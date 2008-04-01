@@ -87,5 +87,9 @@ function workon () {
         return 1
     fi
     source "$activate"
+    if [ -f "$WORKON_HOME/$env_name/bin/workdir" ]
+    then
+        source "$WORKON_HOME/$env_name/bin/workdir"
+    fi
 	return 0
 }
