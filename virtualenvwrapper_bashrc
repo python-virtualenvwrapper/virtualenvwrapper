@@ -47,6 +47,7 @@ function verify_workon_home () {
 function mkvirtualenv () {
     verify_workon_home
     (cd "$WORKON_HOME"; virtualenv $*)
+    workon "${@:-1}"
 }
 
 # Remove an environment, in the WORKON_HOME.
