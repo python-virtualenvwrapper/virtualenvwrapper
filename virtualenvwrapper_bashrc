@@ -1,0 +1,80 @@
+#
+# $Id$
+#
+
+#
+# Setup:
+#
+#  1. Add a line like "export WORKON_HOME=$HOME/.virtualenvs"
+#     to your .bashrc.
+#  2. Add a line like "source /path/to/this/file/virtualenvwrapper_bashrc"
+#     to your .bashrc.
+#  3. Run: source ~/.bashrc
+#  4. Run: workon
+#  5. A list of environments, empty, is printed.
+#  6. Run: mkvirtualenv temp
+#  7. Run: workon
+#  8. This time, the "temp" environment is included.
+#  9. Run: workon temp
+# 10. The virtual environment is activated.
+#
+
+# Make sure there is a default value for WORKON_HOME.
+if [ "$WORKON_HOME" = "" ]
+then
+    export WORKON_HOME="$HOME/.virtualenvs"
+fi
+
+# Verify that the WORKON_HOME directory exists
+function verify_workon_home () {
+    if [ ! -d "$WORKON_HOME" ]
+    then
+        echo "ERROR: $WORKON_HOME does not exist!"
+        return 1
+    fi
+    return 0
+}
+
+# Function to create a new environment, in the WORKON_HOME.
+function mkvirtualenv () {
+    verify_workon_home
+    (cd "$WORKON_HOME"; virtualenv $*)
+}
+
+# Function to remove an environment, in the WORKON_HOME.
+function rmvirtualenv () {
+    typeset env_name="$1"
+    verify_workon_home
+    env_dir="$WORKON_HOME/$env_name"
+    if [ "$VIRTUAL_ENV" == "$env_dir" ]
+    then
+        echo "ERROR: You cannot remove the active environment."
+        return 1
+    fi
+    rm -rf "$env_dir"
+}
+
+# Function to list the available environments.
+function show_workon_options () {
+    verify_workon_home
+	ls "$WORKON_HOME" | egrep -v '*.egg' | sort
+}
+
+# Function to list or change working virtual environments
+function workon () {
+	typeset env_name="$1"
+	if [ "$env_name" = "" ]
+    then
+        show_workon_options
+        return 1
+    fi
+
+    activate="$WORKON_HOME/$env_name/bin/activate"
+    if [ ! -f "$activate" ]
+    then
+        echo "ERROR: No activate for $WORKON_HOME/$env_name"
+        return 1
+    fi
+    source "$activate"
+	return 0
+}
