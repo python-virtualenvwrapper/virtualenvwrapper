@@ -23,6 +23,7 @@
 #
 
 # Make sure there is a default value for WORKON_HOME.
+# You can override this setting in your .bashrc.
 if [ "$WORKON_HOME" = "" ]
 then
     export WORKON_HOME="$HOME/.virtualenvs"
@@ -38,13 +39,17 @@ function verify_workon_home () {
     return 0
 }
 
-# Function to create a new environment, in the WORKON_HOME.
+# Create a new environment, in the WORKON_HOME.
+#
+# Usage: mkvirtualenv [options] ENVNAME
+# (where the options are passed directly to virtualenv)
+#
 function mkvirtualenv () {
     verify_workon_home
     (cd "$WORKON_HOME"; virtualenv $*)
 }
 
-# Function to remove an environment, in the WORKON_HOME.
+# Remove an environment, in the WORKON_HOME.
 function rmvirtualenv () {
     typeset env_name="$1"
     verify_workon_home
@@ -57,13 +62,16 @@ function rmvirtualenv () {
     rm -rf "$env_dir"
 }
 
-# Function to list the available environments.
+# List the available environments.
 function show_workon_options () {
     verify_workon_home
 	ls "$WORKON_HOME" | egrep -v '*.egg' | sort
 }
 
-# Function to list or change working virtual environments
+# List or change working virtual environments
+#
+# Usage: workon [environment_name]
+#
 function workon () {
 	typeset env_name="$1"
 	if [ "$env_name" = "" ]
