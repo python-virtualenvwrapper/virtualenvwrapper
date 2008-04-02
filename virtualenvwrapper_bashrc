@@ -87,10 +87,14 @@ function workon () {
         echo "ERROR: No activate for $WORKON_HOME/$env_name"
         return 1
     fi
-    source "$activate"
-    if [ -f "$WORKON_HOME/$env_name/bin/workdir" ]
+    if [ -f "$VIRTUAL_ENV/bin/predeactivate" ]
     then
-        source "$WORKON_HOME/$env_name/bin/workdir"
+        source "$VIRTUAL_ENV/bin/predeactivate"
+    fi
+    source "$activate"
+    if [ -f "$VIRTUAL_ENV/bin/postactivate" ]
+    then
+        source "$VIRTUAL_ENV/bin/postactivate"
     fi
 	return 0
 }
