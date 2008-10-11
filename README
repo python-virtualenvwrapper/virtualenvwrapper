@@ -1,0 +1,24 @@
+#################
+virtualenvwrapper
+#################
+
+===========
+Quick Setup
+===========
+
+1. Add a line like ``export WORKON_HOME=$HOME/.virtualenvs`` to your .bashrc.
+2. Add a line like ``source /path/to/this/file/virtualenvwrapper_bashrc`` to your .bashrc.
+3. Run: ``source ~/.bashrc``
+4. Run: ``workon``
+5. A list of environments, empty, is printed.
+6. Run: ``mkvirtualenv temp``
+7. Run: ``workon``
+8. This time, the ``temp`` environment is included.
+9. Run: ``workon temp``
+10. The virtual environment is activated.
+
+==========
+References
+==========
+
+For more details, refer to the column I wrote for the May 2008 issue of Python Magazine: `virtualenvwrapper | And Now For Something Completely Different <http://www.doughellmann.com/articles/CompletelyDifferent-2008-05-virtualenvwrapper/index.html>`_.

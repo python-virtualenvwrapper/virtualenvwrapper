@@ -13,10 +13,22 @@ info:
 	VERSION=$(VERSION)
 	RELEASE=$(RELEASE)
 
-package: dist export
-	(rm -f dist/$(RELEASE).zip)
-	(cd dist/; tar zcvf $(RELEASE).tar.gz $(RELEASE))
-	mv dist/*.tar.gz ~/Desktop/
+package:
+	rm -f setup.py
+	$(MAKE) setup.py README.html
+	python setup.py sdist --force-manifest
+	mv dist/*.gz ~/Desktop/
+
+register: setup.py
+	python setup.py register
+
+README.html: README
+	rst2html.py $< $@
+
+%: %.in
+	cat $< | sed 's/VERSION/$(VERSION)/g' > $@
+	chmod -w $@
+
 
 dist:
 	mkdir -p dist
