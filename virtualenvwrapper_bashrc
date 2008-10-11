@@ -33,8 +33,19 @@ fi
 function verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
     then
-        echo "ERROR: $WORKON_HOME does not exist!"
+        echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist."
         return 1
+    fi
+    return 0
+}
+
+# Verify that the requested environment exists
+function verify_workon_environment () {
+       typeset env_name="$1"
+       if [ ! -d "$WORKON_HOME/$env_name" ]
+    then
+       echo "ERROR: Environment '$env_name' does not exist. Create it with 'mkvirtualenv $env_name'."
+       return 1
     fi
     return 0
 }
@@ -57,7 +68,7 @@ function rmvirtualenv () {
     env_dir="$WORKON_HOME/$env_name"
     if [ "$VIRTUAL_ENV" == "$env_dir" ]
     then
-        echo "ERROR: You cannot remove the active environment."
+        echo "ERROR: You cannot remove the active environment ('$env_name')."
         return 1
     fi
     rm -rf "$env_dir"
@@ -81,10 +92,13 @@ function workon () {
         return 1
     fi
 
+    verify_workon_home || return 1
+    verify_workon_environment $env_name || return 1
+    
     activate="$WORKON_HOME/$env_name/bin/activate"
     if [ ! -f "$activate" ]
     then
-        echo "ERROR: No activate for $WORKON_HOME/$env_name"
+        echo "ERROR: Environment '$WORKON_HOME/$env_name' does not contain an activate script."
         return 1
     fi
     
