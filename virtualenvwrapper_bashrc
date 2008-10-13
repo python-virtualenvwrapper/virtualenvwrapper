@@ -115,3 +115,16 @@ function workon () {
     fi
 	return 0
 }
+
+#
+# Set up tab completion.  (Adapted from Arthur Koziel's version at 
+# http://arthurkoziel.com/2008/10/11/virtualenvwrapper-bash-completion/)
+# 
+_virtualenvs ()
+{
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "`show_workon_options`" -- ${cur}) )
+}
+
+complete -o default -o nospace -F _virtualenvs workon
+complete -o default -o nospace -F _virtualenvs rmvirtualenv
