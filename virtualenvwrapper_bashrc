@@ -65,7 +65,7 @@ function mkvirtualenv () {
 function rmvirtualenv () {
     typeset env_name="$1"
     verify_workon_home
-    if ["$env_name" == "" ]
+    if [ "$env_name" == "" ]
     then
         echo "Please specify an enviroment."
         return 1
@@ -74,6 +74,7 @@ function rmvirtualenv () {
     if [ "$VIRTUAL_ENV" == "$env_dir" ]
     then
         echo "ERROR: You cannot remove the active environment ('$env_name')."
+        echo "Either switch to another environment, or run 'deactivate'."
         return 1
     fi
     rm -rf "$env_dir"
