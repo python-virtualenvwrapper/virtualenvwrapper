@@ -67,7 +67,7 @@ function rmvirtualenv () {
     verify_workon_home
     if ["$env_name" == "" ]
     then
-        echo "Please specifiy an enviroment."
+        echo "Please specify an enviroment."
         return 1
     fi
     env_dir="$WORKON_HOME/$env_name"
