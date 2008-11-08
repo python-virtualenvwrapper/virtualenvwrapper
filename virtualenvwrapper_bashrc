@@ -65,6 +65,11 @@ function mkvirtualenv () {
 function rmvirtualenv () {
     typeset env_name="$1"
     verify_workon_home
+    if ["$env_name" == "" ]
+    then
+        echo "Please specifiy an enviroment."
+        return 1
+    fi
     env_dir="$WORKON_HOME/$env_name"
     if [ "$VIRTUAL_ENV" == "$env_dir" ]
     then
