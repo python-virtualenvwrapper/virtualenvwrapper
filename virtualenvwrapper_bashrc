@@ -41,11 +41,21 @@ function verify_workon_home () {
 
 # Verify that the requested environment exists
 function verify_workon_environment () {
-       typeset env_name="$1"
-       if [ ! -d "$WORKON_HOME/$env_name" ]
+    typeset env_name="$1"
+    if [ ! -d "$WORKON_HOME/$env_name" ]
     then
        echo "ERROR: Environment '$env_name' does not exist. Create it with 'mkvirtualenv $env_name'."
        return 1
+    fi
+    return 0
+}
+
+# Verify that the active environment exists
+function verify_active_environment () {
+    if [ ! -n "${VIRTUAL_ENV}" ] || [ ! -d ${VIRTUAL_ENV} ]
+    then
+        echo "ERROR: no virtualenv active, or active virtualenv is missing"
+        return 1
     fi
     return 0
 }
@@ -134,3 +144,49 @@ _virtualenvs ()
 
 complete -o default -o nospace -F _virtualenvs workon
 complete -o default -o nospace -F _virtualenvs rmvirtualenv
+
+# Path management for packages outside of the virtual env.
+# Based on a contribution from James Bennett.
+#
+# add2virtualenv directory1 directory2 ...
+#
+# Adds the specified directories to the Python path for the
+# currently-active virtualenv. This will be done by placing the
+# directory names in a path file named
+# "virtualenv_path_extensions.pth" inside the virtualenv's
+# site-packages directory; if this file does not exist, it will be
+# created first.
+#
+function add2virtualenv () {
+
+    verify_active_environment || return 1
+    
+    site_packages=$VIRTUAL_ENV/lib/python`python -c "import sys; print sys.version[:3]"`/site-packages
+    
+    if [ ! -d "${site_packages}" ]
+    then
+        echo "ERROR: currently-active virtualenv does not appear to have a site-packages directory"
+        return 1
+    fi
+    
+    path_file=$site_packages/virtualenv_path_extensions.pth
+
+    if [ "$*" = "" ]
+    then
+        echo "Usage: add2virtualenv dir [dir ...]"
+        if [ -f "$path_file" ]
+        then
+            echo
+            echo "Existing paths:"
+            cat "$path_file"
+        fi
+        return 1
+    fi
+
+    touch $path_file
+    for pydir in "$@"
+    do
+        echo $pydir >> "$path_file"
+    done
+    return 0
+}
