@@ -13,9 +13,20 @@ Quick Setup
 5. A list of environments, empty, is printed.
 6. Run: ``mkvirtualenv temp``
 7. Run: ``workon``
-8. This time, the ``temp`` environment is included.
-9. Run: ``workon temp``
-10. The virtual environment is activated.
+8. A new environment, ``temp`` is created and activated.
+9. This time, the ``temp`` environment is included.
+
+
+===============
+Path Management
+===============
+
+Sometimes it is desirable to share installed packages that are not in the system ``site-pacakges`` directory and which you do not want to install in each virtualenv.  In this case, you *could* symlink the source into the environment ``site-packages`` directory, but it is also easy to add extra directories to the PYTHONPATH by including them in a .pth file inside ``site-packages`` using ``add2virtualenv``.
+
+1. Check out the source for a big project, such as Django.
+2. Run: ``add2virtualenv path_to_source``.
+3. Run: ``add2virtualenv``.
+4. A usage message and list of current "extra" paths is printed.
 
 ==========
 References

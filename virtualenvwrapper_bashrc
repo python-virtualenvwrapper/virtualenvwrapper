@@ -146,7 +146,7 @@ complete -o default -o nospace -F _virtualenvs workon
 complete -o default -o nospace -F _virtualenvs rmvirtualenv
 
 # Path management for packages outside of the virtual env.
-# Based on a contribution from James Bennett.
+# Based on a contribution from James Bennett and Jannis Leidel.
 #
 # add2virtualenv directory1 directory2 ...
 #
