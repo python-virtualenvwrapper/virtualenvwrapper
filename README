@@ -28,8 +28,58 @@ Sometimes it is desirable to share installed packages that are not in the system
 3. Run: ``add2virtualenv``.
 4. A usage message and list of current "extra" paths is printed.
 
+==================
+Activation Scripts
+==================
+
+virtualenvwrapper adds two separate hook scripts you can use to change your settings when moving between environments.  They are *sourced* by ``workon`` at the appropriate trigger time, allowing them to modify your shell environment.
+
+Both scripts are bash shell scripts and need to be saved in ``$VIRTUAL_ENV/bin/``.
+
+postactivate
+============
+
+The ``postactivate`` script is run after the new environment is enabled.  ``$VIRTUAL_ENV`` refers to the new environment at the time the script runs.
+
+This example script for the PyMOTW environment changes the current working directory and the PATH variable to refer to the source tree containing the PyMOTW source.
+
+::
+
+	pymotw_root=/Users/dhellmann/Documents/PyMOTW
+	cd $pymotw_root
+	PATH=$pymotw_root/bin:$PATH
+
+predeactivate
+=============
+
+The ``predeactivate`` script is run before the current environment is deactivated, and can be used to disable or clear settings in your environment.  ``$VIRTUAL_ENV`` refers to the old environment at the time the script runs.
+
+===============
+Path Management
+===============
+
+The function ``add2virtualenv`` adds the specified directories to the Python path for the active virtualenv. The directory names passed as argument are added to a path file named ``virtualenv_path_extensions.pth`` inside the virtualenv's site-packages directory. If this file does not exist, it will be created first.
+
 ==========
 References
 ==========
 
 For more details, refer to the column I wrote for the May 2008 issue of Python Magazine: `virtualenvwrapper | And Now For Something Completely Different <http://www.doughellmann.com/articles/CompletelyDifferent-2008-05-virtualenvwrapper/index.html>`_.
+
+=======
+Updates
+=======
+
+1.5
+
+  - Fix some issues with spaces in directory or env names.  They still don't really work with virtualenv, though.
+  - Added documentation for the postactivate and predeactivate scripts.
+
+1.4
+
+  - Includes a new .pth management function based on work contributed by James Bennett and Jannis Leidel.
+
+1.3.x
+
+  - Includes a fix for a nasty bug in rmvirtualenv identified by John Shimek.
+

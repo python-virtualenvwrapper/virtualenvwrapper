@@ -52,12 +52,22 @@ function verify_workon_environment () {
 
 # Verify that the active environment exists
 function verify_active_environment () {
-    if [ ! -n "${VIRTUAL_ENV}" ] || [ ! -d ${VIRTUAL_ENV} ]
+    if [ ! -n "${VIRTUAL_ENV}" ] || [ ! -d "${VIRTUAL_ENV}" ]
     then
         echo "ERROR: no virtualenv active, or active virtualenv is missing"
         return 1
     fi
     return 0
+}
+
+# Print the last argument given to us.
+# There has to be a smarter way to do this!
+function _lastarg () {
+    local a
+    for a in "$@"
+    do
+        echo $a
+    done | tail -1
 }
 
 # Create a new environment, in the WORKON_HOME.
@@ -67,8 +77,8 @@ function verify_active_environment () {
 #
 function mkvirtualenv () {
     verify_workon_home
-    (cd "$WORKON_HOME"; virtualenv $*)
-    workon "${@:-1}"
+    (cd "$WORKON_HOME"; virtualenv "$@") 
+    workon $(_lastarg "$@")
 }
 
 # Remove an environment, in the WORKON_HOME.
@@ -161,7 +171,8 @@ function add2virtualenv () {
 
     verify_active_environment || return 1
     
-    site_packages=$VIRTUAL_ENV/lib/python`python -c "import sys; print sys.version[:3]"`/site-packages
+    pyvers="`python -c 'import sys; print sys.version[:3]'`"
+    site_packages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
     
     if [ ! -d "${site_packages}" ]
     then
@@ -169,7 +180,7 @@ function add2virtualenv () {
         return 1
     fi
     
-    path_file=$site_packages/virtualenv_path_extensions.pth
+    path_file="$site_packages/virtualenv_path_extensions.pth"
 
     if [ "$*" = "" ]
     then
@@ -183,10 +194,10 @@ function add2virtualenv () {
         return 1
     fi
 
-    touch $path_file
+    touch "$path_file"
     for pydir in "$@"
     do
-        echo $pydir >> "$path_file"
+        echo "$pydir" >> "$path_file"
     done
     return 0
 }
