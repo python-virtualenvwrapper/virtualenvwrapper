@@ -70,6 +70,10 @@ For more details, refer to the column I wrote for the May 2008 issue of Python M
 Updates
 =======
 
+1.6.1
+
+  - More zsh support (fixes to rmvirtualenv) from Byron Clark.
+
 1.6
 
   - Add completion support for zsh, courtesy of Ted Leung.
