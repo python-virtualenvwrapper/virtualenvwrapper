@@ -1,1 +1,4 @@
 include README.html
+include setup.py
+include paver-minilib.zip
+include pavement.py
