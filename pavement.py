@@ -28,13 +28,11 @@ paver.setuputils.install_distutils_tasks()
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
-
-# What version is this? (take from path in svn tree)
-VERSION = path(os.getcwd()).name
-os.environ['VERSION'] = VERSION
+VERSION = '1.7'
 
 # Read the long description to give to setup
-README = path('README').text()
+README_FILE = 'README'
+README = path(README_FILE).text()
 
 # Scan the input for package information
 # to grab any data files (text, images, etc.) 
@@ -121,5 +119,5 @@ def html():
     # FIXME - Switch to sphinx?
     outfile = path('README.html')
     outfile.unlink()
-    sh('rst2html.py README README.html')
+    sh('rst2html.py %s README.html' % README_FILE)
     return
