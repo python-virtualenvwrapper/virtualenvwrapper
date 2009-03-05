@@ -1,2 +1,5 @@
-o register on pypi
-o setup.py for easy_install?
+#########
+TODO List
+#########
+
+ - figure out if there's a way to host tarballs on bitbucket.org

@@ -1,16 +1,10 @@
 #!/usr/bin/env python
 # encoding: utf-8
 #
-# Copyright (c) 2008 Doug Hellmann All rights reserved.
+# Copyright (c) 2009 Doug Hellmann All rights reserved.
 #
 """
-TODO
-
- - make sure all of the files from the manifests are included
- 
 """
-
-__version__ = "$Id$"
 
 # Standard library
 import copy
