@@ -69,6 +69,8 @@ For more details, refer to the column I wrote for the May 2008 issue of Python M
 =======
 Updates
 =======
+1.8
+  - Fix for processing the argument list in mkvirtualenv from jorgevargas (BitBucket issue #1)
 
 1.7
   - Move to bitbucket.org for hosting

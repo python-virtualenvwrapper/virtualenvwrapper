@@ -58,16 +58,6 @@ function verify_active_environment () {
     return 0
 }
 
-# Print the last argument given to us.
-# There has to be a smarter way to do this!
-function _lastarg () {
-    local a
-    for a in "$@"
-    do
-        echo $a
-    done | tail -1
-}
-
 # Create a new environment, in the WORKON_HOME.
 #
 # Usage: mkvirtualenv [options] ENVNAME
@@ -76,7 +66,7 @@ function _lastarg () {
 function mkvirtualenv () {
     verify_workon_home
     (cd "$WORKON_HOME"; virtualenv "$@") 
-    workon $(_lastarg "$@")
+    workon "$_"
 }
 
 # Remove an environment, in the WORKON_HOME.
