@@ -69,6 +69,10 @@ For more details, refer to the column I wrote for the May 2008 issue of Python M
 =======
 Updates
 =======
+
+1.8.1
+  - Corrected a problem with change to mkvirtualenv that lead to release 1.8 by using an alternate fix proposed by James in comments on release 1.4.
+
 1.8
   - Fix for processing the argument list in mkvirtualenv from jorgevargas (BitBucket issue #1)
 

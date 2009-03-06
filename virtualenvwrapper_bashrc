@@ -64,9 +64,10 @@ function verify_active_environment () {
 # (where the options are passed directly to virtualenv)
 #
 function mkvirtualenv () {
+    eval "envname=\$$#"
     verify_workon_home
-    (cd "$WORKON_HOME"; virtualenv "$@") 
-    workon "$_"
+    (cd "$WORKON_HOME"; virtualenv "$@")
+    workon "$envname"
 }
 
 # Remove an environment, in the WORKON_HOME.
