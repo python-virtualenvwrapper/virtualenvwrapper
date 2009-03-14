@@ -28,7 +28,7 @@ then
 fi
 
 # Verify that the WORKON_HOME directory exists
-function verify_workon_home () {
+function virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
     then
         echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist."
@@ -38,7 +38,7 @@ function verify_workon_home () {
 }
 
 # Verify that the requested environment exists
-function verify_workon_environment () {
+function virtualenvwrapper_verify_workon_environment () {
     typeset env_name="$1"
     if [ ! -d "$WORKON_HOME/$env_name" ]
     then
@@ -49,13 +49,30 @@ function verify_workon_environment () {
 }
 
 # Verify that the active environment exists
-function verify_active_environment () {
+function virtualenvwrapper_verify_active_environment () {
     if [ ! -n "${VIRTUAL_ENV}" ] || [ ! -d "${VIRTUAL_ENV}" ]
     then
         echo "ERROR: no virtualenv active, or active virtualenv is missing"
         return 1
     fi
     return 0
+}
+
+function virtualenvwrapper_source_hook () {
+    scriptname="$1"
+    if [ -f "$scriptname" ]
+    then
+        source "$scriptname"
+    fi
+}
+
+function virtualenvwrapper_run_hook () {
+    scriptname="$1"
+    shift
+    if [ -x "$scriptname" ]
+    then
+        "$scriptname" "$@"
+    fi
 }
 
 # Create a new environment, in the WORKON_HOME.
@@ -65,15 +82,19 @@ function verify_active_environment () {
 #
 function mkvirtualenv () {
     eval "envname=\$$#"
-    verify_workon_home
-    (cd "$WORKON_HOME"; virtualenv "$@")
+    virtualenvwrapper_verify_workon_home
+    (cd "$WORKON_HOME"; 
+        virtualenv "$@"; 
+        virtualenvwrapper_run_hook "./premkvirtualenv" "$envname"
+        )
     workon "$envname"
+    virtualenvwrapper_source_hook "$WORKON_HOME/postmkvirtualenv"
 }
 
 # Remove an environment, in the WORKON_HOME.
 function rmvirtualenv () {
     typeset env_name="$1"
-    verify_workon_home
+    virtualenvwrapper_verify_workon_home
     if [ "$env_name" = "" ]
     then
         echo "Please specify an enviroment."
@@ -86,13 +107,15 @@ function rmvirtualenv () {
         echo "Either switch to another environment, or run 'deactivate'."
         return 1
     fi
+    virtualenvwrapper_run_hook "$WORKON_HOME/prermvirtualenv" "$env_dir"
     rm -rf "$env_dir"
+    virtualenvwrapper_run_hook "$WORKON_HOME/postrmvirtualenv" "$env_dir"
 }
 
 # List the available environments.
-function show_workon_options () {
-    verify_workon_home
-	ls "$WORKON_HOME" | egrep -v '*.egg' | sort
+function virtualenvwrapper_show_workon_options () {
+    virtualenvwrapper_verify_workon_home
+	ls "$WORKON_HOME" | egrep -v '*.egg' | egrep -v '(pre|post)(rm|mk)virtualenv' | sort
 }
 
 # List or change working virtual environments
@@ -103,12 +126,12 @@ function workon () {
 	typeset env_name="$1"
 	if [ "$env_name" = "" ]
     then
-        show_workon_options
+        virtualenvwrapper_show_workon_options
         return 1
     fi
 
-    verify_workon_home || return 1
-    verify_workon_environment $env_name || return 1
+    virtualenvwrapper_verify_workon_home || return 1
+    virtualenvwrapper_verify_workon_environment $env_name || return 1
     
     activate="$WORKON_HOME/$env_name/bin/activate"
     if [ ! -f "$activate" ]
@@ -117,17 +140,11 @@ function workon () {
         return 1
     fi
     
-    if [ -f "$VIRTUAL_ENV/bin/predeactivate" ]
-    then
-        source "$VIRTUAL_ENV/bin/predeactivate"
-    fi
+    virtualenvwrapper_source_hook "$VIRTUAL_ENV/bin/predeactivate"
     
     source "$activate"
     
-    if [ -f "$VIRTUAL_ENV/bin/postactivate" ]
-    then
-        source "$VIRTUAL_ENV/bin/postactivate"
-    fi
+    virtualenvwrapper_source_hook "$VIRTUAL_ENV/bin/postactivate"
 	return 0
 }
 
@@ -140,13 +157,13 @@ if [ -n "$BASH" ] ; then
     _virtualenvs ()
     {
         local cur="${COMP_WORDS[COMP_CWORD]}"
-        COMPREPLY=( $(compgen -W "`show_workon_options`" -- ${cur}) )
+        COMPREPLY=( $(compgen -W "`virtualenvwrapper_show_workon_options`" -- ${cur}) )
     }
 
     complete -o default -o nospace -F _virtualenvs workon
     complete -o default -o nospace -F _virtualenvs rmvirtualenv
 elif [ -n "$ZSH_VERSION" ] ; then
-    compctl -g "`show_workon_options`" workon rmvirtualenv
+    compctl -g "`virtualenvwrapper_show_workon_options`" workon rmvirtualenv
 fi
 
 # Path management for packages outside of the virtual env.
@@ -163,7 +180,7 @@ fi
 #
 function add2virtualenv () {
 
-    verify_active_environment || return 1
+    virtualenvwrapper_verify_active_environment || return 1
     
     pyvers="`python -c 'import sys; print sys.version[:3]'`"
     site_packages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"

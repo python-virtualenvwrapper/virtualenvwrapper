@@ -28,31 +28,59 @@ Sometimes it is desirable to share installed packages that are not in the system
 3. Run: ``add2virtualenv``.
 4. A usage message and list of current "extra" paths is printed.
 
-==================
-Activation Scripts
-==================
-
-virtualenvwrapper adds two separate hook scripts you can use to change your settings when moving between environments.  They are *sourced* by ``workon`` at the appropriate trigger time, allowing them to modify your shell environment.
-
-Both scripts are bash shell scripts and need to be saved in ``$VIRTUAL_ENV/bin/``.
-
-postactivate
+============
+Hook Scripts
 ============
 
-The ``postactivate`` script is run after the new environment is enabled.  ``$VIRTUAL_ENV`` refers to the new environment at the time the script runs.
+virtualenvwrapper adds several hook points you can use to change your settings when creating,
+deleting, or moving between environments. They are either *sourced* (allowing them to modify
+your shell environment) or run as an external program at the appropriate trigger time.
 
-This example script for the PyMOTW environment changes the current working directory and the PATH variable to refer to the source tree containing the PyMOTW source.
+$VIRTUAL_ENV/bin/postactivate
+=============================
+
+The ``postactivate`` script is sourced after the new environment is enabled. ``$VIRTUAL_ENV``
+refers to the new environment at the time the script runs.
+
+This example script for the PyMOTW environment changes the current working directory and the
+PATH variable to refer to the source tree containing the PyMOTW source.
 
 ::
 
-	pymotw_root=/Users/dhellmann/Documents/PyMOTW
-	cd $pymotw_root
-	PATH=$pymotw_root/bin:$PATH
+    pymotw_root=/Users/dhellmann/Documents/PyMOTW
+    cd $pymotw_root
+    PATH=$pymotw_root/bin:$PATH
 
-predeactivate
-=============
+$VIRTUAL_ENV/bin/predeactivate
+==============================
 
-The ``predeactivate`` script is run before the current environment is deactivated, and can be used to disable or clear settings in your environment.  ``$VIRTUAL_ENV`` refers to the old environment at the time the script runs.
+The ``predeactivate`` script is source before the current environment is deactivated, and can
+be used to disable or clear settings in your environment. ``$VIRTUAL_ENV`` refers to the old
+environment at the time the script runs.
+
+$WORKON_HOME/premkvirtualenv
+=============================
+
+The ``premkvirtualenv`` script is run as an external program after the virtual environment is
+created but before the current environment is switched to point to the new env. The current
+working directory for the script is ``$WORKON_HOME`` and the name of the new environment is
+passed as an argument to the script.
+
+$WORKON_HOME/postmkvirtualenv
+=============================
+
+The ``postmkvirtualenv`` script is sourced after the new environment is created and
+activated.
+
+$WORKON_HOME/prermvirtualenv
+============================
+
+The ``prermvirtualenv`` script is run as an external program before the environment is removed.  The full path to the environment directory is passed as an argument to the script.
+
+$WORKON_HOME/postrmvirtualenv
+=============================
+
+The ``postrmvirtualenv`` script is run as an external program after the environment is removed.  The full path to the environment directory is passed as an argument to the script.
 
 ===============
 Path Management
@@ -69,6 +97,9 @@ For more details, refer to the column I wrote for the May 2008 issue of Python M
 =======
 Updates
 =======
+
+1.9
+  - Add more hooks for operations to run before and after creating or deleting environments based on changes from Chris Hasenpflug.
 
 1.8.1
   - Corrected a problem with change to mkvirtualenv that lead to release 1.8 by using an alternate fix proposed by James in comments on release 1.4.
