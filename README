@@ -98,6 +98,9 @@ For more details, refer to the column I wrote for the May 2008 issue of Python M
 Updates
 =======
 
+1.10
+  - Pull in fix for colorized ls from Jeff Forcier (b42a25f7b74a).
+
 1.9
   - Add more hooks for operations to run before and after creating or deleting environments based on changes from Chris Hasenpflug.
 
