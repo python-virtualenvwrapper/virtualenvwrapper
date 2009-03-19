@@ -58,6 +58,20 @@ The ``predeactivate`` script is source before the current environment is deactiv
 be used to disable or clear settings in your environment. ``$VIRTUAL_ENV`` refers to the old
 environment at the time the script runs.
 
+$WORKON_HOME/postactivate
+=============================
+
+The global ``postactivate`` script is sourced after the new environment is enabled and the new
+environment's postactivate is sourced (if it exists). ``$VIRTUAL_ENV`` refers to the new
+environment at the time the script runs.
+
+This example script adds a space between the virtual environment name and your old PS1 by making
+use of ``_OLD_VIRTUAL_PS1``.
+
+::
+
+    PS1="(`basename \"$VIRTUAL_ENV\"`) $_OLD_VIRTUAL_PS1"
+
 $WORKON_HOME/premkvirtualenv
 =============================
 
@@ -104,6 +118,7 @@ Updates
 
 1.10
   - Pull in fix for colorized ls from Jeff Forcier (b42a25f7b74a).
+  - Add global postactivate hook.
 
 1.9
   - Add more hooks for operations to run before and after creating or deleting environments based on changes from Chris Hasenpflug.
