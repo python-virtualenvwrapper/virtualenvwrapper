@@ -114,11 +114,10 @@ Updates
 
 1.11
   - Optimize virtualenvwrapper_show_workon_options.
-  - 
+  - Add global postactivate hook.
 
 1.10
   - Pull in fix for colorized ls from Jeff Forcier (b42a25f7b74a).
-  - Add global postactivate hook.
 
 1.9
   - Add more hooks for operations to run before and after creating or deleting environments based on changes from Chris Hasenpflug.
