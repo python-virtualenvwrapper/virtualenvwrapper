@@ -115,7 +115,7 @@ function rmvirtualenv () {
 # List the available environments.
 function virtualenvwrapper_show_workon_options () {
     virtualenvwrapper_verify_workon_home
-	find "$WORKON_HOME" -maxdepth 1 -mindepth 1 -type d -exec basename '{}' \; | egrep -v '*.egg' | egrep -v '(pre|post)(rm|mk)virtualenv' | sort
+	find "$WORKON_HOME" -maxdepth 1 -mindepth 1 -type d -exec basename '{}' \; | sort
 }
 
 # List or change working virtual environments
