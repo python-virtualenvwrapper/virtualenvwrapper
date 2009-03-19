@@ -15,6 +15,7 @@ mk_test_hook premkvirtualenv
 mk_test_hook postmkvirtualenv
 mk_test_hook prermvirtualenv
 mk_test_hook postrmvirtualenv
+mk_test_hook postactivate
 
 echo
 echo "HOOKS:"

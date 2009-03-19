@@ -145,6 +145,9 @@ function workon () {
     source "$activate"
     
     virtualenvwrapper_source_hook "$VIRTUAL_ENV/bin/postactivate"
+    
+    virtualenvwrapper_source_hook "$WORKON_HOME/postactivate"
+    
 	return 0
 }
 
