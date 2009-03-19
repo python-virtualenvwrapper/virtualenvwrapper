@@ -98,6 +98,10 @@ For more details, refer to the column I wrote for the May 2008 issue of Python M
 Updates
 =======
 
+1.11
+  - Optimize virtualenvwrapper_show_workon_options.
+  - 
+
 1.10
   - Pull in fix for colorized ls from Jeff Forcier (b42a25f7b74a).
 
