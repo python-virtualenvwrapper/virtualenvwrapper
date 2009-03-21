@@ -45,7 +45,13 @@ deactivate
 
 echo
 echo "LISTING ENVIRONMENTS"
-workon
+envs=`workon | tr '\n' ' '`
+if [ "$envs" = "env1 env2 " ]
+then
+    echo "PASS"
+else
+    echo "FAIL: \""$envs\"""
+fi
 
 echo
 echo "REMOVING ENVIRONMENTS"
@@ -53,3 +59,9 @@ rmvirtualenv "env1"
 rmvirtualenv "env2"
 
 rm -rf $WORKON_HOME
+
+echo
+echo "MISSING WORKON_HOME"
+workon && echo "Failed to detect missing dir" || echo "PASS"
+mkvirtualenv foo && echo "Failed to detect missing dir" || echo "PASS"
+rmvirtualenv foo && echo "Failed to detect missing dir" || echo "PASS"
