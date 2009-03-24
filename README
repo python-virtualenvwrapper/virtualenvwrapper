@@ -105,6 +105,12 @@ Path Management
 
 The function ``add2virtualenv`` adds the specified directories to the Python path for the active virtualenv. The directory names passed as argument are added to a path file named ``virtualenv_path_extensions.pth`` inside the virtualenv's site-packages directory. If this file does not exist, it will be created first.
 
+==================================
+Quickly Navigating to a virtualenv
+==================================
+
+The functions ``cdsitepackages`` and ``cdvirtualenv`` provide quick shortcuts to quickly ``cd`` into the ``site-packages`` directory of the currently-active virtualenv, and to the root of the currently-active virtualenv, respectively.
+
 ==========
 References
 ==========

@@ -215,3 +215,28 @@ function add2virtualenv () {
     done
     return 0
 }
+
+#
+# cdsitepackages
+#
+# Does a ``cd`` to the site-packages directory of the currently-active
+# virtualenv.
+#
+
+function cdsitepackages () {
+    verify_active_environment || return 1
+    pyvers="`python -c 'import sys; print sys.version[:3]'`"
+    site_packages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
+    cd $site_packages
+}
+
+#
+# cdvirtualenv
+#
+# Does a ``cd`` to the root of the currently-active virtualenv.
+#
+
+function cdvirtualenv () {
+    verify_active_environment || return 1
+    cd $VIRTUAL_ENV
+}
