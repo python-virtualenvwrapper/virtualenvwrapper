@@ -92,30 +92,39 @@ activated.
 $WORKON_HOME/prermvirtualenv
 ============================
 
-The ``prermvirtualenv`` script is run as an external program before the environment is removed.  The full path to the environment directory is passed as an argument to the script.
+The ``prermvirtualenv`` script is run as an external program before the environment is
+removed. The full path to the environment directory is passed as an argument to the script.
 
 $WORKON_HOME/postrmvirtualenv
 =============================
 
-The ``postrmvirtualenv`` script is run as an external program after the environment is removed.  The full path to the environment directory is passed as an argument to the script.
+The ``postrmvirtualenv`` script is run as an external program after the environment is
+removed. The full path to the environment directory is passed as an argument to the script.
 
 ===============
 Path Management
 ===============
 
-The function ``add2virtualenv`` adds the specified directories to the Python path for the active virtualenv. The directory names passed as argument are added to a path file named ``virtualenv_path_extensions.pth`` inside the virtualenv's site-packages directory. If this file does not exist, it will be created first.
+The function ``add2virtualenv`` adds the specified directories to the Python path for the
+active virtualenv. The directory names passed as argument are added to a path file named
+``virtualenv_path_extensions.pth`` inside the virtualenv's site-packages directory. If this
+file does not exist, it will be created first.
 
 ==================================
 Quickly Navigating to a virtualenv
 ==================================
 
-The functions ``cdsitepackages`` and ``cdvirtualenv`` provide quick shortcuts to quickly ``cd`` into the ``site-packages`` directory of the currently-active virtualenv, and to the root of the currently-active virtualenv, respectively.
+The functions ``cdsitepackages`` and ``cdvirtualenv`` provide quick shortcuts to quickly
+``cd`` into the ``site-packages`` directory of the currently-active virtualenv, and to the
+root of the currently-active virtualenv, respectively.
 
 ==========
 References
 ==========
 
-For more details, refer to the column I wrote for the May 2008 issue of Python Magazine: `virtualenvwrapper | And Now For Something Completely Different <http://www.doughellmann.com/articles/CompletelyDifferent-2008-05-virtualenvwrapper/index.html>`_.
+For more details, refer to the column published in the May 2008 issue of Python Magazine:
+`virtualenvwrapper | And Now For Something Completely Different
+<http://www.doughellmann.com/articles/CompletelyDifferent-2008-05-virtualenvwrapper/index.html>`_.
 
 =======
 Updates
@@ -125,6 +134,8 @@ Updates
   - Check return value of virtualenvwrapper_verify_workon_home everywhere, thanks to 
     Jeff Forcier for pointing out the errors.
   - Fix instructions at top of README, pointed out by Matthew Scott.
+  - Add cdvirtualenv and cdsitepackages, contributed by James Bennett.
+  - Enhance test.sh.
 
 1.11
   - Optimize virtualenvwrapper_show_workon_options.

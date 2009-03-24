@@ -30,22 +30,41 @@ mkvirtualenv "env1"
 echo "Current environment: $VIRTUAL_ENV"
 
 echo
+echo "NAVIGATION"
+echo -n "remember where we start "
+pushd `pwd`
+cdvirtualenv
+echo "cdvirtualenv: `pwd`"
+cdsitepackages
+echo "cdsitepackages: `pwd`"
+echo -n "back to where we started "
+popd
+
+echo
 echo "CREATING AND SWITCHING"
 mkvirtualenv "env2"
 echo "Current environment: $VIRTUAL_ENV"
+echo -n "virtualenvwrapper_verify_active_environment: "
+virtualenvwrapper_verify_active_environment && echo "PASS" || echo "FAIL"
 
 echo
 echo "POSTACTIVATE HOOK"
 echo "echo postactivate" > $WORKON_HOME/env1/bin/postactivate
 workon env1
+echo -n "virtualenvwrapper_verify_active_environment: "
+virtualenvwrapper_verify_active_environment && echo "PASS" || echo "FAIL"
 
 echo
 echo "DEACTIVATING"
 deactivate
+echo "VIRTUAL_ENV: $VIRTUAL_ENV"
+echo "virtualenvwrapper_verify_active_environment: "
+virtualenvwrapper_verify_active_environment && echo "FAIL" || echo "PASS"
 
 echo
 echo "LISTING ENVIRONMENTS"
 envs=`workon | tr '\n' ' '`
+echo "Found environments: $envs"
 if [ "$envs" = "env1 env2 " ]
 then
     echo "PASS"
@@ -62,6 +81,9 @@ rm -rf $WORKON_HOME
 
 echo
 echo "MISSING WORKON_HOME"
+echo -n "workon: "
 workon && echo "Failed to detect missing dir" || echo "PASS"
+echo -n "mkvirtualenv: "
 mkvirtualenv foo && echo "Failed to detect missing dir" || echo "PASS"
+echo -n "rmvirtualenv: "
 rmvirtualenv foo && echo "Failed to detect missing dir" || echo "PASS"
