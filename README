@@ -130,6 +130,10 @@ For more details, refer to the column published in the May 2008 issue of Python 
 Updates
 =======
 
+1.13
+  - Fix issue #5 by correctly handling symlinks and limiting the list of envs to things 
+    that look like they can be activated.
+
 1.12
   - Check return value of virtualenvwrapper_verify_workon_home everywhere, thanks to 
     Jeff Forcier for pointing out the errors.

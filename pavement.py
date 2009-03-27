@@ -22,7 +22,7 @@ paver.setuputils.install_distutils_tasks()
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
-VERSION = '1.12'
+VERSION = '1.13'
 
 # Read the long description to give to setup
 README_FILE = 'README'

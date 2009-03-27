@@ -63,13 +63,17 @@ virtualenvwrapper_verify_active_environment && echo "FAIL" || echo "PASS"
 
 echo
 echo "LISTING ENVIRONMENTS"
+mkdir -p "$WORKON_HOME/extra/bin"
+touch "$WORKON_HOME/extra/bin/activate"
+(cd "$WORKON_HOME"; ln -s extra link)
 envs=`workon | tr '\n' ' '`
 echo "Found environments: $envs"
-if [ "$envs" = "env1 env2 " ]
+if [ "$envs" = "env1 env2 extra link " ]
 then
     echo "PASS"
 else
     echo "FAIL: \""$envs\"""
+    ls -l "$WORKON_HOME"
 fi
 
 echo
