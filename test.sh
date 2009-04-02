@@ -7,15 +7,20 @@ mkdir -p $WORKON_HOME
 
 function mk_test_hook () {
     hookname="$1"
-    echo "echo \"$hookname\" \$@" > $WORKON_HOME/$hookname
+    echo "echo GLOBAL \"$hookname\" \$@" > $WORKON_HOME/$hookname
     chmod +x $WORKON_HOME/$hookname
 }
 
 mk_test_hook premkvirtualenv
 mk_test_hook postmkvirtualenv
+
 mk_test_hook prermvirtualenv
 mk_test_hook postrmvirtualenv
+
 mk_test_hook postactivate
+
+mk_test_hook predeactivate
+mk_test_hook postdeactivate
 
 echo
 echo "HOOKS:"
@@ -49,15 +54,18 @@ virtualenvwrapper_verify_active_environment && echo "PASS" || echo "FAIL"
 
 echo
 echo "POSTACTIVATE HOOK"
-echo "echo postactivate" > $WORKON_HOME/env1/bin/postactivate
+echo "echo ENV postactivate" > "$WORKON_HOME/env1/bin/postactivate"
 workon env1
 echo -n "virtualenvwrapper_verify_active_environment: "
 virtualenvwrapper_verify_active_environment && echo "PASS" || echo "FAIL"
 
 echo
 echo "DEACTIVATING"
+echo "before VIRTUAL_ENV: $VIRTUAL_ENV"
+echo "echo ENV predeactivate \$@" > "$WORKON_HOME/env1/bin/predeactivate"
+echo "echo ENV postdeactivate \$@" > "$WORKON_HOME/env1/bin/postdeactivate"
 deactivate
-echo "VIRTUAL_ENV: $VIRTUAL_ENV"
+echo "after VIRTUAL_ENV: $VIRTUAL_ENV"
 echo "virtualenvwrapper_verify_active_environment: "
 virtualenvwrapper_verify_active_environment && echo "FAIL" || echo "PASS"
 
@@ -80,6 +88,10 @@ echo
 echo "REMOVING ENVIRONMENTS"
 rmvirtualenv "env1"
 rmvirtualenv "env2"
+
+echo
+echo "REMOVING MISSING ENVIRONMENT"
+rmvirtualenv "env1"
 
 rm -rf $WORKON_HOME
 

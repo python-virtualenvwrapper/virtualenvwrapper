@@ -27,6 +27,17 @@ then
     export WORKON_HOME="$HOME/.virtualenvs"
 fi
 
+# Normalize the directory name in case it includes 
+# relative path components.
+WORKON_HOME=$(cd "$WORKON_HOME"; pwd)
+export WORKON_HOME
+
+VIRTUALENV_WRAPPER_BIN=$(dirname "$0")
+if [ "$VIRTUALENV_WRAPPER_BIN" = "." ]
+then
+    VIRTUALENV_WRAPPER_BIN=$(pwd)
+fi
+
 # Verify that the WORKON_HOME directory exists
 function virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
@@ -140,9 +151,38 @@ function workon () {
         return 1
     fi
     
-    virtualenvwrapper_source_hook "$VIRTUAL_ENV/bin/predeactivate"
+    # Deactivate any current environment "destructively"
+    # before switching so we use our override function,
+    # if it exists.
+    type deactivate >/dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+        deactivate
+    fi
     
     source "$activate"
+    
+    # Save the deactivate function from virtualenv
+    virtualenvwrapper_saved_deactivate=$(typeset -f deactivate)
+
+    # Replace the deactivate() function with a wrapper.
+    eval 'function deactivate () {
+        # Call the local hook before the global so we can undo
+        # any settings made by the local postactivate first.
+        virtualenvwrapper_source_hook "$VIRTUAL_ENV/bin/predeactivate"
+        virtualenvwrapper_source_hook "$WORKON_HOME/predeactivate"
+        
+        env_postdeactivate_hook="$VIRTUAL_ENV/bin/postdeactivate"
+        
+        # Restore the original definition of deactivate
+        eval "$virtualenvwrapper_saved_deactivate"
+
+        # Instead of recursing, this calls the now restored original function.
+        deactivate
+
+        virtualenvwrapper_source_hook "$env_postdeactivate_hook"
+        virtualenvwrapper_source_hook "$WORKON_HOME/postdeactivate"
+    }'
     
     virtualenvwrapper_source_hook "$WORKON_HOME/postactivate"
 
@@ -150,6 +190,7 @@ function workon () {
     
 	return 0
 }
+
 
 #
 # Set up tab completion.  (Adapted from Arthur Koziel's version at 
