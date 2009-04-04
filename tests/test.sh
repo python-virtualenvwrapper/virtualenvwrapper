@@ -23,8 +23,7 @@ setUp () {
 
 test_mkvirtualenv() {
     mkvirtualenv "env1"
-    assertTrue "[ -d $WORKON_HOME/env1 ]"
-    assertSame "env1" $(basename "$VIRTUAL_ENV")
+    assertTrue "Environment directory was not created" "[ -d $WORKON_HOME/env1 ]"
 }
 
 test_cdvirtual() {
@@ -38,20 +37,42 @@ test_cdsitepackages () {
     pushd "$(pwd)" >/dev/null   
     cdsitepackages
     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
-    assertSame "$VIRTUAL_ENV/lib/python${pyvers}/site-packages" "$(pwd)"
+    sitepackages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
+    assertSame "$sitepackages" "$(pwd)"
     popd >/dev/null
 }
 
-test_mkvirtualenv_switches () {
+test_mkvirtualenv_activates () {
     mkvirtualenv "env2"
     assertTrue virtualenvwrapper_verify_active_environment
     assertSame "env2" $(basename "$VIRTUAL_ENV")
 }
 
+# test_mkvirtualenv_sitepackages () {
+#     # Without the option verify that site-packages are copied.
+#     mkvirtualenv "env3"
+#     assertSame "env3" "$(basename $VIRTUAL_ENV)"
+#     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
+#     sitepackages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
+#     #cat "$sitepackages/easy-install.pth"
+#     assertTrue "Do not have expected virtualenv.py" "[ -f $sitepackages/virtualenv.py ]"
+#     rmvirtualenv "env3"
+#     
+#     # With the argument, verify that they are not copied.
+#     mkvirtualenv --no-site-packages "env4"
+#     assertSame "env4" $(basename "$VIRTUAL_ENV")
+#     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
+#     sitepackages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
+#     assertTrue "[ -f $sitepackages/setuptools.pth ]"
+#     assertTrue "[ -f $sitepackages/easy-install.pth ]"
+#     assertFalse "Have virtualenv.py but should not" "[ -f $sitepackages/virtualenv.py ]"    
+#     rmvirtualenv "env4"
+# }
+
 test_workon () {
     workon env1
     assertTrue virtualenvwrapper_verify_active_environment
-    assertSame "env1" $(basename "$VIRTUAL_ENV")    
+    assertSame "env1" $(basename "$VIRTUAL_ENV")
 }
 
 test_postactivate_hook () {

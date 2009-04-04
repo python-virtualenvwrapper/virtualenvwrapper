@@ -32,12 +32,6 @@ fi
 WORKON_HOME=$(cd "$WORKON_HOME"; pwd)
 export WORKON_HOME
 
-VIRTUALENV_WRAPPER_BIN=$(dirname "$0")
-if [ "$VIRTUALENV_WRAPPER_BIN" = "." ]
-then
-    VIRTUALENV_WRAPPER_BIN=$(pwd)
-fi
-
 # Verify that the WORKON_HOME directory exists
 function virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
@@ -94,10 +88,14 @@ function virtualenvwrapper_run_hook () {
 function mkvirtualenv () {
     eval "envname=\$$#"
     virtualenvwrapper_verify_workon_home || return 1
-    (cd "$WORKON_HOME"; 
-        virtualenv "$@"; 
+    (cd "$WORKON_HOME" &&
+        virtualenv "$@" &&
         virtualenvwrapper_run_hook "./premkvirtualenv" "$envname"
         )
+    # If they passed a help option or got an error from virtualenv,
+    # the environment won't exist.  Use that to tell whether
+    # we should switch to the environment and run the hook.
+    [ ! -d "$WORKON_HOME/$envname" ] && return 0
     workon "$envname"
     virtualenvwrapper_source_hook "$WORKON_HOME/postmkvirtualenv"
 }
@@ -128,7 +126,9 @@ function virtualenvwrapper_show_workon_options () {
     virtualenvwrapper_verify_workon_home || return 1
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
-    (cd "$WORKON_HOME"; find -L . -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
+    # echo seems a little faster than find, even with -depth 3.
+    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) | sed 's|^\./||' | sed 's|/bin/activate||' | sort
+#    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
 # List or change working virtual environments
