@@ -126,7 +126,9 @@ function rmvirtualenv () {
 # List the available environments.
 function virtualenvwrapper_show_workon_options () {
     virtualenvwrapper_verify_workon_home || return 1
-    (cd "$WORKON_HOME"; ls */bin/activate) | sed 's|/bin/activate||' | sort
+    # NOTE: DO NOT use ls here because colorized versions spew control characters
+    #       into the output list.
+    (cd "$WORKON_HOME"; find -L . -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
 # List or change working virtual environments
