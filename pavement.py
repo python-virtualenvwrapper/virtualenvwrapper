@@ -115,3 +115,7 @@ def html():
     outfile.unlink()
     sh('rst2html.py %s README.html' % README_FILE)
     return
+
+@task
+def test():
+    sh('./tests/test.sh')
