@@ -2,4 +2,4 @@ include README.html
 include setup.py
 include paver-minilib.zip
 include pavement.py
-include test.sh
+include tests/*
