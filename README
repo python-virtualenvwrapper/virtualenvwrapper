@@ -130,9 +130,12 @@ For more details, refer to the column published in the May 2008 issue of Python 
 Updates
 =======
 
-Upcoming
+1.14
   - Wrap the virtualenv version of deactivate() with one that lets us invoke
     the predeactivate hooks.
+  - Fix virtualenvwrapper_show_workon_options for colorized versions of ls and
+    write myself a note so I don't break it again later.
+  - Convert test.sh to use true tests with `shunit2 <http://shunit2.googlecode.com/>`_
 
 1.13
   - Fix issue #5 by correctly handling symlinks and limiting the list of envs to things 
