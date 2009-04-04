@@ -78,8 +78,8 @@ options(
 
         ),
     
-    packaging = Bunch(
-        outdir='~/Desktop',
+    sdist = Bunch(
+        dist_dir=os.path.expanduser('~/Desktop'),
     ),
     
 )
@@ -101,12 +101,7 @@ def remake_directories(*dirnames):
 def sdist():
     """Create a source distribution.
     """
-    # Move the output file to the desktop
-    dist_files = path('dist').glob('*.tar.gz')
-    dest_dir = path(options.packaging.outdir).expanduser()
-    for f in dist_files:
-        f.move(dest_dir)
-    return
+    pass
 
 @task
 def html():
