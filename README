@@ -130,8 +130,9 @@ For more details, refer to the column published in the May 2008 issue of Python 
 Updates
 =======
 
-upcoming
+1.15
   - Better error handling in mkvirtualenv.
+  - Remove bogus VIRTUALENV_WRAPPER_BIN variable.
 
 1.14
   - Wrap the virtualenv version of deactivate() with one that lets us invoke
