@@ -36,7 +36,7 @@ export WORKON_HOME
 function virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
     then
-        echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist."
+        echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist." >&2
         return 1
     fi
     return 0
@@ -47,7 +47,7 @@ function virtualenvwrapper_verify_workon_environment () {
     typeset env_name="$1"
     if [ ! -d "$WORKON_HOME/$env_name" ]
     then
-       echo "ERROR: Environment '$env_name' does not exist. Create it with 'mkvirtualenv $env_name'."
+       echo "ERROR: Environment '$env_name' does not exist. Create it with 'mkvirtualenv $env_name'." >&2
        return 1
     fi
     return 0
@@ -57,7 +57,7 @@ function virtualenvwrapper_verify_workon_environment () {
 function virtualenvwrapper_verify_active_environment () {
     if [ ! -n "${VIRTUAL_ENV}" ] || [ ! -d "${VIRTUAL_ENV}" ]
     then
-        echo "ERROR: no virtualenv active, or active virtualenv is missing"
+        echo "ERROR: no virtualenv active, or active virtualenv is missing" >&2
         return 1
     fi
     return 0
@@ -106,14 +106,14 @@ function rmvirtualenv () {
     virtualenvwrapper_verify_workon_home || return 1
     if [ "$env_name" = "" ]
     then
-        echo "Please specify an enviroment."
+        echo "Please specify an enviroment." >&2
         return 1
     fi
     env_dir="$WORKON_HOME/$env_name"
     if [ "$VIRTUAL_ENV" = "$env_dir" ]
     then
-        echo "ERROR: You cannot remove the active environment ('$env_name')."
-        echo "Either switch to another environment, or run 'deactivate'."
+        echo "ERROR: You cannot remove the active environment ('$env_name')." >&2
+        echo "Either switch to another environment, or run 'deactivate'." >&2
         return 1
     fi
     virtualenvwrapper_run_hook "$WORKON_HOME/prermvirtualenv" "$env_dir"
@@ -149,7 +149,7 @@ function workon () {
     activate="$WORKON_HOME/$env_name/bin/activate"
     if [ ! -f "$activate" ]
     then
-        echo "ERROR: Environment '$WORKON_HOME/$env_name' does not contain an activate script."
+        echo "ERROR: Environment '$WORKON_HOME/$env_name' does not contain an activate script." >&2
         return 1
     fi
     
@@ -206,6 +206,13 @@ if [ -n "$BASH" ] ; then
         COMPREPLY=( $(compgen -W "`virtualenvwrapper_show_workon_options`" -- ${cur}) )
     }
 
+    _cdvirtualenv_complete ()
+    {
+        local cur="$2"
+        # COMPREPLY=( $(compgen -d -- "${VIRTUAL_ENV}/${cur}" | sed -e "s@${VIRTUAL_ENV}/@@" ) )
+        COMPREPLY=( $(cdvirtualenv && compgen -d -- "${cur}" ) )
+    }
+    complete -o nospace -F _cdvirtualenv_complete -S/ cdvirtualenv
     complete -o default -o nospace -F _virtualenvs workon
     complete -o default -o nospace -F _virtualenvs rmvirtualenv
 elif [ -n "$ZSH_VERSION" ] ; then
@@ -233,7 +240,7 @@ function add2virtualenv () {
     
     if [ ! -d "${site_packages}" ]
     then
-        echo "ERROR: currently-active virtualenv does not appear to have a site-packages directory"
+        echo "ERROR: currently-active virtualenv does not appear to have a site-packages directory" >&2
         return 1
     fi
     
