@@ -281,5 +281,5 @@ function cdsitepackages () {
 
 function cdvirtualenv () {
     virtualenvwrapper_verify_active_environment || return 1
-    cd $VIRTUAL_ENV
+    cd $VIRTUAL_ENV/$1
 }
