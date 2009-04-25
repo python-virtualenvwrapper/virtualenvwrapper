@@ -114,9 +114,32 @@ file does not exist, it will be created first.
 Quickly Navigating to a virtualenv
 ==================================
 
-The functions ``cdsitepackages`` and ``cdvirtualenv`` provide quick shortcuts to quickly
-``cd`` into the ``site-packages`` directory of the currently-active virtualenv, and to the
-root of the currently-active virtualenv, respectively.
+There are two functions to provide shortcuts to navigate into the the currently-active
+virtualenv.
+
+cdvirtualenv
+============
+
+Calling ``cdvirtualenv`` changes the current working directory to the top of the virtualenv (``$VIRTUAL_ENV``).  An optional argument is appended to the path, allowing navigation directly into a subdirectory.
+
+::
+
+  $ workon pymotw
+  $ echo $VIRTUAL_ENV
+  /Users/dhellmann/.virtualenvs/pymotw
+  $ cdvirtualenv
+  $ pwd
+  /Users/dhellmann/.virtualenvs/pymotw
+  $ cdvirtualenv bin
+  $ pwd
+  /Users/dhellmann/.virtualenvs/pymotw/bin
+
+cdsitepackages
+==============
+
+Because the exact path to the site-packages directory in the virtualenv depends on the
+version of Python, ``cdsitepackages`` is provided as a shortcut for ``cdvirtualenv
+lib/python${pyvers}/site-packages``.
 
 ==========
 References
@@ -129,6 +152,11 @@ For more details, refer to the column published in the May 2008 issue of Python 
 =======
 Updates
 =======
+
+1.16
+
+  - Merged in changes to ``cdvirtualenv`` from wam and added tests and docs.
+  - Merged in changes to make error messages go to stderr, also provided by wam.
 
 1.15
   - Better error handling in mkvirtualenv.

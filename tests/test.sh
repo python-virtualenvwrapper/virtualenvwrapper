@@ -30,6 +30,8 @@ test_cdvirtual() {
     pushd "$(pwd)" >/dev/null
     cdvirtualenv
     assertSame "$VIRTUAL_ENV" "$(pwd)"
+    cdvirtualenv bin
+    assertSame "$VIRTUAL_ENV/bin" "$(pwd)"
     popd >/dev/null
 }
 

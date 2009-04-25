@@ -276,8 +276,8 @@ function add2virtualenv () {
 function cdsitepackages () {
     virtualenvwrapper_verify_active_environment || return 1
     pyvers="`python -c 'import sys; print sys.version[:3]'`"
-    site_packages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
-    cd $site_packages
+    site_packages="lib/python${pyvers}/site-packages"
+    cdvirtualenv $site_packages
 }
 
 #
