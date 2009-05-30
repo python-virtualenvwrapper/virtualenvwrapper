@@ -3,134 +3,49 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to virtualenvwrapper's documentation!
-=============================================
+#################
+virtualenvwrapper
+#################
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-
-   command_ref
+virtualenvwrapper is a set of extensions to Ian Bicking's `virtualenv <http://pypi.python.org/pypi/virtualenv>`_ tool.  The extensions include wrappers for creating and deleting virtual environments and otherwise managing your development workflow, making it easier to work on more than one project at a time without introducing conflicts in their dependencies.
 
 ===========
 Quick Setup
 ===========
 
-1.  Add a line like ``export WORKON_HOME=$HOME/.virtualenvs`` to your .bashrc.
+1. Add two lines to your .bashrc to set the location where the virtual environments should live and the location of the script installed with this package::
 
-2.  Add a line like ``source /path/to/this/file/virtualenvwrapper_bashrc``
-    to your .bashrc.
+    export WORKON_HOME=$HOME/.virtualenvs
+    source /usr/local/bin/virtualenvwrapper_bashrc
 
-3.  Run: ``source ~/.bashrc``
+2. Run: ``source ~/.bashrc``
+3. Run: ``workon``
+4. A list of environments, empty, is printed.
+5. Run: ``mkvirtualenv temp``
+6. A new environment, ``temp`` is created and activated.
+7. Run: ``workon``
+8. This time, the ``temp`` environment is included.
 
-4.  Run: ``workon``
+=======
+Details
+=======
 
-5.  A list of environments, empty, is printed.
+.. toctree::
+   :maxdepth: 2
 
-6.  Run: ``mkvirtualenv temp``
-
-7.  Run: ``workon``
-
-8.  A new environment, ``temp`` is created and activated.
-
-9.  This time, the ``temp`` environment is included.
-
-
-===============
-Path Management
-===============
-
-Sometimes it is desirable to share installed packages that are not in the
-system ``site-pacakges`` directory and which you do not want to install in
-each virtualenv. In this case, you *could* symlink the source into the
-environment ``site-packages`` directory, but it is also easy to add extra
-directories to the PYTHONPATH by including them in a .pth file inside
-``site-packages`` using ``add2virtualenv``.
-
-1. Check out the source for a big project, such as Django.
-2. Run: ``add2virtualenv path_to_source``.
-3. Run: ``add2virtualenv``.
-4. A usage message and list of current "extra" paths is printed.
-
-==================
-Activation Scripts
-==================
-
-virtualenvwrapper adds two separate hook scripts you can use to change your
-settings when moving between environments. They are *sourced* by ``workon`` at
-the appropriate trigger time, allowing them to modify your shell environment.
-
-Both scripts are bash shell scripts and need to be saved in
-``$VIRTUAL_ENV/bin/``.
-
-postactivate
-============
-
-The ``postactivate`` script is run after the new environment is enabled.
-``$VIRTUAL_ENV`` refers to the new environment at the time the script runs.
-
-This example script for the PyMOTW environment changes the current working
-directory and the PATH variable to refer to the source tree containing the
-PyMOTW source.
-
-::
-
-	pymotw_root=/Users/dhellmann/Documents/PyMOTW
-	cd $pymotw_root
-	PATH=$pymotw_root/bin:$PATH
-
-predeactivate
-=============
-
-The ``predeactivate`` script is run before the current environment is
-deactivated, and can be used to disable or clear settings in your environment.
-``$VIRTUAL_ENV`` refers to the old environment at the time the script runs.
-
-===============
-Path Management
-===============
-
-The function ``add2virtualenv`` adds the specified directories to the Python
-path for the active virtualenv. The directory names passed as argument are
-added to a path file named ``virtualenv_path_extensions.pth`` inside the
-virtualenv's site-packages directory. If this file does not exist, it will be
-created first.
+   command_ref
+   hooks
+   history
 
 ==========
 References
 ==========
 
+`virtualenv <http://pypi.python.org/pypi/virtualenv>`_, from Ian Bicking, is a pre-requisite to using these extensions.
+
 For more details, refer to the column I wrote for the May 2008 issue of Python
 Magazine: `virtualenvwrapper | And Now For Something Completely Different
 <http://www.doughellmann.com/articles/CompletelyDifferent-2008-05-virtualenvwrapper/index.html>`_.
-
-=======
-Updates
-=======
-
-1.7
-  - Move to bitbucket.org for hosting
-  - clean up TODO list and svn keywords
-  - add license section below
-
-1.6.1
-  - More zsh support (fixes to rmvirtualenv) from Byron Clark.
-
-1.6
-  - Add completion support for zsh, courtesy of Ted Leung.
-
-1.5
-  - Fix some issues with spaces in directory or env names. They still don't
-    really work with virtualenv, though.
-  - Added documentation for the postactivate and predeactivate scripts.
-
-1.4
-  - Includes a new .pth management function based on work contributed by James
-    Bennett and Jannis Leidel.
-
-1.3.x
-  - Includes a fix for a nasty bug in rmvirtualenv identified by John Shimek.
 
 =======
 License
@@ -154,11 +69,3 @@ CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
 OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
 NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-

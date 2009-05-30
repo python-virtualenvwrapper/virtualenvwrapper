@@ -4,4 +4,4 @@ include paver-minilib.zip
 include pavement.py
 include tests/*
 recursive-include docs *.html *.txt *.css *.js *.png
-recursive-include docsource *.rst *.txt *.py
+recursive-include docsource *.rst

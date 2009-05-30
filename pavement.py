@@ -23,7 +23,7 @@ import paver.doctools
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
-VERSION = '1.16'
+VERSION = '1.17'
 os.environ['VERSION'] = VERSION
 
 # Read the long description to give to setup
@@ -88,8 +88,11 @@ options(
     
     sdist = Bunch(
         dist_dir=os.path.expanduser('~/Desktop'),
-        # Tell Paver to include extra parts that we use
-        # but it doesn't ship in the minilib by default.
+    ),
+
+    # Tell Paver to include extra parts that we use
+    # but it doesn't ship in the minilib by default.
+    minilib = Bunch(
         extra_files=['doctools'],
     ),
     
@@ -106,7 +109,7 @@ def remake_directories(*dirnames):
     return
 
 @task
-@needs(['html', 'generate_setup', 'minilib', 
+@needs(['html', 'readme_html', 'generate_setup', 'minilib', 
         'setuptools.command.sdist'
         ])
 def sdist():
@@ -114,13 +117,13 @@ def sdist():
     """
     pass
 
-# @task
-# def html():
-#     # FIXME - Switch to sphinx?
-#     outfile = path('README.html')
-#     outfile.unlink()
-#     sh('rst2html.py %s README.html' % README_FILE)
-#     return
+@task
+def readme_html():
+    # FIXME - Switch to sphinx?
+    outfile = path('README.html')
+    outfile.unlink()
+    sh('rst2html.py %s README.html' % README_FILE)
+    return
 
 @task
 def test():
