@@ -5,6 +5,7 @@ paver-minilib.zip
 setup.py
 trace.txt
 docs
+*.pyc
 
 syntax: re
 .DS_Store

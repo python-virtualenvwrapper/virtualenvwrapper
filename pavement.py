@@ -33,10 +33,10 @@ README = path(README_FILE).text()
 # Scan the input for package information
 # to grab any data files (text, images, etc.) 
 # associated with sub-packages.
-# PACKAGE_DATA = paver.setuputils.find_package_data(PROJECT, 
-#                                                   package=PROJECT,
-#                                                   only_in_packages=True,
-#                                                   )
+PACKAGE_DATA = paver.setuputils.find_package_data(PROJECT, 
+                                              package=PROJECT,
+                                              only_in_packages=False,
+                                              )
 
 options(
     setup=Bunch(
@@ -68,13 +68,9 @@ options(
         provides=['virtualenvwrapper',
                   ],
         requires=['virtualenv'],
-
-        data_files=[('docs', ['README.html']),
-                    ],
-
-        # It seems wrong to have to list recursive packages explicitly.
-        # packages = sorted(PACKAGE_DATA.keys()),
-        # package_data=PACKAGE_DATA,
+        
+        packages = sorted(PACKAGE_DATA.keys()),
+        package_data = PACKAGE_DATA,
 
         zip_safe=False,
 
@@ -109,23 +105,26 @@ def remake_directories(*dirnames):
     return
 
 @task
-@needs(['html', 'readme_html', 'generate_setup', 'minilib', 
-        'setuptools.command.sdist'
+@needs('paver.doctools.html')
+def html(options):
+    destdir = path(PROJECT) / 'docs'
+    destdir.rmtree()
+    builtdocs = path(options.builddir) / "html"
+    builtdocs.move(destdir)
+    return
+
+@task
+@needs(['html',
+        'generate_setup', 'minilib', 
+        'setuptools.command.sdist',
         ])
-def sdist():
+def sdist(options):
     """Create a source distribution.
     """
     pass
-
-@task
-def readme_html():
-    # FIXME - Switch to sphinx?
-    outfile = path('README.html')
-    outfile.unlink()
-    sh('rst2html.py %s README.html' % README_FILE)
-    return
-
+    
 @task
 def test():
     sh('bash ./tests/test.sh')
     sh('SHUNIT_PARENT=./tests/test.sh zsh -o shwordsplit ./tests/test.sh')
+    return

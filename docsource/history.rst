@@ -2,6 +2,10 @@
 Release History
 ===============
 
+1.17
+
+  - Added documentation updates provided by Steve Steiner.
+
 1.16
 
   - Merged in changes to ``cdvirtualenv`` from wam and added tests and docs.

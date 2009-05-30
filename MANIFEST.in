@@ -1,7 +1,6 @@
-include README.html
 include setup.py
 include paver-minilib.zip
 include pavement.py
 include tests/*
-recursive-include docs *.html *.txt *.css *.js *.png
+recursive-include virtualenvwrapper *.html *.txt *.css *.js *.png
 recursive-include docsource *.rst
