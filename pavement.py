@@ -19,10 +19,12 @@ from paver.path import path
 from paver.easy import *
 import paver.setuputils
 paver.setuputils.install_distutils_tasks()
+import paver.doctools
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
 VERSION = '1.16'
+os.environ['VERSION'] = VERSION
 
 # Read the long description to give to setup
 README_FILE = 'README'
@@ -78,8 +80,17 @@ options(
 
         ),
     
+    sphinx = Bunch(
+        docroot='.',
+        builddir='docs',
+        sourcedir='docsource',
+    ),
+    
     sdist = Bunch(
         dist_dir=os.path.expanduser('~/Desktop'),
+        # Tell Paver to include extra parts that we use
+        # but it doesn't ship in the minilib by default.
+        extra_files=['doctools'],
     ),
     
 )
@@ -103,13 +114,13 @@ def sdist():
     """
     pass
 
-@task
-def html():
-    # FIXME - Switch to sphinx?
-    outfile = path('README.html')
-    outfile.unlink()
-    sh('rst2html.py %s README.html' % README_FILE)
-    return
+# @task
+# def html():
+#     # FIXME - Switch to sphinx?
+#     outfile = path('README.html')
+#     outfile.unlink()
+#     sh('rst2html.py %s README.html' % README_FILE)
+#     return
 
 @task
 def test():

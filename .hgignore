@@ -1,5 +1,10 @@
+syntax: glob
 README.html
 virtualenvwrapper.egg-info
 paver-minilib.zip
 setup.py
 trace.txt
+docs
+
+syntax: re
+.DS_Store
