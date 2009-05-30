@@ -113,4 +113,5 @@ def html():
 
 @task
 def test():
-    sh('./tests/test.sh')
+    sh('bash ./tests/test.sh')
+    sh('SHUNIT_PARENT=./tests/test.sh zsh -o shwordsplit ./tests/test.sh')
