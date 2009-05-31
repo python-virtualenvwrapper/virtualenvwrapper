@@ -6,6 +6,8 @@ setup.py
 trace.txt
 docs
 *.pyc
+sphinx/web/templates/base.html
 
 syntax: re
 .DS_Store
+^web/

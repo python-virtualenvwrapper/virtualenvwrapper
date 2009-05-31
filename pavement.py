@@ -20,6 +20,7 @@ from paver.easy import *
 import paver.setuputils
 paver.setuputils.install_distutils_tasks()
 import paver.doctools
+import docpaver
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
@@ -49,7 +50,7 @@ options(
         author = 'Doug Hellmann',
         author_email = 'doug.hellmann@gmail.com',
 
-        url = 'http://www.doughellmann.com/projects/virtualenvwrapper/',
+        url = 'http://www.doughellmann.com/projects/%s/' % PROJECT,
         download_url = 'http://www.doughellmann.com/downloads/%s-%s.tar.gz' % \
                         (PROJECT, VERSION),
 
@@ -78,8 +79,29 @@ options(
     
     sphinx = Bunch(
         docroot='.',
-        builddir='docs',
         sourcedir='docsource',
+        builder='html',
+        template_args={'project':PROJECT}
+    ),
+    
+    html=Bunch(
+        templates='pkg',
+        builddir='docs',
+        confdir='sphinx/pkg',
+    ),
+    
+    website=Bunch(
+        templates = 'web',
+        builddir = 'web',
+        confdir='sphinx/web',
+        
+        # What server hosts the website?
+        server = 'www.doughellmann.com',
+        server_path = '/var/www/doughellmann/DocumentRoot/docs/%s/' % PROJECT,
+
+        # What template should be used for the web site HTML?
+        template_source = '~/Devel/personal/doughellmann/templates/base.html',
+        template_dest = 'sphinx/web/templates/base.html',        
     ),
     
     sdist = Bunch(
@@ -94,6 +116,31 @@ options(
     
 )
 
+@task
+def html(options):
+    # Build the docs
+    docpaver.html(options)
+    # Move them into place for packaging
+    destdir = path(PROJECT) / 'docs'
+    destdir.rmtree()
+    builtdocs = path(options.builddir) / "html"
+    builtdocs.move(destdir)
+    return
+
+@task
+def website(options):
+    """Create local copy of website files.
+    """
+    # Make sure the base template is updated
+    dest = path(options.website.template_dest).expanduser()
+    src = path(options.website.template_source).expanduser()
+    if not dest.exists() or (src.mtime > dest.mtime):
+        dest.dirname().mkdir()
+        src.copy(dest)
+    # Build the docs
+    docpaver.run_sphinx(options, 'website')
+    return
+
 def remake_directories(*dirnames):
     """Remove the directories and recreate them.
     """
@@ -105,13 +152,20 @@ def remake_directories(*dirnames):
     return
 
 @task
-@needs('paver.doctools.html')
-def html(options):
-    destdir = path(PROJECT) / 'docs'
-    destdir.rmtree()
-    builtdocs = path(options.builddir) / "html"
-    builtdocs.move(destdir)
+def installwebsite(options):
+    """Rebuild and copy website files to the remote server.
+    """
+    # Clean up
+    remake_directories(options.website.builddir)
+    # Rebuild
+    website(options)
+    # Copy to the server
+    os.environ['RSYNC_RSH'] = '/usr/bin/ssh'
+    src_path = path(options.website.builddir) / 'html'
+    sh('cd %s; rsync --archive --delete --verbose . %s:%s' % 
+        (src_path, options.website.server, options.website.server_path))
     return
+
 
 @task
 @needs(['html',
