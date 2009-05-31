@@ -20,7 +20,11 @@ from paver.easy import *
 import paver.setuputils
 paver.setuputils.install_distutils_tasks()
 import paver.doctools
-import docpaver
+try:
+    import docpaver
+except:
+    import warnings
+    warnings.warn('docpaver was not found, will not be able to produce documentation')
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
@@ -176,7 +180,13 @@ def sdist(options):
     """Create a source distribution.
     """
     pass
-    
+
+@task
+@needs(['sdist'])
+def test_install(options):
+    sh('./tests/test_install.sh "%s" "%s"' % (options.sdist.dist_dir, VERSION))
+    return
+
 @task
 def test():
     sh('bash ./tests/test.sh')
