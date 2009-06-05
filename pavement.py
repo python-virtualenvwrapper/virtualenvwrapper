@@ -19,16 +19,16 @@ from paver.path import path
 from paver.easy import *
 import paver.setuputils
 paver.setuputils.install_distutils_tasks()
-import paver.doctools
+#import paver.doctools
 try:
-    import docpaver
+    from sphinxcontrib import paverutils
 except:
     import warnings
-    warnings.warn('docpaver was not found, will not be able to produce documentation')
+    warnings.warn('sphinxcontrib.paverutils was not found, you will not be able to produce documentation')
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
-VERSION = '1.17'
+VERSION = '1.17.1'
 os.environ['VERSION'] = VERSION
 
 # Read the long description to give to setup
@@ -123,7 +123,7 @@ options(
 @task
 def html(options):
     # Build the docs
-    docpaver.html(options)
+    paverutils.html(options)
     # Move them into place for packaging
     destdir = path(PROJECT) / 'docs'
     destdir.rmtree()
@@ -142,7 +142,7 @@ def website(options):
         dest.dirname().mkdir()
         src.copy(dest)
     # Build the docs
-    docpaver.run_sphinx(options, 'website')
+    paverutils.run_sphinx(options, 'website')
     return
 
 def remake_directories(*dirnames):
