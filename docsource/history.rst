@@ -5,6 +5,8 @@ Release History
 1.18
 
   - Remove warning during installation if sphinxcontrib.paverutils is not installed. (#10)
+  - Added some basic developer information to the documentation.
+  - Added documentation for deactivate command.
 
 1.17
 

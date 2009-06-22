@@ -45,6 +45,7 @@ Details
    command_ref
    hooks
    history
+   developers
 
 ==========
 References
