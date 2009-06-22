@@ -47,6 +47,7 @@ Once all of them are installed into a virtualenv using easy_install, run ``paver
     rmtree virtualenvwrapper/docs () {}
     move docs/html virtualenvwrapper/docs
 
+The output version of the documentation ends up in ``./virtualenvwrapper/docs`` inside your sandbox.
 
 Running Tests
 =============
