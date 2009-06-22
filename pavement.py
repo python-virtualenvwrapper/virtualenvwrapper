@@ -23,8 +23,7 @@ paver.setuputils.install_distutils_tasks()
 try:
     from sphinxcontrib import paverutils
 except:
-    import warnings
-    warnings.warn('sphinxcontrib.paverutils was not found, you will not be able to produce documentation')
+    paverutils = None
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
@@ -122,6 +121,8 @@ options(
 
 @task
 def html(options):
+    if paverutils is None:
+        raise RuntimeError('Building HTML documentation requires the sphinxcontrib.paverutils package')
     # Build the docs
     paverutils.html(options)
     # Move them into place for packaging
@@ -135,6 +136,8 @@ def html(options):
 def website(options):
     """Create local copy of website files.
     """
+    if paverutils is None:
+        raise RuntimeError('Building the website requires the sphinxcontrib.paverutils package')
     # Make sure the base template is updated
     dest = path(options.website.template_dest).expanduser()
     src = path(options.website.template_source).expanduser()

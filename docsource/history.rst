@@ -2,6 +2,10 @@
 Release History
 ===============
 
+1.18
+
+  - Remove warning during installation if sphinxcontrib.paverutils is not installed. (#10)
+
 1.17
 
   - Added documentation updates provided by Steve Steiner.
