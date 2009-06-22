@@ -42,6 +42,19 @@ Syntax::
 
 If no ``environment_name`` is given the list of available environments is printed to stdout.
 
+deactivate
+----------
+
+Switch from a virtual environment to the system-installed version of Python.
+
+Syntax::
+
+    deactivate
+
+.. note::
+
+    This command is actually part of virtualenv, but is wrapped to provide before and after hooks, just as workon does for activate.
+
 ==================================
 Quickly Navigating to a virtualenv
 ==================================
