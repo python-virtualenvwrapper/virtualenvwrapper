@@ -29,7 +29,7 @@ fi
 
 # Normalize the directory name in case it includes 
 # relative path components.
-WORKON_HOME=$(cd "$WORKON_HOME"; pwd)
+WORKON_HOME=$(sh -c 'cd "$WORKON_HOME"; pwd')
 export WORKON_HOME
 
 # Verify that the WORKON_HOME directory exists

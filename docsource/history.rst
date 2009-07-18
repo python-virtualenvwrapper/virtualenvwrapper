@@ -2,6 +2,10 @@
 Release History
 ===============
 
+1.18.1
+
+  - Incorporate patch from Sascha Brossmann to fix a issue #15. Directory normalization was causing ``WORKON_HOME`` to appear to be a missing directory if there were control characters in the output of ``pwd``.
+
 1.18
 
   - Remove warning during installation if sphinxcontrib.paverutils is not installed. (#10)
