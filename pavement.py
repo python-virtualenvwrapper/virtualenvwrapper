@@ -103,7 +103,7 @@ options(
         server_path = '/var/www/doughellmann/DocumentRoot/docs/%s/' % PROJECT,
 
         # What template should be used for the web site HTML?
-        template_source = '~/Devel/personal/doughellmann/templates/base.html',
+        template_source = '~/Devel/doughellmann/doughellmann/templates/base.html',
         template_dest = 'sphinx/web/templates/base.html',        
     ),
     
