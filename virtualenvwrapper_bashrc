@@ -261,7 +261,12 @@ function add2virtualenv () {
     touch "$path_file"
     for pydir in "$@"
     do
-        echo "$pydir" >> "$path_file"
+        absolute_path=$(python -c "import os; print os.path.abspath(\"$pydir\")")
+        if [ "$absolute_path" != "$pydir" ]
+        then
+            echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
+        fi
+        echo "$absolute_path" >> "$path_file"
     done
     return 0
 }

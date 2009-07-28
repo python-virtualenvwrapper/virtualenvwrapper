@@ -2,6 +2,10 @@
 Release History
 ===============
 
+1.19
+
+  - Fix problem with add2virtualenv and relative paths. Thanks to Doug Latornell for the bug report James Bennett for the suggested fix.
+
 1.18.1
 
   - Incorporate patch from Sascha Brossmann to fix a issue #15. Directory normalization was causing ``WORKON_HOME`` to appear to be a missing directory if there were control characters in the output of ``pwd``.
