@@ -148,6 +148,7 @@ test_missing_workon_home () {
     assertFalse "workon"
     assertFalse "mkvirtualenv foo"
     assertFalse "rmvirtualenv foo"
+    assertFalse "lssitepackages"
     WORKON_HOME="$save_home"
 }
 
@@ -169,6 +170,11 @@ test_add2virtualenv_relative () {
     path_file="./virtualenv_path_extensions.pth"
     assertTrue "No $parent_dir/$base_dir in \"`cat $path_file`\"" "grep \"$parent_dir/$base_dir\" $path_file"
     cd - >/dev/null 2>&1
+}
+
+test_lssitepackages () {
+    mkvirtualenv "lssitepackagestest"
+    assertTrue "lssitepackages"
 }
 
 . "$test_dir/shunit2"
