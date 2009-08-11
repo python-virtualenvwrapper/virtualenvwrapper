@@ -295,3 +295,18 @@ function cdvirtualenv () {
     virtualenvwrapper_verify_active_environment || return 1
     cd $VIRTUAL_ENV/$1
 }
+
+#
+# lssitepackages
+# 
+# Shows the content of the site-packages directory of the currently-active
+# virtualenv
+#
+
+function lssitepackages () {
+    virtualenvwrapper_verify_active_environment || return 1
+    pyvers="`python -c 'import sys; print sys.version[:3]'`"
+    site_packages="lib/python${pyvers}/site-packages"
+    echo "$VIRTUAL_ENV/$site_packages"
+    ls -l $VIRTUAL_ENV/$site_packages
+}
