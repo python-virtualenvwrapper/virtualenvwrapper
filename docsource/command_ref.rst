@@ -113,3 +113,9 @@ Based on a contribution from James Bennett and Jannis Leidel.
 This will be done by placing the directory names in a path file
 named ``virtualenv_path_extensions.pth`` inside the virtualenv's site-packages
 directory; if this file does not exist, it will be created first.
+
+
+lssitepackages
+--------------
+
+Calling ``lssitepackages`` shows the content of the ``site-packages`` directory of the currently-active virtualenv.
