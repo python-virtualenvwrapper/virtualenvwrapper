@@ -306,7 +306,15 @@ function cdvirtualenv () {
 function lssitepackages () {
     virtualenvwrapper_verify_active_environment || return 1
     pyvers="`python -c 'import sys; print sys.version[:3]'`"
-    site_packages="lib/python${pyvers}/site-packages"
-    echo "$VIRTUAL_ENV/$site_packages"
-    ls -l $VIRTUAL_ENV/$site_packages
+    site_packages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
+    echo "$site_packages"
+    ls -l $site_packages
+    
+    path_file="$site_packages/virtualenv_path_extensions.pth"
+    if [ -f "$path_file" ]
+    then
+        echo
+        echo "virtualenv_path_extensions.pth:"
+        cat "$path_file"
+    fi
 }
