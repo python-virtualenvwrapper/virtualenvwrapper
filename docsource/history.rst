@@ -2,6 +2,12 @@
 Release History
 ===============
 
+1.20
+
+  - Incorporate lssitepackages feature from Sander Smits.
+  - Refactor some of the functions that were using copy-and-paste code to build path names.
+  - Add a few tests.
+
 1.19
 
   - Fix problem with add2virtualenv and relative paths. Thanks to Doug Latornell for the bug report James Bennett for the suggested fix.

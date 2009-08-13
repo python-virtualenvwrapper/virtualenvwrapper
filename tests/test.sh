@@ -26,6 +26,12 @@ test_mkvirtualenv() {
     assertTrue "Environment directory was not created" "[ -d $WORKON_HOME/env1 ]"
 }
 
+test_get_python_version() {
+    expected=$(python -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.)
+    actual=$(virtualenvwrapper_get_python_version)
+    assertSame "$expected" "$actual"
+}
+
 test_cdvirtual() {
     pushd "$(pwd)" >/dev/null
     cdvirtualenv
@@ -174,7 +180,18 @@ test_add2virtualenv_relative () {
 
 test_lssitepackages () {
     mkvirtualenv "lssitepackagestest"
-    assertTrue "lssitepackages"
+    contents="$(lssitepackages)"    
+    assertTrue "No easy-install.pth in $contents" "echo $contents | grep easy-install.pth"
 }
+
+test_lssitepackages_add2virtualenv () {
+    mkvirtualenv "lssitepackagestest"
+    parent_dir=$(dirname $(pwd))
+    base_dir=$(basename $(pwd))
+    add2virtualenv "../$base_dir"
+    contents="$(lssitepackages)"    
+    assertTrue "No $base_dir in $contents" "echo $contents | grep $base_dir"
+}
+
 
 . "$test_dir/shunit2"
