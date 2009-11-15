@@ -27,20 +27,22 @@ Features
 Quick Setup
 ===========
 
-1.  Add two lines to your .bashrc to set the location where the virtual
-    environments should live and the location of the script installed
-    with this package::
+1. Create a directory to hold all of the virtual environments. The default is
+   ``$HOME/.virtualenvs``.
 
-        export WORKON_HOME=$HOME/.virtualenvs
-        source /usr/local/bin/virtualenvwrapper_bashrc
+2. Add two lines to your .bashrc to set the location where the virtual environments should
+   live and the location of the script installed with this package::
 
-2.  Run: ``source ~/.bashrc``
-3.  Run: ``workon``
-4.  A list of environments, empty, is printed.
-5.  Run: ``mkvirtualenv temp``
-6.  A new environment, ``temp`` is created and activated.
-7.  Run: ``workon``
-8.  This time, the ``temp`` environment is included.
+    export WORKON_HOME=$HOME/.virtualenvs
+    source /usr/local/bin/virtualenvwrapper_bashrc
+
+3. Run: ``source ~/.bashrc``
+4. Run: ``workon``
+5. A list of environments, empty, is printed.
+6. Run: ``mkvirtualenv temp``
+7. A new environment, ``temp`` is created and activated.
+8. Run: ``workon``
+9. This time, the ``temp`` environment is included.
 
 =======
 License
