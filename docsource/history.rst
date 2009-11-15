@@ -2,6 +2,10 @@
 Release History
 ===============
 
+1.21
+
+  - Better protection of ``$WORKON_HOME`` does not exist when the wrapper script is sourced.
+
 1.20
 
   - Incorporate lssitepackages feature from Sander Smits.

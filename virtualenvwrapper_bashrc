@@ -6,18 +6,20 @@
 #
 # Setup:
 #
-#  1. Add a line like "export WORKON_HOME=$HOME/.virtualenvs"
+#  1. Create a directory to hold the virtual environments.
+#     (mkdir $HOME/.virtualenvs).
+#  2. Add a line like "export WORKON_HOME=$HOME/.virtualenvs"
 #     to your .bashrc.
-#  2. Add a line like "source /path/to/this/file/virtualenvwrapper_bashrc"
+#  3. Add a line like "source /path/to/this/file/virtualenvwrapper_bashrc"
 #     to your .bashrc.
-#  3. Run: source ~/.bashrc
-#  4. Run: workon
-#  5. A list of environments, empty, is printed.
-#  6. Run: mkvirtualenv temp
-#  7. Run: workon
-#  8. This time, the "temp" environment is included.
-#  9. Run: workon temp
-# 10. The virtual environment is activated.
+#  4. Run: source ~/.bashrc
+#  5. Run: workon
+#  6. A list of environments, empty, is printed.
+#  7. Run: mkvirtualenv temp
+#  8. Run: workon
+#  9. This time, the "temp" environment is included.
+# 10. Run: workon temp
+# 11. The virtual environment is activated.
 #
 
 # Make sure there is a default value for WORKON_HOME.
@@ -29,7 +31,7 @@ fi
 
 # Normalize the directory name in case it includes 
 # relative path components.
-WORKON_HOME=$(sh -c 'cd "$WORKON_HOME"; pwd')
+WORKON_HOME=$(python -c "import os; print os.path.abspath(os.path.expandshell(os.path.expanduser(\"$pydir\")))")
 export WORKON_HOME
 
 # Verify that the WORKON_HOME directory exists
@@ -41,6 +43,8 @@ function virtualenvwrapper_verify_workon_home () {
     fi
     return 0
 }
+
+virtualenvwrapper_verify_workon_home
 
 # Verify that the requested environment exists
 function virtualenvwrapper_verify_workon_environment () {

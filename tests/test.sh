@@ -135,6 +135,14 @@ test_virtualenvwrapper_show_workon_options () {
     rm -f "$WORKON_HOME/link_env"
 }
 
+test_virtualenvwrapper_show_workon_options_no_envs () {
+    old_home="$WORKON_HOME"
+    export WORKON_HOME=${TMPDIR:/tmp}/$$
+    envs=$(virtualenvwrapper_show_workon_options | tr '\n' ' ')
+    assertSame "" "$envs"
+    export WORKON_HOME="$old_home"
+}
+
 test_rmvirtualenv () {
     mkvirtualenv "deleteme"
     assertTrue "[ -d $WORKON_HOME/deleteme ]"
