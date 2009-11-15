@@ -195,5 +195,4 @@ def test():
     sh('bash ./tests/test.sh')
     sh('SHUNIT_PARENT=./tests/test.sh zsh -o shwordsplit ./tests/test.sh')
     sh('bash ./tests/test_misconfigured.sh')
-    sh('SHUNIT_PARENT=./tests/test_misconfigured.sh zsh -o shwordsplit ./tests/test.sh')
     return

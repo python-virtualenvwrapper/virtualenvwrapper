@@ -31,7 +31,7 @@ fi
 
 # Normalize the directory name in case it includes 
 # relative path components.
-WORKON_HOME=$(python -c "import os; print os.path.abspath(os.path.expandshell(os.path.expanduser(\"$pydir\")))")
+WORKON_HOME=$(python -c "import os; print os.path.abspath(os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\")))")
 export WORKON_HOME
 
 # Verify that the WORKON_HOME directory exists
@@ -45,6 +45,22 @@ function virtualenvwrapper_verify_workon_home () {
 }
 
 virtualenvwrapper_verify_workon_home
+
+# Verify that virtualenv is installed and visible
+function virtualenvwrapper_verify_virtualenv () {
+    venv=$(which virtualenv | grep -v "not found")
+    if [ "$venv" = "" ]
+    then
+        echo "ERROR: virtualenvwrapper could not find virtualenv in your path" >&2
+        return 1
+    fi
+    if [ ! -e "$venv" ]
+    then
+        echo "ERROR: Found virtualenv in path as \"$venv\" but that does not exist" >&2
+        return 1
+    fi
+    return 0
+}
 
 # Verify that the requested environment exists
 function virtualenvwrapper_verify_workon_environment () {
@@ -94,6 +110,7 @@ function virtualenvwrapper_run_hook () {
 function mkvirtualenv () {
     eval "envname=\$$#"
     virtualenvwrapper_verify_workon_home || return 1
+    virtualenvwrapper_verify_virtualenv || return 1
     (cd "$WORKON_HOME" &&
         virtualenv "$@" &&
         virtualenvwrapper_run_hook "./premkvirtualenv" "$envname"
@@ -133,7 +150,7 @@ function virtualenvwrapper_show_workon_options () {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) | sed 's|^\./||' | sed 's|/bin/activate||' | sort
+    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 

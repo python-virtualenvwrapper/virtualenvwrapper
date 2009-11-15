@@ -56,6 +56,18 @@ test_mkvirtualenv_activates () {
     assertSame "env2" $(basename "$VIRTUAL_ENV")
 }
 
+test_no_virtualenv () {
+    old_path="$PATH"
+    PATH="/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$HOME/bin"
+    mkvirtualenv should_not_be_created # 2>/dev/null
+    RC=$?
+    # Restore the path before testing because
+    # the test script depends on commands in the
+    # path.
+    export PATH="$old_path"
+    assertSame "$RC" "1"
+}
+
 # test_mkvirtualenv_sitepackages () {
 #     # Without the option verify that site-packages are copied.
 #     mkvirtualenv "env3"
@@ -137,8 +149,8 @@ test_virtualenvwrapper_show_workon_options () {
 
 test_virtualenvwrapper_show_workon_options_no_envs () {
     old_home="$WORKON_HOME"
-    export WORKON_HOME=${TMPDIR:/tmp}/$$
-    envs=$(virtualenvwrapper_show_workon_options | tr '\n' ' ')
+    export WORKON_HOME=${TMPDIR:-/tmp}/$$
+    envs=$(virtualenvwrapper_show_workon_options 2>/dev/null | tr '\n' ' ')
     assertSame "" "$envs"
     export WORKON_HOME="$old_home"
 }
