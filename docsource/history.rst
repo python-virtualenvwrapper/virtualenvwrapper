@@ -2,6 +2,11 @@
 Release History
 ===============
 
+1.22
+
+  - Automatically create any missing hook scripts as stubs with
+    comments to expose the feature in case users are not aware of it.
+
 1.21
 
   - Better protection of ``$WORKON_HOME`` does not exist when the wrapper script is sourced.

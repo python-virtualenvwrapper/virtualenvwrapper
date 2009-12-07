@@ -24,6 +24,20 @@ setUp () {
 test_mkvirtualenv() {
     mkvirtualenv "env1"
     assertTrue "Environment directory was not created" "[ -d $WORKON_HOME/env1 ]"
+    for hook in postactivate predeactivate postdeactivate
+    do
+        assertTrue "env1 $hook was not created" "[ -f $WORKON_HOME/env1/bin/$hook ]"
+        assertTrue "env1 $hook is not executable" "[ -x $WORKON_HOME/env1/bin/$hook ]"
+    done
+}
+
+test_virtualenvwrapper_initialize() {
+    virtualenvwrapper_initialize
+    for hook in premkvirtualenv postmkvirtualenv prermvirtualenv postrmvirtualenv preactivate postactivate predeactivate postdeactivate
+    do
+        assertTrue "Global $hook was not created" "[ -f $WORKON_HOME/$hook ]"
+        assertTrue "Global $hook is not executable" "[ -x $WORKON_HOME/$hook ]"
+    done
 }
 
 test_get_python_version() {

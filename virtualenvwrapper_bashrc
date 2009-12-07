@@ -45,7 +45,54 @@ function virtualenvwrapper_verify_workon_home () {
     return 0
 }
 
-virtualenvwrapper_verify_workon_home
+# Create a hook script
+#
+# Usage: virtualenvwrapper_make_hook filename comment
+#
+function virtualenvwrapper_make_hook () {
+    filename="$1"
+    comment="$2"
+    if [ ! -f "$filename" ]
+    then
+        #echo "Creating $filename"
+        cat - > "$filename" <<EOF
+#!/bin/sh
+# $comment
+
+EOF
+    fi
+    if [ ! -x "$filename" ]
+    then
+        chmod +x "$filename"
+    fi
+}
+
+# Set up virtualenvwrapper properly
+function virtualenvwrapper_initialize () {
+    virtualenvwrapper_verify_workon_home || return 1
+    # mkvirtualenv
+    virtualenvwrapper_make_hook "$WORKON_HOME/premkvirtualenv" \
+        "This hook is run after a new virtualenv is created and before it is activated."
+    virtualenvwrapper_make_hook "$WORKON_HOME/postmkvirtualenv" \
+        "This hook is run after a new virtualenv is activated."
+    # rmvirtualenv
+    virtualenvwrapper_make_hook "$WORKON_HOME/prermvirtualenv" \
+        "This hook is run before a virtualenv is deleted."
+    virtualenvwrapper_make_hook "$WORKON_HOME/postrmvirtualenv" \
+        "This hook is run after a virtualenv is deleted."
+    # deactivate
+    virtualenvwrapper_make_hook "$WORKON_HOME/predeactivate" \
+        "This hook is run before every virtualenv is deactivated."
+    virtualenvwrapper_make_hook "$WORKON_HOME/postdeactivate" \
+        "This hook is run after every virtualenv is deactivated."
+    # activate
+    virtualenvwrapper_make_hook "$WORKON_HOME/preactivate" \
+        "This hook is run before every virtualenv is activated."
+    virtualenvwrapper_make_hook "$WORKON_HOME/postactivate" \
+        "This hook is run after every virtualenv is activated."
+}
+
+virtualenvwrapper_initialize
 
 # Verify that virtualenv is installed and visible
 function virtualenvwrapper_verify_virtualenv () {
@@ -120,8 +167,13 @@ function mkvirtualenv () {
     # the environment won't exist.  Use that to tell whether
     # we should switch to the environment and run the hook.
     [ ! -d "$WORKON_HOME/$envname" ] && return 0
+    # Create stubs for the environment-specific hook scripts.
+    virtualenvwrapper_make_hook "$WORKON_HOME/$envname/bin/postactivate" "This hook is sourced after the virtualenv is activated."
+    virtualenvwrapper_make_hook "$WORKON_HOME/$envname/bin/predeactivate" "This hook is sourced before the virtualenv is deactivated."
+    virtualenvwrapper_make_hook "$WORKON_HOME/$envname/bin/postdeactivate" "This hook is sourced after the virtualenv is deactivated."
+    # Now activate the new environment
     workon "$envname"
-    virtualenvwrapper_source_hook "$WORKON_HOME/postmkvirtualenv"
+    virtualenvwrapper_source_hook "$WORKON_HOME/$envname/postmkvirtualenv"
 }
 
 # Remove an environment, in the WORKON_HOME.
