@@ -70,12 +70,17 @@ test_mkvirtualenv_activates () {
     assertSame "env2" $(basename "$VIRTUAL_ENV")
 }
 
-test_postmkvirtualenv () {
-    echo "echo GLOBAL postmkvirtualenv > $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+test_mkvirtualenv_hooks () {
+    export pre_test_dir=$(cd "$test_dir"; pwd)
+    echo "echo GLOBAL premkvirtualenv >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    chmod +x "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
     mkvirtualenv "env3"
     output=$(cat "$test_dir/catch_output")
-    expected="GLOBAL postmkvirtualenv"
+    expected="GLOBAL premkvirtualenv
+GLOBAL postmkvirtualenv"
     assertSame "$expected" "$output"
+    rm -f "$WORKON_HOME/premkvirtualenv"
     rm -f "$WORKON_HOME/postmkvirtualenv"
     deactivate
     rmvirtualenv "env3"
