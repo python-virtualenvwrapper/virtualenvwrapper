@@ -2,6 +2,11 @@
 Release History
 ===============
 
+1.23
+
+  - Resolve a bug with the postmkvirtualenv hook not being run
+    properly.  Refer to issues #19 and #20 for complete details.
+
 1.22
 
   - Automatically create any missing hook scripts as stubs with
