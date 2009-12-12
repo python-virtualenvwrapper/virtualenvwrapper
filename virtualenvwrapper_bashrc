@@ -173,7 +173,7 @@ function mkvirtualenv () {
     virtualenvwrapper_make_hook "$WORKON_HOME/$envname/bin/postdeactivate" "This hook is sourced after the virtualenv is deactivated."
     # Now activate the new environment
     workon "$envname"
-    virtualenvwrapper_source_hook "$WORKON_HOME/$envname/postmkvirtualenv"
+    virtualenvwrapper_source_hook "$WORKON_HOME/postmkvirtualenv"
 }
 
 # Remove an environment, in the WORKON_HOME.
