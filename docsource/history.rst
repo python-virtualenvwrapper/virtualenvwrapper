@@ -2,6 +2,11 @@
 Release History
 ===============
 
+1.24
+
+  - Resolve a bug with the preactivate hook not being run properly.
+    Refer to issue #21 for complete details.
+
 1.23
 
   - Resolve a bug with the postmkvirtualenv hook not being run
