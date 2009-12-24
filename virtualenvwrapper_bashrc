@@ -134,6 +134,7 @@ function virtualenvwrapper_verify_active_environment () {
 # Run a hook script in the current shell
 function virtualenvwrapper_source_hook () {
     scriptname="$1"
+    #echo "Looking for hook $scriptname"
     if [ -f "$scriptname" ]
     then
         source "$scriptname"
@@ -144,9 +145,13 @@ function virtualenvwrapper_source_hook () {
 function virtualenvwrapper_run_hook () {
     scriptname="$1"
     shift
+    #echo "Looking for hook $scriptname"
     if [ -x "$scriptname" ]
     then
         "$scriptname" "$@"
+    elif [ -e "$scriptname" ]
+    then
+        echo "Warning: Found \"$scriptname\" but it is not executable." 1>&2
     fi
 }
 
@@ -237,6 +242,9 @@ function workon () {
     then
         deactivate
     fi
+
+    virtualenvwrapper_run_hook "$WORKON_HOME/preactivate"
+    virtualenvwrapper_run_hook "$WORKON_HOME/$env_name/bin/preactivate"
     
     source "$activate"
     
@@ -263,7 +271,6 @@ function workon () {
     }'
     
     virtualenvwrapper_source_hook "$WORKON_HOME/postactivate"
-
     virtualenvwrapper_source_hook "$VIRTUAL_ENV/bin/postactivate"    
     
 	return 0

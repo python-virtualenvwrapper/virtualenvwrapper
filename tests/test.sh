@@ -40,6 +40,24 @@ test_virtualenvwrapper_initialize() {
     done
 }
 
+test_virtualenvwrapper_run_hook() {
+    echo "echo run >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/test_hook"
+    chmod +x "$WORKON_HOME/test_hook"
+    virtualenvwrapper_run_hook "$WORKON_HOME/test_hook"
+    output=$(cat "$test_dir/catch_output")
+    expected="run"
+    assertSame "$expected" "$output"
+}
+
+test_virtualenvwrapper_run_hook_permissions() {
+    echo "echo run >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/test_hook"
+    chmod -x "$WORKON_HOME/test_hook"
+    virtualenvwrapper_run_hook "$WORKON_HOME/test_hook"
+    output=$(cat "$test_dir/catch_output")
+    expected=""
+    assertSame "$expected" "$output"
+}
+
 test_get_python_version() {
     expected=$(python -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.)
     actual=$(virtualenvwrapper_get_python_version)
@@ -125,15 +143,32 @@ test_workon () {
     assertSame "env1" $(basename "$VIRTUAL_ENV")
 }
 
-test_postactivate_hook () {
-    echo "echo ENV postactivate > $test_dir/catch_output" > "$WORKON_HOME/env1/bin/postactivate"
-    
+test_workon_activate_hooks () {
+    for t in pre post
+    do
+        echo "echo GLOBAL ${t}activate >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/${t}activate"
+        chmod +x "$WORKON_HOME/${t}activate"
+        echo "echo ENV ${t}activate >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/env1/bin/${t}activate"
+        chmod +x "$WORKON_HOME/env1/bin/${t}activate"
+    done
+
+    rm "$test_dir/catch_output"
+
     workon env1
     
     output=$(cat "$test_dir/catch_output")
-    assertSame "ENV postactivate" "$output"
+    expected="GLOBAL preactivate
+ENV preactivate
+GLOBAL postactivate
+ENV postactivate"
+
+    assertSame "$expected"  "$output"
     
-    rm -f "$WORKON_HOME/env1/bin/postactivate"
+    for t in pre post
+    do
+        rm -f "$WORKON_HOME/env1/bin/${t}activate"
+        rm -f "$WORKON_HOME/${t}activate"
+    done
 }
 
 test_deactivate () {
@@ -147,11 +182,11 @@ test_deactivate () {
 test_deactivate_hooks () {
     workon env1
 
-    echo "echo GLOBAL predeactivate >> $test_dir/catch_output" > "$WORKON_HOME/predeactivate"
-    echo "echo GLOBAL postdeactivate >> $test_dir/catch_output" > "$WORKON_HOME/postdeactivate"
-    
-    echo "echo ENV predeactivate >> $test_dir/catch_output" > "$WORKON_HOME/env1/bin/predeactivate"
-    echo "echo ENV postdeactivate >> $test_dir/catch_output" > "$WORKON_HOME/env1/bin/postdeactivate"
+    for t in pre post
+    do
+        echo "echo GLOBAL ${t}deactivate >> $test_dir/catch_output" > "$WORKON_HOME/${t}deactivate"
+        echo "echo ENV ${t}deactivate >> $test_dir/catch_output" > "$WORKON_HOME/env1/bin/${t}deactivate"
+    done
 
     deactivate
 
@@ -162,10 +197,11 @@ ENV postdeactivate
 GLOBAL postdeactivate"
     assertSame "$expected" "$output"
     
-    rm -f "$WORKON_HOME/env1/bin/predeactivate"
-    rm -f "$WORKON_HOME/env1/bin/postdeactivate"
-    rm -f "$WORKON_HOME/predeactivate"
-    rm -f "$WORKON_HOME/postdeactivate"
+    for t in pre post
+    do
+        rm -f "$WORKON_HOME/env1/bin/${t}activate"
+        rm -f "$WORKON_HOME/${t}activate"
+    done
 }
 
 test_virtualenvwrapper_show_workon_options () {
