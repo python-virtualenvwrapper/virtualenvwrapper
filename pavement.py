@@ -27,7 +27,7 @@ except:
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
-VERSION = '1.24'
+VERSION = '1.24.1'
 os.environ['VERSION'] = VERSION
 
 # Read the long description to give to setup
