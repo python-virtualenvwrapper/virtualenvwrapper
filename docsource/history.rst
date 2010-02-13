@@ -2,6 +2,11 @@
 Release History
 ===============
 
+1.24.1
+
+  - Add user provided :ref:`tips-and-tricks` section.
+  - Add link to Rich Leland's screencast to :ref:`references` section.
+
 1.24
 
   - Resolve a bug with the preactivate hook not being run properly.

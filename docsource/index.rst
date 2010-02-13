@@ -57,6 +57,8 @@ Details
    history
    developers
 
+.. _references:
+
 ==========
 References
 ==========
