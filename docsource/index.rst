@@ -7,7 +7,12 @@
 virtualenvwrapper
 #################
 
-virtualenvwrapper is a set of extensions to Ian Bicking's `virtualenv <http://pypi.python.org/pypi/virtualenv>`_ tool.  The extensions include wrappers for creating and deleting virtual environments and otherwise managing your development workflow, making it easier to work on more than one project at a time without introducing conflicts in their dependencies.
+virtualenvwrapper is a set of extensions to Ian Bicking's `virtualenv
+<http://pypi.python.org/pypi/virtualenv>`_ tool.  The extensions
+include wrappers for creating and deleting virtual environments and
+otherwise managing your development workflow, making it easier to work
+on more than one project at a time without introducing conflicts in
+their dependencies.
 
 ========
 Features
@@ -55,11 +60,17 @@ Details
 References
 ==========
 
-`virtualenv <http://pypi.python.org/pypi/virtualenv>`_, from Ian Bicking, is a pre-requisite to using these extensions.
+`virtualenv <http://pypi.python.org/pypi/virtualenv>`_, from Ian
+Bicking, is a pre-requisite to using these extensions.
 
-For more details, refer to the column I wrote for the May 2008 issue of Python
-Magazine: `virtualenvwrapper | And Now For Something Completely Different
+For more details, refer to the column I wrote for the May 2008 issue
+of Python Magazine: `virtualenvwrapper | And Now For Something
+Completely Different
 <http://www.doughellmann.com/articles/CompletelyDifferent-2008-05-virtualenvwrapper/index.html>`_.
+
+Rich Leland has created a short `screencast
+<http://mathematism.com/2009/jul/30/presentation-pip-and-virtualenv/>`__
+showing off the features of virtualenvwrapper.
 
 =======
 License
@@ -67,6 +78,18 @@ License
 
 Copyright Doug Hellmann, All Rights Reserved
 
-Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the name of Doug Hellmann not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation, and that the name of Doug Hellmann not be
+used in advertising or publicity pertaining to distribution of the
+software without specific, written prior permission.
 
-DOUG HELLMANN DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL DOUG HELLMANN BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+DOUG HELLMANN DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
+EVENT SHALL DOUG HELLMANN BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
