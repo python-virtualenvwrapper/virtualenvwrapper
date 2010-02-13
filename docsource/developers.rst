@@ -2,18 +2,27 @@
 For Developers
 ##############
 
-If you would like to contribute, these instructions should help you get started.  Patches, bug reports, and feature requests are all welcome through the `BitBucket site <http://bitbucket.org/dhellmann/virtualenvwrapper/>`_.  Contributions in the form of patches or pull requests are easier to integrate and will receive priority attention.
+If you would like to contribute, these instructions should help you
+get started.  Patches, bug reports, and feature requests are all
+welcome through the `BitBucket site
+<http://bitbucket.org/dhellmann/virtualenvwrapper/>`_.  Contributions
+in the form of patches or pull requests are easier to integrate and
+will receive priority attention.
 
 Building Documentation
 ======================
 
-The documentation for virtualenvwrapper is written in reStructuredText and converted to HTML using Sphinx. The build itself is driven by Paver.  You will need the following packages in order to build the docs:
+The documentation for virtualenvwrapper is written in reStructuredText
+and converted to HTML using Sphinx. The build itself is driven by
+Paver.  You will need the following packages in order to build the
+docs:
 
 - Sphinx
 - Paver
 - sphinxcontrib.paverutils
 
-Once all of them are installed into a virtualenv using easy_install, run ``paver html`` to generate the HTML version of the documentation::
+Once all of them are installed into a virtualenv using easy_install,
+run ``paver html`` to generate the HTML version of the documentation::
 
     $ paver html
     ---> pavement.html
@@ -47,12 +56,16 @@ Once all of them are installed into a virtualenv using easy_install, run ``paver
     rmtree virtualenvwrapper/docs () {}
     move docs/html virtualenvwrapper/docs
 
-The output version of the documentation ends up in ``./virtualenvwrapper/docs`` inside your sandbox.
+The output version of the documentation ends up in
+``./virtualenvwrapper/docs`` inside your sandbox.
 
 Running Tests
 =============
 
-The test suite for virtualenvwrapper uses `shunit2 <http://shunit2.googlecode.com/>`_.  To run the tests under both bash and zsh, use ``paver test``.  To add new tests, modify the ``tests/test.sh`` script with new test functions.
+The test suite for virtualenvwrapper uses `shunit2
+<http://shunit2.googlecode.com/>`_.  To run the tests under both bash
+and zsh, use ``paver test``.  To add new tests, modify the
+``tests/test.sh`` script with new test functions.
 
 ::
 

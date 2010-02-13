@@ -53,6 +53,7 @@ Details
 
    command_ref
    hooks
+   tips
    history
    developers
 
