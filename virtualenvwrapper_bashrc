@@ -367,7 +367,7 @@ function add2virtualenv () {
         then
             echo
             echo "Existing paths:"
-            cat "$path_file"
+            cat "$path_file" | grep -v "^import"
         fi
         return 1
     fi
