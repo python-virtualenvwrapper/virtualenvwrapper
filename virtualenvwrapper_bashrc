@@ -372,6 +372,13 @@ function add2virtualenv () {
         return 1
     fi
 
+    remove=0
+    if [ "$1" = "-d" ]
+    then
+        remove=1
+        shift
+    fi
+
     if [ ! -x "$path_file" ]
     then
         echo "import sys; sys.__plen = len(sys.path)" >> "$path_file"
@@ -385,8 +392,14 @@ function add2virtualenv () {
         then
             echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
         fi
+
         contents=$(cat "$path_file")
-        echo "$contents" | sed "1a $absolute_path" > "$path_file"
+        if [ $remove -eq 1 ]
+        then
+            echo "$contents" | sed "\:^$absolute_path$: d" > "$path_file"
+        else
+            echo "$contents" | sed "1a $absolute_path" > "$path_file"
+        fi
     done
     return 0
 }
