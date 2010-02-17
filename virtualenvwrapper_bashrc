@@ -356,7 +356,9 @@ function add2virtualenv () {
         return 1
     fi
     
-    path_file="$site_packages/virtualenv_path_extensions.pth"
+    # Prefix with _ to ensure we are loaded as early as possible,
+    # and at least before easy_install.pth.
+    path_file="$site_packages/_virtualenv_path_extensions.pth"
 
     if [ "$*" = "" ]
     then
@@ -370,7 +372,12 @@ function add2virtualenv () {
         return 1
     fi
 
-    touch "$path_file"
+    if [ ! -x "$path_file" ]
+    then
+        echo "import sys; sys.__plen = len(sys.path)" >> "$path_file"
+        echo "import sys; new=sys.path[sys.__plen:]; del sys.path[sys.__plen:]; p=getattr(sys,'__egginsert',0); sys.path[p:p]=new; sys.__egginsert = p+len(new)" >> "$path_file"
+    fi
+
     for pydir in "$@"
     do
         absolute_path=$(python -c "import os; print os.path.abspath(\"$pydir\")")
@@ -378,7 +385,8 @@ function add2virtualenv () {
         then
             echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
         fi
-        echo "$absolute_path" >> "$path_file"
+        contents=$(cat "$path_file")
+        echo "$contents" | sed "1a $absolute_path" > "$path_file"
     done
     return 0
 }
