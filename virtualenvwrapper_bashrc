@@ -393,12 +393,11 @@ function add2virtualenv () {
             echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
         fi
 
-        contents=$(cat "$path_file")
         if [ $remove -eq 1 ]
         then
-            echo "$contents" | sed "\:^$absolute_path$: d" > "$path_file"
+            sed -i "\:^$absolute_path$: d" "$path_file"
         else
-            echo "$contents" | sed "1a $absolute_path" > "$path_file"
+            sed -i "1a $absolute_path" "$path_file"
         fi
     done
     return 0
