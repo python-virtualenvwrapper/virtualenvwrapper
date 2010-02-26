@@ -82,6 +82,16 @@ test_cdsitepackages () {
     popd >/dev/null
 }
 
+test_cdsitepackages_with_arg () {
+    pushd "$(pwd)" >/dev/null
+    pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
+    sitepackage_subdir="$VIRTUAL_ENV/lib/python${pyvers}/site-packages/subdir"
+    mkdir -p "${sitepackage_subdir}"
+    cdsitepackages subdir
+    assertSame "$sitepackage_subdir" "$(pwd)"
+    popd >/dev/null
+}
+
 test_mkvirtualenv_activates () {
     mkvirtualenv "env2"
     assertTrue virtualenvwrapper_verify_active_environment

@@ -84,7 +84,16 @@ cdsitepackages
 
 Because the exact path to the site-packages directory in the virtualenv depends on the
 version of Python, ``cdsitepackages`` is provided as a shortcut for ``cdvirtualenv
-lib/python${pyvers}/site-packages``.
+lib/python${pyvers}/site-packages``. An optional argument is also allowed, to specify 
+a directory hierarchy within the ``site-packages`` directory to change into.
+
+::
+  $ workon pymotw
+  $ echo $VIRTUAL_ENV
+  /Users/dhellmann/.virtualenvs/pymotw
+  $ cdsitepackages PyMOTW/bisect/
+  $ pwd
+  /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/site-packages/PyMOTW/bisect
 
 ===============
 Path Management

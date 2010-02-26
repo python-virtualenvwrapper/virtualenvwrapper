@@ -316,7 +316,13 @@ if [ -n "$BASH" ] ; then
         # COMPREPLY=( $(compgen -d -- "${VIRTUAL_ENV}/${cur}" | sed -e "s@${VIRTUAL_ENV}/@@" ) )
         COMPREPLY=( $(cdvirtualenv && compgen -d -- "${cur}" ) )
     }
+    _cdsitepackages_complete ()
+    {
+        local cur="$2"
+        COMPREPLY=( $(cdsitepackages && compgen -d -- "${cur}" ) )
+    }
     complete -o nospace -F _cdvirtualenv_complete -S/ cdvirtualenv
+    complete -o nospace -F _cdsitepackages_complete -S/ cdsitepackages
     complete -o default -o nospace -F _virtualenvs workon
     complete -o default -o nospace -F _virtualenvs rmvirtualenv
 elif [ -n "$ZSH_VERSION" ] ; then
@@ -388,7 +394,7 @@ function add2virtualenv () {
 function cdsitepackages () {
     virtualenvwrapper_verify_active_environment || return 1
     site_packages="`virtualenvwrapper_get_site_packages_dir`"
-    cd "$site_packages"
+    cd "$site_packages"/$1
 }
 
 # Does a ``cd`` to the root of the currently-active virtualenv.

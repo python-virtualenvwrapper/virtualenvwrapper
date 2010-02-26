@@ -2,6 +2,12 @@
 Release History
 ===============
 
+1.25
+
+  - Merged in changes to cdsitepackages from William McVey.  It now
+    takes an argument and supports tab-completion for directories
+    within site-packages.
+
 1.24.2
 
   - Add user provided :ref:`tips-and-tricks` section.
