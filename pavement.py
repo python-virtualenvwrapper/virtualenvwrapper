@@ -192,7 +192,7 @@ def test_install(options):
 
 @task
 def test():
-    sh('bash ./tests/test.sh')
-    sh('SHUNIT_PARENT=./tests/test.sh zsh -o shwordsplit ./tests/test.sh')
-    sh('bash ./tests/test_misconfigured.sh')
+    for shell_cmd in [ 'bash', 'sh', 'SHUNIT_PARENT=./tests/test.sh zsh -o shwordsplit' ]:
+        sh('%s ./tests/test.sh' % shell_cmd)
+        sh('%s ./tests/test_misconfigured.sh' % shell_cmd)
     return
