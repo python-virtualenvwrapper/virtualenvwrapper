@@ -21,7 +21,7 @@ setUp () {
     rm -f "$test_dir/catch_output"
 }
 
-test_mkvirtualenv() {
+test_create() {
     mkvirtualenv "env1"
     assertTrue "Environment directory was not created" "[ -d $WORKON_HOME/env1 ]"
     for hook in postactivate predeactivate postdeactivate
@@ -31,13 +31,13 @@ test_mkvirtualenv() {
     done
 }
 
-test_mkvirtualenv_activates () {
+test_activates () {
     mkvirtualenv "env2"
     assertTrue virtualenvwrapper_verify_active_environment
     assertSame "env2" $(basename "$VIRTUAL_ENV")
 }
 
-test_mkvirtualenv_hooks () {
+test_hooks () {
     export pre_test_dir=$(cd "$test_dir"; pwd)
     echo "echo GLOBAL premkvirtualenv >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
@@ -63,6 +63,14 @@ test_no_virtualenv () {
     # path.
     export PATH="$old_path"
     assertSame "$RC" "1"
+}
+
+test_no_workon_home () {
+    old_home="$WORKON_HOME"
+    export WORKON_HOME="$WORKON_HOME/not_there"
+    output=`mkvirtualenv should_not_be_created 2>&1`
+    assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
+    WORKON_HOME="$old_home"
 }
 
 # test_mkvirtualenv_sitepackages () {

@@ -21,7 +21,7 @@ setUp () {
     rm -f "$test_dir/catch_output"
 }
 
-test_rmvirtualenv () {
+test_remove () {
     mkvirtualenv "deleteme"
     assertTrue "[ -d $WORKON_HOME/deleteme ]"
     deactivate
@@ -29,44 +29,17 @@ test_rmvirtualenv () {
     assertFalse "[ -d $WORKON_HOME/deleteme ]"
 }
 
-test_rmvirtualenv_no_such_env () {
+test_no_such_env () {
     assertFalse "[ -d $WORKON_HOME/deleteme ]"
     assertTrue "rmvirtualenv deleteme"
 }
 
-test_add2virtualenv () {
-    mkvirtualenv "pathtest"
-    add2virtualenv "/full/path"
-    cdsitepackages
-    path_file="./virtualenv_path_extensions.pth"
-    assertTrue "No /full/path in `cat $path_file`" "grep /full/path $path_file"
-    cd -
-}
-
-test_add2virtualenv_relative () {
-    mkvirtualenv "pathtest"
-    parent_dir=$(dirname $(pwd))
-    base_dir=$(basename $(pwd))
-    add2virtualenv "../$base_dir"
-    cdsitepackages
-    path_file="./virtualenv_path_extensions.pth"
-    assertTrue "No $parent_dir/$base_dir in \"`cat $path_file`\"" "grep \"$parent_dir/$base_dir\" $path_file"
-    cd - >/dev/null 2>&1
-}
-
-test_lssitepackages () {
-    mkvirtualenv "lssitepackagestest"
-    contents="$(lssitepackages)"    
-    assertTrue "No easy-install.pth in $contents" "echo $contents | grep easy-install.pth"
-}
-
-test_lssitepackages_add2virtualenv () {
-    mkvirtualenv "lssitepackagestest"
-    parent_dir=$(dirname $(pwd))
-    base_dir=$(basename $(pwd))
-    add2virtualenv "../$base_dir"
-    contents="$(lssitepackages)"    
-    assertTrue "No $base_dir in $contents" "echo $contents | grep $base_dir"
+test_no_workon_home () {
+    old_home="$WORKON_HOME"
+    export WORKON_HOME="$WORKON_HOME/not_there"
+    output=`rmvirtualenv should_not_be_created 2>&1`
+    assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
+    WORKON_HOME="$old_home"
 }
 
 

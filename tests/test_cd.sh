@@ -49,5 +49,21 @@ test_cdsitepackages_with_arg () {
     popd >/dev/null
 }
 
+test_cdvirtualenv_no_workon_home () {
+    old_home="$WORKON_HOME"
+    export WORKON_HOME="$WORKON_HOME/not_there"
+    output=`cdvirtualenv 2>&1`
+    assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
+    WORKON_HOME="$old_home"
+}
+
+test_cdsitepackages_no_workon_home () {
+    old_home="$WORKON_HOME"
+    export WORKON_HOME="$WORKON_HOME/not_there"
+    output=`cdsitepackages 2>&1`
+    assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
+    WORKON_HOME="$old_home"
+}
+
 
 . "$test_dir/shunit2"

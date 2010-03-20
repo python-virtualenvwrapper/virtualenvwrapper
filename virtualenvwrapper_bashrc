@@ -60,7 +60,7 @@ export WORKON_HOME
 function virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
     then
-        echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist." >&2
+        [ "$1" != "-q" ] && echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist.  Create it or set WORKON_HOME to an existing directory." >&2
         return 1
     fi
     return 0
@@ -90,7 +90,7 @@ EOF
 
 # Set up virtualenvwrapper properly
 function virtualenvwrapper_initialize () {
-    virtualenvwrapper_verify_workon_home || return 1
+    virtualenvwrapper_verify_workon_home -q || return 1
     # mkvirtualenv
     virtualenvwrapper_make_hook "$WORKON_HOME/premkvirtualenv" \
         "This hook is run after a new virtualenv is created and before it is activated."
@@ -352,6 +352,7 @@ function virtualenvwrapper_get_site_packages_dir () {
 # created first.
 function add2virtualenv () {
 
+    virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     
     site_packages="`virtualenvwrapper_get_site_packages_dir`"
@@ -392,6 +393,7 @@ function add2virtualenv () {
 # Does a ``cd`` to the site-packages directory of the currently-active
 # virtualenv.
 function cdsitepackages () {
+    virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     site_packages="`virtualenvwrapper_get_site_packages_dir`"
     cd "$site_packages"/$1
@@ -399,6 +401,7 @@ function cdsitepackages () {
 
 # Does a ``cd`` to the root of the currently-active virtualenv.
 function cdvirtualenv () {
+    virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     cd $VIRTUAL_ENV/$1
 }
@@ -406,6 +409,7 @@ function cdvirtualenv () {
 # Shows the content of the site-packages directory of the currently-active
 # virtualenv
 function lssitepackages () {
+    virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     site_packages="`virtualenvwrapper_get_site_packages_dir`"
     ls $@ $site_packages

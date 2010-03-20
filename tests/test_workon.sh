@@ -106,14 +106,12 @@ test_virtualenvwrapper_show_workon_options_no_envs () {
     export WORKON_HOME="$old_home"
 }
 
-test_missing_workon_home () {
-    save_home="$WORKON_HOME"
-    WORKON_HOME="/tmp/NO_SUCH_WORKON_HOME"
-    assertFalse "workon"
-    assertFalse "mkvirtualenv foo"
-    assertFalse "rmvirtualenv foo"
-    assertFalse "lssitepackages"
-    WORKON_HOME="$save_home"
+test_no_workon_home () {
+    old_home="$WORKON_HOME"
+    export WORKON_HOME="$WORKON_HOME/not_there"
+    output=`workon should_not_be_created 2>&1`
+    assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
+    WORKON_HOME="$old_home"
 }
 
 . "$test_dir/shunit2"
