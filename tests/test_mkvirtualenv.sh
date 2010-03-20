@@ -55,8 +55,8 @@ GLOBAL postmkvirtualenv"
 
 test_no_virtualenv () {
     old_path="$PATH"
-    PATH="/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$HOME/bin"
-    mkvirtualenv should_not_be_created # 2>/dev/null
+    PATH="/usr/bin:/bin:/usr/sbin:/sbin"
+    mkvirtualenv should_not_be_created 2>/dev/null
     RC=$?
     # Restore the path before testing because
     # the test script depends on commands in the
