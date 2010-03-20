@@ -2,6 +2,14 @@
 Release History
 ===============
 
+1.26
+
+  - Fix a problem with error messages showing up during init for users
+    with the wrappers installed site-wide but who are not actually
+    using them.  See issue #26.
+  - Split up the tests into multiple files.
+  - Run all tests with all supported shells.
+
 1.25
 
   - Merged in changes to cdsitepackages from William McVey.  It now
