@@ -9,7 +9,7 @@ version="$2"
 
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 mkvirtualenv "installtest"
-easy_install "$dist_dir/virtualenvwrapper-$version.tar.gz"
+pip install "$dist_dir/virtualenvwrapper-$version.tar.gz"
 RC=$?
 
 rm -rf "$WORKON_HOME"

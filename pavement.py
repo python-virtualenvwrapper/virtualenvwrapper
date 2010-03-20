@@ -192,7 +192,13 @@ def test_install(options):
 
 @task
 def test():
-    for shell_cmd in [ 'bash', 'sh', 'SHUNIT_PARENT=./tests/test.sh zsh -o shwordsplit' ]:
-        sh('%s ./tests/test.sh' % shell_cmd)
-        sh('%s ./tests/test_misconfigured.sh' % shell_cmd)
+    #test_scripts = glob.glob('./tests/test*.sh')
+    test_scripts = path('tests').glob('test*.sh')
+    for shell_cmd in [ 'bash', 'sh', 'SHUNIT_PARENT=%(test_script)s zsh -o shwordsplit' ]:
+        for test_script in test_scripts:
+            base_cmd = shell_cmd + ' %(test_script)s'
+            cmd = base_cmd % locals()
+            print '*' * 80
+            print
+            sh(cmd)
     return
