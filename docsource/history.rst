@@ -1,6 +1,8 @@
 ===============
 Release History
 ===============
+  
+  - Added cpvirtualenv command [Thomas Desvenain]
 
 1.24
 

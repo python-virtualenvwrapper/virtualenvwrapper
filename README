@@ -15,7 +15,7 @@ Features
 
 1.  Organizes all of your virtual environments in one place.
 
-2.  Wrappers for creating and deleting environments, including
+2.  Wrappers for creating, copying and deleting environments, including
     user-configurable hooks.
 
 3.  Use a single command to switch between environments.

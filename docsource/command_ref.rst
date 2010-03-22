@@ -31,6 +31,15 @@ Syntax::
 
     rmvirtualenv ENVNAME
 
+cpvirtualenv
+------------
+
+Duplicate an environment, in the WORKON_HOME.
+
+Syntax::
+
+    cpvirtualenv ENVNAME TARGETENVNAME
+
 workon
 ------
 

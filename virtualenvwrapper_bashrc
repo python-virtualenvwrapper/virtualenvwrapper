@@ -319,8 +319,9 @@ if [ -n "$BASH" ] ; then
     complete -o nospace -F _cdvirtualenv_complete -S/ cdvirtualenv
     complete -o default -o nospace -F _virtualenvs workon
     complete -o default -o nospace -F _virtualenvs rmvirtualenv
+    complete -o default -o nospace -F _virtualenvs cpvirtualenv
 elif [ -n "$ZSH_VERSION" ] ; then
-    compctl -g "`virtualenvwrapper_show_workon_options`" workon rmvirtualenv
+    compctl -g "`virtualenvwrapper_show_workon_options`" workon rmvirtualenv cpvirtualenv
 fi
 
 # Prints the Python version string for the current interpreter.
@@ -411,4 +412,42 @@ function lssitepackages () {
         echo "virtualenv_path_extensions.pth:"
         cat "$path_file"
     fi
+}
+
+function cpvirtualenv() {
+
+    typeset env_name="$1"
+    if [ "$env_name" = "" ]
+    then
+        virtualenvwrapper_show_workon_options
+        return 1
+    fi
+    typeset new_env="$2"
+    if [ "$new_env" = "" ]
+    then
+        echo "Please specify target virtualenv"
+        return 1
+    fi
+    if [echo "$WORKON_HOME" | grep -e "/$"]
+    then
+        env_home="$WORKON_HOME"
+    else
+        env_home="$WORKON_HOME/"
+    fi
+    source_env="$env_home$env_name"
+    target_env="$env_home$new_env"
+
+    cp -r "$source_env" "$target_env"
+    for script in $( ls $target_env/bin/* )
+      do
+        newscript="$script-new"
+        sed "s|$source_env|$target_env|g" < "$script" > "$newscript"
+        mv "$newscript" "$script"
+        chmod a+x "$script"
+      done
+
+    virtualenv "$target_env" --relocatable
+    sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"
+    echo "Created $new_env virtualenv"
+    workon "$new_env"
 }

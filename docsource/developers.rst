@@ -19,7 +19,8 @@ docs:
 
 - Sphinx
 - Paver
-- sphinxcontrib.paverutils
+- docutils
+- sphinxcontrib-paverutils
 
 Once all of them are installed into a virtualenv using easy_install,
 run ``paver html`` to generate the HTML version of the documentation::

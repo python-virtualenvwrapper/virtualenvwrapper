@@ -21,6 +21,10 @@ setUp () {
     rm -f "$test_dir/catch_output"
 }
 
+tearDown() {
+    echo
+}
+
 test_mkvirtualenv() {
     mkvirtualenv "env1"
     assertTrue "Environment directory was not created" "[ -d $WORKON_HOME/env1 ]"
@@ -267,7 +271,7 @@ test_add2virtualenv_relative () {
 test_lssitepackages () {
     mkvirtualenv "lssitepackagestest"
     contents="$(lssitepackages)"    
-    assertTrue "No easy-install.pth in $contents" "echo $contents | grep easy-install.pth"
+    assertTrue "No easy-install.pth in $/contents" "echo $contents | grep easy-install.pth"
 }
 
 test_lssitepackages_add2virtualenv () {
@@ -279,5 +283,31 @@ test_lssitepackages_add2virtualenv () {
     assertTrue "No $base_dir in $contents" "echo $contents | grep $base_dir"
 }
 
+test_cpvirtualenv () {
+    mkvirtualenv "cpvirtualenvtest"
+    $VIRTUAL_ENV/bin/easy_install "tests/testpackage"
+    cpvirtualenv "cpvirtualenvtest" "cpvirtualenvcopy"
+    deactivate
+    rmvirtualenv "cpvirtualenvtest"
+    workon "cpvirtualenvcopy"
+    testscript="$(which testscript.py)"
+    assertSame "$testscript" $(echo "$WORKON_HOME/cpvirtualenvcopy/bin/testscript.py")
+    testscriptcontent="$(cat $testscript)"
+    assertTrue "No cpvirtualenvtest in $/testscriptcontent" "echo $testscriptcontent | grep cpvirtualenvtest"
+    assertTrue virtualenvwrapper_verify_active_environment
+    assertSame "cpvirtualenvcopy" $(basename "$VIRTUAL_ENV")
+    cdvirtualenv
+    assertSame "$VIRTUAL_ENV" "$(pwd)"
+}
+
+test_cprelocatablevirtualenv () {
+    mkvirtualenv "cprelocatabletest"
+    virtualenv --relocatable "$WORKON_HOME/cprelocatabletest"
+    cpvirtualenv "cprelocatabletest" "cprelocatablecopy"
+    assertTrue virtualenvwrapper_verify_active_environment
+    assertSame "cprelocatablecopy" $(basename "$VIRTUAL_ENV")
+    cdvirtualenv
+    assertSame "$VIRTUAL_ENV" "$(pwd)"
+}
 
 . "$test_dir/shunit2"
