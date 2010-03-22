@@ -10,4 +10,5 @@ setup(
     author="Ingeniweb",
     author_email='thomas.desvenain@gmail.com',
     url='http://pypi.python.org/pypi/testpackage/',
+    scripts=['testscript.py']
     )
