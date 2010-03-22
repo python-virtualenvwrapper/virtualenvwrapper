@@ -49,6 +49,10 @@ test_cprelocatablevirtualenv () {
     assertSame "$VIRTUAL_ENV" "$(pwd)"
 }
 
+test_cp_notexists () {
+    out="$(cpvirtualenv virtualenvthatdoesntexist foo)"
+    assertSame "$out" "virtualenvthatdoesntexist virtualenv doesn't exist"
+}
 
 . "$test_dir/shunit2"
 

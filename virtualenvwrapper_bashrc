@@ -438,7 +438,7 @@ function cpvirtualenv() {
         echo "Please specify target virtualenv"
         return 1
     fi
-    if [echo "$WORKON_HOME" | grep -e "/$"]
+    if echo "$WORKON_HOME" | grep -e "/$"
     then
         env_home="$WORKON_HOME"
     else
@@ -446,6 +446,12 @@ function cpvirtualenv() {
     fi
     source_env="$env_home$env_name"
     target_env="$env_home$new_env"
+    
+    if [ ! -e "$source_env" ]
+    then
+        echo "$env_name virtualenv doesn't exist"
+        return 1
+    fi
 
     cp -r "$source_env" "$target_env"
     for script in $( ls $target_env/bin/* )
