@@ -27,7 +27,7 @@ except:
 
 # What project are we building?
 PROJECT = 'virtualenvwrapper'
-VERSION = '1.24.1'
+VERSION = '1.26'
 os.environ['VERSION'] = VERSION
 
 # Read the long description to give to setup
@@ -192,7 +192,14 @@ def test_install(options):
 
 @task
 def test():
-    sh('bash ./tests/test.sh')
-    sh('SHUNIT_PARENT=./tests/test.sh zsh -o shwordsplit ./tests/test.sh')
-    sh('bash ./tests/test_misconfigured.sh')
+    #test_scripts = glob.glob('./tests/test*.sh')
+    test_scripts = path('tests').glob('test*.sh')
+    print test_scripts
+    for shell_cmd in [ 'bash', 'sh', 'SHUNIT_PARENT=%(test_script)s zsh -o shwordsplit' ]:
+        for test_script in test_scripts:
+            base_cmd = shell_cmd + ' %(test_script)s'
+            cmd = base_cmd % locals()
+            print '*' * 80
+            print
+            sh(cmd)
     return
