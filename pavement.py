@@ -194,7 +194,7 @@ def test_install(options):
 def test():
     #test_scripts = glob.glob('./tests/test*.sh')
     test_scripts = path('tests').glob('test*.sh')
-    print test_scripts
+    #print test_scripts
     for shell_cmd in [ 'bash', 'sh', 'SHUNIT_PARENT=%(test_script)s zsh -o shwordsplit' ]:
         for test_script in test_scripts:
             base_cmd = shell_cmd + ' %(test_script)s'
