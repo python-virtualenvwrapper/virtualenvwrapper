@@ -3,49 +3,56 @@
 * TODO convert to distribute for packaging
   - get rid of newvenvw and virtualenvwrapper virtualenvs and re-create
 
-* TODO plugin system for hooks [0/5]
+* plugin system for hooks
   - http://bitbucket.org/dhellmann/virtualenvwrapper/issue/28/
-  - use Distribute/setuptools
+  - use Distribute/setuptools entry points
   - namespace package `virtualenvwrapper` to hold plugins I write, but
     not required for other authors
-  - [ ] how to specify execution order between plugin providers?
+
+** TODO how to specify execution order between plugin providers?
     - plugins could provide a "phase" function for sorting
       - return an integer, let the plugin author community sort out the
         ranges
     - alphabetical by plugin name
     - undefined
-  - [ ] "user script" plugin implementation
+
+** TODO "user script" plugin implementation
     - uses pkg_resources to get contents of hook scripts out of
       python package and run them
     - move all/most existing hook execution here
     - handles both global & local hooks
-  - [ ] cli app to run the hooks
-  - [ ] how does cli app handle the "sourced" hook scripts
+
+** TODO cli app to run the hooks
+
+** TODO how does cli app handle the "sourced" hook scripts
     - ability to `cd` into a specific directory, for example
     - separate plugin points for "foo_run_hook" and
       "foo_source_hook", handled differently by the calling script
       - run hooks are executed first (implement in any language)
       - source hooks are dumped to text files and then sourced
         (implement in shell language)
-  - [ ] expose each hook point as an entry point function
-    - [ ] requirements
-      - automatically install packages based on requirements file
-        given to pip
-      - separate hook, or let a package just use postmkvirtualenv?
-    - [ ] mkvirtualenv [0/2]
-      - [ ] pre
-      - [ ] post
-    - [ ] activate [0/2]
-      - [ ] pre
-      - [ ] post
-    - [ ] deactivate [0/2]
-      - [ ] pre
-      - [ ] post
-    - [ ] rmvirtualenv [0/2]
-      - [ ] pre
-      - [ ] post
-  - [ ] documentation for how to publish your own hooks
+
+** TODO expose each hook point as an entry point function
+  - [ ] requirements
+    - automatically install packages based on requirements file
+      given to pip
+    - separate hook, or let a package just use postmkvirtualenv?
+    - if provide as a separate hook, run /before/ postmkvirtualenv
+  - [ ] mkvirtualenv [0/2]
+    - [ ] pre
+    - [ ] post
+  - [ ] activate [0/2]
+    - [ ] pre
+    - [ ] post
+  - [ ] deactivate [0/2]
+    - [ ] pre
+    - [ ] post
+  - [ ] rmvirtualenv [0/2]
+    - [ ] pre
+    - [ ] post
+
+** TODO documentation for how to publish your own hooks
+
 
 * TODO add pre/post hooks for cpvirtualenv
   - add new ones or just invoke existing hooks?
-
