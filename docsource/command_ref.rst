@@ -40,6 +40,11 @@ Syntax::
 
     cpvirtualenv ENVNAME TARGETENVNAME
 
+.. note::
+
+   The environment created by the copy operation is made `relocatable
+   <http://virtualenv.openplans.org/#making-environments-relocatable>`__.
+
 workon
 ------
 
