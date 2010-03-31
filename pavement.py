@@ -9,6 +9,7 @@
 # Standard library
 import copy
 import os
+import sys
 
 # Third-party
 
@@ -201,5 +202,6 @@ def test():
             cmd = base_cmd % locals()
             print '*' * 80
             print
+            sys.stdout.flush()
             sh(cmd)
     return
