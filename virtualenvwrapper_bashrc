@@ -424,6 +424,7 @@ function lssitepackages () {
     fi
 }
 
+# Duplicate the named virtualenv to make a new one.
 function cpvirtualenv() {
 
     typeset env_name="$1"
