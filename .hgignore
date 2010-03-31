@@ -8,6 +8,9 @@ docs
 *.pyc
 sphinx/web/templates/base.html
 tests/catch_output
+tests/testpackage/build
+tests/testpackage/dist
+tests/testpackage/testpackage.egg-info
 
 syntax: re
 .DS_Store
