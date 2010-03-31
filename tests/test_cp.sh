@@ -7,46 +7,42 @@ source "$test_dir/../virtualenvwrapper_bashrc"
 
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 
-oneTimeSetUp() {
+setUp () {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
-}
-
-oneTimeTearDown() {
-    rm -rf "$WORKON_HOME"
-}
-
-setUp () {
     echo
     rm -f "$test_dir/catch_output"
 }
 
+tearDown() {
+    rm -rf "$WORKON_HOME"
+}
+
 
 test_cpvirtualenv () {
-    mkvirtualenv "cpvirtualenvtest"
-    $VIRTUAL_ENV/bin/easy_install "tests/testpackage"
-    cpvirtualenv "cpvirtualenvtest" "cpvirtualenvcopy"
+    mkvirtualenv "source"
+    (cd tests/testpackage && python setup.py install)
+    cpvirtualenv "source" "destination"
     deactivate
-    rmvirtualenv "cpvirtualenvtest"
-    workon "cpvirtualenvcopy"
+    rmvirtualenv "source"
+    workon "destination"
     testscript="$(which testscript.py)"
-    assertSame "$testscript" $(echo "$WORKON_HOME/cpvirtualenvcopy/bin/testscript.py")
+    assertTrue "Environment test script not found in path" "[ $WORKON_HOME/destination/bin/testscript.py -ef $testscript ]"
     testscriptcontent="$(cat $testscript)"
     assertTrue "No cpvirtualenvtest in $/testscriptcontent" "echo $testscriptcontent | grep cpvirtualenvtest"
     assertTrue virtualenvwrapper_verify_active_environment
-    assertSame "cpvirtualenvcopy" $(basename "$VIRTUAL_ENV")
-    cdvirtualenv
-    assertSame "$VIRTUAL_ENV" "$(pwd)"
+    assertSame "Wrong virtualenv name" "destination" $(basename "$VIRTUAL_ENV")
 }
 
 test_cprelocatablevirtualenv () {
-    mkvirtualenv "cprelocatabletest"
-    virtualenv --relocatable "$WORKON_HOME/cprelocatabletest"
-    cpvirtualenv "cprelocatabletest" "cprelocatablecopy"
+    mkvirtualenv "source"
+    (cd tests/testpackage && python setup.py install)
+    assertTrue "virtualenv --relocatable \"$WORKON_HOME/source\""
+    cpvirtualenv "source" "destination"
+    testscript="$(which testscript.py)"
+    assertTrue "Environment test script not the same as copy" "[ $WORKON_HOME/destination/bin/testscript.py -ef $testscript ]"
     assertTrue virtualenvwrapper_verify_active_environment
-    assertSame "cprelocatablecopy" $(basename "$VIRTUAL_ENV")
-    cdvirtualenv
-    assertSame "$VIRTUAL_ENV" "$(pwd)"
+    assertSame "Wrong virtualenv name" "destination" $(basename "$VIRTUAL_ENV")
 }
 
 test_cp_notexists () {
