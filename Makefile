@@ -22,6 +22,11 @@ website: docs/sphinx/web/templates/base.html
 installwebsite: website
 	(cd docs/website/html && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper2/)
 
+# Register the new version on pypi
+.PHONY: register
+register:
+	python setup.py register
+
 # Copy the base template from my website build directory
 docs/sphinx/web/templates/base.html: ~/Devel/doughellmann/doughellmann/templates/base.html
 	cp $< $@
