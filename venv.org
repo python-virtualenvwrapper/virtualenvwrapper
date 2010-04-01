@@ -1,13 +1,21 @@
 # Org-mode notes and task list
 
-* TODO convert to distribute for packaging
+* TODO convert to distribute for packaging [1/2]
   - get rid of newvenvw and virtualenvwrapper virtualenvs and re-create
+  - [X] pavement.py to setup.py
+  - [ ] sphinx conf.py needs to get version from setup.py somehow
+  - [ ] separate rules for making website
+  - [ ] installwebsite
+  - [ ] register
+  - [ ] test for installation
 
 * plugin system for hooks
   - http://bitbucket.org/dhellmann/virtualenvwrapper/issue/28/
   - use Distribute/setuptools entry points
   - namespace package `virtualenvwrapper` to hold plugins I write, but
     not required for other authors
+  - bump version to 2, since the user script implementation is moving
+    and this is a major update
 
 ** TODO how to specify execution order between plugin providers?
     - plugins could provide a "phase" function for sorting
@@ -32,7 +40,7 @@
       - source hooks are dumped to text files and then sourced
         (implement in shell language)
 
-** TODO expose each hook point as an entry point function
+** TODO expose each hook point as an entry point function [0/5]
   - [ ] requirements
     - automatically install packages based on requirements file
       given to pip
