@@ -1,16 +1,18 @@
 syntax: glob
+distribute*.egg
+distribute*.tar.gz
 README.html
 virtualenvwrapper.egg-info
-paver-minilib.zip
-setup.py
 trace.txt
-docs
+dist
+docs/build
 *.pyc
 sphinx/web/templates/base.html
 tests/catch_output
 tests/testpackage/build
 tests/testpackage/dist
 tests/testpackage/testpackage.egg-info
+virtualenvwrapper/docs
 
 syntax: re
 .DS_Store
