@@ -29,8 +29,8 @@ docs/sphinx/web/templates/base.html: ~/Devel/doughellmann/doughellmann/templates
 # Testing
 TEST_SCRIPTS=$(wildcard tests/test*.sh)
 
-.PHONY: test test-bash test-sh test-zsh test-loop
-test: test-bash test-sh test-zsh
+.PHONY: test test-bash test-sh test-zsh test-loop test-install
+test: test-bash test-sh test-zsh test-install
 
 test-bash:
 	TEST_SHELL=bash $(MAKE) test-loop
@@ -48,3 +48,6 @@ test-loop:
 		SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script ; \
 		echo ; \
 	done
+
+test-install:
+	bash ./tests/manual_test_install.sh `pwd`/dist "$(VERSION)"
