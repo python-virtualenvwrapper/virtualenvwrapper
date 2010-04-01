@@ -1,18 +1,32 @@
+# Get the version of the app.  This is used in the doc build.
 export VERSION=$(shell python setup.py --version)
 
+# Default target is to build the source distribution.
 .PHONY: sdist
 sdist: html
 	python setup.py sdist
 
+# Documentation
 .PHONY: html
 html:
 	rm -rf virtualenvwrapper/docs
-	(cd docs && $(MAKE) html)
+	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/pkg")
 	cp -r docs/build/html virtualenvwrapper/docs
 
+# Website copy of documentation
 .PHONY: website
-website: 
+website: docs/sphinx/web/templates/base.html
+	rm -rf docs/website
+	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website")
 
+installwebsite: website
+	(cd docs/website/html && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper2/)
+
+# Copy the base template from my website build directory
+docs/sphinx/web/templates/base.html: ~/Devel/doughellmann/doughellmann/templates/base.html
+	cp $< $@
+
+# Testing
 TEST_SCRIPTS=$(wildcard tests/test*.sh)
 
 .PHONY: test test-bash test-sh test-zsh test-loop

@@ -6,6 +6,7 @@ virtualenvwrapper.egg-info
 trace.txt
 dist
 docs/build
+docs/website
 *.pyc
 sphinx/web/templates/base.html
 tests/catch_output
