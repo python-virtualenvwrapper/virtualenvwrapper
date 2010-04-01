@@ -3,7 +3,7 @@
 #set -x
 
 test_dir=$(dirname $0)
-source "$test_dir/../virtualenvwrapper_bashrc"
+source "$test_dir/../virtualenvwrapper.sh"
 
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 
@@ -44,7 +44,7 @@ test_virtualenvwrapper_verify_workon_home_missing_dir() {
 test_virtualenvwrapper_verify_workon_home_missing_dir_quiet_init() {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=`$SHELL $test_dir/../virtualenvwrapper_bashrc 2>&1`
+    output=`$SHELL $test_dir/../virtualenvwrapper.sh 2>&1`
     assertSame "" "$output"
     WORKON_HOME="$old_home"
 }

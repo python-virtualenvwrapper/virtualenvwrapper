@@ -4,7 +4,7 @@
 #
 
 test_dir=$(dirname $0)
-source "$test_dir/../virtualenvwrapper_bashrc"
+source "$test_dir/../virtualenvwrapper.sh"
 
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 
@@ -14,6 +14,7 @@ oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     mkvirtualenv "installtest"
+    (cd "$test_dir/.." && make sdist)
 }
 
 oneTimeTearDown() {
@@ -29,7 +30,7 @@ test_install () {
     pip install "$dist_dir/virtualenvwrapper-$VERSION.tar.gz"
     RC=$?
     assertTrue "Error code $RC" "[ $RC -eq 0 ]"
-    assertTrue "Missing wrapper script" "[ -f $WORKON_HOME/installtest/bin/virtualenvwrapper_bashrc ]"
+    assertTrue "Missing wrapper script" "[ -f $WORKON_HOME/installtest/bin/virtualenvwrapper.sh ]"
 }
 
 . "$test_dir/shunit2"

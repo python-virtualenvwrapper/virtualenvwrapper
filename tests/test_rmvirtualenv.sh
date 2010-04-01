@@ -3,7 +3,7 @@
 #set -x
 
 test_dir=$(dirname $0)
-source "$test_dir/../virtualenvwrapper_bashrc"
+source "$test_dir/../virtualenvwrapper.sh"
 
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 

@@ -132,7 +132,7 @@ setup(
 
     platforms = ('Any',),
 
-    scripts = ['virtualenvwrapper_bashrc', 
+    scripts = ['virtualenvwrapper.sh', 
                ],
 
     provides=['virtualenvwrapper',
