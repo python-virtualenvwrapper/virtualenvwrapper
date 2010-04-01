@@ -150,7 +150,11 @@ setup(
                                      ),
 
     entry_points = {
-#         'console_scripts': [ 'ical2org = ical2org.app:main' ],
+        #'console_scripts': [ 'venvw_hook = virtualenvwrapper.hook_loader:main' ],
+        'virtualenvwrapper.pre_initialize_source': [
+            'user_scripts = virtualenvwrapper.user_scripts:pre_initialize_source',
+            'make_hooks = virtualenvwrapper.make_hooks:pre_initialize_source',
+            ],
         },
 
     zip_safe=False,

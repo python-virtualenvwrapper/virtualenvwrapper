@@ -32,7 +32,7 @@
 #     (mkdir $HOME/.virtualenvs).
 #  2. Add a line like "export WORKON_HOME=$HOME/.virtualenvs"
 #     to your .bashrc.
-#  3. Add a line like "source /path/to/this/file/virtualenvwrapper_bashrc"
+#  3. Add a line like "source /path/to/this/file/virtualenvwrapper.sh"
 #     to your .bashrc.
 #  4. Run: source ~/.bashrc
 #  5. Run: workon
