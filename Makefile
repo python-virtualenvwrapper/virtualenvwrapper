@@ -1,3 +1,4 @@
+export VERSION=$(shell python setup.py --version)
 
 .PHONY: sdist
 sdist: html
@@ -8,6 +9,9 @@ html:
 	rm -rf virtualenvwrapper/docs
 	(cd docs && $(MAKE) html)
 	cp -r docs/build/html virtualenvwrapper/docs
+
+.PHONY: website
+website: 
 
 TEST_SCRIPTS=$(wildcard tests/test*.sh)
 
