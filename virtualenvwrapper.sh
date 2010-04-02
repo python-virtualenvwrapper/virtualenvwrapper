@@ -51,9 +51,12 @@ then
     export WORKON_HOME="$HOME/.virtualenvs"
 fi
 
+# Locate the global Python where virtualenvwrapper is installed.
+VIRTUALENVWRAPPER_PYTHON="$(which python)"
+
 # Normalize the directory name in case it includes 
 # relative path components.
-WORKON_HOME=$(python -c "import os; print os.path.abspath(os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\")))")
+WORKON_HOME=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.abspath(os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\")))")
 export WORKON_HOME
 
 # Verify that the WORKON_HOME directory exists
@@ -66,17 +69,19 @@ function virtualenvwrapper_verify_workon_home () {
     return 0
 }
 
+HOOK_VERBOSE_OPTION="-v"
 
 # Run a hook script in the current shell
 function virtualenvwrapper_source_hook () {
-    python -m virtualenvwrapper.hook_loader --source "${1}_source" >>$TMPDIR/$$.hook
+    "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION \
+        --source "${1}_source" >>$TMPDIR/$$.hook
     source $TMPDIR/$$.hook
     rm -f $TMPDIR/$$.hook
 }
 
 # Run a hook script in its own shell
 function virtualenvwrapper_run_hook () {
-    python -m virtualenvwrapper.hook_loader "$@"
+    "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION "$@"
 }
 
 # Set up virtualenvwrapper properly
@@ -136,19 +141,16 @@ function mkvirtualenv () {
     virtualenvwrapper_verify_virtualenv || return 1
     (cd "$WORKON_HOME" &&
         virtualenv "$@" &&
-        virtualenvwrapper_run_hook "./premkvirtualenv" "$envname"
+        virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
         )
     # If they passed a help option or got an error from virtualenv,
     # the environment won't exist.  Use that to tell whether
     # we should switch to the environment and run the hook.
     [ ! -d "$WORKON_HOME/$envname" ] && return 0
-    # Create stubs for the environment-specific hook scripts.
-    virtualenvwrapper_make_hook "$WORKON_HOME/$envname/bin/postactivate" "This hook is sourced after the virtualenv is activated."
-    virtualenvwrapper_make_hook "$WORKON_HOME/$envname/bin/predeactivate" "This hook is sourced before the virtualenv is deactivated."
-    virtualenvwrapper_make_hook "$WORKON_HOME/$envname/bin/postdeactivate" "This hook is sourced after the virtualenv is deactivated."
     # Now activate the new environment
     workon "$envname"
-    virtualenvwrapper_source_hook "$WORKON_HOME/postmkvirtualenv"
+    virtualenvwrapper_run_hook "post_mkvirtualenv"
+    virtualenvwrapper_source_hook "post_mkvirtualenv"
 }
 
 # Remove an environment, in the WORKON_HOME.

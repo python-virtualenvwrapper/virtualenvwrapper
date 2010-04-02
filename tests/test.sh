@@ -29,6 +29,12 @@ test_virtualenvwrapper_initialize() {
         assertTrue "Global $hook is not executable" "[ -x $WORKON_HOME/$hook ]"
     done
     assertTrue "Log file was not created" "[ -f $WORKON_HOME/hook.log ]"
+    export pre_test_dir=$(cd "$test_dir"; pwd)
+    echo "echo GLOBAL initialize >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/initialize"
+    virtualenvwrapper_initialize
+    output=$(cat "$test_dir/catch_output")
+    expected="GLOBAL initialize"
+    assertSame "$expected" "$output"
 }
 
 test_virtualenvwrapper_verify_workon_home() {

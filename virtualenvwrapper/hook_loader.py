@@ -52,7 +52,7 @@ def main():
                       logging.DEBUG,
                       ][options.verbose_level]
     console.setLevel(console_level)
-    formatter = logging.Formatter('%(message)s')
+    formatter = logging.Formatter('%(name)s %(message)s')
     console.setFormatter(formatter)
     logging.getLogger('').addHandler(console)
 

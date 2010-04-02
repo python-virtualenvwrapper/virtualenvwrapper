@@ -14,6 +14,8 @@ log = logging.getLogger(__name__)
 
 import pkg_resources
 
+PERMISSIONS = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
+
 GLOBAL_HOOKS = [
     # initialize
     ("initialize",
@@ -42,10 +44,23 @@ GLOBAL_HOOKS = [
      "This hook is run before every virtualenv is activated."),
     ("postactivate",
      "This hook is run after every virtualenv is activated."),
-    
     ]
 
-def make_hook(filename, comment, permissions):
+LOCAL_HOOKS = [
+    # deactivate
+    ("predeactivate",
+     "This hook is run before the virtualenv is deactivated."),
+    ("postdeactivate",
+     "This hook is run after the virtualenv is deactivated."),
+
+    # activate
+    ("preactivate",
+     "This hook is run before the virtualenv is activated."),
+    ("postactivate",
+     "This hook is run after the virtualenv is activated."),
+    ]
+
+def make_hook(filename, comment):
     """Create a hook script.
     
     :param filename: The name of the file to write.
@@ -59,14 +74,18 @@ def make_hook(filename, comment, permissions):
 # %s
 
 """ % comment)
-        os.chmod(filename, permissions)
+        os.chmod(filename, PERMISSIONS)
     return
 
 
 def initialize(args):
-    permissions = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
     for filename, comment in GLOBAL_HOOKS:
-        make_hook(os.path.join('$WORKON_HOME', filename), comment, permissions)
+        make_hook(os.path.join('$WORKON_HOME', filename), comment)
     return
 
+def pre_mkvirtualenv(args):
+    envname=args[0]
+    for filename, comment in LOCAL_HOOKS:
+        make_hook(os.path.join('$WORKON_HOME', envname, 'bin', filename), comment)
+    return
 

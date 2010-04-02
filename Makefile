@@ -50,7 +50,7 @@ test-loop:
 	@for test_script in $(wildcard tests/test*.sh) ; do \
 	 	echo '********************************************************************************' ; \
 		echo "Running $$test_script with $(TEST_SHELL)" ; \
-		SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script ; \
+		SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script || exit 1 ; \
 		echo ; \
 	done
 
