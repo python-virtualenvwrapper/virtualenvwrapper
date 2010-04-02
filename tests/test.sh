@@ -28,6 +28,7 @@ test_virtualenvwrapper_initialize() {
         assertTrue "Global $hook was not created" "[ -f $WORKON_HOME/$hook ]"
         assertTrue "Global $hook is not executable" "[ -x $WORKON_HOME/$hook ]"
     done
+    assertTrue "Log file was not created" "[ -f $WORKON_HOME/hook.log ]"
 }
 
 test_virtualenvwrapper_verify_workon_home() {

@@ -66,51 +66,24 @@ function virtualenvwrapper_verify_workon_home () {
     return 0
 }
 
-# Create a hook script
-#
-# Usage: virtualenvwrapper_make_hook filename comment
-#
-function virtualenvwrapper_make_hook () {
-    filename="$1"
-    comment="$2"
-    if [ ! -f "$filename" ]
-    then
-        #echo "Creating $filename"
-        cat - > "$filename" <<EOF
-#!/bin/sh
-# $comment
 
-EOF
-    fi
-    if [ ! -x "$filename" ]
-    then
-        chmod +x "$filename"
-    fi
+# Run a hook script in the current shell
+function virtualenvwrapper_source_hook () {
+    python -m virtualenvwrapper.hook_loader --source "${1}_source" >>$TMPDIR/$$.hook
+    source $TMPDIR/$$.hook
+    rm -f $TMPDIR/$$.hook
+}
+
+# Run a hook script in its own shell
+function virtualenvwrapper_run_hook () {
+    python -m virtualenvwrapper.hook_loader "$@"
 }
 
 # Set up virtualenvwrapper properly
 function virtualenvwrapper_initialize () {
     virtualenvwrapper_verify_workon_home -q || return 1
-    # mkvirtualenv
-    virtualenvwrapper_make_hook "$WORKON_HOME/premkvirtualenv" \
-        "This hook is run after a new virtualenv is created and before it is activated."
-    virtualenvwrapper_make_hook "$WORKON_HOME/postmkvirtualenv" \
-        "This hook is run after a new virtualenv is activated."
-    # rmvirtualenv
-    virtualenvwrapper_make_hook "$WORKON_HOME/prermvirtualenv" \
-        "This hook is run before a virtualenv is deleted."
-    virtualenvwrapper_make_hook "$WORKON_HOME/postrmvirtualenv" \
-        "This hook is run after a virtualenv is deleted."
-    # deactivate
-    virtualenvwrapper_make_hook "$WORKON_HOME/predeactivate" \
-        "This hook is run before every virtualenv is deactivated."
-    virtualenvwrapper_make_hook "$WORKON_HOME/postdeactivate" \
-        "This hook is run after every virtualenv is deactivated."
-    # activate
-    virtualenvwrapper_make_hook "$WORKON_HOME/preactivate" \
-        "This hook is run before every virtualenv is activated."
-    virtualenvwrapper_make_hook "$WORKON_HOME/postactivate" \
-        "This hook is run after every virtualenv is activated."
+    virtualenvwrapper_run_hook initialize
+    virtualenvwrapper_source_hook initialize
 }
 
 virtualenvwrapper_initialize
@@ -150,30 +123,6 @@ function virtualenvwrapper_verify_active_environment () {
         return 1
     fi
     return 0
-}
-
-# Run a hook script in the current shell
-function virtualenvwrapper_source_hook () {
-    scriptname="$1"
-    #echo "Looking for hook $scriptname"
-    if [ -f "$scriptname" ]
-    then
-        source "$scriptname"
-    fi
-}
-
-# Run a hook script in its own shell
-function virtualenvwrapper_run_hook () {
-    scriptname="$1"
-    shift
-    #echo "Looking for hook $scriptname"
-    if [ -x "$scriptname" ]
-    then
-        "$scriptname" "$@"
-    elif [ -e "$scriptname" ]
-    then
-        echo "Warning: Found \"$scriptname\" but it is not executable." 1>&2
-    fi
 }
 
 # Create a new environment, in the WORKON_HOME.
