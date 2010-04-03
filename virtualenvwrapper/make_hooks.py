@@ -49,15 +49,15 @@ GLOBAL_HOOKS = [
 LOCAL_HOOKS = [
     # deactivate
     ("predeactivate",
-     "This hook is run before the virtualenv is deactivated."),
+     "This hook is run before this virtualenv is deactivated."),
     ("postdeactivate",
-     "This hook is run after the virtualenv is deactivated."),
+     "This hook is run after this virtualenv is deactivated."),
 
     # activate
     ("preactivate",
-     "This hook is run before the virtualenv is activated."),
+     "This hook is run before this virtualenv is activated."),
     ("postactivate",
-     "This hook is run after the virtualenv is activated."),
+     "This hook is run after this virtualenv is activated."),
     ]
 
 def make_hook(filename, comment):
@@ -70,10 +70,10 @@ def make_hook(filename, comment):
     if not os.path.exists(filename):
         log.info('Creating %s', filename)
         with open(filename, 'wt') as f:
-            f.write("""#!/bin/sh
-# %s
+            f.write("""#!%(shell)s
+# %(comment)s
 
-""" % comment)
+""" % {'comment':comment, 'shell':os.environ.get('SHELL', '/bin/sh')})
         os.chmod(filename, PERMISSIONS)
     return
 
