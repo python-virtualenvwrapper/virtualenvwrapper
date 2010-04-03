@@ -56,7 +56,7 @@ def main():
     console.setFormatter(formatter)
     logging.getLogger('').addHandler(console)
 
-    logging.getLogger(__name__).debug('cli args %s', args)
+    #logging.getLogger(__name__).debug('cli args %s', args)
 
     # Determine which hook we're running
     if not args:
