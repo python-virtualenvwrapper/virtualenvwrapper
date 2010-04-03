@@ -37,7 +37,8 @@ test_workon_activate_hooks () {
         chmod +x "$WORKON_HOME/env1/bin/${t}activate"
     done
 
-    rm "$test_dir/catch_output"
+    rm -f "$test_dir/catch_output"
+    touch "$test_dir/catch_output"
 
     workon env1
     
@@ -72,6 +73,8 @@ test_deactivate_hooks () {
         echo "echo GLOBAL ${t}deactivate >> $test_dir/catch_output" > "$WORKON_HOME/${t}deactivate"
         echo "echo ENV ${t}deactivate >> $test_dir/catch_output" > "$WORKON_HOME/env1/bin/${t}deactivate"
     done
+
+    touch "$test_dir/catch_output"
 
     deactivate
 

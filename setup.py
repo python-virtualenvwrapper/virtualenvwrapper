@@ -151,9 +151,13 @@ setup(
 
     entry_points = {
         #'console_scripts': [ 'venvw_hook = virtualenvwrapper.hook_loader:main' ],
+        'virtualenvwrapper.initialize': [
+            'make_hooks = virtualenvwrapper.make_hooks:initialize',
+            ],
         'virtualenvwrapper.initialize_source': [
             'user_scripts = virtualenvwrapper.user_scripts:initialize_source',
             ],
+
         'virtualenvwrapper.pre_mkvirtualenv': [
             'user_scripts = virtualenvwrapper.user_scripts:pre_mkvirtualenv',
             'make_hooks = virtualenvwrapper.make_hooks:pre_mkvirtualenv',
@@ -161,9 +165,27 @@ setup(
         'virtualenvwrapper.post_mkvirtualenv_source': [
             'user_scripts = virtualenvwrapper.user_scripts:post_mkvirtualenv_source',
             ],
-        'virtualenvwrapper.initialize': [
-            'make_hooks = virtualenvwrapper.make_hooks:initialize',
-            ]
+
+        'virtualenvwrapper.pre_rmvirtualenv': [
+            'user_scripts = virtualenvwrapper.user_scripts:pre_rmvirtualenv',
+            ],
+        'virtualenvwrapper.post_rmvirtualenv': [
+            'user_scripts = virtualenvwrapper.user_scripts:post_rmvirtualenv',
+            ],
+
+        'virtualenvwrapper.pre_activate': [
+            'user_scripts = virtualenvwrapper.user_scripts:pre_activate',
+            ],
+        'virtualenvwrapper.post_activate_source': [
+            'user_scripts = virtualenvwrapper.user_scripts:post_activate_source',
+            ],
+
+        'virtualenvwrapper.pre_deactivate_source': [
+            'user_scripts = virtualenvwrapper.user_scripts:pre_deactivate_source',
+            ],
+        'virtualenvwrapper.post_deactivate_source': [
+            'user_scripts = virtualenvwrapper.user_scripts:post_deactivate_source',
+            ],
         },
 
     zip_safe=False,

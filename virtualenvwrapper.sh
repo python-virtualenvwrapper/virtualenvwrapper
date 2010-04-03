@@ -71,24 +71,23 @@ function virtualenvwrapper_verify_workon_home () {
 
 HOOK_VERBOSE_OPTION="-v"
 
-# Run a hook script in the current shell
-function virtualenvwrapper_source_hook () {
+# Run the hooks
+function virtualenvwrapper_run_hook () {
+    # First anything that runs directly from the plugin
+    "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION "$@"
+    # Now anything that wants to run inside this shell
+    hook_name="$1"
+    shift # get rid of hook name
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION \
-        --source "${1}_source" >>$TMPDIR/$$.hook
+        --source "${hook_name}_source" "$@" >>$TMPDIR/$$.hook
     source $TMPDIR/$$.hook
     rm -f $TMPDIR/$$.hook
-}
-
-# Run a hook script in its own shell
-function virtualenvwrapper_run_hook () {
-    "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION "$@"
 }
 
 # Set up virtualenvwrapper properly
 function virtualenvwrapper_initialize () {
     virtualenvwrapper_verify_workon_home -q || return 1
-    virtualenvwrapper_run_hook initialize
-    virtualenvwrapper_source_hook initialize
+    virtualenvwrapper_run_hook "initialize"
 }
 
 virtualenvwrapper_initialize
@@ -150,7 +149,6 @@ function mkvirtualenv () {
     # Now activate the new environment
     workon "$envname"
     virtualenvwrapper_run_hook "post_mkvirtualenv"
-    virtualenvwrapper_source_hook "post_mkvirtualenv"
 }
 
 # Remove an environment, in the WORKON_HOME.
@@ -169,9 +167,9 @@ function rmvirtualenv () {
         echo "Either switch to another environment, or run 'deactivate'." >&2
         return 1
     fi
-    virtualenvwrapper_run_hook "$WORKON_HOME/prermvirtualenv" "$env_dir"
+    virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
     rm -rf "$env_dir"
-    virtualenvwrapper_run_hook "$WORKON_HOME/postrmvirtualenv" "$env_dir"
+    virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
 }
 
 # List the available environments.
@@ -215,8 +213,7 @@ function workon () {
         deactivate
     fi
 
-    virtualenvwrapper_run_hook "$WORKON_HOME/preactivate"
-    virtualenvwrapper_run_hook "$WORKON_HOME/$env_name/bin/preactivate"
+    virtualenvwrapper_run_hook "pre_activate" "$env_name"
     
     source "$activate"
     
@@ -227,10 +224,10 @@ function workon () {
     eval 'function deactivate () {
         # Call the local hook before the global so we can undo
         # any settings made by the local postactivate first.
-        virtualenvwrapper_source_hook "$VIRTUAL_ENV/bin/predeactivate"
-        virtualenvwrapper_source_hook "$WORKON_HOME/predeactivate"
+        virtualenvwrapper_run_hook "pre_deactivate"
         
         env_postdeactivate_hook="$VIRTUAL_ENV/bin/postdeactivate"
+        old_env=$(basename "$VIRTUAL_ENV")
         
         # Restore the original definition of deactivate
         eval "$virtualenvwrapper_saved_deactivate"
@@ -238,12 +235,10 @@ function workon () {
         # Instead of recursing, this calls the now restored original function.
         deactivate
 
-        virtualenvwrapper_source_hook "$env_postdeactivate_hook"
-        virtualenvwrapper_source_hook "$WORKON_HOME/postdeactivate"
+        virtualenvwrapper_run_hook "post_deactivate" "$old_env"
     }'
     
-    virtualenvwrapper_source_hook "$WORKON_HOME/postactivate"
-    virtualenvwrapper_source_hook "$VIRTUAL_ENV/bin/postactivate"    
+    virtualenvwrapper_run_hook "post_activate"
     
 	return 0
 }

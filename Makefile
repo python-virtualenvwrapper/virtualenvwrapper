@@ -34,8 +34,11 @@ docs/sphinx/web/templates/base.html: ~/Devel/doughellmann/doughellmann/templates
 # Testing
 TEST_SCRIPTS=$(wildcard tests/test*.sh)
 
-.PHONY: test test-bash test-sh test-zsh test-loop test-install
-test: test-bash test-sh test-zsh test-install
+.PHONY: develop test test-bash test-sh test-zsh test-loop test-install
+test: develop test-bash test-sh test-zsh test-install
+
+develop:
+	python setup.py develop
 
 test-bash:
 	TEST_SHELL=bash $(MAKE) test-loop
