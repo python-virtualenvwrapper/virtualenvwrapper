@@ -42,13 +42,15 @@ test_virtualenvwrapper_source_hook_permissions() {
 }
 
 test_virtualenvwrapper_run_hook_permissions() {
+    echo "#!/bin/sh" > "$WORKON_HOME/prermvirtualenv"
     echo "echo run $@ >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/prermvirtualenv"
     chmod -x "$WORKON_HOME/prermvirtualenv"
     touch "$test_dir/catch_output"
-    virtualenvwrapper_run_hook "pre_rmvirtualenv" "foo"
+    error=$(virtualenvwrapper_run_hook "pre_rmvirtualenv" "foo" 2>&1 | grep "ERROR")
     output=$(cat "$test_dir/catch_output")
     expected=""
     assertSame "$expected" "$output"
+    assertSame "virtualenvwrapper.user_scripts ERROR: Could not run $WORKON_HOME/prermvirtualenv. [Errno 13] Permission denied" "$error"
 }
 
 . "$test_dir/shunit2"

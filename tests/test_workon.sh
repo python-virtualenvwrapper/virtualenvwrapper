@@ -3,13 +3,13 @@
 #set -x
 
 test_dir=$(dirname $0)
-source "$test_dir/../virtualenvwrapper.sh"
 
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
+    source "$test_dir/../virtualenvwrapper.sh"
     mkvirtualenv "env1"
 }
 
@@ -70,8 +70,8 @@ test_deactivate_hooks () {
 
     for t in pre post
     do
-        echo "echo GLOBAL ${t}deactivate >> $test_dir/catch_output" > "$WORKON_HOME/${t}deactivate"
-        echo "echo ENV ${t}deactivate >> $test_dir/catch_output" > "$WORKON_HOME/env1/bin/${t}deactivate"
+        echo "echo GLOBAL ${t}deactivate \$VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV >> $test_dir/catch_output" > "$WORKON_HOME/${t}deactivate"
+        echo "echo ENV ${t}deactivate \$VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV >> $test_dir/catch_output" > "$WORKON_HOME/env1/bin/${t}deactivate"
     done
 
     touch "$test_dir/catch_output"
@@ -81,8 +81,8 @@ test_deactivate_hooks () {
     output=$(cat "$test_dir/catch_output")
     expected="ENV predeactivate
 GLOBAL predeactivate
-ENV postdeactivate
-GLOBAL postdeactivate"
+ENV postdeactivate $WORKON_HOME/env1
+GLOBAL postdeactivate $WORKON_HOME/env1"
     assertSame "$expected" "$output"
     
     for t in pre post
