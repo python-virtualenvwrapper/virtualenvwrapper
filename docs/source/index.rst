@@ -3,9 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-#################
-virtualenvwrapper
-#################
+###########################
+virtualenvwrapper |release|
+###########################
 
 virtualenvwrapper is a set of extensions to Ian Bicking's `virtualenv
 <http://pypi.python.org/pypi/virtualenv>`_ tool.  The extensions
@@ -68,6 +68,7 @@ Details
    tips
    history
    developers
+   extensions
 
 .. _references:
 

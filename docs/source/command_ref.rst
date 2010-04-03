@@ -22,6 +22,11 @@ Syntax::
 
 (any options are passed directly to ``virtualenv``)
 
+.. seealso::
+
+   * :ref:`hooks-scripts-premkvirtualenv`
+   * :ref:`hooks-scripts-postmkvirtualenv`
+
 rmvirtualenv
 ------------
 
@@ -30,6 +35,11 @@ Remove an environment, in the WORKON_HOME.
 Syntax::
 
     rmvirtualenv ENVNAME
+
+.. seealso::
+
+   * :ref:`hooks-scripts-prermvirtualenv`
+   * :ref:`hooks-scripts-postrmvirtualenv`
 
 cpvirtualenv
 ------------
@@ -57,6 +67,13 @@ Syntax::
 If no ``environment_name`` is given the list of available environments
 is printed to stdout.
 
+.. seealso::
+
+   * :ref:`hooks-scripts-predeactivate`
+   * :ref:`hooks-scripts-postdeactivate`
+   * :ref:`hooks-scripts-preactivate`
+   * :ref:`hooks-scripts-postactivate`
+
 deactivate
 ----------
 
@@ -71,6 +88,11 @@ Syntax::
 
     This command is actually part of virtualenv, but is wrapped to
     provide before and after hooks, just as workon does for activate.
+
+.. seealso::
+
+   * :ref:`hooks-scripts-predeactivate`
+   * :ref:`hooks-scripts-postdeactivate`
 
 ==================================
 Quickly Navigating to a virtualenv
