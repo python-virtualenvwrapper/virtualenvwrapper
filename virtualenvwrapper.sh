@@ -69,7 +69,7 @@ function virtualenvwrapper_verify_workon_home () {
     return 0
 }
 
-HOOK_VERBOSE_OPTION="-v"
+#HOOK_VERBOSE_OPTION="-v"
 
 # Run the hooks
 function virtualenvwrapper_run_hook () {
