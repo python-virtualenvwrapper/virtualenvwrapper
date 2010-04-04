@@ -1,14 +1,32 @@
 .. _plugins:
 
-===================
- Extension Plugins
-===================
+===========================
+Extending Virtualenvwrapper
+===========================
 
-virtualenvwrapper includes several ways to modify its behavior.
-End-users can use shell scripts or other programs for personal
+Customizing one's development environment is a practice adopted from
+other tool-based jobs in which long experience leads to home-grown and
+unique solutions to persistent annoyances.  Carpenters build jigs,
+software developers write shell scripts.  virtualenvwrapper continues
+the tradition of encouraging a craftsman to modify his tools to work
+the way he wants, rather than the other way around.
+
+Use the hooks provided to eliminate repetitive manual operations and
+streamline your development workflow.  For example, the pre_activate
+and post_activate hooks can trigger an IDE to load a project file to
+reload files from the last editing session, manage time-tracking
+records, or start and stop development versions of an application
+server.  The initialize hook can be used to add entirely new commands
+and hooks to virtualenvwrapper.  And the pre_mkvirtualenv and
+post_mkvirtualenv hooks give you an opportunity to install basic
+requirements into each new development environment, initialize a
+source code control repository, or otherwise set up a new project.
+
+There are two ways to attach your code so that virtualenvwrapper will
+run it: End-users can use shell scripts or other programs for personal
 customization (see :ref:`scripts`).  Extensions can also be
 implemented in Python by using Distribute_ *entry points*, making it
-possible to share common behaviors between systems.
+possible to share common behaviors between systems and developers.
 
 Defining an Extension
 =====================
@@ -262,7 +280,9 @@ initialize
 ----------
 
 The ``virtualenvwrapper.initialize`` hooks are run each time
-``virtualenvwrapper.sh`` is loaded into the user's environment.
+``virtualenvwrapper.sh`` is loaded into the user's environment.  The
+initialize hook can be used to install templates for configuration
+files or otherwise prepare the system for proper plugin operation.
 
 .. _plugins-pre_mkvirtualenv:
 
@@ -337,5 +357,6 @@ post_rmvirtualenv
 The ``virtualenvwrapper.post_rmvirtualenv`` hooks are run just after
 an environment is deleted.  The name of the environment being deleted
 is passed as the first argument.
+
 
 .. _Distribute: http://packages.python.org/distribute/
