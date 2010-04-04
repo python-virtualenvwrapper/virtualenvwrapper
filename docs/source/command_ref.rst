@@ -24,8 +24,8 @@ Syntax::
 
 .. seealso::
 
-   * :ref:`hooks-scripts-premkvirtualenv`
-   * :ref:`hooks-scripts-postmkvirtualenv`
+   * :ref:`scripts-premkvirtualenv`
+   * :ref:`scripts-postmkvirtualenv`
 
 rmvirtualenv
 ------------
@@ -38,8 +38,8 @@ Syntax::
 
 .. seealso::
 
-   * :ref:`hooks-scripts-prermvirtualenv`
-   * :ref:`hooks-scripts-postrmvirtualenv`
+   * :ref:`scripts-prermvirtualenv`
+   * :ref:`scripts-postrmvirtualenv`
 
 cpvirtualenv
 ------------
@@ -55,6 +55,10 @@ Syntax::
    The environment created by the copy operation is made `relocatable
    <http://virtualenv.openplans.org/#making-environments-relocatable>`__.
 
+==================================
+Controlling the Active Environment
+==================================
+
 workon
 ------
 
@@ -69,10 +73,10 @@ is printed to stdout.
 
 .. seealso::
 
-   * :ref:`hooks-scripts-predeactivate`
-   * :ref:`hooks-scripts-postdeactivate`
-   * :ref:`hooks-scripts-preactivate`
-   * :ref:`hooks-scripts-postactivate`
+   * :ref:`scripts-predeactivate`
+   * :ref:`scripts-postdeactivate`
+   * :ref:`scripts-preactivate`
+   * :ref:`scripts-postactivate`
 
 deactivate
 ----------
@@ -91,8 +95,8 @@ Syntax::
 
 .. seealso::
 
-   * :ref:`hooks-scripts-predeactivate`
-   * :ref:`hooks-scripts-postdeactivate`
+   * :ref:`scripts-predeactivate`
+   * :ref:`scripts-postdeactivate`
 
 ==================================
 Quickly Navigating to a virtualenv
@@ -103,6 +107,12 @@ currently-active virtualenv.
 
 cdvirtualenv
 ------------
+
+Change the current working directory to ``$VIRTUAL_ENV``.
+
+Syntax::
+
+    cdvirtualenv [subdir]
 
 Calling ``cdvirtualenv`` changes the current working directory to the
 top of the virtualenv (``$VIRTUAL_ENV``).  An optional argument is
@@ -124,6 +134,13 @@ subdirectory.
 cdsitepackages
 --------------
 
+Change the current working directory to the ``site-packages`` for
+``$VIRTUAL_ENV``.
+
+Syntax::
+
+    cdsitepackages [subdir]
+
 Because the exact path to the site-packages directory in the
 virtualenv depends on the version of Python, ``cdsitepackages`` is
 provided as a shortcut for ``cdvirtualenv
@@ -132,6 +149,7 @@ allowed, to specify a directory hierarchy within the ``site-packages``
 directory to change into.
 
 ::
+
   $ workon pymotw
   $ echo $VIRTUAL_ENV
   /Users/dhellmann/.virtualenvs/pymotw
@@ -139,21 +157,19 @@ directory to change into.
   $ pwd
   /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/site-packages/PyMOTW/bisect
 
+lssitepackages
+--------------
+
+Calling ``lssitepackages`` shows the content of the ``site-packages``
+directory of the currently-active virtualenv.
+
+Syntax::
+
+    lssitepackages
+
 ===============
 Path Management
 ===============
-
-Sometimes it is desirable to share installed packages that are not in
-the system ``site-pacakges`` directory and which you do not want to
-install in each virtualenv.  In this case, you *could* symlink the
-source into the environment ``site-packages`` directory, but it is
-also easy to add extra directories to the PYTHONPATH by including them
-in a .pth file inside ``site-packages`` using ``add2virtualenv``.
-
-1. Check out the source for a big project, such as Django.
-2. Run: ``add2virtualenv path_to_source``.
-3. Run: ``add2virtualenv``.
-4. A usage message and list of current "extra" paths is printed.
 
 add2virtualenv
 --------------
@@ -165,17 +181,20 @@ Syntax::
 
     add2virtualenv directory1 directory2 ...
 
-Path management for packages outside of the virtual env.  Based on a
-contribution from James Bennett and Jannis Leidel.
+Sometimes it is desirable to share installed packages that are not in
+the system ``site-pacakges`` directory and which should not be
+installed in each virtualenv.  One possible solution is to symlink the
+source into the environment ``site-packages`` directory, but it is
+also easy to add extra directories to the PYTHONPATH by including them
+in a ``.pth`` file inside ``site-packages`` using ``add2virtualenv``.
 
-This will be done by placing the directory names in a path file named
-``virtualenv_path_extensions.pth`` inside the virtualenv's
-site-packages directory; if this file does not exist, it will be
-created first.
+1. Check out the source for a big project, such as Django.
+2. Run: ``add2virtualenv path_to_source``.
+3. Run: ``add2virtualenv``.
+4. A usage message and list of current "extra" paths is printed.
 
+The directory names are added to a path file named
+``virtualenv_path_extensions.pth`` inside the site-packages directory
+for the environment.
 
-lssitepackages
---------------
-
-Calling ``lssitepackages`` shows the content of the ``site-packages``
-directory of the currently-active virtualenv.
+*Based on a contribution from James Bennett and Jannis Leidel.*

@@ -1,4 +1,4 @@
-.. _developers-extensions:
+.. _plugins:
 
 ===================
  Extension Plugins

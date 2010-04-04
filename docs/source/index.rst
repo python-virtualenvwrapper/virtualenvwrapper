@@ -24,7 +24,9 @@ Features
 3. Use a single command to switch between environments.
 4. Tab completion for commands that take a virtual environment as
    argument.
-5. User-configurable hooks for all operations.
+5. User-configurable hooks for all operations (see :ref:`scripts`).
+6. Plugin system for more creating sharable extensions (see
+   :ref:`plugins`).
 
 ===========
 Quick Setup
@@ -33,13 +35,15 @@ Quick Setup
 1. Create a directory to hold all of the virtual environments. The default is
    ``$HOME/.virtualenvs``.
 
-2. Add two lines to your .bashrc to set the location where the virtual environments should
-   live and the location of the script installed with this package::
+2. Add two lines to your shell startup file (``.bashrc``,
+   ``.profile``, etc.) to set the location where the virtual
+   environments should live and the location of the script installed
+   with this package::
 
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
 
-3. Run: ``source ~/.bashrc``
+3. Reload the startup file (e.g., run: ``source ~/.bashrc``).
 4. Run: ``workon``
 5. A list of environments, empty, is printed.
 6. Run: ``mkvirtualenv temp``
