@@ -3,9 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-#################
-virtualenvwrapper
-#################
+###########################
+virtualenvwrapper |release|
+###########################
 
 virtualenvwrapper is a set of extensions to Ian Bicking's `virtualenv
 <http://pypi.python.org/pypi/virtualenv>`_ tool.  The extensions
@@ -18,10 +18,15 @@ their dependencies.
 Features
 ========
 
- 1. Organizes all of your virtual environments in one place.
- 2. Wrappers for creating and deleting environments, including user-configurable hooks.
- 3. Use a single command to switch between environments.
- 4. Tab completion for commands that take a virtual environment as argument.
+1. Organizes all of your virtual environments in one place.
+2. Wrappers for managing your virtual environments (create, delete,
+   copy).
+3. Use a single command to switch between environments.
+4. Tab completion for commands that take a virtual environment as
+   argument.
+5. User-configurable hooks for all operations (see :ref:`scripts`).
+6. Plugin system for more creating sharable extensions (see
+   :ref:`plugins`).
 
 ===========
 Quick Setup
@@ -30,19 +35,30 @@ Quick Setup
 1. Create a directory to hold all of the virtual environments. The default is
    ``$HOME/.virtualenvs``.
 
-2. Add two lines to your .bashrc to set the location where the virtual environments should
-   live and the location of the script installed with this package::
+2. Add two lines to your shell startup file (``.bashrc``,
+   ``.profile``, etc.) to set the location where the virtual
+   environments should live and the location of the script installed
+   with this package::
 
     export WORKON_HOME=$HOME/.virtualenvs
-    source /usr/local/bin/virtualenvwrapper_bashrc
+    source /usr/local/bin/virtualenvwrapper.sh
 
-3. Run: ``source ~/.bashrc``
+3. Reload the startup file (e.g., run: ``source ~/.bashrc``).
 4. Run: ``workon``
 5. A list of environments, empty, is printed.
 6. Run: ``mkvirtualenv temp``
 7. A new environment, ``temp`` is created and activated.
 8. Run: ``workon``
 9. This time, the ``temp`` environment is included.
+
+Upgrading from 1.x
+==================
+
+The shell script containing the wrapper functions has been renamed in
+the 2.x series to reflect the fact that shells other than bash are
+supported.  In your startup file, change ``source
+/usr/local/bin/virtualenvwrapper_bashrc`` to ``source
+/usr/local/bin/virtualenvwrapper.sh``.
 
 =======
 Details
@@ -54,8 +70,9 @@ Details
    command_ref
    hooks
    tips
-   history
    developers
+   extensions
+   history
 
 .. _references:
 

@@ -3,13 +3,12 @@
 #set -x
 
 test_dir=$(dirname $0)
-source "$test_dir/../virtualenvwrapper_bashrc"
-
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
+    source "$test_dir/../virtualenvwrapper.sh"
 }
 
 oneTimeTearDown() {
@@ -39,12 +38,12 @@ test_activates () {
 
 test_hooks () {
     export pre_test_dir=$(cd "$test_dir"; pwd)
-    echo "echo GLOBAL premkvirtualenv >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
     echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
     mkvirtualenv "env3"
     output=$(cat "$test_dir/catch_output")
-    expected="GLOBAL premkvirtualenv
+    expected="GLOBAL premkvirtualenv $WORKON_HOME env3
 GLOBAL postmkvirtualenv"
     assertSame "$expected" "$output"
     rm -f "$WORKON_HOME/premkvirtualenv"

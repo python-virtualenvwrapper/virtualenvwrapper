@@ -2,6 +2,13 @@
 Release History
 ===============
 
+2.0
+
+  - Rewrote hook management using Distribute_ entry points to make it
+    easier to share extensions.
+
+.. _Distribute: http://packages.python.org/distribute/
+
 1.27
   
   - Added cpvirtualenv command [Thomas Desvenain]
