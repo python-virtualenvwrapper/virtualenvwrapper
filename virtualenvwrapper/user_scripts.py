@@ -8,6 +8,7 @@
 
 import logging
 import os
+import stat
 import subprocess
 
 import pkg_resources
@@ -41,8 +42,82 @@ def run_global(script_name, *args):
     return
 
 
+PERMISSIONS = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
+
+
+GLOBAL_HOOKS = [
+    # initialize
+    ("initialize",
+     "This hook is run during the startup phase when loading virtualenvwrapper.sh."),
+
+    # mkvirtualenv
+    ("premkvirtualenv",
+     "This hook is run after a new virtualenv is created and before it is activated."),
+    ("postmkvirtualenv",
+     "This hook is run after a new virtualenv is activated."),
+
+    # rmvirtualenv
+    ("prermvirtualenv",
+     "This hook is run before a virtualenv is deleted."),
+    ("postrmvirtualenv",
+     "This hook is run after a virtualenv is deleted."),
+
+    # deactivate
+    ("predeactivate",
+     "This hook is run before every virtualenv is deactivated."),
+    ("postdeactivate",
+     "This hook is run after every virtualenv is deactivated."),
+
+    # activate
+    ("preactivate",
+     "This hook is run before every virtualenv is activated."),
+    ("postactivate",
+     "This hook is run after every virtualenv is activated."),
+    ]
+
+
+LOCAL_HOOKS = [
+    # deactivate
+    ("predeactivate",
+     "This hook is run before this virtualenv is deactivated."),
+    ("postdeactivate",
+     "This hook is run after this virtualenv is deactivated."),
+
+    # activate
+    ("preactivate",
+     "This hook is run before this virtualenv is activated."),
+    ("postactivate",
+     "This hook is run after this virtualenv is activated."),
+    ]
+
+
+def make_hook(filename, comment):
+    """Create a hook script.
+    
+    :param filename: The name of the file to write.
+    :param comment: The comment to insert into the file.
+    """
+    filename = os.path.expanduser(os.path.expandvars(filename))
+    if not os.path.exists(filename):
+        log.info('Creating %s', filename)
+        with open(filename, 'wt') as f:
+            f.write("""#!%(shell)s
+# %(comment)s
+
+""" % {'comment':comment, 'shell':os.environ.get('SHELL', '/bin/sh')})
+        os.chmod(filename, PERMISSIONS)
+    return
+
+
 
 # HOOKS
+
+
+def initialize(args):
+    for filename, comment in GLOBAL_HOOKS:
+        make_hook(os.path.join('$WORKON_HOME', filename), comment)
+    return
+
 
 def initialize_source(args):
     return """
@@ -54,6 +129,9 @@ def initialize_source(args):
 
 def pre_mkvirtualenv(args):
     log.debug('pre_mkvirtualenv %s', str(args))
+    envname=args[0]
+    for filename, comment in LOCAL_HOOKS:
+        make_hook(os.path.join('$WORKON_HOME', envname, 'bin', filename), comment)
     run_global('premkvirtualenv', *args)
     return
 

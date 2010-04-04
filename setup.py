@@ -152,7 +152,7 @@ setup(
     entry_points = {
         #'console_scripts': [ 'venvw_hook = virtualenvwrapper.hook_loader:main' ],
         'virtualenvwrapper.initialize': [
-            'make_hooks = virtualenvwrapper.make_hooks:initialize',
+            'user_scripts = virtualenvwrapper.user_scripts:initialize',
             ],
         'virtualenvwrapper.initialize_source': [
             'user_scripts = virtualenvwrapper.user_scripts:initialize_source',
@@ -160,7 +160,6 @@ setup(
 
         'virtualenvwrapper.pre_mkvirtualenv': [
             'user_scripts = virtualenvwrapper.user_scripts:pre_mkvirtualenv',
-            'make_hooks = virtualenvwrapper.make_hooks:pre_mkvirtualenv',
             ],
         'virtualenvwrapper.post_mkvirtualenv_source': [
             'user_scripts = virtualenvwrapper.user_scripts:post_mkvirtualenv_source',
