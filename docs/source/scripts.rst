@@ -1,16 +1,17 @@
-.. _hooks-scripts:
+.. _scripts:
 
-Per-User Hook Scripts
-=====================
+========================
+ Per-User Customization
+========================
 
 The end-user customization scripts are either *sourced* (allowing them
 to modify your shell environment) or *run* as an external program at
 the appropriate trigger time.
 
-.. _hooks-scripts-initialize:
+.. _scripts-initialize:
 
 initialize
-----------
+==========
 
   :Global/Local: global
   :Argument(s): None
@@ -20,10 +21,10 @@ initialize
 is loaded into your environment.  Use it to adjust global settings
 when virtualenvwrapper is enabled.
 
-.. _hooks-scripts-premkvirtualenv:
+.. _scripts-premkvirtualenv:
 
 premkvirtualenv
----------------
+===============
 
   :Global/Local: global
   :Argument(s): name of new environment
@@ -35,10 +36,10 @@ is switched to point to the new env. The current working directory for
 the script is ``$WORKON_HOME`` and the name of the new environment is
 passed as an argument to the script.
 
-.. _hooks-scripts-postmkvirtualenv:
+.. _scripts-postmkvirtualenv:
 
 postmkvirtualenv
-----------------
+================
 
   :Global/Local: global
   :Argument(s): none
@@ -47,10 +48,10 @@ postmkvirtualenv
 ``$WORKON_HOME/postmkvirtualenv`` is sourced after the new environment
 is created and activated.
 
-.. _hooks-scripts-preactivate:
+.. _scripts-preactivate:
 
 preactivate
------------
+===========
 
   :Global/Local: global, local
   :Argument(s): environment name
@@ -64,10 +65,10 @@ The local ``$VIRTUAL_ENV/bin/preactivate`` hook is run before the new
 environment is enabled.  The environment name is passed as the first
 argument.
 
-.. _hooks-scripts-postactivate:
+.. _scripts-postactivate:
 
 postactivate
-------------
+============
 
   :Global/Local: global, local
   :Argument(s): none
@@ -98,10 +99,10 @@ containing the PyMOTW source.
     cd $pymotw_root
     PATH=$pymotw_root/bin:$PATH
 
-.. _hooks-scripts-predeactivate:
+.. _scripts-predeactivate:
 
 predeactivate
--------------
+=============
 
   :Global/Local: local, global
   :Argument(s): none
@@ -116,10 +117,10 @@ The global ``$WORKON_HOME/predeactivate`` script is sourced before the
 current environment is deactivated.  ``$VIRTUAL_ENV`` refers to the
 old environment at the time the script runs.
 
-.. _hooks-scripts-postdeactivate:
+.. _scripts-postdeactivate:
 
 postdeactivate
---------------
+==============
 
   :Global/Local: local, global
   :Argument(s): none
@@ -130,10 +131,10 @@ current environment is deactivated, and can be used to disable or
 clear settings in your environment.  The path to the environment just
 deactivated is available in ``$VIRTUALENVWRAPPER_LAST_VIRTUALENV``.
 
-.. _hooks-scripts-prermvirtualenv:
+.. _scripts-prermvirtualenv:
 
 prermvirtualenv
----------------
+===============
 
   :Global/Local: global
   :Argument(s): environment name
@@ -143,10 +144,10 @@ The ``$WORKON_HOME/prermvirtualenv`` script is run as an external
 program before the environment is removed. The full path to the
 environment directory is passed as an argument to the script.
 
-.. _hooks-scripts-postrmvirtualenv:
+.. _scripts-postrmvirtualenv:
 
 postrmvirtualenv
-----------------
+================
 
   :Global/Local: global
   :Argument(s): environment name
