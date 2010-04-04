@@ -1,7 +1,16 @@
 # Get the version of the app.  This is used in the doc build.
 export VERSION=$(shell python setup.py --version)
 
-# Default target is to build the source distribution.
+# Default target is to show help
+help:
+	@echo "sdist          - Source distribution"
+	@echo "html           - HTML documentation"
+	@echo "register       - register a new release on PyPI"
+	@echo "website        - build web version of docs"
+	@echo "installwebsite - deploy web version of docs"
+	@echo "develop        - install development version"
+
+
 .PHONY: sdist
 sdist: html
 	python setup.py sdist
