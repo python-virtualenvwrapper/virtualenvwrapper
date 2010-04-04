@@ -62,6 +62,8 @@ def main():
     if not args:
         parser.error('Please specify the hook to run')
     hook = args[0]
+    if options.sourcing:
+        hook += '_source'
 
     for ep in pkg_resources.iter_entry_points('virtualenvwrapper.%s' % hook):
         plugin = ep.load()
