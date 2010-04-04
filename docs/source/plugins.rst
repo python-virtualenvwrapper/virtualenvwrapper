@@ -4,11 +4,11 @@
  Extension Plugins
 ===================
 
-virtualenvwrapper adds several extension points for modifying its
-behavior.  End-users can use shell scripts or other programs for
-personal customization (see :ref:`scripts`).  Extensions can also be
-implemented in Python by using Distribute_ *entry points*, making
-it possible to share common behaviors between systems.
+virtualenvwrapper includes several ways to modify its behavior.
+End-users can use shell scripts or other programs for personal
+customization (see :ref:`scripts`).  Extensions can also be
+implemented in Python by using Distribute_ *entry points*, making it
+possible to share common behaviors between systems.
 
 Defining an Extension
 =====================
@@ -34,7 +34,7 @@ namespace by setting up their source tree like:
   * __init__.py
   * user_scripts.py
 
-And placing the following code in the ``__init__.py``::
+And placing the following code in ``__init__.py``::
 
     """virtualenvwrapper module
     """

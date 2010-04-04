@@ -2,9 +2,9 @@
 For Developers
 ##############
 
-If you would like to contribute, these instructions should help you
-get started.  Patches, bug reports, and feature requests are all
-welcome through the `BitBucket site
+If you would like to contribute to virtualenvwrapper directly, these
+instructions should help you get started.  Patches, bug reports, and
+feature requests are all welcome through the `BitBucket site
 <http://bitbucket.org/dhellmann/virtualenvwrapper/>`_.  Contributions
 in the form of patches or pull requests are easier to integrate and
 will receive priority attention.
@@ -14,7 +14,7 @@ Building Documentation
 
 The documentation for virtualenvwrapper is written in reStructuredText
 and converted to HTML using Sphinx. The build itself is driven by
-Paver.  You will need the following packages in order to build the
+make.  You will need the following packages in order to build the
 docs:
 
 - Sphinx
