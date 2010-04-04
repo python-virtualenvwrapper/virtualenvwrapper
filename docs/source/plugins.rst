@@ -16,8 +16,9 @@ Defining an Extension
 .. note::
 
   Virtualenvwrapper is delivered with a plugin for creating and
-  running the user customization scripts.  The examples below are
-  taken from the implementation of that plugin.
+  running the user customization scripts
+  (:ref:`extensions-user_scripts`).  The examples below are taken from
+  the implementation of that plugin.
 
 Code Organization
 -----------------
@@ -40,8 +41,10 @@ And placing the following code in the ``__init__.py``::
 
     __import__('pkg_resources').declare_namespace(__name__)
 
-This isn't required, so if you would prefer to use a different
-namespace that will work, too.
+.. note::
+
+    Extensions can be loaded from any package, so using the
+    ``virtualenvwrapper`` namespace is not required.
 
 Extension API
 -------------
@@ -54,23 +57,24 @@ imported from elsewhere using standard Python code organization
 techniques.
 
 The API is the same for every extension point.  Each uses a Python
-function that takes a single argument, a list of string arguments
-passed to the hook loader on the command line.  The contents of the
-argument list are defined for each extension point below (see
-:ref:`plugins-extension-points`).
+function that takes a single argument, a list of strings passed to the
+hook loader on the command line.  
 
 ::
 
     def function_name(args):
         # args is a list of strings passed to the hook loader
 
+The contents of the argument list are defined for each extension point
+below (see :ref:`plugins-extension-points`).
+
 Extension Invocation
 --------------------
 
 Plugins can attach to each hook in two different ways.  The default is
-to have an extension function run and do some work directly.  For
-example, the ``initialize()`` hook for the user scripts plugin makes
-sure the scripts exist every time ``virtualenvwrapper.sh`` is loaded.
+to have a function run and do some work directly.  For example, the
+``initialize()`` function for the user scripts plugin creates default
+user scripts when ``virtualenvwrapper.sh`` is loaded.
 
 ::
 
@@ -88,10 +92,10 @@ There are cases where the extension needs to update the user's
 environment (e.g., changing the current working directory or setting
 environment variables).  Modifications to the user environment must be
 made within the user's current shell, and cannot be run in a separate
-process.  Extensions can define hook functions to return the text of
-the shell statements to be executed.  These *source* hooks are run
-after the regular hooks with the same name, and should not do any work
-of their own.
+process.  To have code run in the user's shell process, extensions can
+define hook functions to return the text of the shell statements to be
+executed.  These *source* hooks are run after the regular hooks with
+the same name, and should not do any work of their own.
 
 The ``initialize_source()`` hook for the user scripts plugin looks for
 a global initialize script and causes it to be run in the current
@@ -112,11 +116,11 @@ shell process.
     Because the extension is modifying the user's working shell, care
     must be taken not to corrupt the environment by overwriting
     existing variable values unexpectedly.  Avoid creating temporary
-    variables where possible, and use unique names where necessary.
-    Prefixing variables with the extension name is a good way to
-    manage the namespace.  For example, instead of ``temp_file`` use
-    ``user_scripts_temp_file``.  Use ``unset`` to release temporary
-    variable names when they are no longer needed.
+    variables where possible, and use unique names where variables
+    cannot be avoided.  Prefixing variables with the extension name is
+    a good way to manage the namespace.  For example, instead of
+    ``temp_file`` use ``user_scripts_temp_file``.  Use ``unset`` to
+    release temporary variable names when they are no longer needed.
 
 .. warning::
 
@@ -183,8 +187,8 @@ The Hook Loader
 ---------------
 
 Extensions are run through a command line application implemented in
-``virtualenvwrapper.hook_loader``.  Since ``virtualenvwrapper.sh`` is
-the primary caller and users do not typically need to run the app
+``virtualenvwrapper.hook_loader``.  Because ``virtualenvwrapper.sh``
+is the primary caller and users do not typically need to run the app
 directly, no separate script is installed.  Instead, to run the
 application, use the ``-m`` option to the interpreter::
 
@@ -199,13 +203,21 @@ application, use the ``-m`` option to the interpreter::
     -v, --verbose  Show more information on the console
     -q, --quiet    Show less information on the console
 
+To run the extensions for the initialize hook::
+
+  $ python -m virtualenvwrapper.hook_loader -v initialize
+
+To get the shell commands for the initialize hook::
+
+  $ python -m virtualenvwrapper.hook_loader --source initialize
+
 Logging
 -------
 
 The hook loader configures logging so that messages are written to
-``$WORKON_HOME/hook.log``.  Messages are also written to stdout,
-depending on the verbosity flag.  The default is for messages at info
-or higher levels to be written to stdout, and debug or higher to go to
+``$WORKON_HOME/hook.log``.  Messages also may be written to stderr,
+depending on the verbosity flag.  The default is for messages at *info*
+or higher levels to be written to stderr, and *debug* or higher to go to
 the log file.  Using logging in this way provides a convenient
 mechanism for users to control the verbosity of extensions.
 
@@ -222,19 +234,24 @@ messages.
         log.debug('pre_mkvirtualenv %s', str(args))
         # ...
 
+.. seealso::
+
+   * `Standard library documentation for logging <http://docs.python.org/library/logging.html>`__
+   * `PyMOTW for logging <http://www.doughellmann.com/PyMOTW/logging/>`__
+
 .. _plugins-extension-points:
 
 Extension Points
 ================
 
-The extension point names for native plugins are different from the
-user customization scripts.  The pattern is
-``virtualenvwrapper.(pre|post)_event[_source]``.  The *event* is the
-action taken by the user or virtualenvwrapper that triggers the
-extension.  ``(pre|post)`` is the prefix indicating whether to call
-the extension before or after the event.  The suffix ``_source`` is
-added for extensions that return shell code instead of taking action
-directly (see :ref:`plugins-user-env`).
+The extension point names for native plugins follow a naming
+convention with several parts:
+``virtualenvwrapper.(pre|post)_<event>[_source]``.  The *<event>* is
+the action taken by the user or virtualenvwrapper that triggers the
+extension.  ``(pre|post)`` indicates whether to call the extension
+before or after the event.  The suffix ``_source`` is added for
+extensions that return shell code instead of taking action directly
+(see :ref:`plugins-user-env`).
 
 .. _plugins-initialize:
 

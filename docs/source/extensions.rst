@@ -2,6 +2,8 @@
  Existing Extensions
 =====================
 
-make_hooks
+.. _extensions-user_scripts:
 
 user_scripts
+============
+
