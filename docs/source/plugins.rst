@@ -71,6 +71,9 @@ below (see :ref:`plugins-extension-points`).
 Extension Invocation
 --------------------
 
+Direct Action
+~~~~~~~~~~~~~
+
 Plugins can attach to each hook in two different ways.  The default is
 to have a function run and do some work directly.  For example, the
 ``initialize()`` function for the user scripts plugin creates default
@@ -86,7 +89,7 @@ user scripts when ``virtualenvwrapper.sh`` is loaded.
 .. _plugins-user-env:
 
 Modifying the User Environment
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are cases where the extension needs to update the user's
 environment (e.g., changing the current working directory or setting
