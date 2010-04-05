@@ -181,6 +181,8 @@ configured.
         description = 'Enhancements to virtualenv',
     
         # ... details omitted ...
+
+        namespace_packages = [ 'virtualenvwrapper' ],
     
         entry_points = {
             'virtualenvwrapper.initialize': [
@@ -193,7 +195,7 @@ configured.
             # ... details omitted ...
             },
         )
-    
+
 The ``entry_points`` argument to ``setup()`` is a dictionary mapping
 the entry point *group names* to lists of entry point specifiers.  A
 different group name is defined by virtualenvwrapper for each
@@ -203,6 +205,11 @@ The entry point specifiers are strings with the syntax ``name =
 package.module:function``.  By convention, the *name* of each entry
 point is the plugin name, but that is not required (the names are not
 used).
+
+.. seealso::
+
+  * `namespace packages <http://packages.python.org/distribute/setuptools.html#namespace-packages>`__
+  * `Extensible Applications and Frameworks <http://packages.python.org/distribute/setuptools.html#extensible-applications-and-frameworks>`__
 
 The Hook Loader
 ---------------
