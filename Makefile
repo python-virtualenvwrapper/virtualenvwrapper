@@ -29,7 +29,7 @@ website: docs/sphinx/web/templates/base.html
 	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website")
 
 installwebsite: website
-	(cd docs/website/html && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper2/)
+	(cd docs/website/html && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/)
 
 # Register the new version on pypi
 .PHONY: register
