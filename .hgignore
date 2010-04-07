@@ -1,18 +1,19 @@
 syntax: glob
+*.pyc
+README.html
+build
+dist
 distribute*.egg
 distribute*.tar.gz
-README.html
-virtualenvwrapper.egg-info
-trace.txt
-dist
 docs/build
 docs/website
-*.pyc
 sphinx/web/templates/base.html
 tests/catch_output
 tests/testpackage/build
 tests/testpackage/dist
 tests/testpackage/testpackage.egg-info
+trace.txt
+virtualenvwrapper.egg-info
 virtualenvwrapper/docs
 
 syntax: re
