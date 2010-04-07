@@ -3,7 +3,6 @@
 #set -x
 
 test_dir=$(dirname $0)
-#source "$test_dir/../virtualenvwrapper.sh"
 
 export SCRATCH_DIR="${TMPDIR:-/tmp}/test_scratch_dir"
 

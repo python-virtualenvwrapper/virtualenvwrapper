@@ -100,11 +100,14 @@ def make_hook(filename, comment):
     filename = os.path.expanduser(os.path.expandvars(filename))
     if not os.path.exists(filename):
         log.info('Creating %s', filename)
-        with open(filename, 'wt') as f:
+        f = open(filename, 'wt')
+        try:
             f.write("""#!%(shell)s
 # %(comment)s
 
 """ % {'comment':comment, 'shell':os.environ.get('SHELL', '/bin/sh')})
+        finally:
+            f.close()
         os.chmod(filename, PERMISSIONS)
     return
 

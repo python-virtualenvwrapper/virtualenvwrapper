@@ -52,7 +52,10 @@ then
 fi
 
 # Locate the global Python where virtualenvwrapper is installed.
-VIRTUALENVWRAPPER_PYTHON="$(which python)"
+if [ "$VIRTUALENVWRAPPER_PYTHON" = "" ]
+then
+    VIRTUALENVWRAPPER_PYTHON="$(which python)"
+fi
 
 # Normalize the directory name in case it includes 
 # relative path components.

@@ -3,13 +3,13 @@
 #set -x
 
 test_dir=$(dirname $0)
-source "$test_dir/../virtualenvwrapper.sh"
 
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
+    source "$test_dir/../virtualenvwrapper.sh"
 }
 
 oneTimeTearDown() {
