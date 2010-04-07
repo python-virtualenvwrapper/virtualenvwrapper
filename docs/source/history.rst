@@ -2,6 +2,11 @@
 Release History
 ===============
 
+2.0.1
+
+  - Fixed issue #29, to use a default value for ``TMPDIR`` if it is
+    not set in the user's shell environment.
+
 2.0
 
   - Rewrote hook management using Distribute_ entry points to make it
