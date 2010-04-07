@@ -31,28 +31,13 @@ Rich Leland has created a short `screencast
 <http://mathematism.com/2009/jul/30/presentation-pip-and-virtualenv/>`__
 showing off the features of virtualenvwrapper.
 
-===========
-Quick Setup
-===========
+============
+Installation
+============
 
-1. Create a directory to hold all of the virtual environments. The default is
-   ``$HOME/.virtualenvs``.
-
-2. Add two lines to your shell startup file (``.bashrc``,
-   ``.profile``, etc.) to set the location where the virtual
-   environments should live and the location of the script installed
-   with this package::
-
-    export WORKON_HOME=$HOME/.virtualenvs
-    source /usr/local/bin/virtualenvwrapper.sh
-
-3. Reload the startup file (e.g., run: ``source ~/.bashrc``).
-4. Run: ``workon``
-5. A list of environments, empty, is printed.
-6. Run: ``mkvirtualenv temp``
-7. A new environment, ``temp`` is created and activated.
-8. Run: ``workon``
-9. This time, the ``temp`` environment is included.
+See the `project documentation
+<http://www.doughellmann.com/docs/virtualenvwrapper/>`__ for
+installation and setup instructions.
 
 Upgrading from 1.x
 ==================
