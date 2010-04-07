@@ -2,6 +2,10 @@
 Release History
 ===============
 
+Dev
+
+  - Add support for ksh.
+
 2.0.2
 
   - Fixed issue #32, making virtualenvwrapper.user_scripts compatible

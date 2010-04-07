@@ -10,6 +10,8 @@ ifeq ($(SUPPORTED_PYTHON_VERSIONS),)
 SUPPORTED_PYTHON_VERSIONS=2.5 2.6
 endif
 
+SUPPORTED_SHELLS=bash sh ksh zsh
+
 # Default target is to show help
 help:
 	@echo "sdist          - Source distribution"
@@ -54,17 +56,17 @@ docs/sphinx/web/templates/base.html: ~/Devel/doughellmann/doughellmann/templates
 # Testing
 TEST_SCRIPTS=$(wildcard tests/test*.sh)
 
-.PHONY: develop test test-bash test-sh test-zsh test-loop test-install
-test: test-bash test-sh test-zsh test-install
+test:
+	for name in $(SUPPORTED_SHELLS) ; do \
+		$(MAKE) test-$$name || exit 1 ; \
+	done
+	$(MAKE) test-install
 
 develop:
 	python setup.py develop
 
-test-bash:
-	TEST_SHELL=bash $(MAKE) test-loop
-
-test-sh:
-	TEST_SHELL=sh $(MAKE) test-loop
+test-%:
+	TEST_SHELL=$(subst test-,,$@) $(MAKE) test-loop
 
 test-zsh:
 	TEST_SHELL="zsh -o shwordsplit" $(MAKE) test-loop
@@ -80,6 +82,7 @@ test-loop:
 			|| exit 1 ; \
 		$$TMPDIR/virtualenvwrapper-test-env/bin/python setup.py install || exit 1 ; \
 		for test_script in $(wildcard tests/test*.sh) ; do \
+			echo ; \
 	 		echo '********************************************************************************' ; \
 			echo "Running $$test_script with $(TEST_SHELL) under Python $$py_ver" ; \
 			VIRTUALENVWRAPPER_PYTHON=$$TMPDIR/virtualenvwrapper-test-env/bin/python SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script || exit 1 ; \

@@ -73,7 +73,7 @@ then
 fi
 
 # Verify that the WORKON_HOME directory exists
-function virtualenvwrapper_verify_workon_home () {
+virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
     then
         [ "$1" != "-q" ] && echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist.  Create it or set WORKON_HOME to an existing directory." >&2
@@ -85,7 +85,7 @@ function virtualenvwrapper_verify_workon_home () {
 #HOOK_VERBOSE_OPTION="-v"
 
 # Run the hooks
-function virtualenvwrapper_run_hook () {
+virtualenvwrapper_run_hook () {
     # First anything that runs directly from the plugin
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION "$@"
     # Now anything that wants to run inside this shell
@@ -96,7 +96,7 @@ function virtualenvwrapper_run_hook () {
 }
 
 # Set up virtualenvwrapper properly
-function virtualenvwrapper_initialize () {
+virtualenvwrapper_initialize () {
     virtualenvwrapper_verify_workon_home -q || return 1
     virtualenvwrapper_run_hook "initialize"
 }
@@ -104,7 +104,7 @@ function virtualenvwrapper_initialize () {
 virtualenvwrapper_initialize
 
 # Verify that virtualenv is installed and visible
-function virtualenvwrapper_verify_virtualenv () {
+virtualenvwrapper_verify_virtualenv () {
     venv=$(which virtualenv | grep -v "not found")
     if [ "$venv" = "" ]
     then
@@ -120,7 +120,7 @@ function virtualenvwrapper_verify_virtualenv () {
 }
 
 # Verify that the requested environment exists
-function virtualenvwrapper_verify_workon_environment () {
+virtualenvwrapper_verify_workon_environment () {
     typeset env_name="$1"
     if [ ! -d "$WORKON_HOME/$env_name" ]
     then
@@ -131,7 +131,7 @@ function virtualenvwrapper_verify_workon_environment () {
 }
 
 # Verify that the active environment exists
-function virtualenvwrapper_verify_active_environment () {
+virtualenvwrapper_verify_active_environment () {
     if [ ! -n "${VIRTUAL_ENV}" ] || [ ! -d "${VIRTUAL_ENV}" ]
     then
         echo "ERROR: no virtualenv active, or active virtualenv is missing" >&2
@@ -145,7 +145,7 @@ function virtualenvwrapper_verify_active_environment () {
 # Usage: mkvirtualenv [options] ENVNAME
 # (where the options are passed directly to virtualenv)
 #
-function mkvirtualenv () {
+mkvirtualenv () {
     eval "envname=\$$#"
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_virtualenv || return 1
@@ -163,7 +163,7 @@ function mkvirtualenv () {
 }
 
 # Remove an environment, in the WORKON_HOME.
-function rmvirtualenv () {
+rmvirtualenv () {
     typeset env_name="$1"
     virtualenvwrapper_verify_workon_home || return 1
     if [ "$env_name" = "" ]
@@ -184,7 +184,7 @@ function rmvirtualenv () {
 }
 
 # List the available environments.
-function virtualenvwrapper_show_workon_options () {
+virtualenvwrapper_show_workon_options () {
     virtualenvwrapper_verify_workon_home || return 1
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
@@ -197,7 +197,7 @@ function virtualenvwrapper_show_workon_options () {
 #
 # Usage: workon [environment_name]
 #
-function workon () {
+workon () {
 	typeset env_name="$1"
 	if [ "$env_name" = "" ]
     then
@@ -232,7 +232,7 @@ function workon () {
     virtualenvwrapper_saved_deactivate=$(typeset -f deactivate)
 
     # Replace the deactivate() function with a wrapper.
-    eval 'function deactivate () {
+    eval 'deactivate () {
         # Call the local hook before the global so we can undo
         # any settings made by the local postactivate first.
         virtualenvwrapper_run_hook "pre_deactivate"
@@ -288,12 +288,12 @@ elif [ -n "$ZSH_VERSION" ] ; then
 fi
 
 # Prints the Python version string for the current interpreter.
-function virtualenvwrapper_get_python_version () {
+virtualenvwrapper_get_python_version () {
     python -c 'import sys; print ".".join(str(p) for p in sys.version_info[:2])'
 }
 
 # Prints the path to the site-packages directory for the current environment.
-function virtualenvwrapper_get_site_packages_dir () {
+virtualenvwrapper_get_site_packages_dir () {
     echo "$VIRTUAL_ENV/lib/python`virtualenvwrapper_get_python_version`/site-packages"    
 }
 
@@ -308,7 +308,7 @@ function virtualenvwrapper_get_site_packages_dir () {
 # "virtualenv_path_extensions.pth" inside the virtualenv's
 # site-packages directory; if this file does not exist, it will be
 # created first.
-function add2virtualenv () {
+add2virtualenv () {
 
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
@@ -350,7 +350,7 @@ function add2virtualenv () {
 
 # Does a ``cd`` to the site-packages directory of the currently-active
 # virtualenv.
-function cdsitepackages () {
+cdsitepackages () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     site_packages="`virtualenvwrapper_get_site_packages_dir`"
@@ -358,7 +358,7 @@ function cdsitepackages () {
 }
 
 # Does a ``cd`` to the root of the currently-active virtualenv.
-function cdvirtualenv () {
+cdvirtualenv () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     cd $VIRTUAL_ENV/$1
@@ -366,7 +366,7 @@ function cdvirtualenv () {
 
 # Shows the content of the site-packages directory of the currently-active
 # virtualenv
-function lssitepackages () {
+lssitepackages () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     site_packages="`virtualenvwrapper_get_site_packages_dir`"
@@ -382,7 +382,7 @@ function lssitepackages () {
 }
 
 # Duplicate the named virtualenv to make a new one.
-function cpvirtualenv() {
+cpvirtualenv() {
 
     typeset env_name="$1"
     if [ "$env_name" = "" ]

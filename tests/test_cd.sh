@@ -22,31 +22,31 @@ setUp () {
 }
 
 test_cdvirtual() {
-    pushd "$(pwd)" >/dev/null
+    start_dir="$(pwd)"
     cdvirtualenv
     assertSame "$VIRTUAL_ENV" "$(pwd)"
     cdvirtualenv bin
     assertSame "$VIRTUAL_ENV/bin" "$(pwd)"
-    popd >/dev/null
+    cd "$(start_dir)"
 }
 
 test_cdsitepackages () {
-    pushd "$(pwd)" >/dev/null   
+    start_dir="$(pwd)"
     cdsitepackages
     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
     sitepackages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
     assertSame "$sitepackages" "$(pwd)"
-    popd >/dev/null
+    cd "$(start_dir)"
 }
 
 test_cdsitepackages_with_arg () {
-    pushd "$(pwd)" >/dev/null
+    start_dir="$(pwd)"
     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
     sitepackage_subdir="$VIRTUAL_ENV/lib/python${pyvers}/site-packages/subdir"
     mkdir -p "${sitepackage_subdir}"
     cdsitepackages subdir
     assertSame "$sitepackage_subdir" "$(pwd)"
-    popd >/dev/null
+    cd "$(start_dir)"
 }
 
 test_cdvirtualenv_no_workon_home () {
