@@ -2,6 +2,11 @@
 Release History
 ===============
 
+2.0.2
+
+  - Fixed issue #32, making virtualenvwrapper.user_scripts compatible
+    with Python 2.5 again.
+
 2.0.1
 
   - Fixed issue #29, to use a default value for ``TMPDIR`` if it is
