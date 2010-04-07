@@ -59,6 +59,16 @@ VIRTUALENVWRAPPER_PYTHON="$(which python)"
 WORKON_HOME=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.abspath(os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\")))")
 export WORKON_HOME
 
+# Make sure we have a location for temporary files
+if [ "$VIRTUALENVWRAPPER_TMPDIR" = "" ]
+then
+    VIRTUALENVWRAPPER_TMPDIR="$TMPDIR"
+    if [ "$VIRTUALENVWRAPPER_TMPDIR" = "" ]
+    then
+        VIRTUALENVWRAPPER_TMPDIR="/tmp"
+    fi
+fi
+
 # Verify that the WORKON_HOME directory exists
 function virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
@@ -77,9 +87,9 @@ function virtualenvwrapper_run_hook () {
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION "$@"
     # Now anything that wants to run inside this shell
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION \
-        --source "$@" >>$TMPDIR/$$.hook
-    source $TMPDIR/$$.hook
-    rm -f $TMPDIR/$$.hook
+        --source "$@" >>$VIRTUALENVWRAPPER_TMPDIR/$$.hook
+    source $VIRTUALENVWRAPPER_TMPDIR/$$.hook
+    rm -f $VIRTUALENVWRAPPER_TMPDIR/$$.hook
 }
 
 # Set up virtualenvwrapper properly
