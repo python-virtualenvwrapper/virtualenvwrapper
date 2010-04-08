@@ -48,6 +48,17 @@ supported.  In your startup file, change ``source
 /usr/local/bin/virtualenvwrapper_bashrc`` to ``source
 /usr/local/bin/virtualenvwrapper.sh``.
 
+============
+Contributing
+============
+
+Before contributing new features to virtualenvwrapper core, consider
+whether they should be implemented as an extension instead.
+
+Refer to the `developers docs
+<http://www.doughellmann.com/docs/virtualenvwrapper/developers.html>`__
+for tips on contributing patches.
+
 =======
 License
 =======
@@ -69,3 +80,5 @@ CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
 USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
+
+.. _BitBucket: http://bitbucket.org/dhellmann/virtualenvwrapper/overview/

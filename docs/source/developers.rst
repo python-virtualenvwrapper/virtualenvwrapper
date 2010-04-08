@@ -9,6 +9,11 @@ feature requests are all welcome through the `BitBucket site
 in the form of patches or pull requests are easier to integrate and
 will receive priority attention.
 
+.. note::
+
+  Before contributing new features to virtualenvwrapper core, please
+  consider whether they should be implemented as an extension instead.
+
 Building Documentation
 ======================
 
