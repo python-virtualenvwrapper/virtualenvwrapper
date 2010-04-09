@@ -89,10 +89,11 @@ virtualenvwrapper_run_hook () {
     # First anything that runs directly from the plugin
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION "$@"
     # Now anything that wants to run inside this shell
+    hook_script=$(tempfile --directory "$VIRTUALENVWRAPPER_TMPDIR")
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION \
-        --source "$@" >>$VIRTUALENVWRAPPER_TMPDIR/$$.hook
-    source $VIRTUALENVWRAPPER_TMPDIR/$$.hook
-    rm -f $VIRTUALENVWRAPPER_TMPDIR/$$.hook
+        --source "$@" >>"$hook_script"
+    source "$hook_script"
+    rm -f "$hook_script"
 }
 
 # Set up virtualenvwrapper properly

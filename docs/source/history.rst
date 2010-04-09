@@ -6,6 +6,7 @@ Dev
 
   - Add support for ksh.  Thanks to Doug Latornell for doing the
     research on what needed to be changed.
+  - Switch to ``tempfile`` command for creating temporary hook files.
 
 2.0.2
 
