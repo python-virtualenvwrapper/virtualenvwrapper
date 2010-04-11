@@ -9,7 +9,10 @@ Dev
   - Switch to ``tempfile`` command for creating temporary hook files.
   - Test import of virtualenvwrapper.hook_loader on startup and report
     the error in a way that should help the user figure out how to fix
-    it.
+    it (issue #33).
+  - Update :ref:`command-mkvirtualenv` documentation to include the
+    fact that a new environment is activated immediately after it is
+    created (issue #30).
 
 2.0.2
 

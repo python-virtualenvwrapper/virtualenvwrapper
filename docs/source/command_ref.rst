@@ -11,6 +11,8 @@ All of the commands below are to be used on the Terminal command line.
 Managing Environments
 =====================
 
+.. _command-mkvirtualenv:
+
 mkvirtualenv
 ------------
 
@@ -20,7 +22,8 @@ Syntax::
 
     mkvirtualenv [options] ENVNAME
 
-(any options are passed directly to ``virtualenv``)
+All command line options are passed directly to ``virtualenv``.  The
+new environment is automatically activated after being initialized.
 
 .. seealso::
 
