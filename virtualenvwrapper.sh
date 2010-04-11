@@ -99,10 +99,16 @@ virtualenvwrapper_run_hook () {
 # Set up virtualenvwrapper properly
 virtualenvwrapper_initialize () {
     virtualenvwrapper_verify_workon_home -q || return 1
+    # Test for the virtualenvwrapper package we need so we can report
+    # an installation problem.
+    "$VIRTUALENVWRAPPER_PYTHON" -c "import virtualenvwrapper.hook_loader" >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "virtualenvwrapper.sh: Could not find Python module virtualenvwrapper.hook_loader using VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON. Is the PATH set properly?" 1>&2
+        return 1
+    fi
     virtualenvwrapper_run_hook "initialize"
 }
-
-virtualenvwrapper_initialize
 
 # Verify that virtualenv is installed and visible
 virtualenvwrapper_verify_virtualenv () {
@@ -426,3 +432,8 @@ cpvirtualenv() {
     echo "Created $new_env virtualenv"
     workon "$new_env"
 }
+
+#
+# Invoke the initialization hooks
+#
+virtualenvwrapper_initialize

@@ -53,6 +53,27 @@ and the location of the script installed with this package::
 After editing it, reload the startup file (e.g., run: ``source
 ~/.bashrc``).
 
+Python Interpreter and $PATH
+============================
+
+During startup, ``virtualenvwrapper.sh`` finds the first ``python`` on
+the ``$PATH`` and remembers it to use later.  This eliminates any
+conflict as the ``$PATH`` changes, enabling interpreters inside
+virtual environments where virtualenvwrapper is not installed.
+Because of this behavior, it is important for the ``$PATH`` to be set
+**before** sourcing ``virtualenvwrapper.sh``.  For example::
+
+    export PATH=/usr/local/bin:$PATH
+    source /usr/local/bin/virtualenvwrapper.sh
+
+To override the ``$PATH`` search, set the variable
+``VIRTUALENVWRAPPER_PYTHON`` to the full path of the interpreter to
+use (also **before** sourcing ``virtualenvwrapper.sh``).  For
+example::
+
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+    source /usr/local/bin/virtualenvwrapper.sh
+
 Quick-Start
 ===========
 
