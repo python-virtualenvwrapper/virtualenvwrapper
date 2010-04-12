@@ -167,6 +167,13 @@ setup(
             'user_scripts = virtualenvwrapper.user_scripts:post_mkvirtualenv_source',
             ],
 
+        'virtualenvwrapper.pre_cpvirtualenv': [
+            'user_scripts = virtualenvwrapper.user_scripts:pre_cpvirtualenv',
+            ],
+        'virtualenvwrapper.post_cpvirtualenv_source': [
+            'user_scripts = virtualenvwrapper.user_scripts:post_cpvirtualenv_source',
+            ],
+
         'virtualenvwrapper.pre_rmvirtualenv': [
             'user_scripts = virtualenvwrapper.user_scripts:pre_rmvirtualenv',
             ],

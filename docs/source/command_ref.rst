@@ -44,6 +44,8 @@ Syntax::
    * :ref:`scripts-prermvirtualenv`
    * :ref:`scripts-postrmvirtualenv`
 
+.. _command-cpvirtualenv:
+
 cpvirtualenv
 ------------
 
@@ -57,6 +59,13 @@ Syntax::
 
    The environment created by the copy operation is made `relocatable
    <http://virtualenv.openplans.org/#making-environments-relocatable>`__.
+
+.. seealso::
+
+   * :ref:`scripts-precpvirtualenv`
+   * :ref:`scripts-postcpvirtualenv`
+   * :ref:`scripts-premkvirtualenv`
+   * :ref:`scripts-postmkvirtualenv`
 
 ==================================
 Controlling the Active Environment

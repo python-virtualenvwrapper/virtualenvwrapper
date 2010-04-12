@@ -27,7 +27,7 @@ test_cdvirtual() {
     assertSame "$VIRTUAL_ENV" "$(pwd)"
     cdvirtualenv bin
     assertSame "$VIRTUAL_ENV/bin" "$(pwd)"
-    cd "$(start_dir)"
+    cd "$start_dir"
 }
 
 test_cdsitepackages () {
@@ -36,7 +36,7 @@ test_cdsitepackages () {
     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
     sitepackages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
     assertSame "$sitepackages" "$(pwd)"
-    cd "$(start_dir)"
+    cd "$start_dir"
 }
 
 test_cdsitepackages_with_arg () {
@@ -46,7 +46,7 @@ test_cdsitepackages_with_arg () {
     mkdir -p "${sitepackage_subdir}"
     cdsitepackages subdir
     assertSame "$sitepackage_subdir" "$(pwd)"
-    cd "$(start_dir)"
+    cd "$start_dir"
 }
 
 test_cdvirtualenv_no_workon_home () {

@@ -13,6 +13,8 @@ Dev
   - Update :ref:`command-mkvirtualenv` documentation to include the
     fact that a new environment is activated immediately after it is
     created (issue #30).
+  - Added hooks around :ref:`command-cpvirtualenv`.
+  - Made deactivation more robust, especially under ksh.
 
 2.0.2
 

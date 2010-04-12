@@ -48,6 +48,34 @@ postmkvirtualenv
 ``$WORKON_HOME/postmkvirtualenv`` is sourced after the new environment
 is created and activated.
 
+.. _scripts-precpvirtualenv:
+
+precpvirtualenv
+===============
+
+  :Global/Local: global
+  :Argument(s): name of original environment, name of new environment
+  :Sourced/Run: run
+
+``$WORKON_HOME/precpvirtualenv`` is run as an external program after
+the source environment is duplicated and made relocatable, but before
+the ``premkvirtualenv`` hook is run or the current environment is
+switched to point to the new env. The current working directory for
+the script is ``$WORKON_HOME`` and the names of the source and new
+environments are passed as arguments to the script.
+
+.. _scripts-postcpvirtualenv:
+
+postcpvirtualenv
+================
+
+  :Global/Local: global
+  :Argument(s): none
+  :Sourced/Run: sourced
+
+``$WORKON_HOME/postcpvirtualenv`` is sourced after the new environment
+is created and activated.
+
 .. _scripts-preactivate:
 
 preactivate

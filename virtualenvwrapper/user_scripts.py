@@ -147,6 +147,23 @@ def post_mkvirtualenv_source(args):
 [ -f "$WORKON_HOME/postmkvirtualenv" ] && source "$WORKON_HOME/postmkvirtualenv"
 """
 
+def pre_cpvirtualenv(args):
+    log.debug('pre_cpvirtualenv %s', str(args))
+    envname=args[0]
+    for filename, comment in LOCAL_HOOKS:
+        make_hook(os.path.join('$WORKON_HOME', envname, 'bin', filename), comment)
+    run_global('precpvirtualenv', *args)
+    return
+
+
+def post_cpvirtualenv_source(args):
+    return """
+#
+# Run user-provided scripts
+#
+[ -f "$WORKON_HOME/postcpvirtualenv" ] && source "$WORKON_HOME/postcpvirtualenv"
+"""
+
 
 def pre_rmvirtualenv(args):
     log.debug('pre_rmvirtualenv')

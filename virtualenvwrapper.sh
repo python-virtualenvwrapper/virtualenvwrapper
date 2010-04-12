@@ -229,17 +229,26 @@ workon () {
     if [ $? -eq 0 ]
     then
         deactivate
+        unset -f deactivate >/dev/null 2>&1
     fi
 
     virtualenvwrapper_run_hook "pre_activate" "$env_name"
     
     source "$activate"
     
-    # Save the deactivate function from virtualenv
-    virtualenvwrapper_saved_deactivate=$(typeset -f deactivate)
+    # Save the deactivate function from virtualenv under a different name
+    virtualenvwrapper_original_deactivate=`typeset -f deactivate | sed 's/deactivate/virtualenv_deactivate/g'`
+    eval "$virtualenvwrapper_original_deactivate"
+    unset -f deactivate >/dev/null 2>&1
+#     virtualenvwrapper_saved_deactivate=$(tempfile --directory "$VIRTUALENVWRAPPER_TMPDIR")
+#     $(typeset -f deactivate | sed 's/deactivate/original_deactivate/g' > $virtualenvwrapper_saved_deactivate)
+#     echo "original_deactivate" >> $virtualenvwrapper_saved_deactivate
+#     echo "SAVED: \"$virtualenvwrapper_saved_deactivate\""
+#     cat $virtualenvwrapper_saved_deactivate
 
     # Replace the deactivate() function with a wrapper.
     eval 'deactivate () {
+
         # Call the local hook before the global so we can undo
         # any settings made by the local postactivate first.
         virtualenvwrapper_run_hook "pre_deactivate"
@@ -247,13 +256,16 @@ workon () {
         env_postdeactivate_hook="$VIRTUAL_ENV/bin/postdeactivate"
         old_env=$(basename "$VIRTUAL_ENV")
         
-        # Restore the original definition of deactivate
-        eval "$virtualenvwrapper_saved_deactivate"
-
-        # Instead of recursing, this calls the now restored original function.
-        deactivate
+        # Call the original function.
+        #source "$virtualenvwrapper_saved_deactivate"
+        #rm -f "$virtualenvwrapper_saved_deactivate"
+        virtualenv_deactivate
 
         virtualenvwrapper_run_hook "post_deactivate" "$old_env"
+
+        # Remove this function
+        unset -f deactivate
+
     }'
     
     virtualenvwrapper_run_hook "post_activate"
@@ -429,8 +441,14 @@ cpvirtualenv() {
 
     virtualenv "$target_env" --relocatable
     sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"
-    echo "Created $new_env virtualenv"
+
+    (cd "$WORKON_HOME" && 
+        virtualenvwrapper_run_hook "pre_cpvirtualenv" "$env_name" "$new_env" &&
+        virtualenvwrapper_run_hook "pre_mkvirtualenv" "$new_env"
+        )
     workon "$new_env"
+    virtualenvwrapper_run_hook "post_mkvirtualenv"
+    virtualenvwrapper_run_hook "post_cpvirtualenv"
 }
 
 #
