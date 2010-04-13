@@ -62,16 +62,6 @@ fi
 WORKON_HOME=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.abspath(os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\")))")
 export WORKON_HOME
 
-# Make sure we have a location for temporary files
-if [ "$VIRTUALENVWRAPPER_TMPDIR" = "" ]
-then
-    VIRTUALENVWRAPPER_TMPDIR="$TMPDIR"
-    if [ "$VIRTUALENVWRAPPER_TMPDIR" = "" ]
-    then
-        VIRTUALENVWRAPPER_TMPDIR="/tmp"
-    fi
-fi
-
 # Verify that the WORKON_HOME directory exists
 virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
@@ -84,12 +74,22 @@ virtualenvwrapper_verify_workon_home () {
 
 #HOOK_VERBOSE_OPTION="-v"
 
+# Use Python's tempfile module to create a temporary file
+# with a unique and not-likely-to-be-predictable name.
+virtualenvwrapper_tempfile () {
+    $VIRTUALENVWRAPPER_PYTHON -c "import tempfile; print tempfile.NamedTemporaryFile(prefix='virtualenvwrapper.').name"
+    if [ $? -ne 0 ]
+    then
+        echo "${TMPDIR:-/tmp}/virtualenvwrapper.$$"
+    fi
+}
+
 # Run the hooks
 virtualenvwrapper_run_hook () {
     # First anything that runs directly from the plugin
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION "$@"
     # Now anything that wants to run inside this shell
-    hook_script=$(tempfile --directory "$VIRTUALENVWRAPPER_TMPDIR")
+    hook_script=$(virtualenvwrapper_tempfile)
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION \
         --source "$@" >>"$hook_script"
     source "$hook_script"
@@ -240,7 +240,7 @@ workon () {
     virtualenvwrapper_original_deactivate=`typeset -f deactivate | sed 's/deactivate/virtualenv_deactivate/g'`
     eval "$virtualenvwrapper_original_deactivate"
     unset -f deactivate >/dev/null 2>&1
-#     virtualenvwrapper_saved_deactivate=$(tempfile --directory "$VIRTUALENVWRAPPER_TMPDIR")
+#     virtualenvwrapper_saved_deactivate=$(virtualenvwrapper_tempfile)
 #     $(typeset -f deactivate | sed 's/deactivate/original_deactivate/g' > $virtualenvwrapper_saved_deactivate)
 #     echo "original_deactivate" >> $virtualenvwrapper_saved_deactivate
 #     echo "SAVED: \"$virtualenvwrapper_saved_deactivate\""
