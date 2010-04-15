@@ -80,7 +80,7 @@ virtualenvwrapper_tempfile () {
     $VIRTUALENVWRAPPER_PYTHON -c "import tempfile; print tempfile.NamedTemporaryFile(prefix='virtualenvwrapper.').name"
     if [ $? -ne 0 ]
     then
-        echo "${TMPDIR:-/tmp}/virtualenvwrapper.$$"
+        echo "${TMPDIR:-/tmp}/virtualenvwrapper.$$.`date +%s`"
     fi
 }
 
