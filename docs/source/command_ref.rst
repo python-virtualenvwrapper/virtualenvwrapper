@@ -25,6 +25,19 @@ Syntax::
 All command line options are passed directly to ``virtualenv``.  The
 new environment is automatically activated after being initialized.
 
+::
+
+    $ workon
+    $ mkvirtualenv mynewenv
+    New python executable in mynewenv/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (mynewenv)$ workon
+    mynewenv
+    (mynewenv)$ 
+
 .. seealso::
 
    * :ref:`scripts-premkvirtualenv`
@@ -38,6 +51,16 @@ Remove an environment, in the WORKON_HOME.
 Syntax::
 
     rmvirtualenv ENVNAME
+
+You must use :ref:`command-deactivate` before removing the current
+environment.
+
+::
+
+    (mynewenv)$ deactivate
+    $ rmvirtualenv mynewenv
+    $ workon
+    $
 
 .. seealso::
 
@@ -59,6 +82,28 @@ Syntax::
 
    The environment created by the copy operation is made `relocatable
    <http://virtualenv.openplans.org/#making-environments-relocatable>`__.
+
+::
+
+    $ workon 
+    $ mkvirtualenv source
+    New python executable in source/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (source)$ cpvirtualenv source dest
+    Making script /Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/easy_install relative
+    Making script /Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/easy_install-2.6 relative
+    Making script /Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/pip relative
+    Script /Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/postactivate cannot be made relative (it's not a normal script that starts with #!/Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/python)
+    Script /Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/postdeactivate cannot be made relative (it's not a normal script that starts with #!/Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/python)
+    Script /Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/preactivate cannot be made relative (it's not a normal script that starts with #!/Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/python)
+    Script /Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/predeactivate cannot be made relative (it's not a normal script that starts with #!/Users/dhellmann/Devel/virtualenvwrapper/tmp/dest/bin/python)
+    (dest)$ workon 
+    dest
+    source
+    (dest)$ 
 
 .. seealso::
 
@@ -83,12 +128,41 @@ Syntax::
 If no ``environment_name`` is given the list of available environments
 is printed to stdout.
 
+::
+
+    $ workon 
+    $ mkvirtualenv env1
+      New python executable in env1/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env1)$ mkvirtualenv env2
+    New python executable in env2/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env2)$ workon 
+    env1
+    env2
+    (env2)$ workon env1
+    (env1)$ echo $VIRTUAL_ENV
+    /Users/dhellmann/Devel/virtualenvwrapper/tmp/env1
+    (env1)$ workon env2
+    (env2)$ echo $VIRTUAL_ENV
+    /Users/dhellmann/Devel/virtualenvwrapper/tmp/env2
+    (env2)$ 
+
+
 .. seealso::
 
    * :ref:`scripts-predeactivate`
    * :ref:`scripts-postdeactivate`
    * :ref:`scripts-preactivate`
    * :ref:`scripts-postactivate`
+
+.. _command-deactivate:
 
 deactivate
 ----------
@@ -104,6 +178,24 @@ Syntax::
 
     This command is actually part of virtualenv, but is wrapped to
     provide before and after hooks, just as workon does for activate.
+
+::
+
+    $ workon 
+    $ echo $VIRTUAL_ENV
+
+    $ mkvirtualenv env1
+    New python executable in env1/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env1)$ echo $VIRTUAL_ENV
+    /Users/dhellmann/Devel/virtualenvwrapper/tmp/env1
+    (env1)$ deactivate
+    $ echo $VIRTUAL_ENV
+
+    $ 
 
 .. seealso::
 
@@ -133,15 +225,20 @@ subdirectory.
 
 ::
 
-  $ workon pymotw
-  $ echo $VIRTUAL_ENV
-  /Users/dhellmann/.virtualenvs/pymotw
-  $ cdvirtualenv
-  $ pwd
-  /Users/dhellmann/.virtualenvs/pymotw
-  $ cdvirtualenv bin
-  $ pwd
-  /Users/dhellmann/.virtualenvs/pymotw/bin
+    $ mkvirtualenv env1
+    New python executable in env1/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env1)$ echo $VIRTUAL_ENV
+    /Users/dhellmann/Devel/virtualenvwrapper/tmp/env1
+    (env1)$ cdvirtualenv
+    (env1)$ pwd
+    /Users/dhellmann/Devel/virtualenvwrapper/tmp/env1
+    (env1)$ cdvirtualenv bin
+    (env1)$ pwd
+    /Users/dhellmann/Devel/virtualenvwrapper/tmp/env1/bin
 
 cdsitepackages
 --------------
@@ -162,12 +259,17 @@ directory to change into.
 
 ::
 
-  $ workon pymotw
-  $ echo $VIRTUAL_ENV
-  /Users/dhellmann/.virtualenvs/pymotw
-  $ cdsitepackages PyMOTW/bisect/
-  $ pwd
-  /Users/dhellmann/.virtualenvs/pymotw/lib/python2.6/site-packages/PyMOTW/bisect
+    $ mkvirtualenv env1
+    New python executable in env1/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env1)$ echo $VIRTUAL_ENV
+    /Users/dhellmann/Devel/virtualenvwrapper/tmp/env1
+    (env1)$ cdsitepackages PyMOTW/bisect/
+    (env1)$ pwd
+    /Users/dhellmann/Devel/virtualenvwrapper/tmp/env1/lib/python2.6/site-packages/PyMOTW/bisect
 
 lssitepackages
 --------------
@@ -178,6 +280,19 @@ directory of the currently-active virtualenv.
 Syntax::
 
     lssitepackages
+
+::
+
+    $ mkvirtualenv env1
+    New python executable in env1/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env1)$ $ workon env1
+    (env1)$ lssitepackages 
+    distribute-0.6.10-py2.6.egg     pip-0.6.3-py2.6.egg
+    easy-install.pth                setuptools.pth
 
 ===============
 Path Management

@@ -16,6 +16,9 @@ Dev
   - Made deactivation more robust, especially under ksh.
   - Use Python's ``tempfile`` module for creating temporary filenames
     safely and portably.
+  - Fix a problem with ``virtualenvwrapper_show_workon_options`` that
+    caused it to show ``*`` as the name of a virtualenv when no
+    environments had yet been created.
 
 2.0.2
 
