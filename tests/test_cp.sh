@@ -15,6 +15,10 @@ setUp () {
 }
 
 tearDown() {
+    if type deactivate >/dev/null 2>&1
+    then 
+        deactivate
+    fi
     rm -rf "$WORKON_HOME"
 }
 
@@ -73,7 +77,6 @@ GLOBAL postcpvirtualenv"
     assertSame "$expected" "$output"
     rm -f "$WORKON_HOME/premkvirtualenv"
     rm -f "$WORKON_HOME/postmkvirtualenv"
-    deactivate
 }
 
 . "$test_dir/shunit2"

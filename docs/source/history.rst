@@ -6,7 +6,6 @@ Dev
 
   - Add support for ksh.  Thanks to Doug Latornell for doing the
     research on what needed to be changed.
-  - Switch to ``tempfile`` command for creating temporary hook files.
   - Test import of virtualenvwrapper.hook_loader on startup and report
     the error in a way that should help the user figure out how to fix
     it (issue #33).
@@ -15,6 +14,8 @@ Dev
     created (issue #30).
   - Added hooks around :ref:`command-cpvirtualenv`.
   - Made deactivation more robust, especially under ksh.
+  - Use Python's ``tempfile`` module for creating temporary filenames
+    safely and portably.
 
 2.0.2
 

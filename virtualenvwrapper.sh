@@ -240,11 +240,6 @@ workon () {
     virtualenvwrapper_original_deactivate=`typeset -f deactivate | sed 's/deactivate/virtualenv_deactivate/g'`
     eval "$virtualenvwrapper_original_deactivate"
     unset -f deactivate >/dev/null 2>&1
-#     virtualenvwrapper_saved_deactivate=$(virtualenvwrapper_tempfile)
-#     $(typeset -f deactivate | sed 's/deactivate/original_deactivate/g' > $virtualenvwrapper_saved_deactivate)
-#     echo "original_deactivate" >> $virtualenvwrapper_saved_deactivate
-#     echo "SAVED: \"$virtualenvwrapper_saved_deactivate\""
-#     cat $virtualenvwrapper_saved_deactivate
 
     # Replace the deactivate() function with a wrapper.
     eval 'deactivate () {
@@ -257,14 +252,16 @@ workon () {
         old_env=$(basename "$VIRTUAL_ENV")
         
         # Call the original function.
-        #source "$virtualenvwrapper_saved_deactivate"
-        #rm -f "$virtualenvwrapper_saved_deactivate"
-        virtualenv_deactivate
+        virtualenv_deactivate $1
 
         virtualenvwrapper_run_hook "post_deactivate" "$old_env"
 
-        # Remove this function
-        unset -f deactivate
+        if [ ! "$1" = "nondestructive" ]
+        then
+            # Remove this function
+            unset -f virtualenv_deactivate
+            unset -f deactivate
+        fi
 
     }'
     
