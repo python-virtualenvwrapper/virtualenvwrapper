@@ -6,6 +6,7 @@
 """Load hooks for virtualenvwrapper.
 """
 
+import inspect
 import logging
 import optparse
 import os
@@ -24,6 +25,12 @@ def main():
                       dest='sourcing',
                       default=False,
                       )
+    parser.add_option('-l', '--list',
+                      help='Print a list of the plugins available for the given hook',
+                      action='store_true',
+                      default=False,
+                      dest='listing',
+                      )
     parser.add_option('-v', '--verbose',
                       help='Show more information on the console',
                       action='store_const',
@@ -36,6 +43,12 @@ def main():
                       action='store_const',
                       const=0,
                       dest='verbose_level',
+                      )
+    parser.add_option('-n', '--name',
+                      help='Only run the hook from the named plugin',
+                      action='append',
+                      dest='names',
+                      default=[],
                       )
     parser.disable_interspersed_args() # stop when we hit an option without an '-'
     options, args = parser.parse_args()
@@ -66,7 +79,12 @@ def main():
         hook += '_source'
 
     for ep in pkg_resources.iter_entry_points('virtualenvwrapper.%s' % hook):
+        if options.names and ep.name not in options.names:
+            continue
         plugin = ep.load()
+        if options.listing:
+            print '  {0:10} -- {1}'.format(ep.name, inspect.getdoc(plugin) or '')
+            continue
         if options.sourcing:
             # Show the shell commands so they can
             # be run in the calling shell.

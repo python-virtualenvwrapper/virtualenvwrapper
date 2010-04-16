@@ -19,6 +19,10 @@ Dev
   - Fix a problem with ``virtualenvwrapper_show_workon_options`` that
     caused it to show ``*`` as the name of a virtualenv when no
     environments had yet been created.
+  - Change the hook loader so it can be told to run only a set of
+    named hooks.
+  - Add support for listing the available hooks, to be used in help
+    output of commands like virtualenvwrapper.project's mkproject.
 
 2.0.2
 
