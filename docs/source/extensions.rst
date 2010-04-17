@@ -16,7 +16,7 @@ templates to virtualenvwrapper.
 bitbucket
 ---------
 
-The bitbucket_ extension creates a project working directory and
+The bitbucket_ project template creates a working directory and
 automatically clones the repository from BitBucket.  Requires
 project_.
 
@@ -24,6 +24,18 @@ project_.
 
 .. _bitbucket: http://www.doughellmann.com/projects/virtualenvwrapper.bitbucket/
 
+emacs-desktop
+=============
+
+Emacs desktop-mode_ lets you save the state of emacs (open buffers,
+kill rings, buffer positions, etc.) between sessions.  It can also be
+used as a project file similar to other IDEs.  The emacs-desktop_
+plugin adds a trigger to save the current desktop file and load a new
+one when activating a new virtualenv using ``workon``.
+
+.. _desktop-mode: http://www.emacswiki.org/emacs/DeskTop
+
+.. _emacs-desktop: http://www.doughellmann.com/projects/virtualenvwrapper-emacs-desktop/
 
 user_scripts
 ============

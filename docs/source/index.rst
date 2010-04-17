@@ -29,77 +29,141 @@ Features
    :ref:`plugins`).
 
 ============
-Installation
+Introduction
 ============
 
-WORKON_HOME
-===========
+The best way to explain the features virtualenvwrapper gives you is to
+show it in use.
 
-The variable ``WORKON_HOME`` tells virtualenvwrapper where to place
-your virtual environments.  The default is ``$HOME/.virtualenvs``.
-This directory must be created before using any virtualenvwrapper
-commands.
+First, some initialization steps.  Most of this only needs to be done
+one time.  You will want to add the command to ``source
+/usr/local/bin/virtualenvwrapper.sh`` to your shell startup file,
+changing the path to virtualenvwrapper.sh depending on where it was
+installed by pip.
 
-Shell Startup File
-==================
+::
 
-Add two lines to your shell startup file (``.bashrc``, ``.profile``,
-etc.) to set the location where the virtual environments should live
-and the location of the script installed with this package::
+  $ pip install virtualenvwrapper
+  ...
+  $ export WORKON_HOME=~/Envs
+  $ mkdir -p $WORKON_HOME
+  $ source /usr/local/bin/virtualenvwrapper.sh
+  $ mkvirtualenv env1
+  Installing
+  distribute..........................................
+  ....................................................
+  ....................................................
+  ...............................done.
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env1/bin/predeactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env1/bin/postdeactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env1/bin/preactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env1/bin/postactivate  New python executable in env1/bin/python
+  (env1)$ ls $WORKON_HOME
+  env1 hook.log
 
-    export WORKON_HOME=$HOME/.virtualenvs
-    source /usr/local/bin/virtualenvwrapper.sh
+Now we can install some software into the environment.
 
-After editing it, reload the startup file (e.g., run: ``source
-~/.bashrc``).
+::
 
-Python Interpreter and $PATH
-============================
+  (env1)$ pip install django
+  Downloading/unpacking django
+    Downloading Django-1.1.1.tar.gz (5.6Mb): 5.6Mb downloaded
+    Running setup.py egg_info for package django
+  Installing collected packages: django
+    Running setup.py install for django
+      changing mode of build/scripts-2.6/django-admin.py from 644 to 755
+      changing mode of /Users/dhellmann/Envs/env1/bin/django-admin.py to 755
+  Successfully installed django
 
-During startup, ``virtualenvwrapper.sh`` finds the first ``python`` on
-the ``$PATH`` and remembers it to use later.  This eliminates any
-conflict as the ``$PATH`` changes, enabling interpreters inside
-virtual environments where virtualenvwrapper is not installed.
-Because of this behavior, it is important for the ``$PATH`` to be set
-**before** sourcing ``virtualenvwrapper.sh``.  For example::
+We can see the new package with ``lssitepackages``::
 
-    export PATH=/usr/local/bin:$PATH
-    source /usr/local/bin/virtualenvwrapper.sh
+  (env1)$ lssitepackages
+  Django-1.1.1-py2.6.egg-info     easy-install.pth
+  distribute-0.6.10-py2.6.egg     pip-0.6.3-py2.6.egg
+  django                          setuptools.pth
 
-To override the ``$PATH`` search, set the variable
-``VIRTUALENVWRAPPER_PYTHON`` to the full path of the interpreter to
-use (also **before** sourcing ``virtualenvwrapper.sh``).  For
-example::
+Of course we are not limited to a single virtualenv::
 
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-    source /usr/local/bin/virtualenvwrapper.sh
+  (env1)$ ls $WORKON_HOME
+  env1            hook.log
+  (env1)$ mkvirtualenv env2
+  Installing distribute...............................
+  ....................................................
+  ....................................................
+  ........... ...............................done.
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env2/bin/predeactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env2/bin/postdeactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env2/bin/preactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env2/bin/postactivate  New python executable in env2/bin/python
+  (env2)$ ls $WORKON_HOME
+  env1            env2            hook.log
 
-Quick-Start
-===========
+Switch between environments with ``workon``::
 
-1. Run: ``workon``
-2. A list of environments, empty, is printed.
-3. Run: ``mkvirtualenv temp``
-4. A new environment, ``temp`` is created and activated.
-5. Run: ``workon``
-6. This time, the ``temp`` environment is included.
+  (env2)$ workon env1
+  (env1)$ echo $VIRTUAL_ENV
+  /Users/dhellmann/Envs/env1
+  (env1)$ 
 
-Temporary Files
-===============
+The ``workon`` command also includes tab completion for the
+environment names, and invokes customization scripts as an environment
+is activated or deactivated (see :ref:`scripts`).
 
-virtualenvwrapper creates temporary files in ``$TMPDIR``.  If the
-variable is not set, it uses ``/tmp``.  To change the location of
-temporary files just for virtualenvwrapper, set
-``VIRTUALENVWRAPPER_TMPDIR``.
+::
 
-Upgrading from 1.x
-==================
+  (env1)$ echo 'cd $VIRTUAL_ENV' >> $WORKON_HOME/postactivate
+  (env1)$ workon env2
+  (env2)$ pwd
+  /Users/dhellmann/Envs/env2
 
-The shell script containing the wrapper functions has been renamed in
-the 2.x series to reflect the fact that shells other than bash are
-supported.  In your startup file, change ``source
-/usr/local/bin/virtualenvwrapper_bashrc`` to ``source
-/usr/local/bin/virtualenvwrapper.sh``.
+:ref:`scripts-postmkvirtualenv` is run when a new environment is
+created, letting you automatically install commonly-used tools.
+
+::
+
+  (env2)$ echo 'pip install sphinx' >> $WORKON_HOME/postmkvirtualenv
+  (env3)$ mkvirtualenv env3
+  New python executable in env3/bin/python
+  Installing distribute...............................
+  ....................................................
+  ....................................................
+  ........... ...............................done.
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env3/bin/predeactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env3/bin/postdeactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env3/bin/preactivate
+  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env3/bin/postactivate
+  Downloading/unpacking sphinx
+    Downloading Sphinx-0.6.5.tar.gz (972Kb): 972Kb downloaded
+    Running setup.py egg_info for package sphinx
+      no previously-included directories found matching 'doc/_build'
+  Downloading/unpacking Pygments>=0.8 (from sphinx)
+    Downloading Pygments-1.3.1.tar.gz (1.1Mb): 1.1Mb downloaded
+    Running setup.py egg_info for package Pygments
+  Downloading/unpacking Jinja2>=2.1 (from sphinx)
+    Downloading Jinja2-2.4.tar.gz (688Kb): 688Kb downloaded
+    Running setup.py egg_info for package Jinja2
+      warning: no previously-included files matching '*' found under directory 'docs/_build/doctrees'
+  Downloading/unpacking docutils>=0.4 (from sphinx)
+    Downloading docutils-0.6.tar.gz (1.4Mb): 1.4Mb downloaded
+    Running setup.py egg_info for package docutils
+  Installing collected packages: docutils, Jinja2, Pygments, sphinx
+    Running setup.py install for docutils
+    Running setup.py install for Jinja2
+    Running setup.py install for Pygments
+    Running setup.py install for sphinx
+      no previously-included directories found matching 'doc/_build'
+      Installing sphinx-build script to /Users/dhellmann/Envs/env3/bin
+      Installing sphinx-quickstart script to /Users/dhellmann/Envs/env3/bin
+      Installing sphinx-autogen script to /Users/dhellmann/Envs/env3/bin
+  Successfully installed docutils Jinja2 Pygments sphinx  (env3)$ 
+  (venv3)$ which sphinx-build
+  /Users/dhellmann/Envs/env3/bin/sphinx-build
+
+Through a combination of the existing functions defined by the core
+package (see :ref:`command`), third-party plugins (see
+:ref:`plugins`), and user-defined scripts (see :ref:`scripts`)
+virtualenvwrapper gives you a wide variety of opportunities to
+automate repetitive operations.
 
 =======
 Details
@@ -108,6 +172,7 @@ Details
 .. toctree::
    :maxdepth: 2
 
+   install
    command_ref
    hooks
    tips

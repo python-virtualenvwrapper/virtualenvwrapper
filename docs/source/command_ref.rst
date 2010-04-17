@@ -1,6 +1,8 @@
 .. Quick reference documentation for virtualenvwrapper command line functions
     Originally contributed Thursday, May 28, 2009 by Steve Steiner (ssteinerX@gmail.com)
 
+.. _command:
+
 #################
 Command Reference
 #################

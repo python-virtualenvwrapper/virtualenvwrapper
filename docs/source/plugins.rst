@@ -4,23 +4,26 @@
 Extending Virtualenvwrapper
 ===========================
 
-Customizing one's development environment is a practice adopted from
-other tool-based jobs in which long experience leads to home-grown and
-unique solutions to persistent annoyances.  Carpenters build jigs,
-software developers write shell scripts.  virtualenvwrapper continues
-the tradition of encouraging a craftsman to modify his tools to work
-the way he wants, rather than the other way around.
+Long experience with home-grown solutions for customizing a
+development environment has proven how valuable it can be to have the
+ability to automate common tasks and eliminate persistent annoyances.
+Carpenters build jigs, software developers write shell scripts.
+virtualenvwrapper continues the tradition of encouraging a craftsman
+to modify their tools to work the way they want, rather than the other
+way around.
 
 Use the hooks provided to eliminate repetitive manual operations and
-streamline your development workflow.  For example, the pre_activate
-and post_activate hooks can trigger an IDE to load a project file to
-reload files from the last editing session, manage time-tracking
-records, or start and stop development versions of an application
-server.  The initialize hook can be used to add entirely new commands
-and hooks to virtualenvwrapper.  And the pre_mkvirtualenv and
-post_mkvirtualenv hooks give you an opportunity to install basic
-requirements into each new development environment, initialize a
-source code control repository, or otherwise set up a new project.
+streamline your development workflow.  For example, set up the
+:ref:`plugins-pre_activate` and :ref:`plugins-post_activate` hooks to
+trigger an IDE to load a project file to reload files from the last
+editing session, manage time-tracking records, or start and stop
+development versions of an application server.  Use the
+:ref:`plugins-initialize` hook to add entirely new commands and hooks
+to virtualenvwrapper.  And the :ref:`plugins-pre_mkvirtualenv` and
+:ref:`plugins-post_mkvirtualenv` hooks give you an opportunity to
+install basic requirements into each new development environment,
+initialize a source code control repository, or otherwise set up a new
+project.
 
 There are two ways to attach your code so that virtualenvwrapper will
 run it: End-users can use shell scripts or other programs for personal
@@ -222,15 +225,20 @@ application, use the ``-m`` option to the interpreter::
 
   $ python -m virtualenvwrapper.hook_loader -h
   Usage: virtualenvwrapper.hook_loader [options] <hook> [<arguments>]
-
+  
   Manage hooks for virtualenvwrapper
-
+  
   Options:
-    -h, --help     show this help message and exit
-    -s, --source   Print the shell commands to be run in the current shell
-    -v, --verbose  Show more information on the console
-    -q, --quiet    Show less information on the console
-
+    -h, --help            show this help message and exit
+    -s, --source          Print the shell commands to be run in the current
+                          shell
+    -l, --list            Print a list of the plugins available for the given
+                          hook
+    -v, --verbose         Show more information on the console
+    -q, --quiet           Show less information on the console
+    -n NAMES, --name=NAMES
+                          Only run the hook from the named plugin
+  
 To run the extensions for the initialize hook::
 
   $ python -m virtualenvwrapper.hook_loader -v initialize
@@ -238,6 +246,15 @@ To run the extensions for the initialize hook::
 To get the shell commands for the initialize hook::
 
   $ python -m virtualenvwrapper.hook_loader --source initialize
+
+In practice, rather than invoking the hook loader directly it is more
+convenient to use the shell function, ``virtualenvwrapper_run_hook``
+to run the hooks in both modes.::
+
+  $ virtualenvwrapper_run_hook initialize
+
+All of the arguments given to shell function are passed directly to
+the hook loader.
 
 Logging
 -------
@@ -365,5 +382,32 @@ The ``virtualenvwrapper.post_rmvirtualenv`` hooks are run just after
 an environment is deleted.  The name of the environment being deleted
 is passed as the first argument.
 
+Adding New Extension Points
+===========================
+
+Plugins that define new operations can also define new extension
+points.  No setup needs to be done to allow the hook loader to find
+the extensions; documenting the names and adding calls to
+``virtualenvwrapper_run_hook`` is sufficient to cause them to be
+invoked.  
+
+The hook loader assumes all extension point names start with
+``virtualenvwrapper.`` and new plugins will want to use their own
+namespace qualifier to append to that.  For example, the project_
+extension defines new events around creating project directories (pre
+and post).  These are called
+``virtualenvwrapper.project.pre_mkproject`` and
+``virtualenvwrapper.project.post_mkproject``.  These are invoked
+with::
+
+  virtualenvwrapper_run_hook project.pre_mkproject $project_name
+
+and::
+
+  virtualenvwrapper_run_hook project.post_mkproject
+
+respectively.
 
 .. _Distribute: http://packages.python.org/distribute/
+
+.. _project: http://www.doughellmann.com/projects/virtualenvwrapper.project/
