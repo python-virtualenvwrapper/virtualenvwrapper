@@ -2,7 +2,7 @@
 Release History
 ===============
 
-Dev
+2.1
 
   - Add support for ksh.  Thanks to Doug Latornell for doing the
     research on what needed to be changed.
