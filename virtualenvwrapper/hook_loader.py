@@ -8,6 +8,7 @@
 
 import inspect
 import logging
+import logging.handlers
 import optparse
 import os
 
@@ -53,12 +54,20 @@ def main():
     parser.disable_interspersed_args() # stop when we hit an option without an '-'
     options, args = parser.parse_args()
 
-    # Set up logging to a file and to the console
-    logging.basicConfig(
-        filename=os.path.expandvars(os.path.join('$WORKON_HOME', 'hook.log')),
-        level=logging.DEBUG,
-        format='%(asctime)s %(levelname)s %(name)s %(message)s',
+    root_logger = logging.getLogger('')
+
+    # Set up logging to a file
+    root_logger.setLevel(logging.DEBUG)
+    file_handler = logging.handlers.RotatingFileHandler(
+        os.path.expandvars(os.path.join('$WORKON_HOME', 'hook.log')),
+        maxBytes=10240,
+        backupCount=1,
         )
+    formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
+    file_handler.setFormatter(formatter)
+    root_logger.addHandler(file_handler)
+
+    # Send higher-level messages to the console, too
     console = logging.StreamHandler()
     console_level = [ logging.WARNING,
                       logging.INFO,
@@ -67,7 +76,7 @@ def main():
     console.setLevel(console_level)
     formatter = logging.Formatter('%(name)s %(message)s')
     console.setFormatter(formatter)
-    logging.getLogger('').addHandler(console)
+    root_logger.addHandler(console)
 
     #logging.getLogger(__name__).debug('cli args %s', args)
 

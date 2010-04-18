@@ -24,6 +24,8 @@ Dev
   - Add support for listing the available hooks, to be used in help
     output of commands like virtualenvwrapper.project's mkproject.
   - Fix mkvirtualenv -h option behavior.
+  - Change logging so the $WORKON_HOME/hook.log file rotates after
+    10KiB.
 
 2.0.2
 
