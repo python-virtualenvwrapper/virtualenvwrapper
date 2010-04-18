@@ -31,9 +31,7 @@ sdist: html
 # Documentation
 .PHONY: html
 html:
-	rm -rf virtualenvwrapper/docs
 	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/pkg")
-	cp -r docs/build/html virtualenvwrapper/docs
 
 # Website copy of documentation
 .PHONY: website
