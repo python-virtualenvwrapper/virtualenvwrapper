@@ -2,6 +2,17 @@
 Installation
 ============
 
+Basic Installation
+==================
+
+virtualenvwrapper should be installed using pip_::
+
+  $ pip install virtualenvwrapper
+
+You will want to install it into the global Python site-packages area,
+along with virtualenv.  You may need administrative privileges to do
+that.
+
 WORKON_HOME
 ===========
 
@@ -9,6 +20,8 @@ The variable ``WORKON_HOME`` tells virtualenvwrapper where to place
 your virtual environments.  The default is ``$HOME/.virtualenvs``.
 This directory must be created before using any virtualenvwrapper
 commands.
+
+.. _install-shell-config:
 
 Shell Startup File
 ==================
@@ -70,3 +83,5 @@ the 2.x series to reflect the fact that shells other than bash are
 supported.  In your startup file, change ``source
 /usr/local/bin/virtualenvwrapper_bashrc`` to ``source
 /usr/local/bin/virtualenvwrapper.sh``.
+
+.. _pip: http://pypi.python.org/pypi/pip

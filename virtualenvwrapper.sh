@@ -158,7 +158,7 @@ mkvirtualenv () {
     virtualenvwrapper_verify_virtualenv || return 1
     (cd "$WORKON_HOME" &&
         virtualenv "$@" &&
-        virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
+        [ -d "$WORKON_HOME/$envname" ] && virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
         )
     # If they passed a help option or got an error from virtualenv,
     # the environment won't exist.  Use that to tell whether

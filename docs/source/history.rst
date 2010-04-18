@@ -23,6 +23,7 @@ Dev
     named hooks.
   - Add support for listing the available hooks, to be used in help
     output of commands like virtualenvwrapper.project's mkproject.
+  - Fix mkvirtualenv -h option behavior.
 
 2.0.2
 
