@@ -15,7 +15,7 @@ initialize
 
   :Global/Local: global
   :Argument(s): None
-  :Sourced/Run: run
+  :Sourced/Run: sourced
 
 ``$WORKON_HOME/initialize`` is sourced when ``virtualenvwrapper.sh``
 is loaded into your environment.  Use it to adjust global settings
