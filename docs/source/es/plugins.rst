@@ -30,31 +30,30 @@ ejecute: los usuarios finales pueden usar scrips the shell o otros programas
 para la customización personal (ver :ref:`scripts`). Las extensiones también
 pueden ser implementadas en Python usando *entry points* con Distribute_ ,
 
-Defining an Extension
+Definir una extensión
 =====================
 
 .. note::
 
-  Virtualenvwrapper is delivered with a plugin for creating and
-  running the user customization scripts
-  (:ref:`extensions-user_scripts`).  The examples below are taken from
-  the implementation of that plugin.
+  Virtualenvwrapper es distribuido con un plugin para la creación y ejecución de
+  los scripts de customización de los usuarios (:ref:`extensions-user_scripts`).
+  Los ejemplos siguientes han sido tomados de la implementación de ese plugin.
 
-Code Organization
------------------
+Organización del código
+-----------------------
 
-The Python package for ``virtualenvwrapper`` is a *namespace package*.
-That means multiple libraries can install code into the package, even
-if they are not distributed together or installed into the same
-directory.  Extensions can (optionally) use the ``virtualenvwrapper``
-namespace by setting up their source tree like:
+El paquete Python para ``virtualenvwrapper`` es un *namespace package*.
+Eso signific que multiples librerías pueden instalar código dentro del paquete,
+incluso si ellas no son ditribuidas juntas o instaladas dentro del mismo
+directorio. Las extensiones pueden (opcionalmente) usar el namespace de 
+``virtualenvwrapper`` configurando su estructura de directorios así:
 
 * virtualenvwrapper/
 
   * __init__.py
   * user_scripts.py
 
-And placing the following code in ``__init__.py``::
+Y agregando el siguiente código dentro de ``__init__.py``::
 
     """virtualenvwrapper module
     """
@@ -63,8 +62,8 @@ And placing the following code in ``__init__.py``::
 
 .. note::
 
-    Extensions can be loaded from any package, so using the
-    ``virtualenvwrapper`` namespace is not required.
+    Las extensiones pueden ser cargadas desde cualquier paquete, así que usar el
+    espacio de nombres de ``virtualenvwrapper`` no es requerido.
 
 Extension API
 -------------
