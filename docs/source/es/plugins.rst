@@ -68,35 +68,38 @@ Y agregando el siguiente código dentro de ``__init__.py``::
 Extension API
 -------------
 
-After the package is established, the next step is to create a module
-to hold the extension code.  For example,
-``virtualenvwrapper/user_scripts.py``.  The module should contain the
-actual extension entry points.  Supporting code can be included, or
-imported from elsewhere using standard Python code organization
-techniques.
+Después de que el paquete está establecido, el siguiente paso es crear un módulo
+para alojar el código de la extensión. Por ejemplo,
+``virtualenvwrapper/user_scripts.py``. El módulo debe contener la extensión
+actual a los *entry points*. Soporte de código puede ser incluído, o importado
+desde algún lugar usando la técnica de organización de código estándar de
+Python.
 
-The API is the same for every extension point.  Each uses a Python
-function that takes a single argument, a list of strings passed to the
-hook loader on the command line.  
+FIXME: I don't like the last paragraph
+
+La API es la misma para todos los puntos de extensión. Cada uno usa una función
+de Python que toma un sólo argumento, una lista de string pasada al script que
+carga los ganchos en la línea de comandos.
 
 ::
 
     def function_name(args):
         # args is a list of strings passed to the hook loader
 
-The contents of the argument list are defined for each extension point
-below (see :ref:`plugins-extension-points`).
+El contenido de la lista de argumentos está definida para cada punto de
+extensión a continuación (ver :ref:`plugins-extension-points`).
 
-Extension Invocation
---------------------
+Invocación de la extensión
+--------------------------
 
-Direct Action
-~~~~~~~~~~~~~
+Acción directa
+~~~~~~~~~~~~~~
 
-Plugins can attach to each hook in two different ways.  The default is
-to have a function run and do some work directly.  For example, the
-``initialize()`` function for the user scripts plugin creates default
-user scripts when ``virtualenvwrapper.sh`` is loaded.
+Los plugins pueden ser colgados a cada uno de los ganchos de dos formas
+diferentes. La estándar es tener una función y hacer algún trabajo diréctamente.
+Por ejemplo, la función ``initialize()`` para el pluging de los scripts de
+usuarios crea scripts de usuarios por default cuando ``virtualenvwrapper.sh`` es
+cargada.
 
 ::
 
@@ -107,21 +110,22 @@ user scripts when ``virtualenvwrapper.sh`` is loaded.
 
 .. _plugins-user-env:
 
-Modifying the User Environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Modificar el entorno de usuario
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are cases where the extension needs to update the user's
-environment (e.g., changing the current working directory or setting
-environment variables).  Modifications to the user environment must be
-made within the user's current shell, and cannot be run in a separate
-process.  To have code run in the user's shell process, extensions can
-define hook functions to return the text of the shell statements to be
-executed.  These *source* hooks are run after the regular hooks with
-the same name, and should not do any work of their own.
+Hay casos en dónde la extensión necesita actualizar el entorno del usuario (por
+ejemplo, cambiar el directorio de trabajo actual o configurar variables de
+entorno). Las modificaciones al entorno del usuario deben ser hechas dentro del
+shell actual del usuario, y no pueden ser ejecutadas en un proceso separado.
+Para tener código ejecutado en un proceso shell del usuario, las extensiones
+pueden definir funciones gancho y retornar el texto de los comandos de shell
+a ser ejecutados. Estos ganchos *fuente* son ejecutados después de los ganchos
+comunes con el mismo nombre, y no deben hacer ningún trabajo por ellos mismos.
 
-The ``initialize_source()`` hook for the user scripts plugin looks for
-a global initialize script and causes it to be run in the current
-shell process.
+
+El gancho ``initialize_source()`` para el plugin de scripts de usuarios busca
+un script ``initializa`` global y causa que este sea ejecutado en el proceso de
+shell actual.
 
 ::
 
