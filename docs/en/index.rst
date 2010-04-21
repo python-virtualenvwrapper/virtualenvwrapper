@@ -179,7 +179,6 @@ Details
    developers
    extensions
    history
-   translations
 
 .. _references:
 
