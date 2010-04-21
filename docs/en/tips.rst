@@ -84,7 +84,7 @@ Automatically Run workon When Entering a Directory
 
 `Justin Lily posted
 <http://justinlilly.com/blog/2009/mar/28/virtualenv-wrapper-helper/>`__
-about about some code he added to his shell environment to look at the
+about some code he added to his shell environment to look at the
 directory each time he runs ``cd``.  If it finds a ``.venv`` file, it
 activates the environment named within.  On leaving that directory,
 the current virtualenv is automatically deactivated.
