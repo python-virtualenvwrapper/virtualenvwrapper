@@ -7,7 +7,6 @@ distribute*.egg
 distribute*.tar.gz
 docs/build
 docs/website
-sphinx/web/templates/base.html
 tests/catch_output
 tests/testpackage/build
 tests/testpackage/dist

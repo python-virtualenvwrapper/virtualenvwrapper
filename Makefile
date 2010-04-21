@@ -37,7 +37,8 @@ html:
 
 # Website copy of documentation
 .PHONY: website
-website: docs/sphinx/web/templates/base.html
+website: 
+	[ ~/Devel/doughellmann/doughellmann/templates/base.html -nt docs/sphinx/web/templates/base.html ] && (echo "Updating base.html" ; cp ~/Devel/doughellmann/doughellmann/templates/base.html docs/sphinx/web/templates/base.html) || exit 0
 	rm -rf docs/website
 	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website")
 	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website" LANGUAGE="es")
@@ -49,10 +50,6 @@ installwebsite: website
 .PHONY: register
 register:
 	python setup.py register
-
-# Copy the base template from my website build directory
-docs/sphinx/web/templates/base.html: ~/Devel/doughellmann/doughellmann/templates/base.html
-	cp $< $@
 
 # Testing
 TEST_SCRIPTS=$(wildcard tests/test*.sh)

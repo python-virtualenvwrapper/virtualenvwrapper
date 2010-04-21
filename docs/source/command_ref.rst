@@ -208,7 +208,7 @@ Syntax::
 Quickly Navigating to a virtualenv
 ==================================
 
-There are two functions to provide shortcuts to navigate into the the
+There are two functions to provide shortcuts to navigate into the
 currently-active virtualenv.
 
 cdvirtualenv
