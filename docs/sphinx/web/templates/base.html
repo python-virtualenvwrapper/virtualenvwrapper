@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}Doug Hellmann{% endblock %}</title>
+{% block head_before_css %}
+{% endblock %}
+<link href="/static/css/leaves.css" rel="stylesheet" type="text/css" />
+{% block head_after_css %}
+{% endblock %}
+{% block head %}
+{% endblock %}
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <h1>{% block page_heading %}Doug Hellmann{% endblock %}</h1>
+  <p>{% block page_subheading %}{% endblock %}</p>
+  <a id="admin-link" href="/admin/">admin</a>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="/">Home</a></li>
+		<li><a href="/PyMOTW/">PyMOTW</a></li>
+		<li><a href="http://blog.doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="/articles/">Articles</a></li>
+		<li><a href="/projects/">Projects</a></li>
+		<li><a href="http://code.doughellmann.com/" target="_">Code</a></li>
+		<li><a href="/about/">About</a></li>
+	</ul>
+</div>
+
+{% block sidebar_l %}
+{% endblock %}
+</div>
+
+<div id="sidebar">
+{% block sidebar %}
+
+    <h2>Sidebar</h2>
+    <p>You have reached the sidebar, put news, links, or anything textual in here. I think I'll drag on with typing nonsense text, until you feel really really sleepy. Of course, you wouldn't waste time reading this. Some Latin would be more useful.</p>
+{% endblock %}
+    
+    <p class="ads">
+    <script type="text/javascript"><!--
+    google_ad_client = "pub-3205160560229413";
+    google_ad_width = 120;
+    google_ad_height = 600;
+    google_ad_format = "120x600_as";
+    google_ad_type = "text";
+    //2007-10-27: www.doughellmann.com
+    google_ad_channel = "0828653884";
+    google_color_border = "FFFFFF";
+    google_color_bg = "FFFFFF";
+    google_color_link = "CC6714";
+    google_color_text = "000000";
+    google_color_url = "999999";
+    google_ui_features = "rc:0";
+    //-->
+    </script>
+    <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+    </p>
+
+</div>
+	  
+<div id="content">
+{% block content %}
+{% block relbar1 %}{% endblock %}
+
+  <h2>Welcome to Leaves.</h2>
+  <p>Welcome to Leaves, a static, 3 column layout made with your usual CSS and XHTML. It is able to correctly accommodate any font size increases or shrinkages (Is that a word?). It seems to work fine in Firefox, Opera, Internet Explorer and Safari. It's more minimal than other designs, because I think images (drop shadows, giant header images) are being obsessively over used these days. I think it detracts from the content and shoves way too much information to a viewer all at the same time, so here you go: Leaves, a minimalist design. Feel free to massacre or change the design to your liking. Well, I guess it's time for some more Latin. <strong>If you want me to create a custom design for you, feel free to drop me a line anytime at web@smallpark.org </strong></p>
+
+{% block relbar2 %}{% endblock %}
+{% endblock %}
+
+{% block addthis %}
+<div id="addthis"><a href="http://www.addthis.com/bookmark.php" onclick="addthis_url   = location.href; addthis_title = document.title; return addthis_click(this);" target="_blank"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" border="0" alt="Bookmark and Share" /></a><script type="text/javascript">var addthis_pub = "dhellmann";</script><script type="text/javascript" src="http://s7.addthis.com/js/widget.php?v=10"></script></div>
+{% endblock %}
+
+{% block comments %}
+<!-- Disqus -->
+<div id="disqus_wrapper">
+<div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/doughellmann/embed.js"></script><noscript><a href="http://doughellmann.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+{% endblock %}
+</div>
+
+<div id="footer_ads">
+
+    <p><script type="text/javascript"><!--
+    google_ad_client = "pub-3205160560229413";
+    google_ad_width = 728;
+    google_ad_height = 90;
+    google_ad_format = "728x90_as";
+    google_ad_type = "text";
+    //2007-10-21: www.doughellmann.com
+    google_ad_channel = "0828653884";
+    google_color_border = "FFFFFF";
+    google_color_bg = "FFFFFF";
+    google_color_link = "CC6714";
+    google_color_text = "000000";
+    google_color_url = "999999";
+    google_ui_features = "rc:0";
+    //-->
+    </script>
+    <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script></p>
+</div>
+
+<div id="footer">
+ {% block footer %}
+    
+<p>Copyright Doug Hellmann | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a></p>
+   
+    <script src="http://www.google-analytics.com/urchin.js"
+    type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1847381-1";
+      urchinTracker();
+    </script>
+
+ {% endblock %}
+</div>
+
+</div>
+
+<!-- Disqus -->
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+		var links = document.getElementsByTagName('a');
+		var query = '?';
+		for(var i = 0; i < links.length; i++) {
+			if(links[i].href.indexOf('#disqus_thread') >= 0) {
+				query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+			}
+		}
+		document.write('<script type="text/javascript" src="http://disqus.com/forums/doughellmann/get_num_replies.js' + query + '"></' + 'script>');
+	})();
+//]]>
+</script>
+
+
+</body>
+</html>
