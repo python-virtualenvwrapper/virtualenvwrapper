@@ -40,11 +40,12 @@ html:
 website: 
 	[ ~/Devel/doughellmann/doughellmann/templates/base.html -nt docs/sphinx/web/templates/base.html ] && (echo "Updating base.html" ; cp ~/Devel/doughellmann/doughellmann/templates/base.html docs/sphinx/web/templates/base.html) || exit 0
 	rm -rf docs/website
-	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website")
-	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website" LANGUAGE="es")
+	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website/en")
+	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website/es" LANGUAGE="es")
 
 installwebsite: website
-	(cd docs/website/html && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/)
+	(cd docs/website/en/html && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/)
+	(cd docs/website/es/html && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/es/)
 
 # Register the new version on pypi
 .PHONY: register
