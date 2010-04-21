@@ -23,7 +23,7 @@ Características
 4. Completa con tab los comandos que toman un entorno virtual como argumento.
 5. Ganchos configurables para todas las operaciones (ver :ref:`scripts`).
 6. Sistema de plugins para la creación de extensiones compartibles (ver
-:ref:`plugins`).
+   :ref:`plugins`).
 
 ============
 Introducción
