@@ -98,7 +98,7 @@ Installing Common Tools Automatically in New Environments
 
 Via `rizumu <http://rizumu.myopenid.com/>`__:
 
-I have this postmkvirtualenv to install the get a basic setup.
+I have this ``postmkvirtualenv`` to install the get a basic setup.
 
 ::
 
