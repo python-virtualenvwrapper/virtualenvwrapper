@@ -150,26 +150,24 @@ shell actual.
 
 .. warning::
 
-    virtualenvwrapper works under several shells with slightly
-    different syntax (bash, sh, zsh, ksh).  Take this portability into
-    account when defining source hooks.  Sticking to the simplest
-    possible syntax usually avoids problems, but there may be cases
-    where examining the ``SHELL`` environment variable to generate
-    different syntax for each case is the only way to achieve the
-    desired result.
+    virtualenvwrapper funciona en varios shells con una sintaxis ligeramente
+    diferente (bash, sh, zsh, ksh). Ten en cuenta esta portabilidad cuando
+    definas ganchos incluídos (*sourced hooks*). Mantener la sintaxis lo más simple 
+    posible evitará problemas comunes, pero quizás haya casos donde 
+    examinar la varible de entorno ``SHELL`` y generar diferente sintaxis 
+    para cada caso sea la única manera de alcanzar el resultado desedo.
     
-Registering Entry Points
-------------------------
+Registrar puntos de entrada
+---------------------------
 
-The functions defined in the plugin need to be registered as *entry
-points* in order for virtualenvwrapper's hook loader to find them.
-Distribute_ entry points are configured in the ``setup.py`` for your
-package by mapping the entry point name to the function in the package
-that implements it.
+Las funciones definidas en el plugin necesitan ser registradas como *puntos de
+entrada* para que el cargador de ganchos de virtualenvwrapper los encuentre.
+Los puntos de entrada de Distribute_ se configuran en el ``setup.py`` de tu
+paquete coincidiendo el nombre del punto de entrada con la función en el paquete
+que lo implementa.
 
-This partial copy of virtualenvwrapper's ``setup.py`` illustrates how
-the ``initialize()`` and ``initialize_source()`` entry points are
-configured.
+Una copia parcial del ``setup.py`` de virtualenvwrapper ilustra cómo los puntos
+de entrada ``initialize()`` y ``initialize_source()`` son configurados.
 
 ::
     
@@ -201,15 +199,14 @@ configured.
             },
         )
 
-The ``entry_points`` argument to ``setup()`` is a dictionary mapping
-the entry point *group names* to lists of entry point specifiers.  A
-different group name is defined by virtualenvwrapper for each
-extension point (see :ref:`plugins-extension-points`).
+El argumento ``entry_points`` de ``setup()`` es un diccionario que mapea los
+*grupos de nombre* de puntos de entrada a listas de puntos de entrada
+específicos. Un nombre de grupo diferente es definido por virtualenvwrapper por
+cada punto de extensión (ver :ref:`plugins-extension-points`).
 
-The entry point specifiers are strings with the syntax ``name =
-package.module:function``.  By convention, the *name* of each entry
-point is the plugin name, but that is not required (the names are not
-used).
+Los identificadores de puntos de entrada son strings con la sintaxis ``name =
+package.module:function``. Por convención, el *nombre* de cada punto de entrada
+es el nombre del plugin, pero esto no es requerido (los nombres no son usados).
 
 .. seealso::
 
