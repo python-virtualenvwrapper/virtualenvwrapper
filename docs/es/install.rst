@@ -5,7 +5,7 @@ Instalación
 Instalación básica
 ==================
 
-virtualenvwrapper debe se instalado usando pip_::
+virtualenvwrapper debe ser instalado usando pip_::
 
   $ pip install virtualenvwrapper
 
@@ -32,7 +32,7 @@ y los scripts instalados con este paquete::
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
 
-Después de editar este, recarga el archivo de inicio (e.g., ejecuta: ``source
+Después de editar este, recarga el archivo de inicio (por ejemplo, ejecuta: ``source
 ~/.bashrc``).
 
 Intérprete de Python y $PATH
@@ -77,7 +77,7 @@ Actualizar desde 1.x
 ====================
 
 El script de shell que contiene las funciones ha sido renombrado en la serie
-2.x para reflejar el hecho de que otros shell además de bash son soportados. En
+2.x para reflejar el hecho de que otros shells, además de bash, son soportados. En
 tu archivo de inicio del shell, cambia ``source
 /usr/local/bin/virtualenvwrapper_bashrc`` por ``source
 /usr/local/bin/virtualenvwrapper.sh``.

@@ -7,8 +7,8 @@
 Referencia de comandos
 ######################
 
-Todos los comandos a continuación son para ser utilizados en una Terminal de
-línea de comandos.
+Todos los comandos, mostrados a continuación, son para ser utilizados 
+en una Terminal de línea de comandos.
 
 ====================
 Administrar entornos
@@ -128,7 +128,7 @@ Sintaxis::
 
     workon [environment_name]
 
-Si no se especifica el ``environment_name`` la lista de entornos disponibles es
+Si no se especifica el ``environment_name``, la lista de entornos disponibles es
 impresa en la salida estándar.
 
 ::
@@ -308,7 +308,7 @@ Sintaxis::
 
     add2virtualenv directory1 directory2 ...
 
-A veces esto es conveniente compartir paquetes instalados que no están en el
+A veces esto es útli para compartir paquetes instalados que no están en el
 directorio ``site-pacakges`` del sistema y no deben ser instalados en cada
 entorno virtual. Una posible solución es crear enlaces simbólicos (*symlinks*)
 hacia el código dentro del directorio ``site-packages`` del entorno, pero
