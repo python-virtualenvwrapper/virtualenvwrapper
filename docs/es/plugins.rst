@@ -213,8 +213,13 @@ es el nombre del plugin, pero esto no es requerido (los nombres no son usados).
   * `namespace packages <http://packages.python.org/distribute/setuptools.html#namespace-packages>`__
   * `Extensible Applications and Frameworks <http://packages.python.org/distribute/setuptools.html#extensible-applications-and-frameworks>`__
 
-The Hook Loader
----------------
+El cargador de ganchos
+----------------------
+
+Las extenciones son ejecutadas mediante una aplicación de líneas de comando
+implementada en ``virtualenvwrapper.hook_loader``. Debido a que ``virtualenvwrapper.sh``
+
+
 
 Extensions are run through a command line application implemented in
 ``virtualenvwrapper.hook_loader``.  Because ``virtualenvwrapper.sh``
@@ -237,37 +242,36 @@ application, use the ``-m`` option to the interpreter::
     -q, --quiet           Show less information on the console
     -n NAMES, --name=NAMES
                           Only run the hook from the named plugin
-  
-To run the extensions for the initialize hook::
+
+Para ejecutar las extensiones para el gancho *initialize*::
 
   $ python -m virtualenvwrapper.hook_loader -v initialize
 
-To get the shell commands for the initialize hook::
+Para obtener los comandos de shell para el gancho *initialize*::
 
   $ python -m virtualenvwrapper.hook_loader --source initialize
 
-In practice, rather than invoking the hook loader directly it is more
-convenient to use the shell function, ``virtualenvwrapper_run_hook``
-to run the hooks in both modes.::
+En la práctica, en vez de invocar al cargador de ganchos directamente es
+conveniente usar la función de shell, ``virtualenvwrapper_run_hook`` para
+ejecutar los ganchos en ambos modos.::
 
   $ virtualenvwrapper_run_hook initialize
 
-All of the arguments given to shell function are passed directly to
-the hook loader.
+Todos los argumentos pasados a la función de shell son pasados directamente al
+cargador de ganchos.
 
-Logging
--------
+Registro (*Logging*)
+--------------------
 
-The hook loader configures logging so that messages are written to
-``$WORKON_HOME/hook.log``.  Messages also may be written to stderr,
-depending on the verbosity flag.  The default is for messages at *info*
-or higher levels to be written to stderr, and *debug* or higher to go to
-the log file.  Using logging in this way provides a convenient
-mechanism for users to control the verbosity of extensions.
+El cargador de ganchos configura el registro para que los mensajes sean escritos
+en ``$WORKON_HOME/hook.log``. Los mensajes quizás sean escritos en stderr,
+dependiendo de la flash verbose. Por default los mensajes con un nivel mayor o
+igual a *info* se escriben en stderr, y los de nivel *debug* o mayor van al
+archivo de registro. Usar el registro de esta forma provee un mecanismo 
+conveniente para que los usuarios controlen la verbosidad de las extensiones.
 
-To use logging from within your extension, simply instantiate a logger
-and call its ``info()``, ``debug()`` and other methods with the
-messages.
+Para usar el registro en tu extensión, simplemente instancia un registro y llama
+a sus métodos ``info()``, ``debug()`` y otros métodos de mensajería.
 
 ::
 
@@ -285,8 +289,17 @@ messages.
 
 .. _plugins-extension-points:
 
-Extension Points
-================
+Puntos de extensión
+===================
+
+Los nombres de los puntos de extensión para los plugins nativos siguen una
+convensión con varias partes:
+``virtualenvwrapper.(pre|post)_<event>[_source]``. *<event>* es la acción tomada
+por el usuario o virtualenvwrapper que provoca la extensión. ``(pre|post)``
+indica si llamar a la extensión antes o después de un evento. El sufijo ``_source`` 
+es agregado para las extensiones que retornan código shell en vez de tomar una
+acción directamente (ver :ref:`plugins-user-env`).
+
 
 The extension point names for native plugins follow a naming
 convention with several parts:
