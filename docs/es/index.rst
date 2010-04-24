@@ -17,7 +17,7 @@ de un proyecto al mismo tiempo sin introducir conflictos entre sus dependencias.
 Características
 ===============
 
-1. Organiza todos tus entornos virtuales en un sólo lugar
+1. Organiza todos tus entornos virtuales en un sólo lugar.
 2. Funciones para administrar tus entornos virtuales (crear, eliminar, copiar).
 3. Usa un sólo comando para cambiar entre los entornos.
 4. Completa con Tab los comandos que toman un entorno virtual como argumento.
@@ -30,7 +30,7 @@ Introducción
 ============
 
 La mejor forma de explicar las características que virtualenvwrapper brinda es
-mostrar éste en uso.
+mostrarlo en acción.
 
 Primero, algunos pasos de inicialización. La mayoría de esto sólo necesita ser
 hecho una sola vez. Vas a querer agregar el comando ``source
@@ -156,8 +156,8 @@ dejándote instalar automáticamente herramientas comúnmente utilizadas.
   (venv3)$ which sphinx-build
   /Users/dhellmann/Envs/env3/bin/sphinx-build
 
-A través de una combinación de funciones existentes definidas por el "core"
-package (ver :ref:`command`), plugins de terceros (ver
+A través de una combinación de funciones existentes definidas por el *core*
+del paquete (ver :ref:`command`), plugins de terceros (ver
 :ref:`plugins`), y scripts definidos por el usuario (ver :ref:`scripts`)
 virtualenvwrapper brinda una amplia variedad de oportunidades para automatizar
 tareas repetitivas.
