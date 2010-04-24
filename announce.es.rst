@@ -24,7 +24,7 @@ cambios y corrección de bugs.
 - Actualizada la documentación de mkvirtualenv para incluir el hecho de que un
   nuevo entorno es activado inmediatamente luego de que es creado (ticket #30).
 - Agregados ganchos alrededor cpvirtualenv.
-- deactivation es más robusto, especialmente bajo ksh.
+- *deactivation* es más robusto, especialmente bajo ksh.
 - Uso del módulo de Python ``tempfile`` para creación de archivos temporales
   de forma segura y portable.
 - Corregido un problema con ``virtualenvwrapper_show_workon_options`` que
