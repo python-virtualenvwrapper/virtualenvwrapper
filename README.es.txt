@@ -10,15 +10,6 @@ incluyen funciones para la creación y eliminación de entornos virtuales y por 
 lado administración de tu rutina de desarrollo, haciendo fácil trabajar en más
 de un proyecto al mismo tiempo sin introducir conflictos entre sus dependencias.
 
-
-
-virtualenvwrapper is a set of extensions to Ian Bicking's `virtualenv
-<http://pypi.python.org/pypi/virtualenv>`_ tool.  The extensions include
-wrappers for creating and deleting virtual environments and otherwise
-managing your development workflow, making it easier to work on more
-than one project at a time without introducing conflicts in their
-dependencies.
-
 ===============
 Características
 ===============
