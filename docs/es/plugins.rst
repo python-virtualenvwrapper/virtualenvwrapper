@@ -4,9 +4,9 @@
 Extender Virtualenvwrapper
 ==========================
 
-Una gran experiencia con soluciones caseras para customizar un entorno de
+Una gran experiencia con soluciones caseras para personalizar un entorno de
 desarrollo ha demostrado cuán valioso puede ser tener la capacidad de
-automatizar tareas comunes y elminar molestias persistentes. Carpinteros
+automatizar tareas comunes y eliminar molestias persistentes. Carpinteros
 construyen plantillas de guía, desarrolladores de software escriben scripts de
 shell. virtualenvwrapper continúa la tradición de animar a un artesano a
 modificar sus herramientas para trabajar de la manera que ellos quieran, en vez
@@ -26,9 +26,9 @@ el repositorio de control de versiones para el código, o por otro lado
 configurar un nuevo proyecto.
 
 Existen dos maneras para adjuntar tu código para que virtualenvwrapper lo
-ejecute: los usuarios finales pueden usar scrips the shell o otros programas
-para la customización personal (ver :ref:`scripts`). Las extensiones también
-pueden ser implementadas en Python usando *entry points* con Distribute_ ,
+ejecute: los usuarios finales pueden usar scripts de shell o otros programas
+para la personalización personal (ver :ref:`scripts`). Las extensiones también
+pueden ser implementadas en Python usando *puntos de entrada* con Distribute_ ,
 
 Definir una extensión
 =====================
@@ -36,15 +36,15 @@ Definir una extensión
 .. note::
 
   Virtualenvwrapper es distribuido con un plugin para la creación y ejecución de
-  los scripts de customización de los usuarios (:ref:`extensions-user_scripts`).
+  los scripts de personalización de los usuarios (:ref:`extensions-user_scripts`).
   Los ejemplos siguientes han sido tomados de la implementación de ese plugin.
 
 Organización del código
 -----------------------
 
 El paquete Python para ``virtualenvwrapper`` es un *namespace package*.
-Eso signific que multiples librerías pueden instalar código dentro del paquete,
-incluso si ellas no son ditribuidas juntas o instaladas dentro del mismo
+Eso significa que múltiples librerías pueden instalar código dentro del paquete,
+incluso si ellas no son distribuidas juntas o instaladas dentro del mismo
 directorio. Las extensiones pueden (opcionalmente) usar el namespace de 
 ``virtualenvwrapper`` configurando su estructura de directorios así:
 
@@ -65,20 +65,20 @@ Y agregando el siguiente código dentro de ``__init__.py``::
     Las extensiones pueden ser cargadas desde cualquier paquete, así que usar el
     espacio de nombres de ``virtualenvwrapper`` no es requerido.
 
-Extension API
+Extensión API
 -------------
 
 Después de que el paquete está establecido, el siguiente paso es crear un módulo
 para alojar el código de la extensión. Por ejemplo,
 ``virtualenvwrapper/user_scripts.py``. El módulo debe contener la extensión
-actual a los *entry points*. Soporte de código puede ser incluído, o importado
+actual a los *entry points*. Soporte de código puede ser incluido, o importado
 desde algún lugar usando la técnica de organización de código estándar de
 Python.
 
 FIXME: I don't like the last paragraph
 
 La API es la misma para todos los puntos de extensión. Cada uno usa una función
-de Python que toma un sólo argumento, una lista de string pasada al script que
+de Python que toma un sólo argumento, una lista de strings pasada al script que
 carga los ganchos en la línea de comandos.
 
 ::
@@ -96,8 +96,8 @@ Acción directa
 ~~~~~~~~~~~~~~
 
 Los plugins pueden ser colgados a cada uno de los ganchos de dos formas
-diferentes. La estándar es tener una función y hacer algún trabajo diréctamente.
-Por ejemplo, la función ``initialize()`` para el pluging de los scripts de
+diferentes. La estándar es tener una función y hacer algún trabajo directamente.
+Por ejemplo, la función ``initialize()`` para el plugin de los scripts de
 usuarios crea scripts de usuarios por default cuando ``virtualenvwrapper.sh`` es
 cargada.
 
@@ -151,10 +151,10 @@ shell actual.
 
     virtualenvwrapper funciona en varios shells con una sintaxis ligeramente
     diferente (bash, sh, zsh, ksh). Ten en cuenta esta portabilidad cuando
-    definas ganchos incluídos (*sourced hooks*). Mantener la sintaxis lo más simple 
+    definas ganchos incluidos (*sourced hooks*). Mantener la sintaxis lo más simple 
     posible evitará problemas comunes, pero quizás haya casos donde 
-    examinar la varible de entorno ``SHELL`` y generar diferente sintaxis 
-    para cada caso sea la única manera de alcanzar el resultado desedo.
+    examinar la variable de entorno ``SHELL`` y generar diferente sintaxis 
+    para cada caso sea la única manera de alcanzar el resultado deseado.
     
 Registrar puntos de entrada
 ---------------------------
@@ -215,16 +215,11 @@ es el nombre del plugin, pero esto no es requerido (los nombres no son usados).
 El cargador de ganchos
 ----------------------
 
-Las extenciones son ejecutadas mediante una aplicación de líneas de comando
+Las extensiones son ejecutadas mediante una aplicación de líneas de comando
 implementada en ``virtualenvwrapper.hook_loader``. Como ``virtualenvwrapper.sh``
-es 
-
-
-Extensions are run through a command line application implemented in
-``virtualenvwrapper.hook_loader``.  Because ``virtualenvwrapper.sh``
-is the primary caller and users do not typically need to run the app
-directly, no separate script is installed.  Instead, to run the
-application, use the ``-m`` option to the interpreter::
+es invocado primero y los usuarios generalmente no necesitan ejecutar la
+aplicación directamente, ningún otro script es instalado por separado. En vez,
+para ejecutar la aplicación, usa la opción ``-m`` del intérprete::
 
   $ python -m virtualenvwrapper.hook_loader -h
   Usage: virtualenvwrapper.hook_loader [options] <hook> [<arguments>]
@@ -292,7 +287,7 @@ Puntos de extensión
 ===================
 
 Los nombres de los puntos de extensión para los plugins nativos siguen una
-convensión con varias partes:
+convención con varias partes:
 ``virtualenvwrapper.(pre|post)_<event>[_source]``. *<event>* es la acción tomada
 por el usuario o virtualenvwrapper que provoca la extensión. ``(pre|post)``
 indica si llama a la extensión antes o después de un evento. El sufijo ``_source`` 
