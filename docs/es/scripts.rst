@@ -1,11 +1,11 @@
 .. _scripts:
 
 =============================
- Customizaciones por usuario
+ Personalizaciones por usuario
 =============================
 
-Los scripts de customización de usuarios finales son *incluidos* uno por uno
-(permitiendoles modificar su entorno de shell) o *ejecutados* como un programa externo
+Los scripts de personalización de usuarios finales son *incluidos* uno por uno
+(permitiéndoles modificar su entorno de shell) o *ejecutados* como un programa externo
 en el momento apropiado.
 
 .. _scripts-initialize:
@@ -15,9 +15,9 @@ initialize
 
   :Global/Local: global
   :Argumento(s): ninguno
-  :Incluído/Ejecutado: incluído
+  :Incluido/Ejecutado: incluido
 
-``$WORKON_HOME/initialize`` is incluído cuando ``virtualenvwrapper.sh``
+``$WORKON_HOME/initialize`` es incluido cuando ``virtualenvwrapper.sh``
 es cargado dentro de tu entorno. Usa este para ajustar configuraciones globales
 cuando virtualenvwrapper es habilitado.
 
@@ -28,7 +28,7 @@ premkvirtualenv
 
   :Global/Local: global
   :Argumento(s): nombre de un nuevo virtualenv
-  :Incluído/Ejecutado: run
+  :Incluido/Ejecutado: ejecutado
 
 ``$WORKON_HOME/premkvirtualenv`` es ejecutado como un programa externo luego que
 de un entorno virtual es creado pero antes de que el entorno actual sea cambiado
@@ -43,9 +43,9 @@ postmkvirtualenv
 
   :Global/Local: global
   :Argumento(s): ninguno
-  :Incluído/Ejecutado: incluído
+  :Incluido/Ejecutado: incluido
 
-``$WORKON_HOME/postmkvirtualenv`` es incluído después de que un nuevo entorno es
+``$WORKON_HOME/postmkvirtualenv`` es incluido después de que un nuevo entorno es
 creado y activado.
 
 .. _scripts-precpvirtualenv:
@@ -54,8 +54,8 @@ precpvirtualenv
 ===============
 
   :Global/Local: global
-  :Argumento(s): nombre del entorno origianl, nombre del nuevo entorno
-  :Incluído/Ejecutado: ejecutado
+  :Argumento(s): nombre del entorno original, nombre del nuevo entorno
+  :Incluido/Ejecutado: ejecutado
 
 ``$WORKON_HOME/precpvirtualenv`` es ejecutado como un programa externo luego de
 que un entorno es duplicado y hecho reubicable, pero antes de que
@@ -70,9 +70,9 @@ postcpvirtualenv
 
   :Global/Local: global
   :Argumento(s): ninguno
-  :Incluído/Ejecutado: incluído
+  :Incluido/Ejecutado: incluido
 
-``$WORKON_HOME/postcpvirtualenv`` es incluído luego de que un nuevo entorno es
+``$WORKON_HOME/postcpvirtualenv`` es incluido luego de que un nuevo entorno es
 creado y activado.
 
 .. _scripts-preactivate:
@@ -82,7 +82,7 @@ preactivate
 
   :Global/Local: global, local
   :Argumento(s): nombre de entorno
-  :Incluído/Ejecutado: ejecutado
+  :Incluido/Ejecutado: ejecutado
 
 El script global ``$WORKON_HOME/preactivate`` es ejecutado antes de que el nuevo
 entorno sea habilitado. El nombre de entorno es pasado como primer argumento.
@@ -97,10 +97,10 @@ postactivate
 
   :Global/Local: global, local
   :Argumento(s): ninguno
-  :Incluído/Ejecutado: incluído
+  :Incluido/Ejecutado: incluido
 
 
-El script global ``$WORKON_HOME/postactivate`` es incluído luego de que el nuevo
+El script global ``$WORKON_HOME/postactivate`` es incluido luego de que el nuevo
 entorno sea habilitado. ``$VIRTUAL_ENV`` hace referencia al nuevo entorno al
 momento en el que se ejecuta el script.
 
@@ -111,7 +111,7 @@ tu variable PS1 haciendo uso de ``_OLD_VIRTUAL_PS1``.
 
     PS1="(`basename \"$VIRTUAL_ENV\"`) $_OLD_VIRTUAL_PS1"
 
-El script local ``$VIRTUAL_ENV/bin/postactivate`` es incluído luego de que el
+El script local ``$VIRTUAL_ENV/bin/postactivate`` es incluido luego de que el
 nuevo entorno es habilitado. ``$VIRTUAL_ENV``  hace referencia al nuevo entorno
 al momento en el que el script es ejecutado.
 
@@ -132,14 +132,14 @@ predeactivate
 
   :Global/Local: local, global
   :Argumento(s): ninguno
-  :Incluído/Ejecutado: incluído
+  :Incluido/Ejecutado: incluido
 
-El script local ``$VIRTUAL_ENV/bin/predeactivate`` es incluído antes de que el entorno
+El script local ``$VIRTUAL_ENV/bin/predeactivate`` es incluido antes de que el entorno
 actual sea desactivado, y puede ser usado para deshabilitar o limpiar
 configuraciones en tu entorno. ``$VIRTUAL_ENV`` hace referencia al entorno viejo
 al momento de ejecutar este script.
 
-El script global ``$WORKON_HOME/predeactivate`` es incluído antes de que el
+El script global ``$WORKON_HOME/predeactivate`` es incluido antes de que el
 entorno actual sea desactivado. ``$VIRTUAL_ENV`` hace referencia al entorno viejo
 al momento de ejecutar este script.
 
@@ -150,9 +150,9 @@ postdeactivate
 
   :Global/Local: local, global
   :Argumento(s): ninguno
-  :Incluído/Ejecutado: incluído
+  :Incluido/Ejecutado: incluido
 
-El script ``$VIRTUAL_ENV/bin/postdeactivate`` es incluído luego de que el
+El script ``$VIRTUAL_ENV/bin/postdeactivate`` es incluido luego de que el
 entorno actual sea desactivado, y puede ser usado para deshabilitar o limpiar
 configuraciones en tu entorno. El path hacia el entorno que recientemente se ha
 desactivado está disponible en ``$VIRTUALENVWRAPPER_LAST_VIRTUALENV``.
@@ -164,11 +164,11 @@ prermvirtualenv
 
   :Global/Local: global
   :Argumento(s): nombre de entorno
-  :Incluído/Ejecutado: ejecutad
+  :Incluido/Ejecutado: ejecutado
 
 EL script ``$WORKON_HOME/prermvirtualenv`` es ejecutado como un programa externo
 antes de que el entorno sea eliminado. El path absoluto hacia el entorno es
-pasado como arguemnto al script.
+pasado como argumento al script.
 
 .. _scripts-postrmvirtualenv:
 
@@ -177,9 +177,9 @@ postrmvirtualenv
 
   :Global/Local: global
   :Argumento(s): nombre de entorno
-  :Incluído/Ejecutado: ejecutado
+  :Incluido/Ejecutado: ejecutado
 
-El script ``$WORKON_HOME/postrmvirtualenv`` es ejecuato como un programa externo
+El script ``$WORKON_HOME/postrmvirtualenv`` es ejecutado como un programa externo
 luego de que el entorno sea eliminado. El path absoluto hacia el directorio del
 entorno es pasado como argumento al script.
 
