@@ -1,8 +1,8 @@
 .. _scripts:
 
-=============================
+===============================
  Personalizaciones por usuario
-=============================
+===============================
 
 Los scripts de personalización de usuarios finales son *incluidos* uno por uno
 (permitiéndoles modificar su entorno de shell) o *ejecutados* como un programa externo

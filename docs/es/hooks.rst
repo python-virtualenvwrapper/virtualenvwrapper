@@ -1,6 +1,6 @@
-==============================
+================================
  Personalizar Virtualenvwrapper
-==============================
+================================
 
 virtualenvwrapper agrega varios ganchos que puedes usar para cambiar tus
 configuraciones, el entorno del shell, u otras configuraciones al crear,
