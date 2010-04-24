@@ -6,7 +6,7 @@ Si quieres contribuir con virtualenvwrapper directamente, estas instrucciones
 deberían ayudarte a empezar. Parches, reporte de bugs, y propuestas de
 características son todas bienvenidas a través del `sitio de BitBucket
 <http://bitbucket.org/dhellmann/virtualenvwrapper/>`_. Contribuciones en la
-forma de parches o solicitud de pull son fáciles de integrar y recibirán
+forma de parches o solicitud de *pull* son fáciles de integrar y recibirán
 prioridad en la atención.
 
 .. note::
@@ -24,7 +24,7 @@ Necesitas los siguientes paquetes para construir la documentación:
 - Sphinx
 - docutils
 
-Una vez que todas las herramientas están instaladas dentro de un virtualen
+Una vez que todas las herramientas están instaladas dentro de un virtualenv
 usando pip, ejecuta ``make html`` para generar la versión de HTML de la
 documentación::
 
