@@ -296,129 +296,116 @@ Los nombres de los puntos de extensión para los plugins nativos siguen una
 convensión con varias partes:
 ``virtualenvwrapper.(pre|post)_<event>[_source]``. *<event>* es la acción tomada
 por el usuario o virtualenvwrapper que provoca la extensión. ``(pre|post)``
-indica si llamar a la extensión antes o después de un evento. El sufijo ``_source`` 
+indica si llama a la extensión antes o después de un evento. El sufijo ``_source`` 
 es agregado para las extensiones que retornan código shell en vez de tomar una
 acción directamente (ver :ref:`plugins-user-env`).
-
-
-The extension point names for native plugins follow a naming
-convention with several parts:
-``virtualenvwrapper.(pre|post)_<event>[_source]``.  The *<event>* is
-the action taken by the user or virtualenvwrapper that triggers the
-extension.  ``(pre|post)`` indicates whether to call the extension
-before or after the event.  The suffix ``_source`` is added for
-extensions that return shell code instead of taking action directly
-(see :ref:`plugins-user-env`).
 
 .. _plugins-initialize:
 
 initialize
 ----------
 
-The ``virtualenvwrapper.initialize`` hooks are run each time
-``virtualenvwrapper.sh`` is loaded into the user's environment.  The
-initialize hook can be used to install templates for configuration
-files or otherwise prepare the system for proper plugin operation.
+Los ganchos ``virtualenvwrapper.initialize`` son ejecutados cada vez que 
+``virtualenvwrapper.sh`` es cargado en el entorno del usuario. El gancho
+*initialize* puede ser usado para instalar plantillas para configurar archivos o
+preparar el sistema para una operación correcta del plugin.
 
 .. _plugins-pre_mkvirtualenv:
 
 pre_mkvirtualenv
 ----------------
 
-The ``virtualenvwrapper.pre_mkvirtualenv`` hooks are run after the
-virtual environment is created, but before the new environment is
-activated.  The current working directory for when the hook is run is
-``$WORKON_HOME`` and the name of the new environment is passed as an
-argument.
+Los ganchos ``virtualenvwrapper.pre_mkvirtualenv`` son ejecutados después de que
+el entorno es creado, pero antes de que el nuevo entorno sea activado. El
+directorio de trabajo actual para cuando el gancho es ejecutado es ``$WORKON_HOME``
+y el nombre del nuevo entorno es pasado como un argumento.
 
 .. _plugins-post_mkvirtualenv:
 
 post_mkvirtualenv
 -----------------
 
-The ``virtualenvwrapper.post_mkvirtualenv`` hooks are run after a new
-virtual environment is created and activated.  ``$VIRTUAL_ENV`` is set
-to point to the new environment.
+Los ganchos ``virtualenvwrapper.post_mkvirtualenv`` son ejecutado después de que
+un nuevo entorno sea creado y activado. ``$VIRTUAL_ENV`` es configurado para
+apuntar al nuevo entorno.
 
 .. _plugins-pre_activate:
 
 pre_activate
 ------------
 
-The ``virtualenvwrapper.pre_activate`` hooks are run just before an
-environment is enabled.  The environment name is passed as the first
-argument.
+Los ganchos ``virtualenvwrapper.pre_activate`` son ejecutados justo antes 
+de que un entorno sea activado. El nombre del entorno es pasado como
+primer argumento.
 
 .. _plugins-post_activate:
 
 post_activate
 -------------
 
-The ``virtualenvwrapper.post_activate`` hooks are run just after an
-environment is enabled.  ``$VIRTUAL_ENV`` is set to point to the
-current environment.
+
+Los ganchos ``virtualenvwrapper.post_activate`` son ejecutados justo después
+de que un entorno sea activado. ``$VIRTUAL_ENV`` apunta al entorno actual.
 
 .. _plugins-pre_deactivate:
 
 pre_deactivate
 --------------
 
-The ``virtualenvwrapper.pre_deactivate`` hooks are run just before an
-environment is disabled.  ``$VIRTUAL_ENV`` is set to point to the
-current environment.
+Los ganchos ``virtualenvwrapper.pre_deactivate`` son ejecutados justo antes de
+que un entorno sea desactivado. ``$VIRTUAL_ENV`` apunta al entorno actual.
 
 .. _plugins-post_deactivate:
 
 post_deactivate
 ---------------
 
-The ``virtualenvwrapper.post_deactivate`` hooks are run just after an
-environment is disabled.  The name of the environment just deactivated
-is passed as the first argument.
+Los ganchos ``virtualenvwrapper.post_deactivate`` son ejecutados justo después
+de que un entorno sea desactivado. El nombre del entorno recién desactivado es
+pasado como primer argumento.
 
 .. _plugins-pre_rmvirtualenv:
 
 pre_rmvirtualenv
 ----------------
 
-The ``virtualenvwrapper.pre_rmvirtualenv`` hooks are run just before
-an environment is deleted.  The name of the environment being deleted
-is passed as the first argument.
+Los ganchos ``virtualenvwrapper.pre_rmvirtualenv`` son ejecutados justo antes
+de que un entorno sea eliminado. El nombre del entorno eliminado es pasado
+como primer argumento.
 
 .. _plugins-post_rmvirtualenv:
 
 post_rmvirtualenv
 -----------------
 
-The ``virtualenvwrapper.post_rmvirtualenv`` hooks are run just after
-an environment is deleted.  The name of the environment being deleted
-is passed as the first argument.
+Los ganchos ``virtualenvwrapper.post_rmvirtualenv`` son ejecutados justo después
+de que un entorno haya sido eliminado. El nombre del entorno eliminado es pasado
+como primer argumento.
 
-Adding New Extension Points
-===========================
 
-Plugins that define new operations can also define new extension
-points.  No setup needs to be done to allow the hook loader to find
-the extensions; documenting the names and adding calls to
-``virtualenvwrapper_run_hook`` is sufficient to cause them to be
-invoked.  
+Agregar nuevos puntos de extensión
+==================================
 
-The hook loader assumes all extension point names start with
-``virtualenvwrapper.`` and new plugins will want to use their own
-namespace qualifier to append to that.  For example, the project_
-extension defines new events around creating project directories (pre
-and post).  These are called
-``virtualenvwrapper.project.pre_mkproject`` and
-``virtualenvwrapper.project.post_mkproject``.  These are invoked
-with::
+Los plugins que definen nuevas operaciones pueden también definir nuevos puntos
+de extensión. No es necesario hacer ninguna configuración para permitir que el
+cargador de ganchos encuentre las extensiones; documentar los nombres y agregar
+llamadas a ``virtualenvwrapper_run_hook`` es suficiente para causar que ellos se
+invoquen.
+ 
+El cargador de ganchos asume que todos los nombres de puntos de extensión
+comienzan con ``virtualenvwrapper.`` y los nuevos plugins querrán usar su
+propio espacio de nombres para agregar. Por ejemplo, la extensión project_
+define nuevos eventos para crear directorios del proyecto (pre y post). Esas son
+llamadas a ``virtualenvwrapper.project.pre_mkproject`` y
+``virtualenvwrapper.project.post_mkproject``. Estas son invocadas con::
 
   virtualenvwrapper_run_hook project.pre_mkproject $project_name
 
-and::
+y::
 
   virtualenvwrapper_run_hook project.post_mkproject
 
-respectively.
+respectivamente.
 
 .. _Distribute: http://packages.python.org/distribute/
 
