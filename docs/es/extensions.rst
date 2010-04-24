@@ -29,7 +29,7 @@ emacs-desktop
 Emacs desktop-mode_ te permite guardar el estado de emacs (buffers abiertos,
 posiciones de buffers, etc.) entre sesiones. También puede ser usado como un
 archivo de proyecto similar a otros IDEs. El plugin emacs-desktop_ agrega 
-un disparador para guardar el archivo de proyect actual y cargar uno nuevo
+un disparador para guardar el archivo de proyecto actual y cargar uno nuevo
 cuando se active un nuevo entorno usando ``workon``.
 
 .. _desktop-mode: http://www.emacswiki.org/emacs/DeskTop
@@ -40,6 +40,6 @@ user_scripts
 ============
 
 La extensión ``user_scripts`` es distribuida con virtualenvwrapper y está
-habilitada por default. Implmenta la característica de script de customización
+habilitada por default. Implementa la característica de script de personalización
 de usuarios descrita en :ref:`scripts`.
 
