@@ -1,5 +1,5 @@
 ==============================
- Customizar Virtualenvwrapper
+ Personalizar Virtualenvwrapper
 ==============================
 
 virtualenvwrapper agrega varios ganchos que puedes usar para cambiar tus
