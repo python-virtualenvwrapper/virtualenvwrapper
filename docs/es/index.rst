@@ -18,9 +18,9 @@ Características
 ===============
 
 1. Organiza todos tus entornos virtuales en un sólo lugar
-2. Funciones para administrar tus entornor virtuales (crear, eliminar, copiar).
+2. Funciones para administrar tus entornos virtuales (crear, eliminar, copiar).
 3. Usa un sólo comando para cambiar entre los entornos.
-4. Completa con tab los comandos que toman un entorno virtual como argumento.
+4. Completa con Tab los comandos que toman un entorno virtual como argumento.
 5. Ganchos configurables para todas las operaciones (ver :ref:`scripts`).
 6. Sistema de plugins para la creación de extensiones compartibles (ver
    :ref:`plugins`).
@@ -33,7 +33,7 @@ La mejor forma de explicar las características que virtualenvwrapper brinda es
 mostrar éste en uso.
 
 Primero, algunos pasos de inicialización. La mayoría de esto sólo necesita ser
-hecho una sóla vez. Vas a querer agregar el comando ``source
+hecho una sola vez. Vas a querer agregar el comando ``source
 /usr/local/bin/virtualenvwrapper.sh`` al archivo de inicio de shell, cambiando
 el path hacia virtualenvwrapper.sh dependiendo en dónde haya sido instalado por
 pip.
@@ -102,8 +102,8 @@ Cambiar entre entornos con ``workon``::
   /Users/dhellmann/Envs/env1
   (env1)$ 
 
-El comando ``workon`` también incluye la completación con tab para los nombres
-de los entornos, e invoca a los scripts customizados cuando un entorno es
+El comando ``workon`` también incluye la opción de completar con Tab los nombres
+de los entornos, e invoca a los scripts personalizados cuando un entorno es
 activado o desactivado (ver :ref:`scripts`).
 
 ::
@@ -114,7 +114,7 @@ activado o desactivado (ver :ref:`scripts`).
   /Users/dhellmann/Envs/env2
 
 :ref:`scripts-postmkvirtualenv` es ejecutado cuando un nuevo entorno es creado,
-dejándote instalar automáticamente herramientas comunmente utilizadas.
+dejándote instalar automáticamente herramientas comúnmente utilizadas.
 
 ::
 
@@ -157,8 +157,8 @@ dejándote instalar automáticamente herramientas comunmente utilizadas.
   /Users/dhellmann/Envs/env3/bin/sphinx-build
 
 A través de una combinación de funciones existentes definidas por el "core"
-package (see :ref:`command`), plugins de terceros (see
-:ref:`plugins`), y scripts definidos por el usuario (see :ref:`scripts`)
+package (ver :ref:`command`), plugins de terceros (ver
+:ref:`plugins`), y scripts definidos por el usuario (ver :ref:`scripts`)
 virtualenvwrapper brinda una amplia variedad de oportunidades para automatizar
 tareas repetitivas.
 
