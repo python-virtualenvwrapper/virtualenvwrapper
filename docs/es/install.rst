@@ -32,7 +32,7 @@ y los scripts instalados con este paquete::
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
 
-Despues de editar este, recarga el archivo de inicio (e.g., ejecuta: ``source
+Después de editar este, recarga el archivo de inicio (e.g., ejecuta: ``source
 ~/.bashrc``).
 
 Intérprete de Python y $PATH
@@ -70,7 +70,7 @@ Archivos temporales
 ===================
 
 virtualenvwrapper crea archivos temporales en ``$TMPDIR``. Si la variable no
-está configuradad, este usa ``/tmp``. Para cambiar la ubicación de los archivos
+está configurada, este usa ``/tmp``. Para cambiar la ubicación de los archivos
 temporales sólo para virtualenvwrapper, configura ``VIRTUALENVWRAPPER_TMPDIR``.
 
 Actualizar desde 1.x
