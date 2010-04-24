@@ -25,7 +25,7 @@ Sintaxis::
 
     mkvirtualenv [options] ENVNAME
 
-Todas las opciones de línea de comandos son pasados diréctamente a
+Todas las opciones de línea de comandos son pasados directamente a
 ``virtualenv``. El nuevo entorno es automáticamente activado luego de su
 inicialización.
 
@@ -77,7 +77,7 @@ cpvirtualenv
 
 Duplica un entorno, dentro de WORKON_HOME.
 
-Syntax::
+Sintaxis::
 
     cpvirtualenv ENVNAME TARGETENVNAME
 
@@ -179,7 +179,7 @@ Sintaxis::
 .. note::
 
     Este comando es actualmente parte de virtualenv, pero es encapsulado para
-    proveer ganchos antes y después, al igual que workon hace para activate.
+    proveer ganchos antes y después, al igual que workon hace para *activate*.
 
 ::
 
@@ -222,7 +222,7 @@ Sintaxis::
 
 Al llamar ``cdvirtualenv`` se cambia el directorio de trabajo actual hacia la
 sima de virtualenv (``$VIRTUAL_ENV``). Un argumento adicional es agregado a la
-ruta, permitiendo navegar diréctamente dentro de un subdirectorio.
+ruta, permitiendo navegar directamente dentro de un subdirectorio.
 
 ::
 
@@ -310,10 +310,10 @@ Sintaxis::
 
 A veces esto es conveniente compartir paquetes instalados que no están en el
 directorio ``site-pacakges`` del sistema y no deben ser instalados en cada
-entorno virtual. Una posible solución es crear enláces simbólicos (*symlinks*)
+entorno virtual. Una posible solución es crear enlaces simbólicos (*symlinks*)
 hacia el código dentro del directorio ``site-packages`` del entorno, pero
 también es fácil agregar a la variable PYTHONPATH directorios extras que están
-incluídos en los archivos ``.pth`` dentro de ``site-packages`` usando ``add2virtualenv``.
+incluidos en los archivos ``.pth`` dentro de ``site-packages`` usando ``add2virtualenv``.
 
 1. Descarga (*check out*) el código de un proyecto grande, como Django.
 2. Ejecuta: ``add2virtualenv path_to_source``.
