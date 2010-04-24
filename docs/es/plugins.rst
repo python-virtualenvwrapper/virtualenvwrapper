@@ -139,14 +139,13 @@ shell actual.
 
 .. warning::
 
-    Because the extension is modifying the user's working shell, care
-    must be taken not to corrupt the environment by overwriting
-    existing variable values unexpectedly.  Avoid creating temporary
-    variables where possible, and use unique names where variables
-    cannot be avoided.  Prefixing variables with the extension name is
-    a good way to manage the namespace.  For example, instead of
-    ``temp_file`` use ``user_scripts_temp_file``.  Use ``unset`` to
-    release temporary variable names when they are no longer needed.
+    Como las extensiones están modificando el shell de trabajo del usuario, se
+    debe tener mucho cuidado de corromper el entorno sobreescribiendo variables
+    con valores inesperados. Evita crear variables temporales cuando sea
+    posible. Poner prefijos a las variables con el nombre de la extensión es una
+    buena forma de manejar espacios de nombres. Por ejemplo, en vez de
+    ``temp_file`` usa ``user_scripts_temp_file``. Usa ``unset`` para liberar
+    nombres de variables temporales cuando no sean más necesarias.
 
 .. warning::
 
@@ -217,8 +216,8 @@ El cargador de ganchos
 ----------------------
 
 Las extenciones son ejecutadas mediante una aplicación de líneas de comando
-implementada en ``virtualenvwrapper.hook_loader``. Debido a que ``virtualenvwrapper.sh``
-
+implementada en ``virtualenvwrapper.hook_loader``. Como ``virtualenvwrapper.sh``
+es 
 
 
 Extensions are run through a command line application implemented in
