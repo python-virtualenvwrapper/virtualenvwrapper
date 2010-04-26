@@ -76,11 +76,14 @@ virtualenvwrapper_verify_workon_home () {
 
 # Use Python's tempfile module to create a temporary file
 # with a unique and not-likely-to-be-predictable name.
+# Expects 1 argument, the suffix for the new file.
 virtualenvwrapper_tempfile () {
-    $VIRTUALENVWRAPPER_PYTHON -c "import tempfile; print tempfile.NamedTemporaryFile(prefix='virtualenvwrapper.').name"
-    if [ $? -ne 0 ]
+    typeset base=$("$VIRTUALENVWRAPPER_PYTHON" -c "import tempfile; print tempfile.NamedTemporaryFile(prefix='virtualenvwrapper.').name")
+    if [ -z "$base" ]
     then
-        echo "${TMPDIR:-/tmp}/virtualenvwrapper.$$.`date +%s`"
+        echo "${TMPDIR:-/tmp}/virtualenvwrapper.$$.`date +%s`.$1"
+    else
+        echo "$base.$1"
     fi
 }
 
@@ -89,7 +92,7 @@ virtualenvwrapper_run_hook () {
     # First anything that runs directly from the plugin
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION "$@"
     # Now anything that wants to run inside this shell
-    hook_script=$(virtualenvwrapper_tempfile)
+    hook_script="$(virtualenvwrapper_tempfile hook)"
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader $HOOK_VERBOSE_OPTION \
         --source "$@" >>"$hook_script"
     source "$hook_script"

@@ -20,6 +20,7 @@ help:
 	@echo "website        - build web version of docs"
 	@echo "installwebsite - deploy web version of docs"
 	@echo "develop        - install development version"
+	@echo "test           - run the test suite"
 
 
 .PHONY: sdist

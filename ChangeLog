@@ -1,0 +1,5 @@
+2010-04-26  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Add a suffix
+	to the tempfile name so we know the tempfile module isn't going to
+	erase it.
