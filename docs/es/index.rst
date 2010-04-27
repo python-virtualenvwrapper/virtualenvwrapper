@@ -224,9 +224,8 @@ PERFORMANCE OF THIS SOFTWARE.
 
 .. seealso::
 
-   `La traducción al español
-   <http://bitbucket.org/humitos/virtualenvwrapper-es-translation/>`__
+   * `La traducción al español <http://bitbucket.org/humitos/virtualenvwrapper-es-translation/>`__
 
-   The original `English version
-   <http://www.doughellmann.com/docs/virtualenvwrapper/>`__ of the
-   documentation.
+   * The original `English version
+     <http://www.doughellmann.com/docs/virtualenvwrapper/>`__ of the
+     documentation.
