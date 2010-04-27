@@ -6,6 +6,7 @@ dist
 distribute*.egg
 distribute*.tar.gz
 docs/build
+docs/html
 docs/website
 tests/catch_output
 tests/testpackage/build

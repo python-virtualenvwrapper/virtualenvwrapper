@@ -16,6 +16,7 @@ SUPPORTED_SHELLS=bash sh ksh zsh
 help:
 	@echo "sdist          - Source distribution"
 	@echo "html           - HTML documentation"
+	@echo "docclean       - Remove documentation build files"
 	@echo "register       - register a new release on PyPI"
 	@echo "website        - build web version of docs"
 	@echo "installwebsite - deploy web version of docs"
@@ -33,15 +34,19 @@ sdist: html
 # Documentation
 .PHONY: html
 html:
-	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/pkg")
+	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/pkg" LANGUAGE="en")
 	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/pkg" LANGUAGE="es")
+
+.PHONY: docclean
+docclean:
+	rm -rf docs/build docs/html
 
 # Website copy of documentation
 .PHONY: website
 website: 
 	[ ~/Devel/doughellmann/doughellmann/templates/base.html -nt docs/sphinx/web/templates/base.html ] && (echo "Updating base.html" ; cp ~/Devel/doughellmann/doughellmann/templates/base.html docs/sphinx/web/templates/base.html) || exit 0
 	rm -rf docs/website
-	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website/en")
+	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website/en" LANGUAGE="en")
 	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx/web" BUILDDIR="website/es" LANGUAGE="es")
 
 installwebsite: website
