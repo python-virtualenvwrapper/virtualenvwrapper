@@ -2,6 +2,13 @@
 Release History
 ===============
 
+Dev
+
+  - Added `Spanish translation for the documentation
+    <http://www.doughellmann.com/docs/virtualenvwrapper/es/>`__ via
+    Manuel Kaufmann's fork at
+    http://bitbucket.org/humitos/virtualenvwrapper-es-translation/
+
 2.1
 
   - Add support for ksh.  Thanks to Doug Latornell for doing the
