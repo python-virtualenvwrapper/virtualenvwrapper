@@ -221,3 +221,9 @@ PERFORMANCE OF THIS SOFTWARE.
 
    Esta traducción fue preparada por `Manuel Kaufmann
    <http://bitbucket.org/humitos/virtualenvwrapper-es-translation/>`__.
+
+.. seealso::
+
+   The original `English version
+   <http://www.doughellmann.com/docs/virtualenvwrapper/>`__ of the
+   documentation.
