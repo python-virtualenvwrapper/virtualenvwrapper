@@ -8,6 +8,9 @@ Dev
     <http://www.doughellmann.com/docs/virtualenvwrapper/es/>`__ via
     Manuel Kaufmann's fork at
     http://bitbucket.org/humitos/virtualenvwrapper-es-translation/
+  - Fixed improper use of python from ``$PATH`` instead of the
+    location where the wrappers are installed.  See `issue #41
+    <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/41/>`__.
 
 2.1
 

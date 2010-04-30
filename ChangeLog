@@ -1,3 +1,11 @@
+2010-04-29  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_get_python_version): Add
+	a comment about why we're using the $PATH python instead of the
+	one where the wrappers are installed.
+	(add2virtualenv): Use the install-tree python instead of the one
+	from $PATH.
+
 2010-04-26  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Add a suffix

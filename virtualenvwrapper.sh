@@ -308,6 +308,9 @@ fi
 
 # Prints the Python version string for the current interpreter.
 virtualenvwrapper_get_python_version () {
+    # Uses the Python from the virtualenv because we're trying to
+    # determine the version installed there so we can build
+    # up the path to the site-packages directory.
     python -c 'import sys; print ".".join(str(p) for p in sys.version_info[:2])'
 }
 
@@ -357,7 +360,7 @@ add2virtualenv () {
     touch "$path_file"
     for pydir in "$@"
     do
-        absolute_path=$(python -c "import os; print os.path.abspath(\"$pydir\")")
+        absolute_path=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.abspath(\"$pydir\")")
         if [ "$absolute_path" != "$pydir" ]
         then
             echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
