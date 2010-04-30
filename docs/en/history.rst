@@ -11,6 +11,9 @@ Dev
   - Fixed improper use of python from ``$PATH`` instead of the
     location where the wrappers are installed.  See `issue #41
     <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/41/>`__.
+  - Quiet spurrious error/warning messages when deactivating a
+    virtualenv under zsh.  See `issue #42
+    <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/42/>`__.
 
 2.1
 

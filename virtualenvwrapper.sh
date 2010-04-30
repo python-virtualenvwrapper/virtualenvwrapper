@@ -262,8 +262,8 @@ workon () {
         if [ ! "$1" = "nondestructive" ]
         then
             # Remove this function
-            unset -f virtualenv_deactivate
-            unset -f deactivate
+            unset -f virtualenv_deactivate >/dev/null 2>&1
+            unset -f deactivate >/dev/null 2>&1
         fi
 
     }'
