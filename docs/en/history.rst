@@ -2,7 +2,7 @@
 Release History
 ===============
 
-Dev
+2.1.1
 
   - Added `Spanish translation for the documentation
     <http://www.doughellmann.com/docs/virtualenvwrapper/es/>`__ via
