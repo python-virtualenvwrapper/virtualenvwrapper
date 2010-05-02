@@ -1,3 +1,8 @@
+2010-05-02  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_run_hook): Instead of
+	-m, use -c so hooks can be run under Python 2.4.
+
 2010-04-29  Doug Hellmann  <dhellmann@racemi.com>
 
 	* tests/test_workon.sh: Refactor deactivate tests into their own

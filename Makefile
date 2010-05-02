@@ -1,13 +1,18 @@
 # Get the version of the app.  This is used in the doc build.
 export VERSION=$(shell python setup.py --version)
 
+# Locations of Python interpreter binaries
+PYTHON26=/Library/Frameworks/Python.framework/Versions/2.6/bin/python2.6
+PYTHON25=/Library/Frameworks/Python.framework/Versions/2.5/bin/python2.5
+PYTHON24=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.4.6/bin/python2.4
+
 # The main version of Python supported.
-PRIMARY_PYTHON_VERSION=2.6
+PRIMARY_PYTHON_VERSION=$(PYTHON26)
 
 # The test-quick pattern changes the definition of
 # this variable to only run against a single version of python.
-ifeq ($(SUPPORTED_PYTHON_VERSIONS),)
-SUPPORTED_PYTHON_VERSIONS=2.5 2.6
+ifeq ($(PYTHON_BINARIES),)
+PYTHON_BINARIES=$(PRIMARY_PYHTON_VERSION) $(PYTHON25) $(PYTHON24)
 endif
 
 SUPPORTED_SHELLS=bash sh ksh zsh
@@ -81,9 +86,9 @@ test-zsh:
 # - Install virtualenvwrapper into the new virtualenv
 # - Run each test script in tests
 test-loop:
-	for py_ver in $(SUPPORTED_PYTHON_VERSIONS) ; do \
+	for py_bin in $(PYTHON_BINARIES) ; do \
 		(cd $$TMPDIR/ && rm -rf virtualenvwrapper-test-env \
-			&& virtualenv -p /Library/Frameworks/Python.framework/Versions/$$py_ver/bin/python$$py_ver --no-site-packages virtualenvwrapper-test-env) \
+			&& virtualenv -p $$py_bin --no-site-packages virtualenvwrapper-test-env) \
 			|| exit 1 ; \
 		$$TMPDIR/virtualenvwrapper-test-env/bin/python setup.py install || exit 1 ; \
 		for test_script in $(wildcard tests/test*.sh) ; do \
@@ -96,7 +101,10 @@ test-loop:
 	done
 
 test-quick:
-	SUPPORTED_PYTHON_VERSIONS=$(PRIMARY_PYTHON_VERSION) $(MAKE) test-bash
+	PYTHON_BINARIES=$(PRIMARY_PYTHON_VERSION) $(MAKE) test-bash
+
+test-24:
+	PYTHON_BINARIES=$(PYTHON24) $(MAKE) test-bash
 
 test-install:
 	bash ./tests/manual_test_install.sh `pwd`/dist "$(VERSION)"

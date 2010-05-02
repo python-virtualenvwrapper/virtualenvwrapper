@@ -2,6 +2,12 @@
 Release History
 ===============
 
+Dev
+
+  - Switched hook loader execution to a form that works with Python
+    2.4 to resolve `issue 43
+    <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/43/>`__.
+
 2.1.1
 
   - Added `Spanish translation for the documentation
