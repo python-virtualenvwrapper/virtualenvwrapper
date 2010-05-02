@@ -7,6 +7,8 @@ Dev
   - Switched hook loader execution to a form that works with Python
     2.4 to resolve `issue 43
     <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/43/>`__.
+  - Tested under Python 2.7b1.  See `issue 44
+    <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/44/>`__.
 
 2.1.1
 

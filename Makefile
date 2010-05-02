@@ -2,17 +2,15 @@
 export VERSION=$(shell python setup.py --version)
 
 # Locations of Python interpreter binaries
+PYTHON27=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.7b1/bin/python2.7
 PYTHON26=/Library/Frameworks/Python.framework/Versions/2.6/bin/python2.6
 PYTHON25=/Library/Frameworks/Python.framework/Versions/2.5/bin/python2.5
 PYTHON24=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.4.6/bin/python2.4
 
-# The main version of Python supported.
-PRIMARY_PYTHON_VERSION=$(PYTHON26)
-
 # The test-quick pattern changes the definition of
 # this variable to only run against a single version of python.
 ifeq ($(PYTHON_BINARIES),)
-PYTHON_BINARIES=$(PRIMARY_PYHTON_VERSION) $(PYTHON25) $(PYTHON24)
+PYTHON_BINARIES=$(PYTHON26) $(PYTHON27) $(PYTHON25) $(PYTHON24)
 endif
 
 SUPPORTED_SHELLS=bash sh ksh zsh
@@ -100,11 +98,19 @@ test-loop:
 		done \
 	done
 
-test-quick:
-	PYTHON_BINARIES=$(PRIMARY_PYTHON_VERSION) $(MAKE) test-bash
+test-quick: test-26
 
 test-24:
 	PYTHON_BINARIES=$(PYTHON24) $(MAKE) test-bash
+
+test-25:
+	PYTHON_BINARIES=$(PYTHON25) $(MAKE) test-bash
+
+test-26:
+	PYTHON_BINARIES=$(PYTHON26) $(MAKE) test-bash
+
+test-27:
+	PYTHON_BINARIES=$(PYTHON27) $(MAKE) test-bash
 
 test-install:
 	bash ./tests/manual_test_install.sh `pwd`/dist "$(VERSION)"
