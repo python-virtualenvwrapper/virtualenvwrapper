@@ -92,7 +92,7 @@ test-loop:
 		for test_script in $(wildcard tests/test*.sh) ; do \
 			echo ; \
 	 		echo '********************************************************************************' ; \
-			echo "Running $$test_script with $(TEST_SHELL) under Python $$py_ver" ; \
+			echo "Running $$test_script with $(TEST_SHELL) under Python $(basename $$py_bin)" ; \
 			VIRTUALENVWRAPPER_PYTHON=$$TMPDIR/virtualenvwrapper-test-env/bin/python SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script || exit 1 ; \
 			echo ; \
 		done \
