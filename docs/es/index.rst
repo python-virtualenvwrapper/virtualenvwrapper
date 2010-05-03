@@ -100,7 +100,7 @@ Cambiar entre entornos con ``workon``::
   (env2)$ workon env1
   (env1)$ echo $VIRTUAL_ENV
   /Users/dhellmann/Envs/env1
-  (env1)$ 
+  (env1)$
 
 El comando ``workon`` también incluye la opción de completar con Tab los nombres
 de los entornos, e invoca a los scripts personalizados cuando un entorno es
@@ -152,7 +152,7 @@ dejándote instalar automáticamente herramientas comúnmente utilizadas.
       Installing sphinx-build script to /Users/dhellmann/Envs/env3/bin
       Installing sphinx-quickstart script to /Users/dhellmann/Envs/env3/bin
       Installing sphinx-autogen script to /Users/dhellmann/Envs/env3/bin
-  Successfully installed docutils Jinja2 Pygments sphinx  (env3)$ 
+  Successfully installed docutils Jinja2 Pygments sphinx  (env3)$
   (venv3)$ which sphinx-build
   /Users/dhellmann/Envs/env3/bin/sphinx-build
 
@@ -219,7 +219,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 .. note::
 
-   Esta traducción fue preparada por `Manuel Kaufmann
+   Esta traducción fue realizada por `Manuel Kaufmann
    <http://humitos.wordpress.com/>`__.
 
 .. seealso::
