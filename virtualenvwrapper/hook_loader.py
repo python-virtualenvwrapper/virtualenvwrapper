@@ -11,6 +11,7 @@ import logging
 import logging.handlers
 import optparse
 import os
+import sys
 
 import pkg_resources
 
@@ -20,6 +21,13 @@ def main():
         prog='virtualenvwrapper.hook_loader',
         description='Manage hooks for virtualenvwrapper',
         )
+
+    parser.add_option('-S', '--run-hook-and-write-source',
+                      help='Runs "hook" and runs "<hook>_source", writing the ' +
+                           'result to <file>',
+                      dest='source_filename',
+                      default=None,
+                      )
     parser.add_option('-s', '--source',
                       help='Print the shell commands to be run in the current shell',
                       action='store_true',
@@ -84,8 +92,29 @@ def main():
     if not args:
         parser.error('Please specify the hook to run')
     hook = args[0]
+
+    if options.sourcing and options.source_filename:
+        parser.error('--source and --run-hook-and-write-source are mutually ' +
+                     'exclusive.')
+
     if options.sourcing:
         hook += '_source'
+
+    run_hooks(hook, options, args)
+
+    if options.source_filename:
+        options.sourcing = True
+        output = open(options.source_filename, "w")
+        try:
+            run_hooks(hook + '_source', options, args, output)
+        finally:
+            output.close()
+
+    return 0
+
+def run_hooks(hook, options, args, output=None):
+    if output is None:
+        output = sys.stdout
 
     for ep in pkg_resources.iter_entry_points('virtualenvwrapper.%s' % hook):
         if options.names and ep.name not in options.names:
@@ -99,12 +128,11 @@ def main():
             # be run in the calling shell.
             contents = (plugin(args[1:]) or '').strip()
             if contents:
-                print contents
-                print
+                output.write(contents)
+                output.write("\n")
         else:
             # Just run the plugin ourselves
             plugin(args[1:])
-    return 0
 
 if __name__ == '__main__':
     main()

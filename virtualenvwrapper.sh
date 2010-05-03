@@ -57,10 +57,25 @@ then
     VIRTUALENVWRAPPER_PYTHON="$(which python)"
 fi
 
-# Normalize the directory name in case it includes 
-# relative path components.
-WORKON_HOME=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.abspath(os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\")))")
-export WORKON_HOME
+# If the path is relative, prefix it with $HOME
+# (note: for compatibility)
+if echo "$WORKON_HOME" | grep -e '^[^/~]'
+then
+    export WORKON_HOME="$HOME/$WORKON_HOME"
+fi
+
+# Only call on Python to fix the path if it looks like the
+# path might contain stuff to expand.
+# (it might be possible to do this in shell, but I don't know a
+# cross-shell-safe way of doing it -wolever)
+if echo "$WORKON_HOME" | grep -e "[$~]"
+then
+    # This will normalize the path by:
+    # - Expanding variables (eg, $foo)
+    # - Converting ~s to complete paths (eg, ~/ to /home/brian/ and ~arthur to /home/arthur)
+    WORKON_HOME=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\"))")
+    export WORKON_HOME
+fi
 
 # Verify that the WORKON_HOME directory exists
 virtualenvwrapper_verify_workon_home () {
@@ -74,43 +89,34 @@ virtualenvwrapper_verify_workon_home () {
 
 #HOOK_VERBOSE_OPTION="-v"
 
-# Use Python's tempfile module to create a temporary file
-# with a unique and not-likely-to-be-predictable name.
 # Expects 1 argument, the suffix for the new file.
 virtualenvwrapper_tempfile () {
-    typeset base=$("$VIRTUALENVWRAPPER_PYTHON" -c "import tempfile; print tempfile.NamedTemporaryFile(prefix='virtualenvwrapper.').name")
-    if [ -z "$base" ]
-    then
-        echo "${TMPDIR:-/tmp}/virtualenvwrapper.$$.`date +%s`.$1"
-    else
-        echo "$base.$1"
-    fi
+    tempfile "virtualenvwrapper-XXXXXX-$1"
 }
 
 # Run the hooks
 virtualenvwrapper_run_hook () {
-    # First anything that runs directly from the plugin
-    "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION "$@"
-    # Now anything that wants to run inside this shell
     hook_script="$(virtualenvwrapper_tempfile hook)"
-    "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION \
-        --source "$@" >>"$hook_script"
-    source "$hook_script"
-    rm -f "$hook_script"
+    "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --run-hook-and-write-source "$hook_script" "$@"
+    result=$?
+    
+    if [ $result -eq 0 ]
+    then
+        source "$hook_script"
+    fi
+    rm -f "$hook_script" > /dev/null 2>&1 
+    return $result
 }
 
 # Set up virtualenvwrapper properly
 virtualenvwrapper_initialize () {
     virtualenvwrapper_verify_workon_home -q || return 1
-    # Test for the virtualenvwrapper package we need so we can report
-    # an installation problem.
-    "$VIRTUALENVWRAPPER_PYTHON" -c "import virtualenvwrapper.hook_loader" >/dev/null 2>&1
+    virtualenvwrapper_run_hook "initialize"
     if [ $? -ne 0 ]
     then
-        echo "virtualenvwrapper.sh: Could not find Python module virtualenvwrapper.hook_loader using VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON. Is the PATH set properly?" 1>&2
+        echo "virtualenvwrapper.sh: Python encountered a problem. If Python could not import the module virtualenvwrapper.hook_loader, check that virtualenv has been installed for VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH set properly." 1>&2
         return 1
     fi
-    virtualenvwrapper_run_hook "initialize"
 }
 
 # Verify that virtualenv is installed and visible
