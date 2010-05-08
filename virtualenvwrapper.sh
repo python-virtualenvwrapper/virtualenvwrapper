@@ -91,7 +91,8 @@ virtualenvwrapper_verify_workon_home () {
 
 # Expects 1 argument, the suffix for the new file.
 virtualenvwrapper_tempfile () {
-    mktemp "virtualenvwrapper-XXXXXX-$1"
+    # Note: the 'X's must come last
+    mktemp "virtualenvwrapper-$1-XXXXXX"
 }
 
 # Run the hooks
