@@ -22,10 +22,10 @@ def main():
         description='Manage hooks for virtualenvwrapper',
         )
 
-    parser.add_option('-S', '--run-hook-and-write-source',
-                      help='Runs "hook" and runs "<hook>_source", writing the ' +
+    parser.add_option('-S', '--script',
+                      help='Runs "hook" then "<hook>_source", writing the ' +
                            'result to <file>',
-                      dest='source_filename',
+                      dest='script_filename',
                       default=None,
                       )
     parser.add_option('-s', '--source',
@@ -93,18 +93,17 @@ def main():
         parser.error('Please specify the hook to run')
     hook = args[0]
 
-    if options.sourcing and options.source_filename:
-        parser.error('--source and --run-hook-and-write-source are mutually ' +
-                     'exclusive.')
+    if options.sourcing and options.script_filename:
+        parser.error('--source and --script are mutually exclusive.')
 
     if options.sourcing:
         hook += '_source'
 
     run_hooks(hook, options, args)
 
-    if options.source_filename:
+    if options.script_filename:
         options.sourcing = True
-        output = open(options.source_filename, "w")
+        output = open(options.script_filename, "w")
         try:
             run_hooks(hook + '_source', options, args, output)
         finally:

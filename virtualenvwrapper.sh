@@ -59,7 +59,7 @@ fi
 
 # If the path is relative, prefix it with $HOME
 # (note: for compatibility)
-if echo "$WORKON_HOME" | grep -e '^[^/~]'
+if echo "$WORKON_HOME" | grep -e '^[^/~]' > /dev/null
 then
     export WORKON_HOME="$HOME/$WORKON_HOME"
 fi
@@ -68,7 +68,7 @@ fi
 # path might contain stuff to expand.
 # (it might be possible to do this in shell, but I don't know a
 # cross-shell-safe way of doing it -wolever)
-if echo "$WORKON_HOME" | grep -e "[$~]"
+if echo "$WORKON_HOME" | grep -e "[$~]" > /dev/null
 then
     # This will normalize the path by:
     # - Expanding variables (eg, $foo)
@@ -91,20 +91,20 @@ virtualenvwrapper_verify_workon_home () {
 
 # Expects 1 argument, the suffix for the new file.
 virtualenvwrapper_tempfile () {
-    tempfile "virtualenvwrapper-XXXXXX-$1"
+    mktemp "virtualenvwrapper-XXXXXX-$1"
 }
 
 # Run the hooks
 virtualenvwrapper_run_hook () {
     hook_script="$(virtualenvwrapper_tempfile hook)"
-    "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --run-hook-and-write-source "$hook_script" "$@"
+    "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
     result=$?
     
     if [ $result -eq 0 ]
     then
         source "$hook_script"
     fi
-    rm -f "$hook_script" > /dev/null 2>&1 
+    rm -f "$hook_script" &> /dev/null
     return $result
 }
 
@@ -424,7 +424,7 @@ cpvirtualenv() {
         echo "Please specify target virtualenv"
         return 1
     fi
-    if echo "$WORKON_HOME" | grep -e "/$"
+    if echo "$WORKON_HOME" | grep -e "/$" > /dev/null
     then
         env_home="$WORKON_HOME"
     else
