@@ -9,6 +9,8 @@ Dev
     <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/43/>`__.
   - Tested under Python 2.7b1.  See `issue 44
     <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/44/>`__.
+  - Incorporated performance improvements from David Wolever.  See `issue 38
+    <http://bitbucket.org/dhellmann/virtualenvwrapper/issue/38/>`__.
 
 2.1.1
 
