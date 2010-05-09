@@ -5,7 +5,7 @@
 LANGUAGE      = en
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
+SPHINXOPTS    = -c sphinx
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = html/$(LANGUAGE)

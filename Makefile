@@ -38,8 +38,8 @@ sdist: html
 # Documentation
 .PHONY: html
 html:
-	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx" LANGUAGE="en")
-	(cd docs && $(MAKE) html SPHINXOPTS="-c sphinx" LANGUAGE="es")
+	(cd docs && $(MAKE) html LANGUAGE="en")
+	(cd docs && $(MAKE) html LANGUAGE="es")
 
 .PHONY: docclean
 docclean:
@@ -50,8 +50,8 @@ docclean:
 website: 
 	[ ~/Devel/doughellmann/doughellmann/templates/base.html -nt docs/sphinx/web/templates/base.html ] && (echo "Updating base.html" ; cp ~/Devel/doughellmann/doughellmann/templates/base.html docs/sphinx/web/templates/base.html) || exit 0
 	rm -rf docs/website
-	(cd docs && $(MAKE) html BUILDING_WEB=1 SPHINXOPTS="-c sphinx" BUILDDIR="website/en" LANGUAGE="en")
-	(cd docs && $(MAKE) html BUILDING_WEB=1 SPHINXOPTS="-c sphinx" BUILDDIR="website/es" LANGUAGE="es")
+	(cd docs && $(MAKE) html BUILDING_WEB=1 BUILDDIR="website/en" LANGUAGE="en")
+	(cd docs && $(MAKE) html BUILDING_WEB=1 BUILDDIR="website/es" LANGUAGE="es")
 
 installwebsite: website
 	(cd docs/website/en && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/)
