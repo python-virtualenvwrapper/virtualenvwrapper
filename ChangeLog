@@ -1,3 +1,25 @@
+2010-05-09  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh: Tweak path normalization code so double
+	slashes are also removed from WORKON_HOME. Use typeset for local
+	variables.
+	(virtualenvwrapper_tempfile): Add -t option to mktemp so the new
+	files are always created in the user's temporary directory.
+	(virtualenvwrapper_run_hook): Add the hook name to the temporary
+	file name.
+
+	* tests/test_tempfile.sh: Remove obsolete test.  Fix assertions
+	for remaining test.
+
+	* tests/test_mkvirtualenv.sh (test_hooks): Use pwd to convert
+	WORKON_HOME to the expected value.
+
+	* tests/test.sh (test_python_interpreter_set_incorrectly): Rework
+	grep-based assertion to actually pass.
+
+	* Makefile (test-bash test-ksh test-sh): Remove wildcard build
+	rule so test-quick target works.
+
 2010-05-02  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh (virtualenvwrapper_run_hook): Instead of

@@ -68,11 +68,12 @@ fi
 # path might contain stuff to expand.
 # (it might be possible to do this in shell, but I don't know a
 # cross-shell-safe way of doing it -wolever)
-if echo "$WORKON_HOME" | grep -e "[$~]" > /dev/null
+if echo "$WORKON_HOME" | egrep -e "([$~]|//)" >/dev/null
 then
     # This will normalize the path by:
-    # - Expanding variables (eg, $foo)
-    # - Converting ~s to complete paths (eg, ~/ to /home/brian/ and ~arthur to /home/arthur)
+    # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
+    # - Expanding variables (e.g., $foo)
+    # - Converting ~s to complete paths (e.g., ~/ to /home/brian/ and ~arthur to /home/arthur)
     WORKON_HOME=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\"))")
     export WORKON_HOME
 fi
@@ -81,7 +82,7 @@ fi
 virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
     then
-        [ "$1" != "-q" ] && echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist.  Create it or set WORKON_HOME to an existing directory." >&2
+        [ "$1" != "-q" ] && echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist.  Create it or set WORKON_HOME to an existing directory." 1>&2
         return 1
     fi
     return 0
@@ -92,12 +93,12 @@ virtualenvwrapper_verify_workon_home () {
 # Expects 1 argument, the suffix for the new file.
 virtualenvwrapper_tempfile () {
     # Note: the 'X's must come last
-    mktemp "virtualenvwrapper-$1-XXXXXX"
+    mktemp -t "virtualenvwrapper-$1-XXXXXX"
 }
 
 # Run the hooks
 virtualenvwrapper_run_hook () {
-    hook_script="$(virtualenvwrapper_tempfile hook)"
+    typeset hook_script="$(virtualenvwrapper_tempfile ${1}-hook)"
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
     result=$?
     
@@ -105,7 +106,7 @@ virtualenvwrapper_run_hook () {
     then
         source "$hook_script"
     fi
-    rm -f "$hook_script" &> /dev/null
+    rm -f "$hook_script" >/dev/null 2>&1
     return $result
 }
 
@@ -115,14 +116,14 @@ virtualenvwrapper_initialize () {
     virtualenvwrapper_run_hook "initialize"
     if [ $? -ne 0 ]
     then
-        echo "virtualenvwrapper.sh: Python encountered a problem. If Python could not import the module virtualenvwrapper.hook_loader, check that virtualenv has been installed for VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH set properly." 1>&2
+        echo "virtualenvwrapper.sh: Python encountered a problem. If Python could not import the module virtualenvwrapper.hook_loader, check that virtualenv has been installed for VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is set properly." 1>&2
         return 1
     fi
 }
 
 # Verify that virtualenv is installed and visible
 virtualenvwrapper_verify_virtualenv () {
-    venv=$(which virtualenv | grep -v "not found")
+    typeset venv=$(which virtualenv | grep -v "not found")
     if [ "$venv" = "" ]
     then
         echo "ERROR: virtualenvwrapper could not find virtualenv in your path" >&2
@@ -382,7 +383,7 @@ add2virtualenv () {
 cdsitepackages () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    site_packages="`virtualenvwrapper_get_site_packages_dir`"
+    typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
     cd "$site_packages"/$1
 }
 
@@ -398,7 +399,7 @@ cdvirtualenv () {
 lssitepackages () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    site_packages="`virtualenvwrapper_get_site_packages_dir`"
+    typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
     ls $@ $site_packages
     
     path_file="$site_packages/virtualenv_path_extensions.pth"
@@ -427,12 +428,12 @@ cpvirtualenv() {
     fi
     if echo "$WORKON_HOME" | grep -e "/$" > /dev/null
     then
-        env_home="$WORKON_HOME"
+        typset env_home="$WORKON_HOME"
     else
-        env_home="$WORKON_HOME/"
+        typeset env_home="$WORKON_HOME/"
     fi
-    source_env="$env_home$env_name"
-    target_env="$env_home$new_env"
+    typeset source_env="$env_home$env_name"
+    typeset target_env="$env_home$new_env"
     
     if [ ! -e "$source_env" ]
     then
@@ -442,12 +443,12 @@ cpvirtualenv() {
 
     cp -r "$source_env" "$target_env"
     for script in $( ls $target_env/bin/* )
-      do
+    do
         newscript="$script-new"
         sed "s|$source_env|$target_env|g" < "$script" > "$newscript"
         mv "$newscript" "$script"
         chmod a+x "$script"
-      done
+    done
 
     virtualenv "$target_env" --relocatable
     sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"

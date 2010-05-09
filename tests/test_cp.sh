@@ -68,9 +68,10 @@ test_hooks () {
     cpvirtualenv "source" "destination"
 
     output=$(cat "$test_dir/catch_output")
+    workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
 
-    expected="GLOBAL precpvirtualenv $WORKON_HOME source destination
-GLOBAL premkvirtualenv $WORKON_HOME destination
+    expected="GLOBAL precpvirtualenv $workon_home_as_pwd source destination
+GLOBAL premkvirtualenv $workon_home_as_pwd destination
 GLOBAL postmkvirtualenv
 GLOBAL postcpvirtualenv"
 

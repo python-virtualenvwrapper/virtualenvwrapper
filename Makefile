@@ -25,6 +25,7 @@ help:
 	@echo "installwebsite - deploy web version of docs"
 	@echo "develop        - install development version"
 	@echo "test           - run the test suite"
+	@echo "test-quick     - run the test suite for bash and one version of Python"
 
 
 .PHONY: sdist
@@ -73,7 +74,7 @@ test:
 develop:
 	python setup.py develop
 
-test-%:
+test-bash test-ksh test-sh:
 	TEST_SHELL=$(subst test-,,$@) $(MAKE) test-loop
 
 test-zsh:
@@ -89,16 +90,17 @@ test-loop:
 			&& virtualenv -p $$py_bin --no-site-packages virtualenvwrapper-test-env) \
 			|| exit 1 ; \
 		$$TMPDIR/virtualenvwrapper-test-env/bin/python setup.py install || exit 1 ; \
-		for test_script in $(wildcard tests/test*.sh) ; do \
+		for test_script in tests/test*.sh ; do \
 			echo ; \
 	 		echo '********************************************************************************' ; \
 			echo "Running $$test_script with $(TEST_SHELL) under Python $(basename $$py_bin)" ; \
+			echo ; \
 			VIRTUALENVWRAPPER_PYTHON=$$TMPDIR/virtualenvwrapper-test-env/bin/python SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script || exit 1 ; \
 			echo ; \
 		done \
 	done
 
-test-quick: test-26
+test-quick:: test-26
 
 test-24:
 	PYTHON_BINARIES=$(PYTHON24) $(MAKE) test-bash

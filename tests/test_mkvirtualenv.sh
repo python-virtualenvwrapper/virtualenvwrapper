@@ -43,7 +43,8 @@ test_hooks () {
     echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
     mkvirtualenv "env3"
     output=$(cat "$test_dir/catch_output")
-    expected="GLOBAL premkvirtualenv $WORKON_HOME env3
+    workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
+    expected="GLOBAL premkvirtualenv $workon_home_as_pwd env3
 GLOBAL postmkvirtualenv"
     assertSame "$expected" "$output"
     rm -f "$WORKON_HOME/premkvirtualenv"
