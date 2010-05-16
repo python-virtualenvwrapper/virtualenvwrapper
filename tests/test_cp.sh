@@ -6,6 +6,8 @@ test_dir=$(dirname $0)
 
 export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 
+unset HOOK_VERBOSE_OPTION
+
 setUp () {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"

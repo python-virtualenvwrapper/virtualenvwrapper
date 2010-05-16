@@ -1,5 +1,9 @@
 2010-05-16  Doug Hellmann  <dhellmann@racemi.com>
 
+	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Set a default
+	suffix of "hook" and explicitly report when we detect an error
+	condition.
+
 	* Makefile (PYTHON26): Use which to find python2.6, the default
 	interpreter, so we can run the tests as "make test-quick" on other
 	hosts.

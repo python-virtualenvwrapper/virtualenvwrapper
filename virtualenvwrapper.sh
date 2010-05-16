@@ -93,7 +93,14 @@ virtualenvwrapper_verify_workon_home () {
 # Expects 1 argument, the suffix for the new file.
 virtualenvwrapper_tempfile () {
     # Note: the 'X's must come last
-    mktemp -t "virtualenvwrapper-$1-XXXXXX"
+    typeset suffix=${1:-hook}
+    mktemp -t "virtualenvwrapper-$suffix-XXXXXXXXXX"
+    if [ $? -ne 0 ]
+    then
+        echo "ERROR: virtualenvwrapper could not create a temporary file name." 1>&2
+        return 1
+    fi
+    return 0
 }
 
 # Run the hooks
