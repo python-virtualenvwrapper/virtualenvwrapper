@@ -1,7 +1,20 @@
 2010-05-16  Doug Hellmann  <dhellmann@racemi.com>
 
+	* Makefile (PYTHON26): Use which to find python2.6, the default
+	interpreter, so we can run the tests as "make test-quick" on other
+	hosts.
+
+	* tests/test_tempfile.sh (test_tempfile): Normalize the paths so
+	we don't depend on the value of TMPDIR or behavior of dirname.
+
+	* tests/test_cd.sh: Make sure the virtualenv from the caller does
+	not influence test behaviors by establishing our own virtualenv
+	locally.
+
 	* virtualenvwrapper/hook_loader.py (main): Add more debug logging
 	to try to narrow down the tempfile issue (#35).
+	(run_hooks): Insert a comment into the output file to show which
+	hook we are running.
 
 	* virtualenvwrapper.sh (virtualenvwrapper_run_hook): Add more
 	debugging error reporting to try to narrow down the tempfile

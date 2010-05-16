@@ -9,7 +9,10 @@ export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
+    unset VIRTUAL_ENV
     source "$test_dir/../virtualenvwrapper.sh"
+    mkvirtualenv cd-test
+    deactivate
 }
 
 oneTimeTearDown() {
@@ -19,6 +22,11 @@ oneTimeTearDown() {
 setUp () {
     echo
     rm -f "$test_dir/catch_output"
+    workon cd-test
+}
+
+tearDown () {
+    deactivate
 }
 
 test_cdvirtual() {

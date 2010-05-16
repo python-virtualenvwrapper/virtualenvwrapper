@@ -25,8 +25,11 @@ setUp () {
 
 test_tempfile () {
     filename=$(virtualenvwrapper_tempfile hook)
+    assertTrue "Filename is empty" "[ ! -z \"$filename\" ]"
     rm -f $filename
-    assertSame "TMPDIR and path not the same for $filename." "$TMPDIR" "$(dirname $filename)/"
+    comparable_tmpdir=$(echo $TMPDIR | sed 's|/$||')
+    comparable_dirname=$(dirname $filename | sed 's|/$||')
+    assertSame "TMPDIR and path not the same for $filename" "$comparable_tmpdir" "$comparable_dirname"
     assertTrue "virtualenvwrapper-hook not in filename." "echo $filename | grep virtualenvwrapper-hook"
 }
 

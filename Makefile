@@ -3,7 +3,7 @@ export VERSION=$(shell python setup.py --version)
 
 # Locations of Python interpreter binaries
 PYTHON27=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.7b1/bin/python2.7
-PYTHON26=/Library/Frameworks/Python.framework/Versions/2.6/bin/python2.6
+PYTHON26=$(shell which python2.6)
 PYTHON25=/Library/Frameworks/Python.framework/Versions/2.5/bin/python2.5
 PYTHON24=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.4.6/bin/python2.4
 
@@ -95,7 +95,7 @@ test-loop:
 	 		echo '********************************************************************************' ; \
 			echo "Running $$test_script with $(TEST_SHELL) under Python $(basename $$py_bin)" ; \
 			echo ; \
-			VIRTUALENVWRAPPER_PYTHON=$$TMPDIR/virtualenvwrapper-test-env/bin/python SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script || exit 1 ; \
+			HOOK_VERBOSE_OPTION=-v VIRTUALENVWRAPPER_PYTHON=$$TMPDIR/virtualenvwrapper-test-env/bin/python SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script || exit 1 ; \
 			echo ; \
 		done \
 	done

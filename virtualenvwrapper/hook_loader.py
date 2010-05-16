@@ -132,6 +132,7 @@ def run_hooks(hook, options, args, output=None):
             # be run in the calling shell.
             contents = (plugin(args[1:]) or '').strip()
             if contents:
+                output.write('# %s\n' % ep.name)
                 output.write(contents)
                 output.write("\n")
         else:
