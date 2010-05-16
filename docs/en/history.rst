@@ -9,6 +9,7 @@ Dev
   - Tested under Python 2.7b1.  See :bbissue:`44`.
   - Incorporated performance improvements from David Wolever.  See
     :bbissue:`38`.
+  - Added some debug instrumentation for :bbissue:`35`.
 
 2.1.1
 
