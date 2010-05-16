@@ -99,12 +99,17 @@ def main():
     if options.sourcing:
         hook += '_source'
 
+    log = logging.getLogger(__name__)
+
+    log.debug('Running %s hooks', hook)
     run_hooks(hook, options, args)
 
     if options.script_filename:
+        log.debug('Saving sourcable %s hooks to %s', hook, options.script_filename)
         options.sourcing = True
         output = open(options.script_filename, "w")
         try:
+            output.write('# %s\n' % hook)
             run_hooks(hook + '_source', options, args, output)
         finally:
             output.close()

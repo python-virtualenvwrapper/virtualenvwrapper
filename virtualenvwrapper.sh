@@ -99,11 +99,21 @@ virtualenvwrapper_tempfile () {
 # Run the hooks
 virtualenvwrapper_run_hook () {
     typeset hook_script="$(virtualenvwrapper_tempfile ${1}-hook)"
+    if [ -z "$hook_script" ]
+    then
+        echo "ERROR: Could not create temporary file name. Make sure TMPDIR is set." 1>&2
+        return 1
+    fi
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
     result=$?
     
     if [ $result -eq 0 ]
     then
+        if [ ! -f "$hook_script" ]
+        then
+            echo "ERROR: virtualenvwrapper_run_hook could not find temporary file $hook_script" 1>&2
+            return 2
+        fi
         source "$hook_script"
     fi
     rm -f "$hook_script" >/dev/null 2>&1
@@ -116,7 +126,7 @@ virtualenvwrapper_initialize () {
     virtualenvwrapper_run_hook "initialize"
     if [ $? -ne 0 ]
     then
-        echo "virtualenvwrapper.sh: Python encountered a problem. If Python could not import the module virtualenvwrapper.hook_loader, check that virtualenv has been installed for VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is set properly." 1>&2
+        echo "virtualenvwrapper.sh: There was a problem running the initialization hooks. If Python could not import the module virtualenvwrapper.hook_loader, check that virtualenv has been installed for VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is set properly." 1>&2
         return 1
     fi
 }

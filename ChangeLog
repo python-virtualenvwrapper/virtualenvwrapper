@@ -1,3 +1,12 @@
+2010-05-16  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper/hook_loader.py (main): Add more debug logging
+	to try to narrow down the tempfile issue (#35).
+
+	* virtualenvwrapper.sh (virtualenvwrapper_run_hook): Add more
+	debugging error reporting to try to narrow down the tempfile
+	issue (#35).
+
 2010-05-09  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh: Tweak path normalization code so double
