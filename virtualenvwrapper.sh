@@ -94,12 +94,14 @@ virtualenvwrapper_verify_workon_home () {
 virtualenvwrapper_tempfile () {
     # Note: the 'X's must come last
     typeset suffix=${1:-hook}
-    mktemp -t "virtualenvwrapper-$suffix-XXXXXXXXXX"
+    typeset file="`mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX`"
     if [ $? -ne 0 ]
     then
         echo "ERROR: virtualenvwrapper could not create a temporary file name." 1>&2
         return 1
     fi
+    trap "rm '$file' >/dev/null 2>&1" EXIT
+    echo $file
     return 0
 }
 

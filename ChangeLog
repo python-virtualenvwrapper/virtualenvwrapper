@@ -1,3 +1,8 @@
+2010-05-18  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Use a trap to
+	ensure the temporary file is removed when we exit.
+
 2010-05-16  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Set a default
