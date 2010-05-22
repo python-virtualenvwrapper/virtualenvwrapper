@@ -2,9 +2,9 @@
 
 #set -x
 
-export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
+test_dir=$(cd $(dirname $0) && pwd)
 
-test_dir=$(dirname $0)
+export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"

@@ -2,15 +2,17 @@
 
 #set -x
 
-test_dir=$(dirname $0)
+test_dir=$(cd $(dirname $0) && pwd)
 
-export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
+export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     source "$test_dir/../virtualenvwrapper.sh"
     mkvirtualenv "env1"
+    mkvirtualenv "env2"
+    deactivate >/dev/null 2>&1 
 }
 
 oneTimeTearDown() {
@@ -22,6 +24,10 @@ setUp () {
     rm -f "$test_dir/catch_output"
 }
 
+tearDown () {
+    deactivate >/dev/null 2>&1 
+}
+
 test_workon () {
     workon env1
     assertTrue virtualenvwrapper_verify_active_environment
@@ -31,8 +37,10 @@ test_workon () {
 test_workon_activate_hooks () {
     for t in pre post
     do
+        echo "#!/bin/bash" > "$WORKON_HOME/${t}activate"
         echo "echo GLOBAL ${t}activate >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/${t}activate"
         chmod +x "$WORKON_HOME/${t}activate"
+        echo "#!/bin/bash" > "$WORKON_HOME/env2/bin/${t}activate"
         echo "echo ENV ${t}activate >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/env1/bin/${t}activate"
         chmod +x "$WORKON_HOME/env1/bin/${t}activate"
     done
@@ -61,7 +69,7 @@ test_virtualenvwrapper_show_workon_options () {
     mkdir "$WORKON_HOME/not_env"
     (cd "$WORKON_HOME"; ln -s env1 link_env)
     envs=$(virtualenvwrapper_show_workon_options | tr '\n' ' ')
-    assertSame "env1 link_env " "$envs"
+    assertSame "env1 env2 link_env " "$envs"
     rmdir "$WORKON_HOME/not_env"
     rm -f "$WORKON_HOME/link_env"
 }

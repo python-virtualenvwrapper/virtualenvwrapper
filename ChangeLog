@@ -1,3 +1,12 @@
+2010-05-22  Doug Hellmann  <dhellmann@racemi.com>
+
+	* tests/test_cp.sh: Clarify some of the tests by breaking up,
+	renaming, and rewriting some functions.
+
+	* Makefile (PYTHON26): If we're in a virtualenv when the tests
+	start, use a hard-coded path to the binary to get the global
+	version.
+
 2010-05-18  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Use a trap to

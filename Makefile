@@ -3,7 +3,11 @@ export VERSION=$(shell python setup.py --version)
 
 # Locations of Python interpreter binaries
 PYTHON27=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.7b1/bin/python2.7
+ifeq ($VIRTUAL_ENV,)
 PYTHON26=$(shell which python2.6)
+else
+PYTHON26=/Library/Frameworks/Python.framework/Versions/2.6/bin/python2.6
+endif
 PYTHON25=/Library/Frameworks/Python.framework/Versions/2.5/bin/python2.5
 PYTHON24=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.4.6/bin/python2.4
 
@@ -25,7 +29,7 @@ help:
 	@echo "installwebsite - deploy web version of docs"
 	@echo "develop        - install development version"
 	@echo "test           - run the test suite"
-	@echo "test-quick     - run the test suite for bash and one version of Python"
+	@echo "test-quick     - run the test suite for bash and one version of Python ($(PYTHON26))"
 
 
 .PHONY: sdist

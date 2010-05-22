@@ -2,9 +2,9 @@
 
 #set -x
 
-test_dir=$(dirname $0)
+test_dir=$(cd $(dirname $0) && pwd)
 
-export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
+export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
 
 unset HOOK_VERBOSE_OPTION
 
@@ -24,21 +24,26 @@ tearDown() {
     rm -rf "$WORKON_HOME"
 }
 
-test_cpvirtualenv () {
+test_new_env_activated () {
     mkvirtualenv "source"
     (cd tests/testpackage && python setup.py install) >/dev/null 2>&1
     cpvirtualenv "source" "destination"
-    assertSame "destination" $(basename "$VIRTUAL_ENV")
     rmvirtualenv "source"
     testscript="$(which testscript.py)"
     assertTrue "Environment test script not found in path" "[ $WORKON_HOME/destination/bin/testscript.py -ef $testscript ]"
     testscriptcontent="$(cat $testscript)"
-    assertTrue "No cpvirtualenvtest in $/testscriptcontent" "echo $testscriptcontent | grep cpvirtualenvtest"
+    assertTrue "No cpvirtualenvtest in $testscriptcontent" "echo $testscriptcontent | grep cpvirtualenvtest"
     assertTrue virtualenvwrapper_verify_active_environment
-    assertSame "Wrong virtualenv name" "destination" $(basename "$VIRTUAL_ENV")
 }
 
-test_cprelocatablevirtualenv () {
+test_virtual_env_variable () {
+    mkvirtualenv "source"
+    cpvirtualenv "source" "destination"
+    assertSame "Wrong virtualenv name" "destination" $(basename "$VIRTUAL_ENV")
+    assertTrue "$WORKON_HOME not in $VIRTUAL_ENV" "echo $VIRTUAL_ENV | grep -q $WORKON_HOME"
+}
+
+test_source_relocatable () {
     mkvirtualenv "source"
     (cd tests/testpackage && python setup.py install) >/dev/null 2>&1
     assertTrue "virtualenv --relocatable \"$WORKON_HOME/source\""
@@ -49,7 +54,7 @@ test_cprelocatablevirtualenv () {
     assertSame "Wrong virtualenv name" "destination" $(basename "$VIRTUAL_ENV")
 }
 
-test_cp_notexists () {
+test_source_does_not_exist () {
     out="$(cpvirtualenv virtualenvthatdoesntexist foo)"
     assertSame "$out" "virtualenvthatdoesntexist virtualenv doesn't exist"
 }

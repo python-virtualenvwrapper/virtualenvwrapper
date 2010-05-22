@@ -2,9 +2,10 @@
 
 #set -x
 
-test_dir=$(dirname $0)
+test_dir=$(cd $(dirname $0) && pwd)
 
-export WORKON_HOME="${TMPDIR:-/tmp}/WORKON_HOME"
+export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
+
 export HOOK_VERBOSE_OPTION=-v
 
 oneTimeSetUp() {
