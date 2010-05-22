@@ -2,7 +2,7 @@
 Release History
 ===============
 
-Dev
+2.2
 
   - Switched hook loader execution to a form that works with Python
     2.4 to resolve :bbissue:`43`.
