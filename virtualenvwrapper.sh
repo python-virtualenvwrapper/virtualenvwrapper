@@ -100,7 +100,7 @@ virtualenvwrapper_tempfile () {
         echo "ERROR: virtualenvwrapper could not create a temporary file name." 1>&2
         return 1
     fi
-    trap "rm '$file' >/dev/null 2>&1" EXIT
+    trap "rm -f '$file' >/dev/null 2>&1" EXIT
     echo $file
     return 0
 }
