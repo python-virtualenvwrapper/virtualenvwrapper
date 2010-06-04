@@ -2,6 +2,10 @@
 Release History
 ===============
 
+Dev
+
+  - Escape ``which`` calls to avoid aliases. Resolves :bbissue:`46`.
+
 2.2
 
   - Switched hook loader execution to a form that works with Python
