@@ -54,7 +54,7 @@ fi
 # Locate the global Python where virtualenvwrapper is installed.
 if [ "$VIRTUALENVWRAPPER_PYTHON" = "" ]
 then
-    VIRTUALENVWRAPPER_PYTHON="$(which python)"
+    VIRTUALENVWRAPPER_PYTHON="$(\which python)"
 fi
 
 # If the path is relative, prefix it with $HOME
@@ -142,7 +142,7 @@ virtualenvwrapper_initialize () {
 
 # Verify that virtualenv is installed and visible
 virtualenvwrapper_verify_virtualenv () {
-    typeset venv=$(which virtualenv | grep -v "not found")
+    typeset venv=$(\which virtualenv | grep -v "not found")
     if [ "$venv" = "" ]
     then
         echo "ERROR: virtualenvwrapper could not find virtualenv in your path" >&2

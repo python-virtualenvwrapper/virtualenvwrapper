@@ -1,3 +1,8 @@
+2010-06-03  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh: Escape the call to "which" so we don't use
+	an alias by accident.
+
 2010-05-22  Doug Hellmann  <dhellmann@racemi.com>
 
 	* tests/test_cp.sh: Clarify some of the tests by breaking up,
