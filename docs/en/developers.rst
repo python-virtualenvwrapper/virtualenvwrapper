@@ -66,5 +66,5 @@ Running Tests
 
 The test suite for virtualenvwrapper uses `shunit2
 <http://shunit2.googlecode.com/>`_.  To run the tests under bash, sh,
-and zsh, use ``make test``.  To add new tests, modify or create an
-appropriate script in the ``tests`` directory.
+and zsh, use ``make test``.  In order to add new tests, you will need
+to modify or create an appropriate script in the ``tests`` directory.
