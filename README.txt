@@ -62,6 +62,17 @@ Refer to the `developers docs
 for tips on contributing patches.
 
 =======
+Support
+=======
+
+Join the `virtualenvwrapper Google Group
+<http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
+issues and features.  
+
+Report bugs via the `bug tracker on BitBucket
+<http://bitbucket.org/dhellmann/virtualenvwrapper/>`__.
+
+=======
 License
 =======
 
@@ -82,5 +93,3 @@ CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
 USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
-
-.. _BitBucket: http://bitbucket.org/dhellmann/virtualenvwrapper/overview/

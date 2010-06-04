@@ -202,6 +202,17 @@ Manuel Kaufmann has `translated this documentation into Spanish
 <http://www.doughellmann.com/docs/virtualenvwrapper/es/>`__.
 
 =======
+Support
+=======
+
+Join the `virtualenvwrapper Google Group
+<http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
+issues and features.  
+
+Report bugs via the `bug tracker on BitBucket
+<http://bitbucket.org/dhellmann/virtualenvwrapper/>`__.
+
+=======
 License
 =======
 
