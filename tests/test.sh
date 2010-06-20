@@ -49,6 +49,17 @@ test_virtualenvwrapper_verify_workon_home_missing_dir() {
     WORKON_HOME="$old_home"
 }
 
+test_virtualenvwrapper_verify_workon_home_missing_dir_grep_options() {
+    old_home="$WORKON_HOME"
+    WORKON_HOME="$WORKON_HOME/not_there"
+    # This should prevent the message from being found if it isn't
+    # unset correctly.
+    export GREP_OPTIONS="--count"
+    assertFalse "WORKON_HOME verified unexpectedly" virtualenvwrapper_verify_workon_home
+    WORKON_HOME="$old_home"
+    unset GREP_OPTIONS
+}
+
 test_virtualenvwrapper_verify_workon_home_missing_dir_quiet_init() {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"

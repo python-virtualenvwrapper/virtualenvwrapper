@@ -74,6 +74,17 @@ test_virtualenvwrapper_show_workon_options () {
     rm -f "$WORKON_HOME/link_env"
 }
 
+test_virtualenvwrapper_show_workon_options_grep_options () {
+    mkdir "$WORKON_HOME/not_env"
+    (cd "$WORKON_HOME"; ln -s env1 link_env)
+    export GREP_OPTIONS="--count"
+    envs=$(virtualenvwrapper_show_workon_options | tr '\n' ' ')
+    unset GREP_OPTIONS
+    assertSame "env1 env2 link_env " "$envs"
+    rmdir "$WORKON_HOME/not_env"
+    rm -f "$WORKON_HOME/link_env"
+}
+
 test_virtualenvwrapper_show_workon_options_no_envs () {
     old_home="$WORKON_HOME"
     export WORKON_HOME=${TMPDIR:-/tmp}/$$
