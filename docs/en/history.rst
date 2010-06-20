@@ -2,7 +2,7 @@
 Release History
 ===============
 
-Dev
+2.2.1
 
   - Escape ``which`` calls to avoid aliases. Resolves :bbissue:`46`.
   - Integrate Manuel Kaufmann's patch to unset GREP_OPTIONS before
