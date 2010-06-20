@@ -44,39 +44,45 @@
 # 11. The virtual environment is activated.
 #
 
-# Make sure there is a default value for WORKON_HOME.
-# You can override this setting in your .bashrc.
-if [ "$WORKON_HOME" = "" ]
-then
-    export WORKON_HOME="$HOME/.virtualenvs"
-fi
-
 # Locate the global Python where virtualenvwrapper is installed.
 if [ "$VIRTUALENVWRAPPER_PYTHON" = "" ]
 then
     VIRTUALENVWRAPPER_PYTHON="$(\which python)"
 fi
 
-# If the path is relative, prefix it with $HOME
-# (note: for compatibility)
-if echo "$WORKON_HOME" | (unset GREP_OPTIONS; grep -e '^[^/~]' > /dev/null)
-then
-    export WORKON_HOME="$HOME/$WORKON_HOME"
-fi
+virtualenvwrapper_derive_workon_home() {
+    typeset workon_home_dir="$WORKON_HOME"
 
-# Only call on Python to fix the path if it looks like the
-# path might contain stuff to expand.
-# (it might be possible to do this in shell, but I don't know a
-# cross-shell-safe way of doing it -wolever)
-if echo "$WORKON_HOME" | (unset GREP_OPTIONS; egrep -e "([\$~]|//)" >/dev/null)
-then
-    # This will normalize the path by:
-    # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
-    # - Expanding variables (e.g., $foo)
-    # - Converting ~s to complete paths (e.g., ~/ to /home/brian/ and ~arthur to /home/arthur)
-    WORKON_HOME=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.expandvars(os.path.expanduser(\"$WORKON_HOME\"))")
-    export WORKON_HOME
-fi
+    # Make sure there is a default value for WORKON_HOME.
+    # You can override this setting in your .bashrc.
+    if [ "$workon_home_dir" = "" ]
+    then
+        workon_home_dir="$HOME/.virtualenvs"
+    fi
+
+    # If the path is relative, prefix it with $HOME
+    # (note: for compatibility)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; grep -e '^[^/~]' > /dev/null)
+    then
+        workon_home_dir="$HOME/$WORKON_HOME"
+    fi
+
+    # Only call on Python to fix the path if it looks like the
+    # path might contain stuff to expand.
+    # (it might be possible to do this in shell, but I don't know a
+    # cross-shell-safe way of doing it -wolever)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; egrep -e "([\$~]|//)" >/dev/null)
+    then
+        # This will normalize the path by:
+        # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
+        # - Expanding variables (e.g., $foo)
+        # - Converting ~s to complete paths (e.g., ~/ to /home/brian/ and ~arthur to /home/arthur)
+        workon_home_dir=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.expandvars(os.path.expanduser(\"$workon_home_dir\"))")
+    fi
+
+    echo "$workon_home_dir"
+    return 0
+}
 
 # Verify that the WORKON_HOME directory exists
 virtualenvwrapper_verify_workon_home () {
@@ -131,6 +137,7 @@ virtualenvwrapper_run_hook () {
 
 # Set up virtualenvwrapper properly
 virtualenvwrapper_initialize () {
+    export WORKON_HOME=$(virtualenvwrapper_derive_workon_home)
     virtualenvwrapper_verify_workon_home -q || return 1
     virtualenvwrapper_run_hook "initialize"
     if [ $? -ne 0 ]
