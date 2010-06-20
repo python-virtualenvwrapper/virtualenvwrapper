@@ -106,7 +106,7 @@ virtualenvwrapper_tempfile () {
         echo "ERROR: virtualenvwrapper could not create a temporary file name." 1>&2
         return 1
     fi
-    trap "rm -f '$file' >/dev/null 2>&1" EXIT
+    trap "\rm -f '$file' >/dev/null 2>&1" EXIT
     echo $file
     return 0
 }
@@ -131,7 +131,7 @@ virtualenvwrapper_run_hook () {
         fi
         source "$hook_script"
     fi
-    rm -f "$hook_script" >/dev/null 2>&1
+    \rm -f "$hook_script" >/dev/null 2>&1
     return $result
 }
 
@@ -223,7 +223,7 @@ rmvirtualenv () {
         return 1
     fi
     virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
-    rm -rf "$env_dir"
+    \rm -rf "$env_dir"
     virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
 }
 

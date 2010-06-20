@@ -29,6 +29,16 @@ test_remove () {
     assertFalse "[ -d $WORKON_HOME/deleteme ]"
 }
 
+test_rm_aliased () {
+    mkvirtualenv "deleteme"
+    deactivate
+    alias rm='rm -i'
+    set -x
+    rmvirtualenv "deleteme"
+    set +x
+    unalias rm
+}
+
 test_no_such_env () {
     assertFalse "[ -d $WORKON_HOME/deleteme ]"
     assertTrue "rmvirtualenv deleteme"

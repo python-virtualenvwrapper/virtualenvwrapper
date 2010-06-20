@@ -8,6 +8,8 @@ Release History
   - Integrate Manuel Kaufmann's patch to unset GREP_OPTIONS before
     calling grep.  Resolves :bbissue:`51`.
   - Escape ``$`` in regex to resolve :bbissue:`53`.
+  - Escape ``rm`` to avoid issues with aliases and resolve
+    :bbissue:`50`.
 
 2.2
 
