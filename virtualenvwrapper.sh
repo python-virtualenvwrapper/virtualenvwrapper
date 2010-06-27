@@ -71,7 +71,7 @@ virtualenvwrapper_derive_workon_home() {
     # path might contain stuff to expand.
     # (it might be possible to do this in shell, but I don't know a
     # cross-shell-safe way of doing it -wolever)
-    if echo "$workon_home_dir" | (unset GREP_OPTIONS; \egrep -e "([\$~]|//)" >/dev/null)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; \egrep -e '([\$~]|//)' >/dev/null)
     then
         # This will normalize the path by:
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
