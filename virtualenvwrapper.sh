@@ -62,7 +62,7 @@ virtualenvwrapper_derive_workon_home() {
 
     # If the path is relative, prefix it with $HOME
     # (note: for compatibility)
-    if echo "$workon_home_dir" | (unset GREP_OPTIONS; grep -e '^[^/~]' > /dev/null)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; \grep -e '^[^/~]' > /dev/null)
     then
         workon_home_dir="$HOME/$WORKON_HOME"
     fi
@@ -71,7 +71,7 @@ virtualenvwrapper_derive_workon_home() {
     # path might contain stuff to expand.
     # (it might be possible to do this in shell, but I don't know a
     # cross-shell-safe way of doing it -wolever)
-    if echo "$workon_home_dir" | (unset GREP_OPTIONS; egrep -e "([\$~]|//)" >/dev/null)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; \egrep -e "([\$~]|//)" >/dev/null)
     then
         # This will normalize the path by:
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
@@ -149,7 +149,7 @@ virtualenvwrapper_initialize () {
 
 # Verify that virtualenv is installed and visible
 virtualenvwrapper_verify_virtualenv () {
-    typeset venv=$(\which virtualenv | (unset GREP_OPTIONS; grep -v "not found"))
+    typeset venv=$(\which virtualenv | (unset GREP_OPTIONS; \grep -v "not found"))
     if [ "$venv" = "" ]
     then
         echo "ERROR: virtualenvwrapper could not find virtualenv in your path" >&2
@@ -233,7 +233,7 @@ virtualenvwrapper_show_workon_options () {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | sed 's|^\./||' | sed 's|/bin/activate||' | sort | (unset GREP_OPTIONS; egrep -v '^\*$')
+    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | sed 's|^\./||' | sed 's|/bin/activate||' | sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
@@ -452,7 +452,7 @@ cpvirtualenv() {
         echo "Please specify target virtualenv"
         return 1
     fi
-    if echo "$WORKON_HOME" | (unset GREP_OPTIONS; grep -e "/$" > /dev/null)
+    if echo "$WORKON_HOME" | (unset GREP_OPTIONS; \grep -e "/$" > /dev/null)
     then
         typset env_home="$WORKON_HOME"
     else
