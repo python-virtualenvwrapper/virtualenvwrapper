@@ -2,10 +2,12 @@
 Release History
 ===============
 
-Dev
+2.2.2
 
   - Integrate Fred Palmer's patch to escape more shell commands to
     avoid aliases.  Resolves :bbissue:`57`.
+  - Fix a problem with egrep argument escaping (:bbissue:`55`).
+  - Fix a problem with running mkvirtualenv without arguments (:bbissue:`56`).
 
 2.2.1
 
