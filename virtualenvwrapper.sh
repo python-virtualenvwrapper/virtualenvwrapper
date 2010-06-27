@@ -100,7 +100,7 @@ virtualenvwrapper_verify_workon_home () {
 virtualenvwrapper_tempfile () {
     # Note: the 'X's must come last
     typeset suffix=${1:-hook}
-    typeset file="`mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX`"
+    typeset file="`\mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX`"
     if [ $? -ne 0 ]
     then
         echo "ERROR: virtualenvwrapper could not create a temporary file name." 1>&2
@@ -233,7 +233,7 @@ virtualenvwrapper_show_workon_options () {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | sed 's|^\./||' | sed 's|/bin/activate||' | sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
+    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/bin/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
@@ -467,17 +467,17 @@ cpvirtualenv() {
         return 1
     fi
 
-    cp -r "$source_env" "$target_env"
-    for script in $( ls $target_env/bin/* )
+    \cp -r "$source_env" "$target_env"
+    for script in $( \ls $target_env/bin/* )
     do
         newscript="$script-new"
-        sed "s|$source_env|$target_env|g" < "$script" > "$newscript"
-        mv "$newscript" "$script"
-        chmod a+x "$script"
+        \sed "s|$source_env|$target_env|g" < "$script" > "$newscript"
+        \mv "$newscript" "$script"
+        \chmod a+x "$script"
     done
 
     virtualenv "$target_env" --relocatable
-    sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"
+    \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"
 
     (cd "$WORKON_HOME" && 
         virtualenvwrapper_run_hook "pre_cpvirtualenv" "$env_name" "$new_env" &&
