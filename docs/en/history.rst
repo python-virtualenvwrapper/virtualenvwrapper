@@ -2,6 +2,11 @@
 Release History
 ===============
 
+Dev
+
+  - Integrate Fred Palmer's patch to escape more shell commands to
+    avoid aliases.  Resolves :bbissue:`57`.
+
 2.2.1
 
   - Escape ``which`` calls to avoid aliases. Resolves :bbissue:`46`.
