@@ -197,6 +197,8 @@ mkvirtualenv () {
         virtualenv "$@" &&
         [ -d "$WORKON_HOME/$envname" ] && virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
         )
+    typeset RC=$?
+    [ $RC -ne 0 ] && return $RC
     # If they passed a help option or got an error from virtualenv,
     # the environment won't exist.  Use that to tell whether
     # we should switch to the environment and run the hook.

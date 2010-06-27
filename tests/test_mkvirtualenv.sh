@@ -67,6 +67,12 @@ test_no_virtualenv () {
     assertSame "$RC" "1"
 }
 
+test_no_args () {
+    mkvirtualenv 2>/dev/null 1>&2
+    RC=$?
+    assertSame "2" "$RC"
+}
+
 test_no_workon_home () {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
