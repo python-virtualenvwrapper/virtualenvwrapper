@@ -73,6 +73,10 @@ GLOBAL_HOOKS = [
      "This hook is run before every virtualenv is activated."),
     ("postactivate",
      "This hook is run after every virtualenv is activated."),
+
+    # get_env_details
+    ("get_env_details",
+     "This hook is run when the list of virtualenvs is printed so each name can include details."),
     ]
 
 
@@ -88,6 +92,10 @@ LOCAL_HOOKS = [
      "This hook is run before this virtualenv is activated."),
     ("postactivate",
      "This hook is run after this virtualenv is activated."),
+
+    # get_env_details
+    ("get_env_details",
+     "This hook is run when the list of virtualenvs is printed so each name can include details."),
     ]
 
 
@@ -218,3 +226,11 @@ VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV="$WORKON_HOME/%(env_name)s"
 [ -f "$WORKON_HOME/postdeactivate" ] && source "$WORKON_HOME/postdeactivate"
 unset VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV
 """ % { 'env_name':args[0] }
+
+
+def get_env_details(args):
+    log.debug('get_env_details')
+    run_global('get_env_details', *args)
+    script_path = os.path.expandvars(os.path.join('$WORKON_HOME', args[0], 'bin', 'get_env_details'))
+    run_script(script_path, *args)
+    return

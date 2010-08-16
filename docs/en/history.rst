@@ -2,6 +2,10 @@
 Release History
 ===============
 
+2.3
+
+  - Added ``get_env_details`` hook.
+
 2.2.2
 
   - Integrate Fred Palmer's patch to escape more shell commands to

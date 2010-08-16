@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 PROJECT = 'virtualenvwrapper'
-VERSION = '2.2.2'
+VERSION = '2.3'
 
 # Bootstrap installation of Distribute
 import distribute_setup
@@ -193,6 +193,10 @@ setup(
             ],
         'virtualenvwrapper.post_deactivate_source': [
             'user_scripts = virtualenvwrapper.user_scripts:post_deactivate_source',
+            ],
+
+        'virtualenvwrapper.get_env_details': [
+            'user_scripts = virtualenvwrapper.user_scripts:get_env_details',
             ],
         },
 

@@ -236,6 +236,7 @@ virtualenvwrapper_show_workon_options () {
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
     (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/bin/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
+    
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
@@ -247,7 +248,12 @@ workon () {
 	typeset env_name="$1"
 	if [ "$env_name" = "" ]
     then
-        virtualenvwrapper_show_workon_options
+        for env_name in $(virtualenvwrapper_show_workon_options)
+        do
+            echo -n "$env_name"
+            virtualenvwrapper_run_hook "get_env_details" "$env_name"
+            echo
+        done
         return 1
     fi
 

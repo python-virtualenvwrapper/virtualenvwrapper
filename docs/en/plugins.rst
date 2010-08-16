@@ -298,6 +298,17 @@ before or after the event.  The suffix ``_source`` is added for
 extensions that return shell code instead of taking action directly
 (see :ref:`plugins-user-env`).
 
+.. _plugins-get_env_details:
+
+get_env_details
+===============
+
+The ``virtualenvwrapper.get_env_details`` hooks are run when
+``workon`` is run with no arguments and a list of the virtual
+environments is printed.  The hook is run once for each environment,
+after the name is printed, and can be used to show additional
+information about that environment.
+
 .. _plugins-initialize:
 
 initialize

@@ -8,6 +8,20 @@ The end-user customization scripts are either *sourced* (allowing them
 to modify your shell environment) or *run* as an external program at
 the appropriate trigger time.
 
+.. _scripts-get_env_details:
+
+get_env_details
+===============
+
+  :Global/Local: both
+  :Argument(s): env name
+  :Sourced/Run: run
+
+``$WORKON_HOME/get_env_details`` is run when ``workon`` is run with no
+arguments and a list of the virtual environments is printed.  The hook
+is run once for each environment, after the name is printed, and can
+print additional information about that environment.
+
 .. _scripts-initialize:
 
 initialize

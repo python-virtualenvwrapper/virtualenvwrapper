@@ -1,3 +1,13 @@
+2010-08-16  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper/user_scripts.py (get_env_details): New hook to
+	optionally give more detail than the name of an environment when
+	the user requests a list.
+
+	* virtualenvwrapper.sh: Update workon to use the get_env_details
+	hook to print more details, if the user provides scripts to give
+	them.
+
 2010-06-03  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh: Escape the call to "which" so we don't use
