@@ -45,6 +45,26 @@ new environment is automatically activated after being initialized.
    * :ref:`scripts-premkvirtualenv`
    * :ref:`scripts-postmkvirtualenv`
 
+.. _command-lsvirtualenv:
+
+lsvirtualenv
+------------
+
+List all of the environments.
+
+Syntax::
+
+    lsvirtualenv [-l] [-h]
+
+-l
+  Long mode, enables verbose output.
+-h
+  Print the help for lsvirtualenv.
+
+.. seealso::
+
+   * :ref:`scripts-get_env_details`
+
 rmvirtualenv
 ------------
 

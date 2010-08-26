@@ -95,7 +95,7 @@ LOCAL_HOOKS = [
 
     # get_env_details
     ("get_env_details",
-     "This hook is run when the list of virtualenvs is printed so each name can include details."),
+     "This hook is run when the list of virtualenvs is printed in 'long' mode so each name can include details."),
     ]
 
 

@@ -240,6 +240,43 @@ virtualenvwrapper_show_workon_options () {
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
+_lsvirtualenv_usage () {
+    echo "lsvirtualenv [-lh]"
+}
+
+# List virtual environments
+#
+# Usage: lsvirtualenv [-l]
+lsvirtualenv () {
+    typeset args=$(getopt lh $*)
+    if [ $? != 0 ]
+    then
+        _lsvirtualenv_usage
+        return 1
+    fi
+    typeset long_mode=false
+    for opt in $args
+    do
+        case "$opt" in
+            -l) long_mode=true;;
+            -h) _lsvirtualenv_usage;
+                return 1;;
+        esac
+    done
+
+    if $long_mode
+    then
+        for env_name in $(virtualenvwrapper_show_workon_options)
+        do
+            echo -n "$env_name"
+            virtualenvwrapper_run_hook "get_env_details" "$env_name"
+            echo
+        done
+    else
+        virtualenvwrapper_show_workon_options
+    fi
+}
+
 # List or change working virtual environments
 #
 # Usage: workon [environment_name]
@@ -248,12 +285,7 @@ workon () {
 	typeset env_name="$1"
 	if [ "$env_name" = "" ]
     then
-        for env_name in $(virtualenvwrapper_show_workon_options)
-        do
-            echo -n "$env_name"
-            virtualenvwrapper_run_hook "get_env_details" "$env_name"
-            echo
-        done
+        lsvirtualenv
         return 1
     fi
 
