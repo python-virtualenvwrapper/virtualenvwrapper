@@ -241,24 +241,28 @@ virtualenvwrapper_show_workon_options () {
 }
 
 _lsvirtualenv_usage () {
-    echo "lsvirtualenv [-lh]"
+    echo "lsvirtualenv [-blh]"
+    echo "  -b -- brief mode"
+    echo "  -l -- long mode"
+    echo "  -h -- this help message"
 }
 
 # List virtual environments
 #
 # Usage: lsvirtualenv [-l]
 lsvirtualenv () {
-    typeset args=$(getopt lh $*)
+    typeset args=$(getopt blh $*)
     if [ $? != 0 ]
     then
         _lsvirtualenv_usage
         return 1
     fi
-    typeset long_mode=false
+    typeset long_mode=true
     for opt in $args
     do
         case "$opt" in
             -l) long_mode=true;;
+            -b) long_mode=false;;
             -h) _lsvirtualenv_usage;
                 return 1;;
         esac
@@ -268,13 +272,31 @@ lsvirtualenv () {
     then
         for env_name in $(virtualenvwrapper_show_workon_options)
         do
-            echo -n "$env_name"
-            virtualenvwrapper_run_hook "get_env_details" "$env_name"
-            echo
+            showvirtualenv "$env_name"
         done
     else
         virtualenvwrapper_show_workon_options
     fi
+}
+
+# Show details of a virtualenv
+#
+# Usage: showvirtualenv [env]
+showvirtualenv () {
+    typeset env_name="$1"
+    if [ -z "$env_name" ]
+    then
+        if [ -z "$VIRTUAL_ENV" ]
+        then
+            echo "showvirtualenv [env]"
+            return 1
+        fi
+        env_name=$(basename $VIRTUAL_ENV)
+    fi
+
+    echo -n "$env_name"
+    virtualenvwrapper_run_hook "get_env_details" "$env_name"
+    echo
 }
 
 # List or change working virtual environments
