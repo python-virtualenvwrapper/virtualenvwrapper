@@ -54,12 +54,29 @@ List all of the environments.
 
 Syntax::
 
-    lsvirtualenv [-l] [-h]
+    lsvirtualenv [-b] [-l] [-h]
 
+-b
+  Brief mode, disables verbose output.
 -l
-  Long mode, enables verbose output.
+  Long mode, enables verbose output.  Default.
 -h
   Print the help for lsvirtualenv.
+
+.. seealso::
+
+   * :ref:`scripts-get_env_details`
+
+.. _command-showvirtualenv:
+
+showvirtualenv
+--------------
+
+Show the details for a single virtualenv.
+
+Syntax::
+
+    showvirtualenv [env]
 
 .. seealso::
 

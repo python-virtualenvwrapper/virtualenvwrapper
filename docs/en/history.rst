@@ -2,6 +2,11 @@
 Release History
 ===============
 
+2.5
+
+  - Add :ref:`command-showvirtualenv` command.  Modify
+    :ref:`command-lsvirtualenv` to make verbose output the default.
+
 2.4
 
   - Add :ref:`command-lsvirtualenv` command with ``-l`` option to run
