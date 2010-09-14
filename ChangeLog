@@ -1,3 +1,8 @@
+2010-09-14  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (workon): Use the brief list format by
+	default.
+
 2010-08-16  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper/user_scripts.py (get_env_details): New hook to

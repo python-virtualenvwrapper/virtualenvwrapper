@@ -307,7 +307,7 @@ workon () {
 	typeset env_name="$1"
 	if [ "$env_name" = "" ]
     then
-        lsvirtualenv
+        lsvirtualenv -b
         return 1
     fi
 

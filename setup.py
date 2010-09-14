@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 PROJECT = 'virtualenvwrapper'
-VERSION = '2.5'
+VERSION = '2.5.1'
 
 # Bootstrap installation of Distribute
 import distribute_setup
