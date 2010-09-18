@@ -2,6 +2,16 @@
 Release History
 ===============
 
+2.5.2
+
+  - Apply patch from Zach Voase to fix :ref:`command-lsvirtualenv`
+    under zsh. Resolves :bbissue:`64`.
+
+2.5.1
+
+  - Make :ref:`command-workon` list brief environment details when run
+    without argument, instead of full details.
+
 2.5
 
   - Add :ref:`command-showvirtualenv` command.  Modify

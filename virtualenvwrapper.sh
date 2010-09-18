@@ -251,7 +251,7 @@ _lsvirtualenv_usage () {
 #
 # Usage: lsvirtualenv [-l]
 lsvirtualenv () {
-    typeset args=$(getopt blh $*)
+    typeset args="$(getopt blh "$@")"
     if [ $? != 0 ]
     then
         _lsvirtualenv_usage

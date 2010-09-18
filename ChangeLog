@@ -1,3 +1,8 @@
+2010-09-18  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh: Apply patch from Zach Voase to fix
+	lsvirtualenv under zsh.
+
 2010-09-14  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh (workon): Use the brief list format by
