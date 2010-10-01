@@ -2,6 +2,10 @@
 Release History
 ===============
 
+2.5.3
+
+  - Point release uploaded to PyPI during outage on doughellmann.com.
+
 2.5.2
 
   - Apply patch from Zach Voase to fix :ref:`command-lsvirtualenv`
