@@ -90,12 +90,15 @@ virtualenvwrapper_derive_workon_home() {
     return 0
 }
 
-# Verify that the WORKON_HOME directory exists
+# Check if the WORKON_HOME directory exists,
+# create it if it does not
+# seperate from creating the files in it because this used to just error
+# and maybe other things rely on the dir existing before that happens.
 virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
     then
-        [ "$1" != "-q" ] && echo "ERROR: Virtual environments directory '$WORKON_HOME' does not exist.  Create it or set WORKON_HOME to an existing directory." 1>&2
-        return 1
+        [ "$1" != "-q" ] && echo "NOTE: Virtual environments directory '$WORKON_HOME' does not exist.  Creating..." 1>&2
+        mkdir $WORKON_HOME
     fi
     return 0
 }
