@@ -63,12 +63,20 @@ test_hooks () {
     mkvirtualenv "source"
 
     export pre_test_dir=$(cd "$test_dir"; pwd)
+
+    # Set the interpreter of the hook script to the simple shell
+    echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
     echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
+
     echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+
+    # Set the interpreter of the hook script to the simple shell
     echo "#!/bin/sh" > "$WORKON_HOME/precpvirtualenv"
     echo "echo GLOBAL precpvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/precpvirtualenv"
     chmod +x "$WORKON_HOME/precpvirtualenv"
+
+    # Set the interpreter of the hook script to the simple shell
     echo "#!/bin/sh" > "$WORKON_HOME/postcpvirtualenv"
     echo "echo GLOBAL postcpvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postcpvirtualenv"
 
@@ -83,6 +91,7 @@ GLOBAL postmkvirtualenv
 GLOBAL postcpvirtualenv"
 
     assertSame "$expected" "$output"
+
     rm -f "$WORKON_HOME/premkvirtualenv"
     rm -f "$WORKON_HOME/postmkvirtualenv"
 }

@@ -1,0 +1,56 @@
+#!/bin/sh
+
+##
+## ONLY RUN THIS VIA TOX
+##
+
+#set -x
+
+envdir="$1"
+shift
+scripts="$*"
+if [ -z "$scripts" ]
+then
+    scripts=$(ls tests/test*.sh)
+fi
+
+# Force the tox virtualenv to be active.  
+#
+# Since this script runs from within a separate shell created by tox,
+# the name of the virtualenv (in $VIRTUAL_ENV) is inherited, but the
+# shell functions and other settings created by the activate script
+# are *not* inherited.
+#
+source "$envdir/bin/activate"
+
+# Set up virtualenvwrapper.hook_loader to print more details than usual for debugging.
+export HOOK_VERBOSE_OPTION=-vvv
+
+# Force virtualenvwrapper to use the python interpreter in the
+# tox-created virtualenv.
+export VIRTUALENVWRAPPER_PYTHON="$envdir/bin/python"
+
+if [ -n "${ZSH_VERSION:-}" ]
+then
+    export SHELL=$(which zsh)
+fi
+
+# Run the test scripts with a little formatting around them to make it
+# easier to find where each script output starts.
+for test_script in $scripts
+do
+	echo
+ 	echo '********************************************************************************'
+	echo "Running $test_script"
+    echo "  VIRTUAL_ENV=$VIRTUAL_ENV"
+    echo "  VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON"
+    echo "    $($VIRTUALENVWRAPPER_PYTHON -V 2>&1)"
+    echo "  PYTHONPATH=$PYTHONPATH"
+    echo "  SHELL=$SHELL"
+	echo
+    export SHUNIT_PARENT="$test_script"
+	$test_script || exit 1
+	echo
+done
+
+exit 0

@@ -1,3 +1,26 @@
+2010-12-24  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (cpvirtualenv): Ensure that both pre hooks
+	are run, even if one produces an error.
+
+	* virtualenvwrapper/user_scripts.py: Change log message format.
+
+	* tox.ini: Configuration file for running tests under tox.
+
+	* tests/test_run_hook.sh (test_virtualenvwrapper_run_hook_permissions):
+	Fix the expected output message.
+
+	* tests/*: Make sure all of the test scripts have execute permission.
+
+	* tests/test.sh (test_virtualenvwrapper_verify_workon_home_missing_dir_quiet_init):
+	Use source instead of starting another shell, since zsh doesn't
+	play nicely with inheriting environment settings otherwise.
+	(test_python_interpreter_set_incorrectly): Force
+	VIRTUALENVWRAPPER_PYTHON before running the script in a sub-shell.
+
+	* tests/run_tests: Script to run through all of the other test
+	scripts one at a time.
+
 2010-09-18  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh: Apply patch from Zach Voase to fix

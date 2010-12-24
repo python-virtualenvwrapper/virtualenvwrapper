@@ -15,6 +15,7 @@ tests/testpackage/testpackage.egg-info
 trace.txt
 virtualenvwrapper.egg-info
 virtualenvwrapper/docs
+.tox
 
 syntax: re
 .DS_Store

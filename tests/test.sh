@@ -10,7 +10,6 @@ oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     source "$test_dir/../virtualenvwrapper.sh"
-    echo $PYTHONPATH
 }
 
 oneTimeTearDown() {
@@ -63,7 +62,7 @@ test_virtualenvwrapper_verify_workon_home_missing_dir_grep_options() {
 test_virtualenvwrapper_verify_workon_home_missing_dir_quiet_init() {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=`$SHELL $test_dir/../virtualenvwrapper.sh 2>&1`
+    output=$(source $test_dir/../virtualenvwrapper.sh 2>&1)
     assertSame "" "$output"
     WORKON_HOME="$old_home"
 }
@@ -79,7 +78,7 @@ test_python_interpreter_set_incorrectly() {
     cd "$WORKON_HOME"
     mkvirtualenv --no-site-packages no_wrappers
     expected="ImportError: No module named virtualenvwrapper.hook_loader"
-    output=$(VIRTUALENVWRAPPER_PYTHON=$VIRTUAL_ENV/bin/python $SHELL $return_to/virtualenvwrapper.sh 2>&1)
+    output=$(VIRTUALENVWRAPPER_PYTHON=$(which python) $SHELL $return_to/virtualenvwrapper.sh 2>&1)
     echo "$output" | grep "$expected" 2>&1
     found=$?
     assertTrue "Expected \"$expected\", got: \"$output\"" "[ $found -eq 0 ]"

@@ -37,10 +37,11 @@ test_workon () {
 test_workon_activate_hooks () {
     for t in pre post
     do
-        echo "#!/bin/bash" > "$WORKON_HOME/${t}activate"
+        echo "#!/bin/sh" > "$WORKON_HOME/${t}activate"
         echo "echo GLOBAL ${t}activate >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/${t}activate"
         chmod +x "$WORKON_HOME/${t}activate"
-        echo "#!/bin/bash" > "$WORKON_HOME/env2/bin/${t}activate"
+
+        echo "#!/bin/sh" > "$WORKON_HOME/env2/bin/${t}activate"
         echo "echo ENV ${t}activate >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/env1/bin/${t}activate"
         chmod +x "$WORKON_HOME/env1/bin/${t}activate"
     done

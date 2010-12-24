@@ -25,11 +25,11 @@ def run_script(script_path, *args):
 #             print f.read()
 #             print '+' * 80
         cmd = [script_path] + list(args)
-        log.debug('Running %s', str(cmd))
+        log.debug('running %s', str(cmd))
         try:
             return_code = subprocess.call(cmd)
         except OSError, msg:
-            log.error('ERROR: Could not run %s. %s', script_path, str(msg))
+            log.error('could not run "%s": %s', script_path, str(msg))
         #log.debug('Returned %s', return_code)
     return
 
@@ -107,7 +107,7 @@ def make_hook(filename, comment):
     """
     filename = os.path.expanduser(os.path.expandvars(filename))
     if not os.path.exists(filename):
-        log.info('Creating %s', filename)
+        log.warning('creating %s', filename)
         f = open(filename, 'wt')
         try:
             f.write("""#!%(shell)s

@@ -39,8 +39,11 @@ test_activates () {
 
 test_hooks () {
     export pre_test_dir=$(cd "$test_dir"; pwd)
+
+    echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
     echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
+
     echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
     mkvirtualenv "env3"
     output=$(cat "$test_dir/catch_output")

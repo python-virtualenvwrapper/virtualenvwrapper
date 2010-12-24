@@ -1,24 +1,6 @@
 # Get the version of the app.  This is used in the doc build.
 export VERSION=$(shell python setup.py --version)
 
-# Locations of Python interpreter binaries
-PYTHON27=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.7b1/bin/python2.7
-ifeq ($VIRTUAL_ENV,)
-PYTHON26=$(shell which python2.6)
-else
-PYTHON26=/Library/Frameworks/Python.framework/Versions/2.6/bin/python2.6
-endif
-PYTHON25=/Library/Frameworks/Python.framework/Versions/2.5/bin/python2.5
-PYTHON24=/Users/dhellmann/Devel/virtualenvwrapper/Python/2.4.6/bin/python2.4
-
-# The test-quick pattern changes the definition of
-# this variable to only run against a single version of python.
-ifeq ($(PYTHON_BINARIES),)
-PYTHON_BINARIES=$(PYTHON26) $(PYTHON27) $(PYTHON25) $(PYTHON24)
-endif
-
-SUPPORTED_SHELLS=bash sh ksh zsh
-
 # Default target is to show help
 help:
 	@echo "sdist          - Source distribution"
@@ -67,56 +49,11 @@ register:
 	python setup.py register
 
 # Testing
-TEST_SCRIPTS=$(wildcard tests/test*.sh)
-
 test:
-	for name in $(SUPPORTED_SHELLS) ; do \
-		$(MAKE) test-$$name || exit 1 ; \
-	done
-	$(MAKE) test-install
+	tox
+
+test-quick:
+	tox -e py27
 
 develop:
 	python setup.py develop
-
-test-bash test-ksh test-sh:
-	TEST_SHELL=$(subst test-,,$@) $(MAKE) test-loop
-
-test-zsh:
-	TEST_SHELL="zsh -o shwordsplit" $(MAKE) test-loop
-
-# For each supported version of Python,
-# - Create a new virtualenv in a temporary directory.
-# - Install virtualenvwrapper into the new virtualenv
-# - Run each test script in tests
-test-loop:
-	for py_bin in $(PYTHON_BINARIES) ; do \
-		(cd $$TMPDIR/ && rm -rf virtualenvwrapper-test-env \
-			&& virtualenv -p $$py_bin --no-site-packages virtualenvwrapper-test-env) \
-			|| exit 1 ; \
-		$$TMPDIR/virtualenvwrapper-test-env/bin/python setup.py install || exit 1 ; \
-		for test_script in tests/test*.sh ; do \
-			echo ; \
-	 		echo '********************************************************************************' ; \
-			echo "Running $$test_script with $(TEST_SHELL) under Python $(basename $$py_bin)" ; \
-			echo ; \
-			HOOK_VERBOSE_OPTION=-v VIRTUALENVWRAPPER_PYTHON=$$TMPDIR/virtualenvwrapper-test-env/bin/python SHUNIT_PARENT=$$test_script $(TEST_SHELL) $$test_script || exit 1 ; \
-			echo ; \
-		done \
-	done
-
-test-quick:: test-26
-
-test-24:
-	PYTHON_BINARIES=$(PYTHON24) $(MAKE) test-bash
-
-test-25:
-	PYTHON_BINARIES=$(PYTHON25) $(MAKE) test-bash
-
-test-26:
-	PYTHON_BINARIES=$(PYTHON26) $(MAKE) test-bash
-
-test-27:
-	PYTHON_BINARIES=$(PYTHON27) $(MAKE) test-bash
-
-test-install:
-	bash ./tests/manual_test_install.sh `pwd`/dist "$(VERSION)"
