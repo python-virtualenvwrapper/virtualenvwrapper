@@ -2,6 +2,23 @@
 Installation
 ============
 
+Supported Shells
+================
+
+virtualenvwrapper is a set of shell *functions* defined in Bourne
+shell compatible syntax.  It is tested under `bash`, `ksh`, and `zsh`.
+It may work with other shells, so if you find that it does work with a
+shell not listed here please let me know.  If you can modify it to
+work with another shell, without completely rewriting it, send a pull
+request through the bitbucket project page.  If you write a clone to
+work with an incompatible shell, let me know and I will link to it
+from this page.
+
+Python Versions
+===============
+
+virtualenvwrapper is tested under Python 2.4 - 2.7.
+
 Basic Installation
 ==================
 
@@ -12,6 +29,13 @@ virtualenvwrapper should be installed using pip_::
 You will want to install it into the global Python site-packages area,
 along with virtualenv.  You may need administrative privileges to do
 that.
+
+An alternative to installing it into the global site-packages is to
+add it to your user local directory (usually `~/.local`).
+
+::
+
+  $ pip install --install-option="--user" virtualenvwrapper
 
 WORKON_HOME
 ===========
