@@ -41,6 +41,23 @@ See the `project documentation
 <http://www.doughellmann.com/docs/virtualenvwrapper/>`__ for
 installation and setup instructions.
 
+Supported Shells
+================
+
+virtualenvwrapper is a set of shell *functions* defined in Bourne
+shell compatible syntax.  It is tested under `bash`, `ksh`, and `zsh`.
+It may work with other shells, so if you find that it does work with a
+shell not listed here please let me know.  If you can modify it to
+work with another shell, without completely rewriting it, send a pull
+request through the bitbucket project page.  If you write a clone to
+work with an incompatible shell, let me know and I will link to it
+from this page.
+
+Python Versions
+===============
+
+virtualenvwrapper is tested under Python 2.4 - 2.7.
+
 Upgrading from 1.x
 ==================
 
