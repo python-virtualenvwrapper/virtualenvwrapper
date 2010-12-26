@@ -13,8 +13,6 @@ VERSION=$(python setup.py --version)
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
-    mkvirtualenv "installtest"
-    (cd "$test_dir/.." && make sdist)
 }
 
 oneTimeTearDown() {
@@ -23,6 +21,12 @@ oneTimeTearDown() {
 
 setUp () {
     echo
+}
+
+test_build_ok () {
+    (cd "$test_dir/.." && make sdist)
+    outcome=$?
+ 	assertSame "0" "$outcome"
 }
 
 test_install () {

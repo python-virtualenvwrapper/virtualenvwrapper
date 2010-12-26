@@ -138,7 +138,7 @@ setup(
     provides=['virtualenvwrapper',
               'virtualenvwrapper.user_scripts',
               ],
-    requires=['virtualenv'],
+    install_requires=['virtualenv'],
 
     namespace_packages = [ 'virtualenvwrapper' ],
     packages = find_packages(),
