@@ -108,7 +108,7 @@ def make_hook(filename, comment):
     filename = os.path.expanduser(os.path.expandvars(filename))
     if not os.path.exists(filename):
         log.warning('creating %s', filename)
-        f = open(filename, 'wt')
+        f = open(filename, 'w')
         try:
             f.write("""#!%(shell)s
 # %(comment)s

@@ -1,5 +1,9 @@
 2010-12-26  Doug Hellmann  <dhellmann@racemi.com>
 
+	* virtualenvwrapper/user_scripts.py (make_hook): Do not specify
+	text mode when creating the files so cygwin will not replace \n
+	with \r\n.
+
 	* setup.py: Change "requires" to "install_requires" so pip will
 	try to install virtualenv if it is not already there.  Add trove
 	classifiers for the supported Python versions.
