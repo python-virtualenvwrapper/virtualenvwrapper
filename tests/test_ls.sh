@@ -44,5 +44,10 @@ test_no_workon_home () {
     WORKON_HOME="$old_home"
 }
 
+test_get_site_packages_dir () {
+    d=$(virtualenvwrapper_get_site_packages_dir)
+    assertTrue "[ -d $d ]"
+}
+
 
 . "$test_dir/shunit2"

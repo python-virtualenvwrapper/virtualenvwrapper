@@ -407,7 +407,7 @@ virtualenvwrapper_get_python_version () {
     # Uses the Python from the virtualenv because we're trying to
     # determine the version installed there so we can build
     # up the path to the site-packages directory.
-    python -c 'import sys; print ".".join(str(p) for p in sys.version_info[:2])'
+    python -V 2>&1 | cut -f2 -d' '
 }
 
 # Prints the path to the site-packages directory for the current environment.
