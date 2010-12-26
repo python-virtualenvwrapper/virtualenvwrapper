@@ -2,6 +2,8 @@
 Installation
 ============
 
+.. _supported-shells:
+
 Supported Shells
 ================
 
@@ -13,6 +15,8 @@ work with another shell, without completely rewriting it, send a pull
 request through the bitbucket project page.  If you write a clone to
 work with an incompatible shell, let me know and I will link to it
 from this page.
+
+.. _supported-versions:
 
 Python Versions
 ===============

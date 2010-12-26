@@ -2,6 +2,20 @@
 Release History
 ===============
 
+2.6
+
+  - Fixed a problem with hook script line endings under Cygwin
+    (:bbissue:`68`).
+  - Updated documentation to include a list of the compatible shells
+    (:ref:`supported-shells`) and Python versions
+    (:ref:`supported-versions`) (:bbissue:`70`).
+  - Fixed installation dependency on virtualenv (:bbissue:`60`).
+  - Fixed the method for determining the Python version so it works
+    under Python 2.4 (:bbissue:`61`).
+  - Converted the test infrastructure to use `tox
+    <http://codespeak.net/tox/index.html>`_ instead of home-grown
+    scripts in the Makefile.
+
 2.5.3
 
   - Point release uploaded to PyPI during outage on doughellmann.com.
