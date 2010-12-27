@@ -10,7 +10,6 @@ oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     source "$test_dir/../virtualenvwrapper.sh"
-    mkvirtualenv testing
 }
 
 oneTimeTearDown() {
@@ -23,7 +22,7 @@ setUp () {
 }
 
 test_get_python_version () {
-    expected="$($VIRTUAL_ENV/bin/python -V 2>&1 | cut -f2 -d' ')"
+    expected="$(python -c 'import sys; print ".".join([str(p) for p in sys.version_info[:2]])')"
     echo "Expecting: $expected"
     vers=$(virtualenvwrapper_get_python_version)
     echo "Got      : $vers"

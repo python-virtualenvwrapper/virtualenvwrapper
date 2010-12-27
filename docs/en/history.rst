@@ -2,6 +2,10 @@
 Release History
 ===============
 
+2.6.1
+
+  - Fixed virtualenvwrapper_get_python_version (:bbissue:`73`).
+
 2.6
 
   - Fixed a problem with hook script line endings under Cygwin

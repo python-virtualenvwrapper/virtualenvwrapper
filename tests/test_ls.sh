@@ -21,10 +21,21 @@ setUp () {
     rm -f "$test_dir/catch_output"
 }
 
+test_get_site_packages_dir () {
+    mkvirtualenv "lssitepackagestest"
+    d=$(virtualenvwrapper_get_site_packages_dir)
+    echo "site-packages in $d"
+    assertTrue "site-packages dir $d does not exist" "[ -d $d ]"
+    deactivate
+}
+
 test_lssitepackages () {
     mkvirtualenv "lssitepackagestest"
     contents="$(lssitepackages)"    
-    assertTrue "No easy-install.pth in $contents" "echo $contents | grep easy-install.pth"
+    actual=$(echo $contents | grep easy-install.pth)
+    expected=$(echo $contents)
+    assertSame "$expected" "$actual"
+    deactivate
 }
 
 test_lssitepackages_add2virtualenv () {
@@ -33,7 +44,10 @@ test_lssitepackages_add2virtualenv () {
     base_dir=$(basename $(pwd))
     add2virtualenv "../$base_dir"
     contents="$(lssitepackages)"    
-    assertTrue "No $base_dir in $contents" "echo $contents | grep $base_dir"
+    actual=$(echo $contents | grep $base_dir)
+    expected=$(echo $contents)
+    assertSame "$expected" "$actual"
+    deactivate
 }
 
 test_no_workon_home () {
@@ -42,11 +56,6 @@ test_no_workon_home () {
     output=`lssitepackages should_not_be_created 2>&1`
     assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
     WORKON_HOME="$old_home"
-}
-
-test_get_site_packages_dir () {
-    d=$(virtualenvwrapper_get_site_packages_dir)
-    assertTrue "[ -d $d ]"
 }
 
 
