@@ -24,9 +24,7 @@ building_web = int(os.environ.get('BUILDING_WEB', '0'))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = [ 'sphinxcontrib.bitbucket',
-               'sphinxcontrib.spelling',
-             ]
+extensions = [ 'sphinxcontrib.bitbucket' ]
 
 bitbucket_project_url = 'http://bitbucket.org/dhellmann/virtualenvwrapper/'
 

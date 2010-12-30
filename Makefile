@@ -26,6 +26,7 @@ sdist: html
 html:
 	(cd docs && $(MAKE) html LANGUAGE="en")
 	(cd docs && $(MAKE) html LANGUAGE="es")
+	(cd docs && $(MAKE) html LANGUAGE="ja")
 
 .PHONY: docclean
 docclean:
@@ -38,10 +39,12 @@ website:
 	rm -rf docs/website
 	(cd docs && $(MAKE) html BUILDING_WEB=1 BUILDDIR="website/en" LANGUAGE="en")
 	(cd docs && $(MAKE) html BUILDING_WEB=1 BUILDDIR="website/es" LANGUAGE="es")
+	(cd docs && $(MAKE) html BUILDING_WEB=1 BUILDDIR="website/ja" LANGUAGE="ja")
 
 installwebsite: website
 	(cd docs/website/en && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/)
 	(cd docs/website/es && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/es/)
+	(cd docs/website/ja && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/ja/)
 
 # Register the new version on pypi
 .PHONY: register
