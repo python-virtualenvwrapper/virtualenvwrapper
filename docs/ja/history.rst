@@ -7,6 +7,14 @@
 リリース履歴
 ============
 
+Dev
+
+  .. - Merged in `Japanese translation of the documentation
+       <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ from
+       Tetsuya Morimoto.
+
+  - Tetsuya Morimoto からの `日本語の翻訳ドキュメント <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ を取り込みました。
+
 2.6.1
 
   .. - Fixed virtualenvwrapper_get_python_version (:bbissue:`73`).
