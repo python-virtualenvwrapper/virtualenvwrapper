@@ -7,6 +7,9 @@ Dev
   - Merged in `Japanese translation of the documentation
     <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ from
     Tetsuya Morimoto.
+  - Incorporate a suggestion from Ales Zoulek to let the user specify
+    the virtualenv binary through an environment variable
+    (``VIRTUALENVWRAPPER_VIRTUALENV``).
 
 2.6.1
 

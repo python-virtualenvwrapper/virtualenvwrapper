@@ -84,6 +84,34 @@ test_no_workon_home () {
     WORKON_HOME="$old_home"
 }
 
+test_virtualenv_fails () {
+    # Test to reproduce the conditions in issue #76
+    # https://bitbucket.org/dhellmann/virtualenvwrapper/issue/76/
+    # 
+    # Should not run the premkvirtualenv or postmkvirtualenv hooks
+    # because the environment is not created and even the
+    # premkvirtualenv hooks are run *after* the environment exists
+    # (but before it is activated).
+    export pre_test_dir=$(cd "$test_dir"; pwd)
+
+    VIRTUALENVWRAPPER_VIRTUALENV=false
+
+    echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    chmod +x "$WORKON_HOME/premkvirtualenv"
+
+    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    mkvirtualenv "env3"
+    output=$(cat "$test_dir/catch_output" 2>/dev/null)
+    workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
+    expected=""
+    assertSame "$expected" "$output"
+    rm -f "$WORKON_HOME/premkvirtualenv"
+    rm -f "$WORKON_HOME/postmkvirtualenv"
+
+    VIRTUALENVWRAPPER_VIRTUALENV=virtualenv
+}
+
 # test_mkvirtualenv_sitepackages () {
 #     # Without the option verify that site-packages are copied.
 #     mkvirtualenv "env3"
