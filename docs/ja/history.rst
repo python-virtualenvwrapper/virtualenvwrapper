@@ -7,13 +7,26 @@
 リリース履歴
 ============
 
-Dev
+2.6.3
 
-  .. - Merged in `Japanese translation of the documentation
-       <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ from
-       Tetsuya Morimoto.
+  .. - Hard-code the version information in the setup.py and conf.py
+       scripts so it works for http://readthedocs.org.
 
+  - http://readthedocs.org でドキュメントを生成するために setup.py や conf.py スクリプトのバージョン情報をハードコードしました。
+
+2.6.2
+
+  .. - Attempted to make the doc build work with http://readthedocs.org.
+     - Merged in `Japanese translation of the documentation
+           <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ from
+                Tetsuya Morimoto.
+     - Incorporate a suggestion from Ales Zoulek to let the user specify
+       the virtualenv binary through an environment variable
+       (``VIRTUALENVWRAPPER_VIRTUALENV``).
+
+  - http://readthedocs.org でドキュメントを生成してみました。
   - Tetsuya Morimoto からの `日本語の翻訳ドキュメント <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ を取り込みました。
+  - 環境変数(``VIRTUALENVWRAPPER_VIRTUALENV``)で virtualenv バイナリをユーザが指定できるように Ales Zoulek からの提案を取り入れました。
 
 2.6.1
 
