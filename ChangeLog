@@ -1,5 +1,9 @@
 2011-02-26  Doug Hellmann  <dhellmann@racemi.com>
 
+	* docs/sphinx/conf.py: Just hard-code the version.
+
+	* setup.py: Just hard-code the version.
+
 	* virtualenvwrapper/version.py: Put the version info inside the
 	package so it is available to the doc build and packaging
 	script. This also makes the readthedocs.org build work properly.

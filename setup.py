@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-import virtualenvwrapper.version
-
 PROJECT = 'virtualenvwrapper'
-VERSION = virtualenvwrapper.version.VERSION
+
+# Change docs/sphinx/conf.py too!
+VERSION = '2.6.3'
 
 # Bootstrap installation of Distribute
 import distribute_setup
