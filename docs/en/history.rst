@@ -5,7 +5,9 @@ Release History
 2.6.3
 
   - Hard-code the version information in the setup.py and conf.py
-    scripts so it works for http://readthedocs.org.
+    scripts. This still doesn't work for http://readthedocs.org, since
+    the doc build needs the sphinxcontrib.bitbucket extension, but
+    will make it easier to transition the docs to another site later.
 
 2.6.2
 
