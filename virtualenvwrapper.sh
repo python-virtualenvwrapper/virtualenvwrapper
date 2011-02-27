@@ -143,7 +143,7 @@ virtualenvwrapper_run_hook () {
 
 # Set up virtualenvwrapper properly
 virtualenvwrapper_initialize () {
-    export WORKON_HOME=$(virtualenvwrapper_derive_workon_home)
+    export WORKON_HOME="$(virtualenvwrapper_derive_workon_home)"
     virtualenvwrapper_verify_workon_home -q || return 1
     virtualenvwrapper_run_hook "initialize"
     if [ $? -ne 0 ]

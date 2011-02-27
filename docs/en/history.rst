@@ -2,6 +2,10 @@
 Release History
 ===============
 
+dev
+
+  - Fix problem with space in WORKON_HOME path (:bbissue:`79`).
+
 2.6.3
 
   - Hard-code the version information in the setup.py and conf.py
