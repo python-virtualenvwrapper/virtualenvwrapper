@@ -3,7 +3,7 @@ help:
 	@echo "sdist          - Source distribution"
 	@echo "html           - HTML documentation"
 	@echo "docclean       - Remove documentation build files"
-	@echo "register       - register a new release on PyPI"
+	@echo "upload         - upload a new release to PyPI"
 	@echo "website        - build web version of docs"
 	@echo "installwebsite - deploy web version of docs"
 	@echo "develop        - install development version"
@@ -46,7 +46,13 @@ installwebsite: website
 # Register the new version on pypi
 .PHONY: register
 register:
+	echo "USE upload target"
+	exit 1
 	python setup.py register
+
+.PHONY: upload
+upload:
+	python setup.py sdist upload
 
 # Testing
 test:
