@@ -1,18 +1,14 @@
-# Get the version of the app.  This is used in the doc build.
-export VERSION=$(shell python setup.py --version)
-
 # Default target is to show help
 help:
 	@echo "sdist          - Source distribution"
 	@echo "html           - HTML documentation"
 	@echo "docclean       - Remove documentation build files"
-	@echo "register       - register a new release on PyPI"
-	@echo "website        - build web version of docs"
-	@echo "installwebsite - deploy web version of docs"
+	@echo "upload         - upload a new release to PyPI"
 	@echo "develop        - install development version"
 	@echo "test           - run the test suite"
 	@echo "test-quick     - run the test suite for bash and one version of Python ($(PYTHON26))"
-
+	@echo "website        - generate web version of the docs"
+	@echo "installwebsite - copy web version of HTML docs up to server"
 
 .PHONY: sdist
 sdist: html
@@ -37,9 +33,9 @@ docclean:
 website: 
 	[ ~/Devel/doughellmann/doughellmann/templates/base.html -nt docs/sphinx/web/templates/base.html ] && (echo "Updating base.html" ; cp ~/Devel/doughellmann/doughellmann/templates/base.html docs/sphinx/web/templates/base.html) || exit 0
 	rm -rf docs/website
-	(cd docs && $(MAKE) html BUILDING_WEB=1 BUILDDIR="website/en" LANGUAGE="en")
-	(cd docs && $(MAKE) html BUILDING_WEB=1 BUILDDIR="website/es" LANGUAGE="es")
-	(cd docs && $(MAKE) html BUILDING_WEB=1 BUILDDIR="website/ja" LANGUAGE="ja")
+	(cd docs && $(MAKE) html BUILDDIR="website/en" LANGUAGE="en")
+	(cd docs && $(MAKE) html BUILDDIR="website/es" LANGUAGE="es")
+	(cd docs && $(MAKE) html BUILDDIR="website/ja" LANGUAGE="ja")
 
 installwebsite: website
 	(cd docs/website/en && rsync --rsh=ssh --archive --delete --verbose . www.doughellmann.com:/var/www/doughellmann/DocumentRoot/docs/virtualenvwrapper/)
@@ -49,7 +45,13 @@ installwebsite: website
 # Register the new version on pypi
 .PHONY: register
 register:
+	echo "USE upload target"
+	exit 1
 	python setup.py register
+
+.PHONY: upload
+upload:
+	python setup.py sdist upload
 
 # Testing
 test:

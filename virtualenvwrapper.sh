@@ -50,6 +50,12 @@ then
     VIRTUALENVWRAPPER_PYTHON="$(\which python)"
 fi
 
+# Set the name of the virtualenv app to use.
+if [ "$VIRTUALENVWRAPPER_VIRTUALENV" = "" ]
+then
+    VIRTUALENVWRAPPER_VIRTUALENV="virtualenv"
+fi
+
 virtualenvwrapper_derive_workon_home() {
     typeset workon_home_dir="$WORKON_HOME"
 
@@ -149,15 +155,15 @@ virtualenvwrapper_initialize () {
 
 # Verify that virtualenv is installed and visible
 virtualenvwrapper_verify_virtualenv () {
-    typeset venv=$(\which virtualenv | (unset GREP_OPTIONS; \grep -v "not found"))
+    typeset venv=$(\which "$VIRTUALENVWRAPPER_VIRTUALENV" | (unset GREP_OPTIONS; \grep -v "not found"))
     if [ "$venv" = "" ]
     then
-        echo "ERROR: virtualenvwrapper could not find virtualenv in your path" >&2
+        echo "ERROR: virtualenvwrapper could not find $VIRTUALENVWRAPPER_VIRTUALENV in your path" >&2
         return 1
     fi
     if [ ! -e "$venv" ]
     then
-        echo "ERROR: Found virtualenv in path as \"$venv\" but that does not exist" >&2
+        echo "ERROR: Found $VIRTUALENVWRAPPER_VIRTUALENV in path as \"$venv\" but that does not exist" >&2
         return 1
     fi
     return 0
@@ -194,11 +200,13 @@ mkvirtualenv () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_virtualenv || return 1
     (cd "$WORKON_HOME" &&
-        virtualenv "$@" &&
-        [ -d "$WORKON_HOME/$envname" ] && virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
+        "$VIRTUALENVWRAPPER_VIRTUALENV" "$@" &&
+        [ -d "$WORKON_HOME/$envname" ] && \
+            virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
         )
     typeset RC=$?
     [ $RC -ne 0 ] && return $RC
+
     # If they passed a help option or got an error from virtualenv,
     # the environment won't exist.  Use that to tell whether
     # we should switch to the environment and run the hook.

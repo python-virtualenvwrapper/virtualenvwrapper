@@ -2,11 +2,20 @@
 Release History
 ===============
 
-Dev
+2.6.3
 
+  - Hard-code the version information in the setup.py and conf.py
+    scripts so it works for http://readthedocs.org.
+
+2.6.2
+
+  - Attempted to make the doc build work with http://readthedocs.org.
   - Merged in `Japanese translation of the documentation
     <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ from
     Tetsuya Morimoto.
+  - Incorporate a suggestion from Ales Zoulek to let the user specify
+    the virtualenv binary through an environment variable
+    (``VIRTUALENVWRAPPER_VIRTUALENV``).
 
 2.6.1
 

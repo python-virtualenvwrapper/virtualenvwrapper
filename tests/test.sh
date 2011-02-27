@@ -37,6 +37,18 @@ test_virtualenvwrapper_initialize() {
     assertSame "$expected" "$output"
 }
 
+test_virtualenvwrapper_space_in_workon_home() {
+    before="$WORKON_HOME"
+    export WORKON_HOME="$WORKON_HOME/this has spaces"
+ 	expected="$WORKON_HOME"
+    mkdir -p "$expected"
+    virtualenvwrapper_initialize
+    RC=$?
+    assertSame "$expected" "$WORKON_HOME"
+    assertSame "0" "$RC"
+    export WORKON_HOME="$before"
+}
+
 test_virtualenvwrapper_verify_workon_home() {
     assertTrue "WORKON_HOME not verified" virtualenvwrapper_verify_workon_home
 }
@@ -79,7 +91,7 @@ test_python_interpreter_set_incorrectly() {
     mkvirtualenv --no-site-packages no_wrappers
     expected="ImportError: No module named virtualenvwrapper.hook_loader"
     output=$(VIRTUALENVWRAPPER_PYTHON=$(which python) $SHELL $return_to/virtualenvwrapper.sh 2>&1)
-    echo "$output" | grep "$expected" 2>&1
+    echo "$output" | grep -q "$expected" 2>&1
     found=$?
     assertTrue "Expected \"$expected\", got: \"$output\"" "[ $found -eq 0 ]"
     assertFalse "Failed to detect invalid Python location" "VIRTUALENVWRAPPER_PYTHON=$VIRTUAL_ENV/bin/python $SHELL $return_to/virtualenvwrapper.sh >/dev/null 2>&1"

@@ -29,10 +29,7 @@ extensions = [ 'sphinxcontrib.bitbucket' ]
 bitbucket_project_url = 'http://bitbucket.org/dhellmann/virtualenvwrapper/'
 
 # Add any paths that contain templates here, relative to this directory.
-if building_web:
-    templates_path = ['web/templates']
-else:
-    templates_path = ['pkg/templates']
+#templates_path = ['pkg/templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -45,14 +42,14 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'virtualenvwrapper'
-copyright = u'2009, Doug Hellmann'
+copyright = u'2009-2011, Doug Hellmann'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = os.environ['VERSION']
+version = '2.6.3'
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -98,10 +95,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-if building_web:
-    html_theme = 'default'
-else:
-    html_theme = 'sphinxdoc'
+html_theme = 'nature'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
