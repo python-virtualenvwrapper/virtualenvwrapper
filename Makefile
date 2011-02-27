@@ -1,6 +1,3 @@
-# Get the version of the app.  This is used in the doc build.
-export VERSION=$(shell python setup.py --version)
-
 # Default target is to show help
 help:
 	@echo "sdist          - Source distribution"

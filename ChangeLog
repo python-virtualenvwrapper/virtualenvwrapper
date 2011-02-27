@@ -1,3 +1,17 @@
+2011-02-26  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper/version.py: Put the version info inside the
+	package so it is available to the doc build and packaging
+	script. This also makes the readthedocs.org build work properly.
+
+	* setup.py: Import the version information from the package.
+
+	* docs/sphinx/conf.py: Import the version information from the
+	package.
+
+	* Makefile: Remove rule to get the version from the installer for
+	the doc build.
+
 2011-01-24  Doug Hellmann  <dhellmann@racemi.com>
 
 	* virtualenvwrapper.sh: Replace hard-coded name "virtualenv" with

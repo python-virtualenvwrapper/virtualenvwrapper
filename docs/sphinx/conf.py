@@ -52,7 +52,8 @@ copyright = u'2009, Doug Hellmann'
 # built documents.
 #
 # The short X.Y version.
-version = os.environ['VERSION']
+import virtualenvwrapper.version
+version = virtualenvwrapper.version.VERSION
 # The full version, including alpha/beta/rc tags.
 release = version
 
