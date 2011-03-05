@@ -5,6 +5,9 @@ Release History
 dev
 
   - Fix problem with space in WORKON_HOME path (:bbissue:`79`).
+  - Add bitbucket directives to the local sphinx config file to avoid
+    the extra build dependency and to try the doc build on readthedocs,
+    again.
 
 2.6.3
 
