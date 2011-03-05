@@ -16,6 +16,7 @@ trace.txt
 virtualenvwrapper.egg-info
 virtualenvwrapper/docs
 .tox
+*.orig
 
 syntax: re
 .DS_Store
