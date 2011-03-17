@@ -5,6 +5,9 @@ Release History
 dev
 
   - Fix problem with space in WORKON_HOME path (:bbissue:`79`).
+  - Fix problem with argument processing in lsvirtualenv under zsh
+    (:bbissue:`86`). Thanks to Nat Williams (:bbuser:`natw`) for the
+    bug report and patch.
 
 2.6.3
 
