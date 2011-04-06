@@ -508,6 +508,21 @@ lssitepackages () {
     fi
 }
 
+# Toggles the currently-active virtualenv between having and not having
+# access to the global site-packages.
+toggleglobalsitepackages () {
+    virtualenvwrapper_verify_workon_home || return 1
+    virtualenvwrapper_verify_active_environment || return 1
+    typeset no_global_site_packages_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+    if [ -f $no_global_site_packages_file ]; then
+        rm $no_global_site_packages_file
+        [ "$1" = "-q" ] || echo "Enabled global site-packages"
+    else
+        touch $no_global_site_packages_file
+        [ "$1" = "-q" ] || echo "Disabled global site-packages"
+    fi
+}
+
 # Duplicate the named virtualenv to make a new one.
 cpvirtualenv() {
     typeset env_name="$1"
