@@ -364,3 +364,31 @@ The directory names are added to a path file named
 for the environment.
 
 *Based on a contribution from James Bennett and Jannis Leidel.*
+
+toggleglobalsitepackages
+------------------------
+
+Toggles the state of the currently active virtualenv's access to the packages
+in the global python ``site-packages`` directory.
+
+Syntax::
+
+    toggleglobalsitepackages [-q]
+
+Outputs the new state of the virtualenv. Use the ``-q`` switch to turn off all
+output.
+
+::
+
+    $ mkvirtualenv env1
+    New python executable in env1/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env1)$ toggleglobalsitepackages
+    Disabled global site-packages
+    (env1)$ toggleglobalsitepackages
+    Enabled global site-packages
+    (env1)$ toggleglobalsitepackages -q
+    (env1)$
