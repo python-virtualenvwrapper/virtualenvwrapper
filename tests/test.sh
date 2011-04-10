@@ -56,7 +56,9 @@ test_virtualenvwrapper_verify_workon_home() {
 test_virtualenvwrapper_verify_workon_home_missing_dir() {
     old_home="$WORKON_HOME"
     WORKON_HOME="$WORKON_HOME/not_there"
-    assertFalse "WORKON_HOME verified unexpectedly" virtualenvwrapper_verify_workon_home
+    output=$(virtualenvwrapper_verify_workon_home 2>&1)
+    assertSame "NOTE: Virtual environments directory $WORKON_HOME does not exist. Creating..." "$output"
+    assertTrue "WORKON_HOME verified unexpectedly" virtualenvwrapper_verify_workon_home
     WORKON_HOME="$old_home"
 }
 
@@ -66,17 +68,9 @@ test_virtualenvwrapper_verify_workon_home_missing_dir_grep_options() {
     # This should prevent the message from being found if it isn't
     # unset correctly.
     export GREP_OPTIONS="--count"
-    assertFalse "WORKON_HOME verified unexpectedly" virtualenvwrapper_verify_workon_home
+    assertTrue "WORKON_HOME not verified" virtualenvwrapper_verify_workon_home
     WORKON_HOME="$old_home"
     unset GREP_OPTIONS
-}
-
-test_virtualenvwrapper_verify_workon_home_missing_dir_quiet_init() {
-    old_home="$WORKON_HOME"
-    export WORKON_HOME="$WORKON_HOME/not_there"
-    output=$(source $test_dir/../virtualenvwrapper.sh 2>&1)
-    assertSame "" "$output"
-    WORKON_HOME="$old_home"
 }
 
 test_get_python_version() {

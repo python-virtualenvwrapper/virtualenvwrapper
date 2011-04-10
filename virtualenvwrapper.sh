@@ -97,13 +97,13 @@ virtualenvwrapper_derive_workon_home() {
 virtualenvwrapper_verify_workon_home () {
     if [ ! -d "$WORKON_HOME" ]
     then
-        [ "$1" != "-q" ] && echo "NOTE: Virtual environments directory '$WORKON_HOME' does not exist.  Creating..." 1>&2
+        [ "$1" != "-q" ] && echo "NOTE: Virtual environments directory $WORKON_HOME does not exist. Creating..." 1>&2
         mkdir $WORKON_HOME
     fi
     return 0
 }
 
-#HOOK_VERBOSE_OPTION="-v"
+#HOOK_VERBOSE_OPTION="-q"
 
 # Expects 1 argument, the suffix for the new file.
 virtualenvwrapper_tempfile () {

@@ -26,7 +26,7 @@ setUp () {
 }
 
 tearDown () {
-    deactivate
+    deactivate >/dev/null 2>&1
 }
 
 test_cdvirtual() {
@@ -60,16 +60,18 @@ test_cdsitepackages_with_arg () {
 test_cdvirtualenv_no_workon_home () {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=`cdvirtualenv 2>&1`
+    output=$(cdvirtualenv 2>&1)
     assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
     WORKON_HOME="$old_home"
 }
 
 test_cdsitepackages_no_workon_home () {
+    deactivate 2>&1
     old_home="$WORKON_HOME"
+    cd "$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=`cdsitepackages 2>&1`
-    assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
+    assertFalse "Was able to change to site-packages" cdsitepackages
+    assertSame "$old_home" "$(pwd)"
     WORKON_HOME="$old_home"
 }
 
