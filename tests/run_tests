@@ -24,7 +24,8 @@ fi
 source "$envdir/bin/activate"
 
 # Set up virtualenvwrapper.hook_loader to print more details than usual for debugging.
-export HOOK_VERBOSE_OPTION=-vvv
+#export HOOK_VERBOSE_OPTION=-vvv
+export HOOK_VERBOSE_OPTION="-q"
 
 # Force virtualenvwrapper to use the python interpreter in the
 # tox-created virtualenv.
