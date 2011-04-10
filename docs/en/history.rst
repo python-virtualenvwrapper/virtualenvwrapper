@@ -18,6 +18,9 @@ dev
     from Paul McLanahan (:bbuser:`pmclanahan`). The new command
     changes the configuration of the active virtualenv to enable or
     disable the global ``site-packages`` directory.
+  - Fixed some tests that were failing under ksh on Ubuntu 10.10.
+  - Document the :ref:`VIRTUALENVWRAPPER_VIRTUALENV
+    <variable-VIRTUALENVWRAPPER_VIRTUALENV>` variable.
 
 2.6.3
 
@@ -34,7 +37,7 @@ dev
     Tetsuya Morimoto.
   - Incorporate a suggestion from Ales Zoulek to let the user specify
     the virtualenv binary through an environment variable
-    (``VIRTUALENVWRAPPER_VIRTUALENV``).
+    (:ref:`VIRTUALENVWRAPPER_VIRTUALENV <variable-VIRTUALENVWRAPPER_VIRTUALENV>`).
 
 2.6.1
 

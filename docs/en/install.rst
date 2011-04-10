@@ -64,26 +64,35 @@ and the location of the script installed with this package::
 After editing it, reload the startup file (e.g., run: ``source
 ~/.bashrc``).
 
-Python Interpreter and $PATH
-============================
+.. _variable-VIRTUALENVWRAPPER_VIRTUALENV:
 
-During startup, ``virtualenvwrapper.sh`` finds the first ``python`` on
-the ``$PATH`` and remembers it to use later.  This eliminates any
-conflict as the ``$PATH`` changes, enabling interpreters inside
-virtual environments where virtualenvwrapper is not installed.
-Because of this behavior, it is important for the ``$PATH`` to be set
-**before** sourcing ``virtualenvwrapper.sh``.  For example::
+.. _variable-VIRTUALENVWRAPPER_PYTHON:
+
+Python Interpreter, virtualenv, and $PATH
+=========================================
+
+During startup, ``virtualenvwrapper.sh`` finds the first ``python``
+and ``virtualenv`` programs on the ``$PATH`` and remembers them to use
+later.  This eliminates any conflict as the ``$PATH`` changes,
+enabling interpreters inside virtual environments where
+virtualenvwrapper is not installed or where different versions of
+virtualenv are installed.  Because of this behavior, it is important
+for the ``$PATH`` to be set **before** sourcing
+``virtualenvwrapper.sh``.  For example::
 
     export PATH=/usr/local/bin:$PATH
     source /usr/local/bin/virtualenvwrapper.sh
 
 To override the ``$PATH`` search, set the variable
 ``VIRTUALENVWRAPPER_PYTHON`` to the full path of the interpreter to
-use (also **before** sourcing ``virtualenvwrapper.sh``).  For
-example::
+use and ``VIRTUALENVWRAPPER_VIRTUALENV`` to the full path of the
+``virtualenv`` binary to use. Both variables *must* be set before
+sourcing ``virtualenvwrapper.sh``.  For example::
 
     export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
     source /usr/local/bin/virtualenvwrapper.sh
+
 
 Quick-Start
 ===========
