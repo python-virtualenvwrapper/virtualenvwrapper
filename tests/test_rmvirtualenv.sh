@@ -33,9 +33,7 @@ test_rm_aliased () {
     mkvirtualenv "deleteme"
     deactivate
     alias rm='rm -i'
-    set -x
     rmvirtualenv "deleteme"
-    set +x
     unalias rm
 }
 
@@ -47,7 +45,8 @@ test_no_such_env () {
 test_no_workon_home () {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=`rmvirtualenv should_not_be_created 2>&1`
+    rmvirtualenv should_not_be_created >"$old_home/output" 2>&1
+    output=$(cat "$old_home/output")
     assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
     WORKON_HOME="$old_home"
 }

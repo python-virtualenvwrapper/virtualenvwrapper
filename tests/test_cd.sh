@@ -60,7 +60,8 @@ test_cdsitepackages_with_arg () {
 test_cdvirtualenv_no_workon_home () {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=$(cdvirtualenv 2>&1)
+    cdvirtualenv >"$old_home/output" 2>&1
+    output=$(cat "$old_home/output")
     assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
     WORKON_HOME="$old_home"
 }

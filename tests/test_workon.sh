@@ -97,7 +97,8 @@ test_virtualenvwrapper_show_workon_options_no_envs () {
 test_no_workon_home () {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=`workon should_not_be_created 2>&1`
+    workon should_not_be_created >"$old_home/output" 2>&1
+    output=$(cat "$old_home/output")
     assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
     WORKON_HOME="$old_home"
 }

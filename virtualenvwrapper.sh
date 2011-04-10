@@ -95,12 +95,17 @@ virtualenvwrapper_derive_workon_home() {
 # seperate from creating the files in it because this used to just error
 # and maybe other things rely on the dir existing before that happens.
 virtualenvwrapper_verify_workon_home () {
+    RC=0
     if [ ! -d "$WORKON_HOME" ]
     then
-        [ "$1" != "-q" ] && echo "NOTE: Virtual environments directory $WORKON_HOME does not exist. Creating..." 1>&2
-        mkdir $WORKON_HOME
+        if [ "$1" != "-q" ]
+        then
+            echo "NOTE: Virtual environments directory $WORKON_HOME does not exist. Creating..." 1>&2
+        fi
+        mkdir -p $WORKON_HOME
+        RC=$?
     fi
-    return 0
+    return $RC
 }
 
 #HOOK_VERBOSE_OPTION="-q"
