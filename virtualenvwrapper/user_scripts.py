@@ -31,9 +31,9 @@ def run_script(script_path, *args):
 
 
 def run_global(script_name, *args):
-    """Run a script from $WORKON_HOME.
+    """Run a script from $VIRTUALENVWRAPPER_HOOK_DIR.
     """
-    script_path = os.path.expandvars(os.path.join('$WORKON_HOME', script_name))
+    script_path = os.path.expandvars(os.path.join('$VIRTUALENVWRAPPER_HOOK_DIR', script_name))
     run_script(script_path, *args)
     return
 
@@ -122,7 +122,7 @@ def make_hook(filename, comment):
 
 def initialize(args):
     for filename, comment in GLOBAL_HOOKS:
-        make_hook(os.path.join('$WORKON_HOME', filename), comment)
+        make_hook(os.path.join('$VIRTUALENVWRAPPER_HOOK_DIR', filename), comment)
     return
 
 
@@ -131,7 +131,7 @@ def initialize_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/initialize" ] && source "$WORKON_HOME/initialize"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/initialize" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/initialize"
 """
 
 def pre_mkvirtualenv(args):
@@ -148,7 +148,7 @@ def post_mkvirtualenv_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/postmkvirtualenv" ] && source "$WORKON_HOME/postmkvirtualenv"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv"
 """
 
 def pre_cpvirtualenv(args):
@@ -165,7 +165,7 @@ def post_cpvirtualenv_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/postcpvirtualenv" ] && source "$WORKON_HOME/postcpvirtualenv"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv"
 """
 
 
@@ -195,7 +195,7 @@ def post_activate_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/postactivate" ] && source "$WORKON_HOME/postactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate"
 [ -f "$VIRTUAL_ENV/bin/postactivate" ] && source "$VIRTUAL_ENV/bin/postactivate"
 """
 
@@ -207,7 +207,7 @@ def pre_deactivate_source(args):
 # Run user-provided scripts
 #
 [ -f "$VIRTUAL_ENV/bin/predeactivate" ] && source "$VIRTUAL_ENV/bin/predeactivate"
-[ -f "$WORKON_HOME/predeactivate" ] && source "$WORKON_HOME/predeactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate"
 """
 
 
@@ -219,7 +219,7 @@ def post_deactivate_source(args):
 #
 VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV="$WORKON_HOME/%(env_name)s"
 [ -f "$WORKON_HOME/%(env_name)s/bin/postdeactivate" ] && source "$WORKON_HOME/%(env_name)s/bin/postdeactivate"
-[ -f "$WORKON_HOME/postdeactivate" ] && source "$WORKON_HOME/postdeactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postdeactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postdeactivate"
 unset VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV
 """ % { 'env_name':args[0] }
 

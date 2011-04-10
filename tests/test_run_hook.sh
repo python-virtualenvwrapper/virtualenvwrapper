@@ -32,6 +32,20 @@ test_virtualenvwrapper_run_hook() {
     assertSame "$expected" "$output"
 }
 
+test_virtualenvwrapper_run_hook_alternate_dir() {
+    mkdir "$WORKON_HOME/hooks"
+    echo "echo WORKON_HOME >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/initialize"
+    echo "echo WORKON_HOME/hooks >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/hooks/initialize"
+    chmod +x "$WORKON_HOME/initialize"
+    chmod +x "$WORKON_HOME/hooks/initialize"
+    VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME/hooks"
+    virtualenvwrapper_run_hook "initialize"
+    output=$(cat "$test_dir/catch_output")
+    expected="WORKON_HOME/hooks"
+    assertSame "$expected" "$output"
+    VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
+}
+
 test_virtualenvwrapper_source_hook_permissions() {
     echo "echo run >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/initialize"
     chmod -x "$WORKON_HOME/initialize"
