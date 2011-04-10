@@ -20,10 +20,6 @@ def run_script(script_path, *args):
     """Execute a script in a subshell.
     """
     if os.path.exists(script_path):
-#         with open(script_path, 'rt') as f:
-#             print '+' * 80
-#             print f.read()
-#             print '+' * 80
         cmd = [script_path] + list(args)
         log.debug('running %s', str(cmd))
         try:
@@ -107,7 +103,7 @@ def make_hook(filename, comment):
     """
     filename = os.path.expanduser(os.path.expandvars(filename))
     if not os.path.exists(filename):
-        log.warning('creating %s', filename)
+        log.info('creating %s', filename)
         f = open(filename, 'w')
         try:
             f.write("""#!%(shell)s

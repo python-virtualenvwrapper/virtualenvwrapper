@@ -1,3 +1,9 @@
+2011-04-10  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper/user_scripts.py (make_hook): Change verbosity
+	of message telling the user we have created a new hook script for
+	them.
+
 2011-02-26  Doug Hellmann  <dhellmann@racemi.com>
 
 	* docs/sphinx/conf.py: Just hard-code the version.
