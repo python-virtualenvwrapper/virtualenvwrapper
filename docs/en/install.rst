@@ -45,9 +45,27 @@ WORKON_HOME
 ===========
 
 The variable ``WORKON_HOME`` tells virtualenvwrapper where to place
-your virtual environments.  The default is ``$HOME/.virtualenvs``.
-This directory must be created before using any virtualenvwrapper
-commands.
+your virtual environments.  The default is ``$HOME/.virtualenvs``. If
+the directory does not exist when virtualenvwrapper is loaded, it will
+be created automatically.
+
+.. _variable-VIRTUALENVWRAPPER_HOOK_DIR:
+
+VIRTUALENVWRAPPER_HOOK_DIR
+==========================
+
+The variable ``VIRTUALENVWRAPPER_HOOK_DIR`` tells virtualenvwrapper
+where the user-defined hooks should be placed. The default is
+``$WORKON_HOME``.
+
+.. _variable-VIRTUALENVWRAPPER_LOG_DIR:
+
+VIRTUALENVWRAPPER_LOG_DIR
+==========================
+
+The variable ``VIRTUALENVWRAPPER_LOG_DIR`` tells virtualenvwrapper
+where the user-defined logs should be written. The default is
+``$WORKON_HOME``.
 
 .. _install-shell-config:
 

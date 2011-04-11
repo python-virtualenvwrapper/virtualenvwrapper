@@ -21,6 +21,12 @@ dev
   - Fixed some tests that were failing under ksh on Ubuntu 10.10.
   - Document the :ref:`VIRTUALENVWRAPPER_VIRTUALENV
     <variable-VIRTUALENVWRAPPER_VIRTUALENV>` variable.
+  - Implement suggestion by Van Lindberg to have
+    :ref:`VIRTUALENVWRAPPER_HOOK_DIR
+    <variable-VIRTUALENVWRAPPER_HOOK_DIR>` and
+    :ref:`VIRTUALENVWRAPPER_LOG_DIR
+    <variable-VIRTUALENVWRAPPER_LOG_DIR>` variables to control the
+    locations of hooks and logs.
 
 2.6.3
 

@@ -62,6 +62,12 @@ then
     export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
 fi
 
+# Set the location of the hook script logs
+if [ "$VIRTUALENVWRAPPER_LOG_DIR" = "" ]
+then
+    export VIRTUALENVWRAPPER_LOG_DIR="$WORKON_HOME"
+fi
+
 virtualenvwrapper_derive_workon_home() {
     typeset workon_home_dir="$WORKON_HOME"
 
