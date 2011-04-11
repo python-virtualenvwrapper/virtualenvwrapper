@@ -27,6 +27,8 @@ dev
     :ref:`VIRTUALENVWRAPPER_LOG_DIR
     <variable-VIRTUALENVWRAPPER_LOG_DIR>` variables to control the
     locations of hooks and logs.
+  - Enabled tab completion for :ref:`command-showvirtualenv`
+    (:bbissue:`78`).
 
 2.6.3
 

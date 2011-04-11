@@ -411,6 +411,7 @@ if [ -n "$BASH" ] ; then
         COMPREPLY=( $(compgen -W "`virtualenvwrapper_show_workon_options`" -- ${cur}) )
     }
 
+
     _cdvirtualenv_complete ()
     {
         local cur="$2"
@@ -427,8 +428,9 @@ if [ -n "$BASH" ] ; then
     complete -o default -o nospace -F _virtualenvs workon
     complete -o default -o nospace -F _virtualenvs rmvirtualenv
     complete -o default -o nospace -F _virtualenvs cpvirtualenv
+    complete -o default -o nospace -F _virtualenvs showvirtualenv
 elif [ -n "$ZSH_VERSION" ] ; then
-    compctl -g "`virtualenvwrapper_show_workon_options`" workon rmvirtualenv cpvirtualenv
+    compctl -g "`virtualenvwrapper_show_workon_options`" workon rmvirtualenv cpvirtualenv showvirtualenv
 fi
 
 # Prints the Python version string for the current interpreter.
