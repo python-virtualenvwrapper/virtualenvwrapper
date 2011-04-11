@@ -559,7 +559,7 @@ cpvirtualenv() {
     fi
     if echo "$WORKON_HOME" | (unset GREP_OPTIONS; \grep -e "/$" > /dev/null)
     then
-        typset env_home="$WORKON_HOME"
+        typeset env_home="$WORKON_HOME"
     else
         typeset env_home="$WORKON_HOME/"
     fi
