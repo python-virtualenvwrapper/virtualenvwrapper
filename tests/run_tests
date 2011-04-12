@@ -34,6 +34,8 @@ export VIRTUALENVWRAPPER_PYTHON="$envdir/bin/python"
 # Clear any user settings for the hook directory or log directory
 unset VIRTUALENVWRAPPER_HOOK_DIR
 unset VIRTUALENVWRAPPER_LOG_DIR
+unset VIRTUALENVWRAPPER_VIRTUALENV
+unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
 
 # Run the test scripts with a little formatting around them to make it
 # easier to find where each script output starts.

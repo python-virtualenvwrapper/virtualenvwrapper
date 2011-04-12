@@ -29,11 +29,11 @@ tearDown () {
 
 test_toggleglobalsitepackages () {
     ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
-    assertTrue "$ngsp_file does not exist" "[ -f "$ngsp_file" ]"
+    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
     toggleglobalsitepackages -q
-    assertFalse "$ngsp_file exists" "[ -f "$ngsp_file" ]"
+    assertFalse "$ngsp_file exists" "[ -f \"$ngsp_file\" ]"
     toggleglobalsitepackages -q
-    assertTrue "$ngsp_file does not exist" "[ -f "$ngsp_file" ]"
+    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
 }
 
 test_toggleglobalsitepackages_quiet () {

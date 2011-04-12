@@ -220,7 +220,7 @@ mkvirtualenv () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_virtualenv || return 1
     (cd "$WORKON_HOME" &&
-        "$VIRTUALENVWRAPPER_VIRTUALENV" "$@" &&
+        "$VIRTUALENVWRAPPER_VIRTUALENV" $VIRTUALENVWRAPPER_VIRTUALENV_ARGS "$@" &&
         [ -d "$WORKON_HOME/$envname" ] && \
             virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
         )

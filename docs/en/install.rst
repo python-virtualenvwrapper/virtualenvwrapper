@@ -84,6 +84,8 @@ After editing it, reload the startup file (e.g., run: ``source
 
 .. _variable-VIRTUALENVWRAPPER_VIRTUALENV:
 
+.. _variable-VIRTUALENVWRAPPER_VIRTUALENV_ARGS:
+
 .. _variable-VIRTUALENVWRAPPER_PYTHON:
 
 Python Interpreter, virtualenv, and $PATH
@@ -111,6 +113,19 @@ sourcing ``virtualenvwrapper.sh``.  For example::
     export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
     source /usr/local/bin/virtualenvwrapper.sh
 
+Default Arguments for virtualenv
+================================
+
+If the application identified by ``VIRTUALENVWRAPPER_VIRTUALENV``
+needs arguments, they can be set in
+``VIRTUALENVWRAPPER_VIRTUALENV_ARGS``. The same variable can be used
+to set default arguments to be passed to ``virtualenv``. For example,
+set the value to ``--no-site-packages`` to ensure that all new
+environments are isolated from the system ``site-packages`` directory.
+
+::
+
+    export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 
 Quick-Start
 ===========
