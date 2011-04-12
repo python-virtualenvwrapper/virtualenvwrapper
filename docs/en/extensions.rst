@@ -43,3 +43,13 @@ user_scripts
 The ``user_scripts`` extension is delivered with virtualenvwrapper and
 enabled by default.  It implements the user customization script
 features described in :ref:`scripts`.
+
+vim-virtualenv
+==============
+
+`vim-virtualenv`_ is Jeremey Cantrell's plugin for controlling
+virtualenvs from within vim. When used together with
+virtualenvwrapper, vim-virtualenv identifies the virtualenv to
+activate based on the name of the file being edited.
+
+.. _vim-virtualenv: https://github.com/jmcantrell/vim-virtualenv
