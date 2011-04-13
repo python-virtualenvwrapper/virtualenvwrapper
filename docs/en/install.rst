@@ -41,32 +41,6 @@ add it to your user local directory (usually `~/.local`).
 
   $ pip install --install-option="--user" virtualenvwrapper
 
-WORKON_HOME
-===========
-
-The variable ``WORKON_HOME`` tells virtualenvwrapper where to place
-your virtual environments.  The default is ``$HOME/.virtualenvs``. If
-the directory does not exist when virtualenvwrapper is loaded, it will
-be created automatically.
-
-.. _variable-VIRTUALENVWRAPPER_HOOK_DIR:
-
-VIRTUALENVWRAPPER_HOOK_DIR
-==========================
-
-The variable ``VIRTUALENVWRAPPER_HOOK_DIR`` tells virtualenvwrapper
-where the user-defined hooks should be placed. The default is
-``$WORKON_HOME``.
-
-.. _variable-VIRTUALENVWRAPPER_LOG_DIR:
-
-VIRTUALENVWRAPPER_LOG_DIR
-==========================
-
-The variable ``VIRTUALENVWRAPPER_LOG_DIR`` tells virtualenvwrapper
-where the user-defined logs should be written. The default is
-``$WORKON_HOME``.
-
 .. _install-shell-config:
 
 Shell Startup File
@@ -79,8 +53,47 @@ and the location of the script installed with this package::
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
 
-After editing it, reload the startup file (e.g., run: ``source
+After editing it, reload the startup file (e.g., run ``source
 ~/.bashrc``).
+
+Quick-Start
+===========
+
+1. Run: ``workon``
+2. A list of environments, empty, is printed.
+3. Run: ``mkvirtualenv temp``
+4. A new environment, ``temp`` is created and activated.
+5. Run: ``workon``
+6. This time, the ``temp`` environment is included.
+
+Customization
+=============
+
+WORKON_HOME
+-----------
+
+The variable ``WORKON_HOME`` tells virtualenvwrapper where to place
+your virtual environments.  The default is ``$HOME/.virtualenvs``. If
+the directory does not exist when virtualenvwrapper is loaded, it will
+be created automatically.
+
+.. _variable-VIRTUALENVWRAPPER_HOOK_DIR:
+
+VIRTUALENVWRAPPER_HOOK_DIR
+--------------------------
+
+The variable ``VIRTUALENVWRAPPER_HOOK_DIR`` tells virtualenvwrapper
+where the user-defined hooks should be placed. The default is
+``$WORKON_HOME``.
+
+.. _variable-VIRTUALENVWRAPPER_LOG_DIR:
+
+VIRTUALENVWRAPPER_LOG_DIR
+-------------------------
+
+The variable ``VIRTUALENVWRAPPER_LOG_DIR`` tells virtualenvwrapper
+where the user-defined logs should be written. The default is
+``$WORKON_HOME``.
 
 .. _variable-VIRTUALENVWRAPPER_VIRTUALENV:
 
@@ -89,7 +102,7 @@ After editing it, reload the startup file (e.g., run: ``source
 .. _variable-VIRTUALENVWRAPPER_PYTHON:
 
 Python Interpreter, virtualenv, and $PATH
-=========================================
+-----------------------------------------
 
 During startup, ``virtualenvwrapper.sh`` finds the first ``python``
 and ``virtualenv`` programs on the ``$PATH`` and remembers them to use
@@ -114,7 +127,7 @@ sourcing ``virtualenvwrapper.sh``.  For example::
     source /usr/local/bin/virtualenvwrapper.sh
 
 Default Arguments for virtualenv
-================================
+--------------------------------
 
 If the application identified by ``VIRTUALENVWRAPPER_VIRTUALENV``
 needs arguments, they can be set in
@@ -127,23 +140,32 @@ environments are isolated from the system ``site-packages`` directory.
 
     export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 
-Quick-Start
-===========
-
-1. Run: ``workon``
-2. A list of environments, empty, is printed.
-3. Run: ``mkvirtualenv temp``
-4. A new environment, ``temp`` is created and activated.
-5. Run: ``workon``
-6. This time, the ``temp`` environment is included.
-
 Temporary Files
-===============
+---------------
 
 virtualenvwrapper creates temporary files in ``$TMPDIR``.  If the
 variable is not set, it uses ``/tmp``.  To change the location of
 temporary files just for virtualenvwrapper, set
 ``VIRTUALENVWRAPPER_TMPDIR``.
+
+Site-wide Configuration
+-----------------------
+
+Most UNIX systems include the ability to change the configuration for
+all users. This typically takes one of two forms: editing the
+*skeleton* files for new accounts or editing the global startup file
+for a shell.
+
+Editing the skeleton files for new accounts means that each new user
+will have their private startup files preconfigured to load
+virtualenvwrapper. They can disable it by commenting out or removing
+those lines. Refer to the documentation for the shell and operating
+system to identify the appropriate file to edit.
+
+Modifying the global startup file for a given shell means that all
+users of that shell will have virtualenvwrapper enabled, and they
+cannot disable it. Refer to the documentation for the shell to
+identify the appropriate file to edit.
 
 Upgrading from 1.x
 ==================
