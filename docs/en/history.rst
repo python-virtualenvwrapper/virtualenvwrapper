@@ -29,6 +29,8 @@ dev
     locations of hooks and logs.
   - Enabled tab completion for :ref:`command-showvirtualenv`
     (:bbissue:`78`).
+  - Fixed a problem with running :ref:`command-rmvirtualenv` from
+    within the environment being removed (:bbissue:`83`).
 
 2.6.3
 

@@ -252,9 +252,21 @@ rmvirtualenv () {
         echo "Either switch to another environment, or run 'deactivate'." >&2
         return 1
     fi
+
+    # Move out of the current directory to one known to be
+    # safe, in case we are inside the environment somewhere.
+    typeset prior_dir="$(pwd)"
+    cd "$WORKON_HOME"
+
     virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
     \rm -rf "$env_dir"
     virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
+
+    # If the directory we used to be in still exists, move back to it.
+    if [ -d "$prior_dir" ]
+    then
+        cd "$prior_dir"
+    fi
 }
 
 # List the available environments.

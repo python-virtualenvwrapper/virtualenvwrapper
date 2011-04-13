@@ -22,15 +22,26 @@ setUp () {
 }
 
 test_remove () {
-    mkvirtualenv "deleteme"
+    mkvirtualenv "deleteme" >/dev/null 2>&1
     assertTrue "[ -d $WORKON_HOME/deleteme ]"
     deactivate
     rmvirtualenv "deleteme"
     assertFalse "[ -d $WORKON_HOME/deleteme ]"
 }
 
+test_within_virtualenv () {
+    mkvirtualenv "deleteme" >/dev/null 2>&1
+    assertTrue "[ -d $WORKON_HOME/deleteme ]"
+    cdvirtualenv
+    assertSame "$VIRTUAL_ENV" "$(pwd)"
+    deactivate
+    rmvirtualenv "deleteme"
+    assertSame "$WORKON_HOME" "$(pwd)"
+    assertFalse "[ -d $WORKON_HOME/deleteme ]"
+}
+
 test_rm_aliased () {
-    mkvirtualenv "deleteme"
+    mkvirtualenv "deleteme" >/dev/null 2>&1
     deactivate
     alias rm='rm -i'
     rmvirtualenv "deleteme"
