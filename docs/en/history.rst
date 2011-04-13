@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+2.7
 
   - Fix problem with space in WORKON_HOME path (:bbissue:`79`).
   - Fix problem with argument processing in lsvirtualenv under zsh
