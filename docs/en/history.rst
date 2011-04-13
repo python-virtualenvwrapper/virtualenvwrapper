@@ -31,6 +31,8 @@ dev
     (:bbissue:`78`).
   - Fixed a problem with running :ref:`command-rmvirtualenv` from
     within the environment being removed (:bbissue:`83`).
+  - Removed use of -e option in calls to grep for better portability
+    (:bbissue:`85`).
 
 2.6.3
 
