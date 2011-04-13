@@ -12,6 +12,11 @@ scripts="$*"
 if [ -z "$scripts" ]
 then
     scripts=$(ls tests/test*.sh)
+    if [ -z "$scripts" ]
+    then
+        echo "Could not find any test scripts to run" 1>&2
+        exit 1
+    fi
 fi
 
 # Force the tox virtualenv to be active.  
