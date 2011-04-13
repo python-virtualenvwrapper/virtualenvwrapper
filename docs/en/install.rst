@@ -66,11 +66,15 @@ Quick-Start
 5. Run: ``workon``
 6. This time, the ``temp`` environment is included.
 
-Customization
+Configuration
 =============
 
-WORKON_HOME
------------
+virtualenvwrapper can be customized by changing environment
+variables. Set the variables in your shell startup file *before*
+loading ``virtualenvwrapper.sh``.
+
+Location of Environments
+------------------------
 
 The variable ``WORKON_HOME`` tells virtualenvwrapper where to place
 your virtual environments.  The default is ``$HOME/.virtualenvs``. If
@@ -79,20 +83,20 @@ be created automatically.
 
 .. _variable-VIRTUALENVWRAPPER_HOOK_DIR:
 
-VIRTUALENVWRAPPER_HOOK_DIR
---------------------------
+Location of Hook Scripts
+------------------------
 
 The variable ``VIRTUALENVWRAPPER_HOOK_DIR`` tells virtualenvwrapper
-where the user-defined hooks should be placed. The default is
-``$WORKON_HOME``.
+where the :ref:`user-defined hooks <scripts>` should be placed. The
+default is ``$WORKON_HOME``.
 
 .. _variable-VIRTUALENVWRAPPER_LOG_DIR:
 
-VIRTUALENVWRAPPER_LOG_DIR
--------------------------
+Location of Hook Logs
+---------------------
 
 The variable ``VIRTUALENVWRAPPER_LOG_DIR`` tells virtualenvwrapper
-where the user-defined logs should be written. The default is
+where the logs for the hook loader should be written. The default is
 ``$WORKON_HOME``.
 
 .. _variable-VIRTUALENVWRAPPER_VIRTUALENV:
