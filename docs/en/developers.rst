@@ -64,11 +64,30 @@ The output version of the documentation ends up in
 Running Tests
 =============
 
-The test suite for virtualenvwrapper uses `shunit2
-<http://shunit2.googlecode.com/>`_ and `tox
-<http://codespeak.net/tox>`_.  To run the tests under bash, sh, and
-zsh for Python 2.4-2.7, use ``tox`` from the top level directory of
-the hg repository.  
+The test suite for virtualenvwrapper uses shunit2_ and tox_.  The
+shunit2 source is included in the ``tests`` directory, but tox must be
+installed separately (``pip install tox``).
 
-Add new tests by modifying or creating an appropriate script in the
-``tests`` directory.
+To run the tests under bash, zsh, and ksh for Python 2.4 through 2.7,
+run ``tox`` from the top level directory of the hg repository.
+
+To run individual test scripts, use a command like::
+
+  $ tox tests/test_cd.sh
+
+To run tests under a single version of Python, specify the appropriate
+environment when running tox::
+
+  $ tox -e py27
+
+Combine the two modes to run specific tests with a single version of
+Python::
+
+  $ tox -e py27 tests/test_cd.sh
+
+Add new tests by modifying an existing file or creating new script in
+the ``tests`` directory.
+
+.. _shunit2: http://shunit2.googlecode.com/
+
+.. _tox: http://codespeak.net/tox
