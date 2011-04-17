@@ -26,18 +26,24 @@ virtualenvwrapper is tested under Python 2.4 - 2.7.
 Basic Installation
 ==================
 
-virtualenvwrapper should be installed using pip_::
+virtualenvwrapper should be installed into the same global
+site-packages area where virtualenv is installed. You may need
+administrative privileges to do that.  The easiest way to install it
+is using pip_::
 
   $ pip install virtualenvwrapper
 
-You will want to install it into the global Python site-packages area,
-along with virtualenv.  You may need administrative privileges to do
-that.
+or::
+
+  $ sudo pip install virtualenvwrapper
 
 .. warning::
 
-   You almost certainly do not want to install virtualenvwrapper into
-   a virtualenv.
+    virtualenv lets you create many different Python environments. You
+    should only ever install virtualenv and virtualenvwrapper on your
+    base Python installation (i.e. NOT while a virtualenv is active)
+    so that the same release is shared by all Python environments that
+    depend on it.
 
 An alternative to installing it into the global site-packages is to
 add it to your user local directory (usually `~/.local`).
