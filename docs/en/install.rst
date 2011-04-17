@@ -34,6 +34,11 @@ You will want to install it into the global Python site-packages area,
 along with virtualenv.  You may need administrative privileges to do
 that.
 
+.. warning::
+
+   You almost certainly do not want to install virtualenvwrapper into
+   a virtualenv.
+
 An alternative to installing it into the global site-packages is to
 add it to your user local directory (usually `~/.local`).
 
