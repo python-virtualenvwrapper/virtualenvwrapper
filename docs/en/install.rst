@@ -46,7 +46,9 @@ or::
     depend on it.
 
 An alternative to installing it into the global site-packages is to
-add it to your user local directory (usually `~/.local`).
+add it to `your user local directory
+<http://docs.python.org/install/index.html#alternate-installation-the-home-scheme>`__
+(usually `~/.local`).
 
 ::
 
