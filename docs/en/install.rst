@@ -23,6 +23,8 @@ Python Versions
 
 virtualenvwrapper is tested under Python 2.4 - 2.7.
 
+.. _install-basic:
+
 Basic Installation
 ==================
 

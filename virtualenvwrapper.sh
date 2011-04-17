@@ -56,18 +56,6 @@ then
     VIRTUALENVWRAPPER_VIRTUALENV="virtualenv"
 fi
 
-# Set the location of the hook scripts
-if [ "$VIRTUALENVWRAPPER_HOOK_DIR" = "" ]
-then
-    export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
-fi
-
-# Set the location of the hook script logs
-if [ "$VIRTUALENVWRAPPER_LOG_DIR" = "" ]
-then
-    export VIRTUALENVWRAPPER_LOG_DIR="$WORKON_HOME"
-fi
-
 virtualenvwrapper_derive_workon_home() {
     typeset workon_home_dir="$WORKON_HOME"
 
@@ -108,7 +96,7 @@ virtualenvwrapper_derive_workon_home() {
 # and maybe other things rely on the dir existing before that happens.
 virtualenvwrapper_verify_workon_home () {
     RC=0
-    if [ ! -d "$WORKON_HOME" ]
+    if [ ! -d "$WORKON_HOME/" ]
     then
         if [ "$1" != "-q" ]
         then
@@ -164,7 +152,21 @@ virtualenvwrapper_run_hook () {
 # Set up virtualenvwrapper properly
 virtualenvwrapper_initialize () {
     export WORKON_HOME="$(virtualenvwrapper_derive_workon_home)"
+
     virtualenvwrapper_verify_workon_home -q || return 1
+
+    # Set the location of the hook scripts
+    if [ "$VIRTUALENVWRAPPER_HOOK_DIR" = "" ]
+    then
+        export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
+    fi
+
+    # Set the location of the hook script logs
+    if [ "$VIRTUALENVWRAPPER_LOG_DIR" = "" ]
+    then
+        export VIRTUALENVWRAPPER_LOG_DIR="$WORKON_HOME"
+    fi
+
     virtualenvwrapper_run_hook "initialize"
     if [ $? -ne 0 ]
     then

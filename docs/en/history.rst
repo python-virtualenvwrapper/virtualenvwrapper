@@ -2,6 +2,17 @@
 Release History
 ===============
 
+2.7.1
+
+  - When testing for WORKON_HOME during startup, dereference any
+    symlink to make sure it is a directory.
+  - Set VIRTUALENVWRAPPER_HOOK_DIR and VIRTUALENV_WRAPPER_LOG DIR in
+    virtualenvwrapper_initialize after WORKON_HOME is set
+    (:bbissue:`94`).
+  - Update the :ref:`install-basic` instructions to be more explicit
+    about needing to install virtualenvwrapper globally (or at least
+    outside of a virtualenv).
+
 2.7
 
   - Fix problem with space in WORKON_HOME path (:bbissue:`79`).
