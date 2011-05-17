@@ -56,6 +56,15 @@ then
     VIRTUALENVWRAPPER_VIRTUALENV="virtualenv"
 fi
 
+# Define script folder depending on the platorm (Win32/Unix)
+script_folder="bin"
+if [ "$OS" = "Windows_NT" ] && [ "$MSYSTEM" = "MINGW32" ]
+then
+	# Only assign this for msys, cygwin use standard Unix paths
+	# and its own python installation 
+	script_folder="Scripts"
+fi
+
 virtualenvwrapper_derive_workon_home() {
     typeset workon_home_dir="$WORKON_HOME"
 
@@ -277,7 +286,7 @@ virtualenvwrapper_show_workon_options () {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/bin/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
+    (cd "$WORKON_HOME"; for f in */$script_folder/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/bin/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
     
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
@@ -357,7 +366,7 @@ workon () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_workon_environment $env_name || return 1
     
-    activate="$WORKON_HOME/$env_name/bin/activate"
+    activate="$WORKON_HOME/$env_name/$script_folder/activate"
     if [ ! -f "$activate" ]
     then
         echo "ERROR: Environment '$WORKON_HOME/$env_name' does not contain an activate script." >&2
@@ -390,7 +399,7 @@ workon () {
         # any settings made by the local postactivate first.
         virtualenvwrapper_run_hook "pre_deactivate"
         
-        env_postdeactivate_hook="$VIRTUAL_ENV/bin/postdeactivate"
+        env_postdeactivate_hook="$VIRTUAL_ENV/$script_folder/postdeactivate"
         old_env=$(basename "$VIRTUAL_ENV")
         
         # Call the original function.
@@ -589,7 +598,7 @@ cpvirtualenv() {
     fi
 
     \cp -r "$source_env" "$target_env"
-    for script in $( \ls $target_env/bin/* )
+    for script in $( \ls $target_env/$script_folder/* )
     do
         newscript="$script-new"
         \sed "s|$source_env|$target_env|g" < "$script" > "$newscript"
@@ -598,7 +607,7 @@ cpvirtualenv() {
     done
 
     virtualenv "$target_env" --relocatable
-    \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"
+    \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/$script_folder/activate"
 
     (cd "$WORKON_HOME" && ( 
         virtualenvwrapper_run_hook "pre_cpvirtualenv" "$env_name" "$new_env";
