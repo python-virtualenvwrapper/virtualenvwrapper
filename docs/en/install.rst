@@ -196,3 +196,23 @@ supported.  In your startup file, change ``source
 /usr/local/bin/virtualenvwrapper.sh``.
 
 .. _pip: http://pypi.python.org/pypi/pip
+
+Using virtualenvwrapper into MSys
+=================================
+
+It is possible to use virtualenv wrapper into msys or msysgit with a
+native Windows Python installation.
+In order to make it work, you need to define an extra environment
+variable named ``MSYS_HOME`` containing the root path to msys installation.
+
+    export WORKON_HOME=$HOME/.virtualenvs
+    export MSYS_HOME=/c/msys/1.0
+    source /usr/local/bin/virtualenvwrapper.sh
+    
+or
+
+    export WORKON_HOME=$HOME/.virtualenvs
+    export MSYS_HOME=C:\msys\1.0
+    source /usr/local/bin/virtualenvwrapper.sh
+
+Right now, ``lsvirtualenv`` is not working because of the lack of ``getopt`` under msys.
