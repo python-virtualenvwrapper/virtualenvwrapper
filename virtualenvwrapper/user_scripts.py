@@ -32,7 +32,7 @@ def run_script(script_path, *args):
     if os.path.exists(script_path):
         cmd = [script_path] + list(args)
         if msys:
-            cmd = [os.path.join(os.environ['MSYS_HOME'],'bin','sh.exe')] + cmd
+            cmd = [get_path(os.environ['MSYS_HOME'],'bin','sh.exe')] + cmd
         log.debug('running %s', str(cmd))
         try:
             return_code = subprocess.call(cmd)
