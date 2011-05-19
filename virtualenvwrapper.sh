@@ -291,6 +291,12 @@ virtualenvwrapper_show_workon_options () {
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
+
+# test if a given command exists
+command_exists () {
+    command -v "$1" &> /dev/null ;
+}
+
 _lsvirtualenv_usage () {
     echo "lsvirtualenv [-blh]"
     echo "  -b -- brief mode"
@@ -302,23 +308,43 @@ _lsvirtualenv_usage () {
 #
 # Usage: lsvirtualenv [-l]
 lsvirtualenv () {
-    typeset -a args
-    args=($(getopt blh "$@"))
-    if [ $? != 0 ]
-    then
-        _lsvirtualenv_usage
-        return 1
-    fi
+    
     typeset long_mode=true
-    for opt in $args
-    do
-        case "$opt" in
-            -l) long_mode=true;;
-            -b) long_mode=false;;
-            -h) _lsvirtualenv_usage;
-                return 1;;
-        esac
-    done
+    if command_exists getopts
+    then
+		# Use getopts when possible
+    	OPTIND=1
+		while getopts ":blh" opt "$@"
+		do
+			case "$opt" in
+				l) long_mode=true;;
+				b) long_mode=false;;
+				h)  _lsvirtualenv_usage;
+					return 1;;
+				?) echo "Invalid option: -$OPTARG" >&2;
+					_lsvirtualenv_usage;
+					return 1;;
+			esac
+		done
+    else
+    	# fallback on getopt for other shell
+	    typeset -a args
+	    args=($(getopt blh "$@"))
+	    if [ $? != 0 ]
+	    then
+	        _lsvirtualenv_usage
+	        return 1
+	    fi
+	    for opt in $args
+	    do
+	        case "$opt" in
+	            -l) long_mode=true;;
+	            -b) long_mode=false;;
+	            -h) _lsvirtualenv_usage;
+	                return 1;;
+	        esac
+	    done
+    fi
 
     if $long_mode
     then
