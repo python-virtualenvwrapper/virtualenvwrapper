@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
     
 # Are we running under msys
 if sys.platform == 'win32' and os.environ.get('OS') == 'Windows_NT' and os.environ.get('MSYSTEM') == 'MINGW32':
-    msys = True
+    is_msys = True
     script_folder = 'Scripts'
 else:
     script_folder = 'bin'
@@ -31,7 +31,7 @@ def run_script(script_path, *args):
     """
     if os.path.exists(script_path):
         cmd = [script_path] + list(args)
-        if msys:
+        if is_msys:
             cmd = [get_path(os.environ['MSYS_HOME'],'bin','sh.exe')] + cmd
         log.debug('running %s', str(cmd))
         try:
@@ -246,12 +246,12 @@ def get_env_details(args):
 def get_path(*args):
     '''
     Get a full path from args.
-    Path separator is determined according to the os and the shell and allow to use msys.
+    Path separator is determined according to the os and the shell and allow to use is_msys.
     Variables and user are expanded during the process.
     '''
     path = os.path.expanduser(os.path.expandvars(os.path.join(*args)))
-    if msys:
-        # MSYS accept unix or Win32 and sometimes it conduce to mixed style paths
+    if is_msys:
+        # MSYS accept unix or Win32 and sometimes it drives to mixed style paths
         if re.match(r'^/[a-zA-Z](/|^)', path):
             # msys path could starts with '/c/'-form drive letter
             path = ''.join((path[1],':',path[2:]))
