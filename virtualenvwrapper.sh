@@ -149,6 +149,44 @@ virtualenvwrapper_run_hook () {
     return $result
 }
 
+# Set up tab completion.  (Adapted from Arthur Koziel's version at 
+# http://arthurkoziel.com/2008/10/11/virtualenvwrapper-bash-completion/)
+virtualenvwrapper_setup_tab_completion () {
+    if [ -n "$BASH" ] ; then
+        _virtualenvs () {
+            local cur="${COMP_WORDS[COMP_CWORD]}"
+            COMPREPLY=( $(compgen -W "`virtualenvwrapper_show_workon_options`" -- ${cur}) )
+        }
+        _cdvirtualenv_complete () {
+            local cur="$2"
+            COMPREPLY=( $(cdvirtualenv && compgen -d -- "${cur}" ) )
+        }
+        _cdsitepackages_complete () {
+            local cur="$2"
+            COMPREPLY=( $(cdsitepackages && compgen -d -- "${cur}" ) )
+        }
+        complete -o nospace -F _cdvirtualenv_complete -S/ cdvirtualenv
+        complete -o nospace -F _cdsitepackages_complete -S/ cdsitepackages
+        complete -o default -o nospace -F _virtualenvs workon
+        complete -o default -o nospace -F _virtualenvs rmvirtualenv
+        complete -o default -o nospace -F _virtualenvs cpvirtualenv
+        complete -o default -o nospace -F _virtualenvs showvirtualenv
+    elif [ -n "$ZSH_VERSION" ] ; then
+        _virtualenvs () {
+            reply=( $(virtualenvwrapper_show_workon_options) )
+        }
+        _cdvirtualenv_complete () {
+            reply=( $(cdvirtualenv && ls -d ${1}*) )
+        }
+        _cdsitepackages_complete () {
+            reply=( $(cdsitepackages && ls -d ${1}*) )
+        }
+        compctl -K _virtualenvs workon rmvirtualenv cpvirtualenv showvirtualenv 
+        compctl -K _cdvirtualenv_complete cdvirtualenv
+        compctl -K _cdsitepackages_complete cdsitepackages
+    fi
+}
+
 # Set up virtualenvwrapper properly
 virtualenvwrapper_initialize () {
     export WORKON_HOME="$(virtualenvwrapper_derive_workon_home)"
@@ -173,7 +211,11 @@ virtualenvwrapper_initialize () {
         echo "virtualenvwrapper.sh: There was a problem running the initialization hooks. If Python could not import the module virtualenvwrapper.hook_loader, check that virtualenv has been installed for VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is set properly." 1>&2
         return 1
     fi
+
+    virtualenvwrapper_setup_tab_completion
+
 }
+
 
 # Verify that virtualenv is installed and visible
 virtualenvwrapper_verify_virtualenv () {
@@ -412,40 +454,6 @@ workon () {
 	return 0
 }
 
-
-#
-# Set up tab completion.  (Adapted from Arthur Koziel's version at 
-# http://arthurkoziel.com/2008/10/11/virtualenvwrapper-bash-completion/)
-# 
-
-if [ -n "$BASH" ] ; then
-    _virtualenvs ()
-    {
-        local cur="${COMP_WORDS[COMP_CWORD]}"
-        COMPREPLY=( $(compgen -W "`virtualenvwrapper_show_workon_options`" -- ${cur}) )
-    }
-
-
-    _cdvirtualenv_complete ()
-    {
-        local cur="$2"
-        # COMPREPLY=( $(compgen -d -- "${VIRTUAL_ENV}/${cur}" | sed -e "s@${VIRTUAL_ENV}/@@" ) )
-        COMPREPLY=( $(cdvirtualenv && compgen -d -- "${cur}" ) )
-    }
-    _cdsitepackages_complete ()
-    {
-        local cur="$2"
-        COMPREPLY=( $(cdsitepackages && compgen -d -- "${cur}" ) )
-    }
-    complete -o nospace -F _cdvirtualenv_complete -S/ cdvirtualenv
-    complete -o nospace -F _cdsitepackages_complete -S/ cdsitepackages
-    complete -o default -o nospace -F _virtualenvs workon
-    complete -o default -o nospace -F _virtualenvs rmvirtualenv
-    complete -o default -o nospace -F _virtualenvs cpvirtualenv
-    complete -o default -o nospace -F _virtualenvs showvirtualenv
-elif [ -n "$ZSH_VERSION" ] ; then
-    compctl -g "`virtualenvwrapper_show_workon_options`" workon rmvirtualenv cpvirtualenv showvirtualenv
-fi
 
 # Prints the Python version string for the current interpreter.
 virtualenvwrapper_get_python_version () {
