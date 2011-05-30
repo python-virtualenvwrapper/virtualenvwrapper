@@ -67,4 +67,11 @@ test_virtualenvwrapper_run_hook_permissions() {
     assertSame "Errno 13] Permission denied" "$error"
 }
 
+test_virtualenvwrapper_run_hook_without_log_dir() {
+    old_log_dir="$VIRTUALENVWRAPPER_LOG_DIR"
+    unset VIRTUALENVWRAPPER_LOG_DIR
+    assertFalse "virtualenvwrapper_run_hook initialize"
+    export VIRTUALENVWRAPPER_LOG_DIR="$old_log_dir"
+}
+
 . "$test_dir/shunit2"

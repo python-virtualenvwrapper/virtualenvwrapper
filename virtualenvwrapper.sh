@@ -133,6 +133,11 @@ virtualenvwrapper_run_hook () {
         echo "ERROR: Could not create temporary file name. Make sure TMPDIR is set." 1>&2
         return 1
     fi
+    if [ -z "$VIRTUALENVWRAPPER_LOG_DIR" ]
+    then
+        echo "ERROR: VIRTUALENVWRAPPER_LOG_DIR is not set." 1>&2
+        return 1
+    fi
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
     result=$?
     
