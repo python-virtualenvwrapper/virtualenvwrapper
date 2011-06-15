@@ -208,7 +208,7 @@ def post_activate_source(args):
 # Run user-provided scripts
 #
 [ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate"
-[ -f "$VIRTUAL_ENV/bin/postactivate" ] && source "$VIRTUAL_ENV/bin/postactivate"
+[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postactivate" ] && source "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postactivate"
 """
 
 
@@ -218,7 +218,7 @@ def pre_deactivate_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$VIRTUAL_ENV/bin/predeactivate" ] && source "$VIRTUAL_ENV/bin/predeactivate"
+[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/predeactivate" ] && source "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/predeactivate"
 [ -f "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate"
 """
 
