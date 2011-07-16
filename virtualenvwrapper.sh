@@ -268,11 +268,13 @@ mkvirtualenv () {
     eval "envname=\$$#"
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_virtualenv || return 1
-    (cd "$WORKON_HOME" &&
+    (
+        [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT
+        cd "$WORKON_HOME" &&
         "$VIRTUALENVWRAPPER_VIRTUALENV" $VIRTUALENVWRAPPER_VIRTUALENV_ARGS "$@" &&
         [ -d "$WORKON_HOME/$envname" ] && \
             virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
-        )
+    )
     typeset RC=$?
     [ $RC -ne 0 ] && return $RC
 
