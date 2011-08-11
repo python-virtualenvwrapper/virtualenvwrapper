@@ -215,4 +215,6 @@ or
     export MSYS_HOME=C:\msys\1.0
     source /usr/local/bin/virtualenvwrapper.sh
 
-Right now, ``lsvirtualenv`` is not working because of the lack of ``getopt`` under msys.
+Depending on your MSYS setup, you may need to install mktemp in 
+your MSYS_HOME/bin folder. The MSYS  mktemp binary is available
+here: http://sourceforge.net/projects/mingw/files/MSYS/mktemp/
