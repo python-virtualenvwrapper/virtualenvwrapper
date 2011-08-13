@@ -56,6 +56,15 @@ then
     VIRTUALENVWRAPPER_VIRTUALENV="virtualenv"
 fi
 
+# Define script folder depending on the platorm (Win32/Unix)
+VIRTUALENVWRAPPER_ENV_BIN_DIR="bin"
+if [ "$OS" = "Windows_NT" ] && [ "$MSYSTEM" = "MINGW32" ]
+then
+	# Only assign this for msys, cygwin use standard Unix paths
+	# and its own python installation 
+	VIRTUALENVWRAPPER_ENV_BIN_DIR="Scripts"
+fi
+
 virtualenvwrapper_derive_workon_home() {
     typeset workon_home_dir="$WORKON_HOME"
 
@@ -326,8 +335,8 @@ virtualenvwrapper_show_workon_options () {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (\cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/bin/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
-    
+    (\cd "$WORKON_HOME"; for f in */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||" | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
+
 #    (\cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
@@ -342,23 +351,43 @@ _lsvirtualenv_usage () {
 #
 # Usage: lsvirtualenv [-l]
 lsvirtualenv () {
-    typeset -a args
-    args=($(getopt blh "$@"))
-    if [ $? != 0 ]
-    then
-        _lsvirtualenv_usage
-        return 1
-    fi
+    
     typeset long_mode=true
-    for opt in $args
-    do
-        case "$opt" in
-            -l) long_mode=true;;
-            -b) long_mode=false;;
-            -h) _lsvirtualenv_usage;
-                return 1;;
-        esac
-    done
+    if command -v "getopts" &> /dev/null 
+    then
+		# Use getopts when possible
+    	OPTIND=1
+		while getopts ":blh" opt "$@"
+		do
+			case "$opt" in
+				l) long_mode=true;;
+				b) long_mode=false;;
+				h)  _lsvirtualenv_usage;
+					return 1;;
+				?) echo "Invalid option: -$OPTARG" >&2;
+					_lsvirtualenv_usage;
+					return 1;;
+			esac
+		done
+    else
+    	# fallback on getopt for other shell
+	    typeset -a args
+	    args=($(getopt blh "$@"))
+	    if [ $? != 0 ]
+	    then
+	        _lsvirtualenv_usage
+	        return 1
+	    fi
+	    for opt in $args
+	    do
+	        case "$opt" in
+	            -l) long_mode=true;;
+	            -b) long_mode=false;;
+	            -h) _lsvirtualenv_usage;
+	                return 1;;
+	        esac
+	    done
+    fi
 
     if $long_mode
     then
@@ -406,7 +435,7 @@ workon () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_workon_environment $env_name || return 1
     
-    activate="$WORKON_HOME/$env_name/bin/activate"
+    activate="$WORKON_HOME/$env_name/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate"
     if [ ! -f "$activate" ]
     then
         echo "ERROR: Environment '$WORKON_HOME/$env_name' does not contain an activate script." >&2
@@ -439,7 +468,7 @@ workon () {
         # any settings made by the local postactivate first.
         virtualenvwrapper_run_hook "pre_deactivate"
         
-        env_postdeactivate_hook="$VIRTUAL_ENV/bin/postdeactivate"
+        env_postdeactivate_hook="$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postdeactivate"
         old_env=$(basename "$VIRTUAL_ENV")
         
         # Call the original function.
@@ -604,7 +633,7 @@ cpvirtualenv() {
     fi
 
     \cp -r "$source_env" "$target_env"
-    for script in $( \ls $target_env/bin/* )
+    for script in $( \ls $target_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/* )
     do
         newscript="$script-new"
         \sed "s|$source_env|$target_env|g" < "$script" > "$newscript"
@@ -613,7 +642,7 @@ cpvirtualenv() {
     done
 
     "$VIRTUALENVWRAPPER_VIRTUALENV" "$target_env" --relocatable
-    \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"
+    \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate" > "$target_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate"
 
     (\cd "$WORKON_HOME" && ( 
         virtualenvwrapper_run_hook "pre_cpvirtualenv" "$env_name" "$new_env";

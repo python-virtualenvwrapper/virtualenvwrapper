@@ -5,6 +5,9 @@ Release History
 dev
 
   - Use VIRTUALENVWRAPPER_VIRTUALENV in `cpvirtualenv` (:bbissue:`104`).
+  - Add support for `MSYS <http://www.mingw.org/wiki/MSYS>`_
+    environment under Windows. Contributed by Axel
+    H. (:bbuser:`noirbizarre`).
 
 2.7.2
 
