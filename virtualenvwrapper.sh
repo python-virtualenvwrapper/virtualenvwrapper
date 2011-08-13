@@ -270,7 +270,7 @@ mkvirtualenv () {
     virtualenvwrapper_verify_virtualenv || return 1
     (
         [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT
-        cd "$WORKON_HOME" &&
+        \cd "$WORKON_HOME" &&
         "$VIRTUALENVWRAPPER_VIRTUALENV" $VIRTUALENVWRAPPER_VIRTUALENV_ARGS "$@" &&
         [ -d "$WORKON_HOME/$envname" ] && \
             virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
@@ -307,7 +307,7 @@ rmvirtualenv () {
     # Move out of the current directory to one known to be
     # safe, in case we are inside the environment somewhere.
     typeset prior_dir="$(pwd)"
-    cd "$WORKON_HOME"
+    \cd "$WORKON_HOME"
 
     virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
     \rm -rf "$env_dir"
@@ -316,7 +316,7 @@ rmvirtualenv () {
     # If the directory we used to be in still exists, move back to it.
     if [ -d "$prior_dir" ]
     then
-        cd "$prior_dir"
+        \cd "$prior_dir"
     fi
 }
 
@@ -326,9 +326,9 @@ virtualenvwrapper_show_workon_options () {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/bin/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
+    (\cd "$WORKON_HOME"; for f in */bin/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/bin/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
     
-#    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
+#    (\cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
 _lsvirtualenv_usage () {
@@ -532,14 +532,14 @@ cdsitepackages () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
-    cd "$site_packages"/$1
+    \cd "$site_packages"/$1
 }
 
 # Does a ``cd`` to the root of the currently-active virtualenv.
 cdvirtualenv () {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    cd $VIRTUAL_ENV/$1
+    \cd $VIRTUAL_ENV/$1
 }
 
 # Shows the content of the site-packages directory of the currently-active
@@ -615,7 +615,7 @@ cpvirtualenv() {
     "$VIRTUALENVWRAPPER_VIRTUALENV" "$target_env" --relocatable
     \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"
 
-    (cd "$WORKON_HOME" && ( 
+    (\cd "$WORKON_HOME" && ( 
         virtualenvwrapper_run_hook "pre_cpvirtualenv" "$env_name" "$new_env";
         virtualenvwrapper_run_hook "pre_mkvirtualenv" "$new_env"
         ))
