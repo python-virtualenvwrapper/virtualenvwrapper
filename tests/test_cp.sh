@@ -110,5 +110,13 @@ GLOBAL postcpvirtualenv"
     rm -f "$WORKON_HOME/postmkvirtualenv"
 }
 
+test_no_site_packages () {
+    # See issue #102
+    mkvirtualenv "source" --no-site-packages
+    cpvirtualenv "source" "destination"
+    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+    assertTrue "$ngsp_file does not exist in copied env" "[ -f \"$ngsp_file\" ]"
+}
+
 . "$test_dir/shunit2"
 
