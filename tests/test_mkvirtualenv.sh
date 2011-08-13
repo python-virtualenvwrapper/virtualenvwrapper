@@ -104,6 +104,7 @@ test_mkvirtualenv_sitepackages () {
 }
 
 test_mkvirtualenv_args () {
+    # See issue #102
     VIRTUALENVWRAPPER_VIRTUALENV_ARGS="--no-site-packages"
     # With the argument, verify that they are not copied.
     mkvirtualenv "without_sp2" >/dev/null 2>&1
