@@ -286,7 +286,7 @@ virtualenvwrapper_show_workon_options () {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (cd "$WORKON_HOME"; for f in */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/bin/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
+    (cd "$WORKON_HOME"; for f in */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed 's|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||' | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
     
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
@@ -633,7 +633,7 @@ cpvirtualenv() {
     done
 
     virtualenv "$target_env" --relocatable
-    \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate"
+    \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate" > "$target_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate"
 
     (cd "$WORKON_HOME" && ( 
         virtualenvwrapper_run_hook "pre_cpvirtualenv" "$env_name" "$new_env";
