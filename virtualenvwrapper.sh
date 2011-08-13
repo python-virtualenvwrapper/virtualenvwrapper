@@ -612,7 +612,7 @@ cpvirtualenv() {
         \chmod a+x "$script"
     done
 
-    virtualenv "$target_env" --relocatable
+    "$VIRTUALENVWRAPPER_VIRTUALENV" "$target_env" --relocatable
     \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/bin/activate" > "$target_env/bin/activate"
 
     (cd "$WORKON_HOME" && ( 

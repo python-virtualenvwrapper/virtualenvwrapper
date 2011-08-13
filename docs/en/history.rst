@@ -2,6 +2,10 @@
 Release History
 ===============
 
+dev
+
+  - Use VIRTUALENVWRAPPER_VIRTUALENV in `cpvirtualenv` (:bbissue:`104`).
+
 2.7.2
 
   - Move setup code for tab completion later in the startup code so

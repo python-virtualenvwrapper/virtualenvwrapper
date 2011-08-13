@@ -43,6 +43,20 @@ test_virtual_env_variable () {
     assertTrue "$WORKON_HOME not in $VIRTUAL_ENV" "echo $VIRTUAL_ENV | grep -q $WORKON_HOME"
 }
 
+fake_virtualenv () {
+    typeset envname="$1"
+    touch "$envname/fake_virtualenv_was_here"
+    virtualenv $@
+}
+
+test_virtualenvwrapper_virtualenv_variable () {
+    mkvirtualenv "source"
+    export VIRTUALENVWRAPPER_VIRTUALENV=fake_virtualenv
+    cpvirtualenv "source" "destination"
+    unset VIRTUALENVWRAPPER_VIRTUALENV
+    assertTrue "wrapper was not run" "[ -f $VIRTUAL_ENV/fake_virtualenv_was_here ]"
+}
+
 test_source_relocatable () {
     mkvirtualenv "source"
     (cd tests/testpackage && python setup.py install) >/dev/null 2>&1
