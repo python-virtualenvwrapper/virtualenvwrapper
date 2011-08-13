@@ -291,12 +291,6 @@ virtualenvwrapper_show_workon_options () {
 #    (cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
 }
 
-
-# test if a given command exists
-command_exists () {
-    command -v "$1" &> /dev/null ;
-}
-
 _lsvirtualenv_usage () {
     echo "lsvirtualenv [-blh]"
     echo "  -b -- brief mode"
@@ -310,7 +304,7 @@ _lsvirtualenv_usage () {
 lsvirtualenv () {
     
     typeset long_mode=true
-    if command_exists getopts
+    if command -v "getopts" &> /dev/null 
     then
 		# Use getopts when possible
     	OPTIND=1
