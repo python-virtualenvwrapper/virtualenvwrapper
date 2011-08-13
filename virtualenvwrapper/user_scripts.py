@@ -23,6 +23,7 @@ if sys.platform == 'win32' and os.environ.get('OS') == 'Windows_NT' and os.envir
     is_msys = True
     script_folder = 'Scripts'
 else:
+    is_msys = False
     script_folder = 'bin'
 
 
