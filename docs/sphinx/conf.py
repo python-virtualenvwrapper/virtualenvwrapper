@@ -47,7 +47,7 @@ copyright = u'2009-2011, Doug Hellmann'
 # built documents.
 #
 # The short X.Y version.
-version = '2.7.1'
+version = '2.8'
 # The full version, including alpha/beta/rc tags.
 release = version
 
