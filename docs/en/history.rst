@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+2.8
 
   - Use VIRTUALENVWRAPPER_VIRTUALENV in `cpvirtualenv` (:bbissue:`104`).
   - Add support for `MSYS <http://www.mingw.org/wiki/MSYS>`_
