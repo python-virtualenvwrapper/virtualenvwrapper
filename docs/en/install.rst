@@ -8,13 +8,58 @@ Supported Shells
 ================
 
 virtualenvwrapper is a set of shell *functions* defined in Bourne
-shell compatible syntax.  It is tested under `bash`, `ksh`, and `zsh`.
+shell compatible syntax.  Its automated tests run under these
+shells on OS X and Linux:
+
+* ``bash``
+* ``ksh``
+* ``zsh``
+
 It may work with other shells, so if you find that it does work with a
 shell not listed here please let me know.  If you can modify it to
-work with another shell, without completely rewriting it, send a pull
-request through the bitbucket project page.  If you write a clone to
+work with another shell without completely rewriting it, then send a pull
+request through the `bitbucket project page`_.  If you write a clone to
 work with an incompatible shell, let me know and I will link to it
 from this page.
+
+.. _bitbucket project page: https://bitbucket.org/dhellmann/virtualenvwrapper/
+
+MSYS
+----
+
+It is possible to use virtualenv wrapper under `MSYS
+<http://www.mingw.org/wiki/MSYS>`_ with a native Windows Python
+installation.  In order to make it work, you need to define an extra
+environment variable named ``MSYS_HOME`` containing the root path to
+the MSYS installation.
+
+::
+
+    export WORKON_HOME=$HOME/.virtualenvs
+    export MSYS_HOME=/c/msys/1.0
+    source /usr/local/bin/virtualenvwrapper.sh
+
+or::
+
+    export WORKON_HOME=$HOME/.virtualenvs
+    export MSYS_HOME=C:\msys\1.0
+    source /usr/local/bin/virtualenvwrapper.sh
+
+Depending on your MSYS setup, you may need to install the `MSYS mktemp
+binary`_ in the ``MSYS_HOME/bin`` folder.
+
+.. _MSYS mktemp binary: http://sourceforge.net/projects/mingw/files/MSYS/mktemp/
+
+PowerShell
+----------
+
+Guillermo López-Anglada has ported virtualenvwrapper to run under
+Microsoft's PowerShell. We have agreed that since it is not compatible
+with the rest of the extensions, and is largely a re-implementation
+(rather than an adaptation), it should be distributed separately. You
+can download virtualenvwrapper-powershell_ from PyPI.
+
+.. _virtualenvwrapper-powershell: http://pypi.python.org/pypi/virtualenvwrapper-powershell/2.7.1
 
 .. _supported-versions:
 
@@ -196,29 +241,3 @@ supported.  In your startup file, change ``source
 /usr/local/bin/virtualenvwrapper.sh``.
 
 .. _pip: http://pypi.python.org/pypi/pip
-
-Using virtualenvwrapper Under MSys
-==================================
-
-It is possible to use virtualenv wrapper under `MSYS
-<http://www.mingw.org/wiki/MSYS>`_ with a native Windows Python
-installation.  In order to make it work, you need to define an extra
-environment variable named ``MSYS_HOME`` containing the root path to
-the MSYS installation.
-
-::
-
-    export WORKON_HOME=$HOME/.virtualenvs
-    export MSYS_HOME=/c/msys/1.0
-    source /usr/local/bin/virtualenvwrapper.sh
-
-or::
-
-    export WORKON_HOME=$HOME/.virtualenvs
-    export MSYS_HOME=C:\msys\1.0
-    source /usr/local/bin/virtualenvwrapper.sh
-
-Depending on your MSYS setup, you may need to install the `MSYS mktemp
-binary`_ in the ``MSYS_HOME/bin`` folder.
-
-.. _MSYS mktemp binary: http://sourceforge.net/projects/mingw/files/MSYS/mktemp/
