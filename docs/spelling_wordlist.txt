@@ -1,0 +1,7 @@
+Hellmann
+Bicking
+virtualenvwrapper
+mkvirtualenv
+rmvirtualenv
+virtualenv
+stderr

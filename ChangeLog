@@ -1,0 +1,200 @@
+2011-04-13  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (rmvirtualenv): Move to a safe directory
+	before removing the virtual environment, and only move back if the
+	previously occupied directory still exists.
+
+2011-04-10  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh: Initialize VIRTUALENVWRAPPER_LOG_DIR and
+	VIRTUALENVWRAPPER_HOOK_DIR.
+
+	* virtualenvwrapper/hook_loader.py (main): Use
+	VIRTUALENVWRAPPER_LOG_DIR for logs instead of assuming
+	WORKON_HOME.
+
+	* virtualenvwrapper/user_scripts.py (make_hook): Change verbosity
+	of message telling the user we have created a new hook script for
+	them.
+
+2011-02-26  Doug Hellmann  <dhellmann@racemi.com>
+
+	* docs/sphinx/conf.py: Just hard-code the version.
+
+	* setup.py: Just hard-code the version.
+
+	* virtualenvwrapper/version.py: Put the version info inside the
+	package so it is available to the doc build and packaging
+	script. This also makes the readthedocs.org build work properly.
+
+	* setup.py: Import the version information from the package.
+
+	* docs/sphinx/conf.py: Import the version information from the
+	package.
+
+	* Makefile: Remove rule to get the version from the installer for
+	the doc build.
+
+2011-01-24  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh: Replace hard-coded name "virtualenv" with
+	the variable VIRTUALENVWRAPPER_VIRTUALENV to allow tests (and
+	users) to override it.
+
+	* tests/test_mkvirtualenv.sh (test_virtualenv_fails): Add a test
+	to reproduce the conditions reported in issue #76.
+
+2010-12-27  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_get_python_version):
+	Only include the major and minor numbers, not the patch level.
+
+2010-12-26  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper/user_scripts.py (make_hook): Do not specify
+	text mode when creating the files so cygwin will not replace \n
+	with \r\n.
+
+	* setup.py: Change "requires" to "install_requires" so pip will
+	try to install virtualenv if it is not already there.  Add trove
+	classifiers for the supported Python versions.
+
+	* virtualenvwrapper.sh (virtualenvwrapper_get_python_version): Use
+	python's -V option and cut to get the version instead of a python
+	one-liner.
+
+2010-12-24  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (cpvirtualenv): Ensure that both pre hooks
+	are run, even if one produces an error.
+
+	* virtualenvwrapper/user_scripts.py: Change log message format.
+
+	* tox.ini: Configuration file for running tests under tox.
+
+	* tests/test_run_hook.sh (test_virtualenvwrapper_run_hook_permissions):
+	Fix the expected output message.
+
+	* tests/*: Make sure all of the test scripts have execute permission.
+
+	* tests/test.sh (test_virtualenvwrapper_verify_workon_home_missing_dir_quiet_init):
+	Use source instead of starting another shell, since zsh doesn't
+	play nicely with inheriting environment settings otherwise.
+	(test_python_interpreter_set_incorrectly): Force
+	VIRTUALENVWRAPPER_PYTHON before running the script in a sub-shell.
+
+	* tests/run_tests: Script to run through all of the other test
+	scripts one at a time.
+
+2010-09-18  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh: Apply patch from Zach Voase to fix
+	lsvirtualenv under zsh.
+
+2010-09-14  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (workon): Use the brief list format by
+	default.
+
+2010-08-16  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper/user_scripts.py (get_env_details): New hook to
+	optionally give more detail than the name of an environment when
+	the user requests a list.
+
+	* virtualenvwrapper.sh: Update workon to use the get_env_details
+	hook to print more details, if the user provides scripts to give
+	them.
+
+2010-06-03  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh: Escape the call to "which" so we don't use
+	an alias by accident.
+
+2010-05-22  Doug Hellmann  <dhellmann@racemi.com>
+
+	* tests/test_cp.sh: Clarify some of the tests by breaking up,
+	renaming, and rewriting some functions.
+
+	* Makefile (PYTHON26): If we're in a virtualenv when the tests
+	start, use a hard-coded path to the binary to get the global
+	version.
+
+2010-05-18  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Use a trap to
+	ensure the temporary file is removed when we exit.
+
+2010-05-16  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Set a default
+	suffix of "hook" and explicitly report when we detect an error
+	condition.
+
+	* Makefile (PYTHON26): Use which to find python2.6, the default
+	interpreter, so we can run the tests as "make test-quick" on other
+	hosts.
+
+	* tests/test_tempfile.sh (test_tempfile): Normalize the paths so
+	we don't depend on the value of TMPDIR or behavior of dirname.
+
+	* tests/test_cd.sh: Make sure the virtualenv from the caller does
+	not influence test behaviors by establishing our own virtualenv
+	locally.
+
+	* virtualenvwrapper/hook_loader.py (main): Add more debug logging
+	to try to narrow down the tempfile issue (#35).
+	(run_hooks): Insert a comment into the output file to show which
+	hook we are running.
+
+	* virtualenvwrapper.sh (virtualenvwrapper_run_hook): Add more
+	debugging error reporting to try to narrow down the tempfile
+	issue (#35).
+
+2010-05-09  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh: Tweak path normalization code so double
+	slashes are also removed from WORKON_HOME. Use typeset for local
+	variables.
+	(virtualenvwrapper_tempfile): Add -t option to mktemp so the new
+	files are always created in the user's temporary directory.
+	(virtualenvwrapper_run_hook): Add the hook name to the temporary
+	file name.
+
+	* tests/test_tempfile.sh: Remove obsolete test.  Fix assertions
+	for remaining test.
+
+	* tests/test_mkvirtualenv.sh (test_hooks): Use pwd to convert
+	WORKON_HOME to the expected value.
+
+	* tests/test.sh (test_python_interpreter_set_incorrectly): Rework
+	grep-based assertion to actually pass.
+
+	* Makefile (test-bash test-ksh test-sh): Remove wildcard build
+	rule so test-quick target works.
+
+2010-05-02  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_run_hook): Instead of
+	-m, use -c so hooks can be run under Python 2.4.
+
+2010-04-29  Doug Hellmann  <dhellmann@racemi.com>
+
+	* tests/test_workon.sh: Refactor deactivate tests into their own
+	script.
+
+	* tests/test_deactivate.sh: Refactor deactivate tests into their
+	own script.
+
+	* virtualenvwrapper.sh (virtualenvwrapper_get_python_version): Add
+	a comment about why we're using the $PATH python instead of the
+	one where the wrappers are installed.
+	(add2virtualenv): Use the install-tree python instead of the one
+	from $PATH.
+	(deactivate): Ignore errors from redundant unset calls.
+
+2010-04-26  Doug Hellmann  <dhellmann@racemi.com>
+
+	* virtualenvwrapper.sh (virtualenvwrapper_tempfile): Add a suffix
+	to the tempfile name so we know the tempfile module isn't going to
+	erase it.
