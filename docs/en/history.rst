@@ -2,6 +2,11 @@
 Release History
 ===============
 
+dev
+
+  - Change the shell function shell definition syntax so that ksh will
+    treat typeset-declared variables as local. No kidding.
+
 2.8
 
   - Use VIRTUALENVWRAPPER_VIRTUALENV in `cpvirtualenv` (:bbissue:`104`).
