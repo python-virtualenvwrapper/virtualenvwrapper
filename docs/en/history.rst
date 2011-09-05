@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+2.9
 
   - Change the shell function shell definition syntax so that ksh will
     treat typeset-declared variables as local. No kidding.
