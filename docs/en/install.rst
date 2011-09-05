@@ -252,6 +252,13 @@ users of that shell will have virtualenvwrapper enabled, and they
 cannot disable it. Refer to the documentation for the shell to
 identify the appropriate file to edit.
 
+Upgrading to 2.9
+================
+
+Version 2.9 includes the features previously delivered separately by
+``virtualenvwrapper.project``.  If you have an older verison of the
+project extensions installed, remove them before upgrading.
+
 Upgrading from 1.x
 ==================
 
