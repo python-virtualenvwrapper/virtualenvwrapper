@@ -10,6 +10,8 @@ dev
     ``virtualenvwrapper.project`` plugin into the main project, adding
     :ref:`command-mkproject`, :ref:`command-cdproject`, and
     :ref:`command-setvirtualenvproject` commands.
+  - Add ``-r`` option to :ref:`command-mkvirtualenv` to install
+    dependencies using a pip requirements file.
 
 2.8
 

@@ -22,10 +22,11 @@ Create a new environment, in the WORKON_HOME.
 
 Syntax::
 
-    mkvirtualenv [options] ENVNAME
+    mkvirtualenv [-r requirements_file] [virtualenv options] ENVNAME
 
-All command line options are passed directly to ``virtualenv``.  The
-new environment is automatically activated after being initialized.
+All command line options except ``-r`` and ``-h`` are passed directly
+to ``virtualenv``.  The new environment is automatically activated
+after being initialized.
 
 ::
 
@@ -40,10 +41,17 @@ new environment is automatically activated after being initialized.
     mynewenv
     (mynewenv)$ 
 
+The ``-r`` option can be used to specify a text file listing packages
+to be installed. The argument value is passed to ``pip -r`` to be
+installed.
+
 .. seealso::
 
    * :ref:`scripts-premkvirtualenv`
    * :ref:`scripts-postmkvirtualenv`
+   * `requirements file format`_
+
+.. _requirements file format: http://www.pip-installer.org/en/latest/requirement-format.html
 
 .. _command-lsvirtualenv:
 

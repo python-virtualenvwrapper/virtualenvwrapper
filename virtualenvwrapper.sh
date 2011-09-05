@@ -277,6 +277,10 @@ function mkvirtualenv_help {
     echo
     echo "    Provide a pip requirements file to install a base set of packages"
     echo "    into the new environment."
+    echo;
+    echo 'virtualenv help:';
+    echo;
+    virtualenv -h;
 }
 
 # Create a new environment, in the WORKON_HOME.
@@ -309,13 +313,7 @@ function mkvirtualenv {
         # echo "arg $i : $a"
         case "$a" in
             -h)
-                echo 'mkvirtualenv help:';
-                echo;
                 mkvirtualenv_help;
-                echo;
-                echo 'virtualenv help:';
-                echo;
-                virtualenv -h;
                 return;;
             -r)
                 i=$(( $i + 1 ));
@@ -761,8 +759,12 @@ function mkproject_help {
     echo ""
     echo "Multiple templates may be selected.  They are applied in the order"
     echo "specified on the command line."
+    echo;
+    echo "mkvirtualenv help:"
     echo
-    echo "Available templates:"
+    mkvirtualenv -h;
+    echo
+    echo "Available project templates:"
     echo
     "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader -l project.template
 }
@@ -793,13 +795,7 @@ function mkproject {
         # echo "arg $i : $a"
         case "$a" in
             -h)
-                echo 'mkproject help:';
-                echo;
                 mkproject_help;
-                echo;
-                echo 'mkvirtualenv help:';
-                echo;
-                mkvirtualenv -h;
                 return;;
             -t)
                 i=$(( $i + 1 ));
