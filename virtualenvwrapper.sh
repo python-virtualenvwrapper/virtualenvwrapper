@@ -269,12 +269,70 @@ function virtualenvwrapper_verify_active_environment {
     return 0
 }
 
+# Help text for mkvirtualenv
+function mkvirtualenv_help {
+    echo "Usage: mkvirtualenv [-r requirements_file] [virtualenv options] env_name"
+    echo
+    echo " -r requirements_file"
+    echo
+    echo "    Provide a pip requirements file to install a base set of packages"
+    echo "    into the new environment."
+}
+
 # Create a new environment, in the WORKON_HOME.
 #
 # Usage: mkvirtualenv [options] ENVNAME
 # (where the options are passed directly to virtualenv)
 #
 function mkvirtualenv {
+    typeset -a in_args
+    typeset -a out_args
+    typeset -i i
+    typeset tst
+    typeset a
+    typeset envname
+    typeset requirements
+
+    in_args=( "$@" )
+
+    if [ -n "$ZSH_VERSION" ]
+    then
+        i=1
+        tst="-le"
+    else
+        i=0
+        tst="-lt"
+    fi
+    while [ $i $tst $# ]
+    do
+        a="${in_args[$i]}"
+        # echo "arg $i : $a"
+        case "$a" in
+            -h)
+                echo 'mkvirtualenv help:';
+                echo;
+                mkvirtualenv_help;
+                echo;
+                echo 'virtualenv help:';
+                echo;
+                virtualenv -h;
+                return;;
+            -r)
+                i=$(( $i + 1 ));
+                requirements="${in_args[$i]}";;
+            *)
+                if [ ${#out_args} -gt 0 ]
+                then
+                    out_args=( "${out_args[@]-}" "$a" )
+                else
+                    out_args=( "$a" )
+                fi;;
+        esac
+        i=$(( $i + 1 ))
+    done
+
+    set -- "${out_args[@]}"
+
     eval "envname=\$$#"
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_virtualenv || return 1
@@ -294,6 +352,12 @@ function mkvirtualenv {
     [ ! -d "$WORKON_HOME/$envname" ] && return 0
     # Now activate the new environment
     workon "$envname"
+
+    if [ ! -z "$requirements" ]
+    then
+        pip install -r "$requirements"
+    fi
+
     virtualenvwrapper_run_hook "post_mkvirtualenv"
 }
 
@@ -738,8 +802,8 @@ function mkproject {
                 mkvirtualenv -h;
                 return;;
             -t)
-                templates="$templates $a";
-                i=$(( $i + 1 ));;
+                i=$(( $i + 1 ));
+                templates="$templates ${in_args[$i]}";;
             *)
                 if [ ${#out_args} -gt 0 ]
                 then
