@@ -175,6 +175,7 @@ Details
    install
    command_ref
    hooks
+   projects
    tips
    developers
    extensions

@@ -6,6 +6,10 @@ dev
 
   - Change the shell function shell definition syntax so that ksh will
     treat typeset-declared variables as local. No kidding.
+  - Merge the "project directory" features of the
+    ``virtualenvwrapper.project`` plugin into the main project, adding
+    :ref:`command-mkproject`, :ref:`command-cdproject`, and
+    :ref:`command-setvirtualenvproject` commands.
 
 2.8
 

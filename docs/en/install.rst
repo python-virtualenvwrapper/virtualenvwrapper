@@ -106,11 +106,13 @@ add it to `your user local directory
 Shell Startup File
 ==================
 
-Add two lines to your shell startup file (``.bashrc``, ``.profile``,
-etc.) to set the location where the virtual environments should live
-and the location of the script installed with this package::
+Add three lines to your shell startup file (``.bashrc``, ``.profile``,
+etc.) to set the location where the virtual environments should live,
+the location of your development project directorkes, and the location
+of the script installed with this package::
 
     export WORKON_HOME=$HOME/.virtualenvs
+    export PROJECT_HOME=$HOME/Devel
     source /usr/local/bin/virtualenvwrapper.sh
 
 After editing it, reload the startup file (e.g., run ``source
@@ -133,6 +135,8 @@ virtualenvwrapper can be customized by changing environment
 variables. Set the variables in your shell startup file *before*
 loading ``virtualenvwrapper.sh``.
 
+.. _variable-WORKON_HOME:
+
 Location of Environments
 ------------------------
 
@@ -140,6 +144,19 @@ The variable ``WORKON_HOME`` tells virtualenvwrapper where to place
 your virtual environments.  The default is ``$HOME/.virtualenvs``. If
 the directory does not exist when virtualenvwrapper is loaded, it will
 be created automatically.
+
+.. _variable-PROJECT_HOME:
+
+Location of Project Directories
+-------------------------------
+
+The variable ``PROJECT_HOME`` tells virtualenvwrapper where to place
+your project working directories.  The variable must be set and the
+directory created before :ref:`command-mkproject` is used.
+
+.. seealso::
+
+   * :ref:`project-management`
 
 .. _variable-VIRTUALENVWRAPPER_HOOK_DIR:
 
@@ -149,6 +166,10 @@ Location of Hook Scripts
 The variable ``VIRTUALENVWRAPPER_HOOK_DIR`` tells virtualenvwrapper
 where the :ref:`user-defined hooks <scripts>` should be placed. The
 default is ``$WORKON_HOME``.
+
+.. seealso::
+
+   * :ref:`scripts`
 
 .. _variable-VIRTUALENVWRAPPER_LOG_DIR:
 

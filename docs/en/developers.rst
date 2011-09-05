@@ -91,3 +91,30 @@ the ``tests`` directory.
 .. _shunit2: http://shunit2.googlecode.com/
 
 .. _tox: http://codespeak.net/tox
+
+.. _developer-templates:
+
+Creating a New Template
+=======================
+
+virtualenvwrapper.project templates work like `virtualenvwrapper
+plugins
+<http://www.doughellmann.com/docs/virtualenvwrapper/plugins.html>`__.
+The *entry point* group name is
+``virtualenvwrapper.project.template``.  Configure your entry point to
+refer to a function that will **run** (source hooks are not supported
+for templates).
+
+The argument to the template function is the name of the project being
+created.  The current working directory is the directory created to
+hold the project files (``$PROJECT_HOME/$envname``).
+
+Help Text
+---------
+
+One difference between project templates and other virtualenvwrapper
+extensions is that only the templates specified by the user are run.
+The ``mkproject`` command has a help option to give the user a list of
+the available templates.  The names are taken from the registered
+entry point names, and the descriptions are taken from the docstrings
+for the template functions.

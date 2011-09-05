@@ -5,25 +5,6 @@
 Below is a list of some of the extensions available for use with
 virtualenvwrapper.
 
-.. _extensions-user_scripts:
-
-project
-=======
-
-The project_ extension adds development directory management with
-templates to virtualenvwrapper.
-
-bitbucket
----------
-
-The bitbucket_ project template creates a working directory and
-automatically clones the repository from BitBucket.  Requires
-project_.
-
-.. _project: http://www.doughellmann.com/projects/virtualenvwrapper.project/
-
-.. _bitbucket: http://www.doughellmann.com/projects/virtualenvwrapper.bitbucket/
-
 emacs-desktop
 =============
 
@@ -36,6 +17,8 @@ one when activating a new virtualenv using ``workon``.
 .. _desktop-mode: http://www.emacswiki.org/emacs/DeskTop
 
 .. _emacs-desktop: http://www.doughellmann.com/projects/virtualenvwrapper-emacs-desktop/
+
+.. _extensions-user_scripts:
 
 user_scripts
 ============
@@ -53,3 +36,34 @@ virtualenvwrapper, vim-virtualenv identifies the virtualenv to
 activate based on the name of the file being edited.
 
 .. _vim-virtualenv: https://github.com/jmcantrell/vim-virtualenv
+
+.. _extensions-templates:
+
+Templates
+=========
+
+Below is a list of some of the templates available for use with
+:ref:`command-mkproject`.
+
+.. _templates-bitbucket:
+
+bitbucket
+---------
+
+The bitbucket_ extension automatically clones a mercurial repository
+from the specified bitbucket project.
+
+.. _bitbucket: http://www.doughellmann.com/projects/virtualenvwrapper.bitbucket/
+
+.. _templates-django:
+
+django
+------
+
+The django_ extension automatically creates a new Django project.
+
+.. _django: http://www.doughellmann.com/projects/virtualenvwrapper.django/
+
+.. seealso::
+
+   * :ref:`developer-templates`
