@@ -662,11 +662,11 @@ function lssitepackages {
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
     ls $@ $site_packages
     
-    path_file="$site_packages/virtualenv_path_extensions.pth"
+    path_file="$site_packages/_virtualenv_path_extensions.pth"
     if [ -f "$path_file" ]
     then
         echo
-        echo "virtualenv_path_extensions.pth:"
+        echo "_virtualenv_path_extensions.pth:"
         cat "$path_file"
     fi
 }
