@@ -3,7 +3,7 @@
 PROJECT = 'virtualenvwrapper'
 
 # Change docs/sphinx/conf.py too!
-VERSION = '2.8'
+VERSION = '2.9'
 
 # Bootstrap installation of Distribute
 import distribute_setup
@@ -144,6 +144,7 @@ setup(
 
     provides=['virtualenvwrapper',
               'virtualenvwrapper.user_scripts',
+              'virtualenvwrapper.project',
               ],
     install_requires=['virtualenv'],
 
@@ -162,6 +163,7 @@ setup(
         #'console_scripts': [ 'venvw_hook = virtualenvwrapper.hook_loader:main' ],
         'virtualenvwrapper.initialize': [
             'user_scripts = virtualenvwrapper.user_scripts:initialize',
+            'project = virtualenvwrapper.project:initialize',
             ],
         'virtualenvwrapper.initialize_source': [
             'user_scripts = virtualenvwrapper.user_scripts:initialize_source',
@@ -188,11 +190,19 @@ setup(
             'user_scripts = virtualenvwrapper.user_scripts:post_rmvirtualenv',
             ],
 
+        'virtualenvwrapper.project.pre_mkproject': [
+            'project = virtualenvwrapper.project:pre_mkproject',
+            ],
+        'virtualenvwrapper.project.post_mkproject_source': [
+            'project = virtualenvwrapper.project:post_mkproject_source',
+            ],
+
         'virtualenvwrapper.pre_activate': [
             'user_scripts = virtualenvwrapper.user_scripts:pre_activate',
             ],
         'virtualenvwrapper.post_activate_source': [
             'user_scripts = virtualenvwrapper.user_scripts:post_activate_source',
+            'project = virtualenvwrapper.project:post_activate_source',
             ],
 
         'virtualenvwrapper.pre_deactivate_source': [
