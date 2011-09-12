@@ -22,11 +22,11 @@ setUp () {
 }
 
 test_virtualenvwrapper_initialize() {
-    virtualenvwrapper_initialize
+    assertTrue "Initialized" virtualenvwrapper_initialize
     for hook in premkvirtualenv postmkvirtualenv prermvirtualenv postrmvirtualenv preactivate postactivate predeactivate postdeactivate
     do
-        assertTrue "Global $hook was not created" "[ -f $WORKON_HOME/$hook ]"
-        assertTrue "Global $hook is not executable" "[ -x $WORKON_HOME/$hook ]"
+        assertTrue "Global $WORKON_HOME/$hook was not created" "[ -f $WORKON_HOME/$hook ]"
+        assertTrue "Global $WORKON_HOME/$hook is not executable" "[ -x $WORKON_HOME/$hook ]"
     done
     assertTrue "Log file was not created" "[ -f $WORKON_HOME/hook.log ]"
     export pre_test_dir=$(cd "$test_dir"; pwd)
@@ -94,10 +94,17 @@ test_python_interpreter_set_incorrectly() {
     cd "$WORKON_HOME"
     mkvirtualenv --no-site-packages no_wrappers
     expected="ImportError: No module named virtualenvwrapper.hook_loader"
-    output=$(VIRTUALENVWRAPPER_PYTHON=$(which python) $SHELL $return_to/virtualenvwrapper.sh 2>&1)
-    echo "$output" | grep -q "$expected" 2>&1
-    found=$?
-    assertTrue "Expected \"$expected\", got: \"$output\"" "[ $found -eq 0 ]"
+    # test_shell is set by tests/run_tests
+    if [ "$test_shell" = "" ]
+    then
+	export test_shell=$SHELL
+    fi
+    subshell_output=$(VIRTUALENVWRAPPER_PYTHON="$WORKON_HOME/no_wrappers/bin/python" $test_shell -x $return_to/virtualenvwrapper.sh 2>&1)
+    echo "$subshell_output"
+    echo "$subshell_output" | grep -q "$expected" 2>&1
+    found_it=$?
+    echo "$found_it"
+    assertTrue "Expected \'$expected\', got: \'$subshell_output\'" "[ $found_it -eq 0 ]"
     assertFalse "Failed to detect invalid Python location" "VIRTUALENVWRAPPER_PYTHON=$VIRTUAL_ENV/bin/python $SHELL $return_to/virtualenvwrapper.sh >/dev/null 2>&1"
     cd "$return_to"
     deactivate
