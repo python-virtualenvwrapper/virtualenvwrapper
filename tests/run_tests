@@ -44,16 +44,17 @@ unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
 
 # Run the test scripts with a little formatting around them to make it
 # easier to find where each script output starts.
-for test_shell in bash ksh zsh
+for test_script in $scripts
 do
-    test_shell_opts=
-    if [ $test_shell = "zsh" ]; then
-        test_shell_opts="-o shwordsplit"
-    fi
-    test_shell=$(which $test_shell)
 
-    for test_script in $scripts
+    for test_shell in bash ksh zsh
     do
+	test_shell_opts=
+	if [ $test_shell = "zsh" ]; then
+            test_shell_opts="-o shwordsplit"
+	fi
+	export test_shell=$(which $test_shell)
+
         echo
         echo '********************************************************************************'
         echo "Running $test_script"
