@@ -61,7 +61,7 @@ test_add2virtualenv_delete () {
     # Remove it and verify that change
     add2virtualenv -d "/full/path"
     assertFalse "/full/path in `cat $path_file`" "grep -q /full/path $path_file"
-    cd -
+    cd - >/dev/null 2>&1
 }
 
 
