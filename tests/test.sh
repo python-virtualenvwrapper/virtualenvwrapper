@@ -99,7 +99,7 @@ test_python_interpreter_set_incorrectly() {
     then
 	export test_shell=$SHELL
     fi
-    subshell_output=$(VIRTUALENVWRAPPER_PYTHON="$WORKON_HOME/no_wrappers/bin/python" $test_shell -x $return_to/virtualenvwrapper.sh 2>&1)
+    subshell_output=$(VIRTUALENVWRAPPER_PYTHON="$WORKON_HOME/no_wrappers/bin/python" $test_shell $return_to/virtualenvwrapper.sh 2>&1)
     echo "$subshell_output"
     echo "$subshell_output" | grep -q "$expected" 2>&1
     found_it=$?
