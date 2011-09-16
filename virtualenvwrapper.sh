@@ -271,7 +271,12 @@ function virtualenvwrapper_verify_active_environment {
 
 # Help text for mkvirtualenv
 function mkvirtualenv_help {
-    echo "Usage: mkvirtualenv [-r requirements_file] [virtualenv options] env_name"
+    echo "Usage: mkvirtualenv [-i package] [-r requirements_file] [virtualenv options] env_name"
+    echo
+    echo " -i package"
+    echo
+    echo "    Install a package after the environment is created."
+    echo "    This option may be repeated."
     echo
     echo " -r requirements_file"
     echo
@@ -296,6 +301,7 @@ function mkvirtualenv {
     typeset a
     typeset envname
     typeset requirements
+    typeset packages
 
     in_args=( "$@" )
 
@@ -315,6 +321,9 @@ function mkvirtualenv {
             -h)
                 mkvirtualenv_help;
                 return;;
+            -i)
+                i=$(( $i + 1 ));
+                packages="$packages ${in_args[$i]}";;
             -r)
                 i=$(( $i + 1 ));
                 requirements="${in_args[$i]}";;
@@ -355,6 +364,11 @@ function mkvirtualenv {
     then
         pip install -r "$requirements"
     fi
+
+    for a in $packages
+    do
+        pip install $a
+    done
 
     virtualenvwrapper_run_hook "post_mkvirtualenv"
 }

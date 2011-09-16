@@ -22,11 +22,11 @@ Create a new environment, in the WORKON_HOME.
 
 Syntax::
 
-    mkvirtualenv [-r requirements_file] [virtualenv options] ENVNAME
+    mkvirtualenv [-i package] [-r requirements_file] [virtualenv options] ENVNAME
 
-All command line options except ``-r`` and ``-h`` are passed directly
-to ``virtualenv``.  The new environment is automatically activated
-after being initialized.
+All command line options except ``-i``, ``-r``, and ``-h`` are passed
+directly to ``virtualenv``.  The new environment is automatically
+activated after being initialized.
 
 ::
 
@@ -40,6 +40,9 @@ after being initialized.
     (mynewenv)$ workon
     mynewenv
     (mynewenv)$ 
+
+The ``-i`` option can be used to install one or more packages (by
+repeating the option) after the environment is created.
 
 The ``-r`` option can be used to specify a text file listing packages
 to be installed. The argument value is passed to ``pip -r`` to be
