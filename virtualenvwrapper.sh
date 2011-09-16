@@ -591,7 +591,9 @@ function add2virtualenv {
         return 1
     fi
     
-    path_file="$site_packages/virtualenv_path_extensions.pth"
+    # Prefix with _ to ensure we are loaded as early as possible,
+    # and at least before easy_install.pth.
+    path_file="$site_packages/_virtualenv_path_extensions.pth"
 
     if [ "$*" = "" ]
     then
@@ -600,12 +602,24 @@ function add2virtualenv {
         then
             echo
             echo "Existing paths:"
-            cat "$path_file"
+            cat "$path_file" | grep -v "^import"
         fi
         return 1
     fi
 
-    touch "$path_file"
+    remove=0
+    if [ "$1" = "-d" ]
+    then
+        remove=1
+        shift
+    fi
+
+    if [ ! -f "$path_file" ]
+    then
+        echo "import sys; sys.__plen = len(sys.path)" >> "$path_file"
+        echo "import sys; new=sys.path[sys.__plen:]; del sys.path[sys.__plen:]; p=getattr(sys,'__egginsert',0); sys.path[p:p]=new; sys.__egginsert = p+len(new)" >> "$path_file"
+    fi
+
     for pydir in "$@"
     do
         absolute_path=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.abspath(\"$pydir\")")
@@ -613,7 +627,13 @@ function add2virtualenv {
         then
             echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
         fi
-        echo "$absolute_path" >> "$path_file"
+
+        if [ $remove -eq 1 ]
+        then
+            sed -i "\:^$absolute_path$: d" "$path_file"
+        else
+            sed -i "1a $absolute_path" "$path_file"
+        fi
     done
     return 0
 }
@@ -642,11 +662,11 @@ function lssitepackages {
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
     ls $@ $site_packages
     
-    path_file="$site_packages/virtualenv_path_extensions.pth"
+    path_file="$site_packages/_virtualenv_path_extensions.pth"
     if [ -f "$path_file" ]
     then
         echo
-        echo "virtualenv_path_extensions.pth:"
+        echo "_virtualenv_path_extensions.pth:"
         cat "$path_file"
     fi
 }
