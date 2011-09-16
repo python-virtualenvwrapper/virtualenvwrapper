@@ -2,6 +2,11 @@
 Release History
 ===============
 
+dev
+
+  - Incorporated patch to add ``-d`` option to
+    :ref:`command-add2virtualenv`, contributed by :bbuser:`miracle2k`.
+
 2.9
 
   - Change the shell function shell definition syntax so that ksh will

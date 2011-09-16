@@ -28,12 +28,17 @@ test_add2virtualenv () {
     cdsitepackages
     # Check contents of path file
     path_file="./_virtualenv_path_extensions.pth"
-    assertTrue "No $full_path in `cat $path_file`" "grep $full_path $path_file"
-    assertTrue "No path insert code in `cat $path_file`" "grep sys.__egginsert $path_file"
+    assertTrue "No $full_path in $(cat $path_file)" "grep $full_path $path_file"
+    assertTrue "No path insert code in $(cat $path_file)" "grep sys.__egginsert $path_file"
     # Check the path we inserted is actually at the top
     expected=$full_path
     actual=$($WORKON_HOME/pathtest/bin/python -c "import sys; print sys.path[1]")
     assertSame "$expected" "$actual"
+
+    # Make sure the temporary file created
+    # during the edit was removed
+    assertFalse "Temporary file ${path_file}.tmp still exists" "[ -f ${path_file}.tmp ]"
+
     cd -
 }
 

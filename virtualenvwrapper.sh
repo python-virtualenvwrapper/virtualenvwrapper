@@ -579,7 +579,6 @@ function virtualenvwrapper_get_site_packages_dir {
 # site-packages directory; if this file does not exist, it will be
 # created first.
 function add2virtualenv {
-
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     
@@ -630,10 +629,13 @@ function add2virtualenv {
 
         if [ $remove -eq 1 ]
         then
-            sed -i "\:^$absolute_path$: d" "$path_file"
+            sed -i.tmp "\:^$absolute_path$: d" "$path_file"
         else
-            sed -i "1a $absolute_path" "$path_file"
+            sed -i.tmp '1 a\
+'$absolute_path'
+' "$path_file"
         fi
+        rm -f "${path_file}.tmp"
     done
     return 0
 }
