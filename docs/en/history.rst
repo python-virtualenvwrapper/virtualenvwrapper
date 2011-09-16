@@ -7,6 +7,9 @@ dev
   - Incorporated patch to add ``-d`` option to
     :ref:`command-add2virtualenv`, contributed by :bbuser:`miracle2k`.
   - Add ``-i`` option to :ref:`command-mkvirtualenv`.
+  - Add :ref:`command-mktmpenv` command for creating temporary
+    environments that are automatically removed when they are
+    deactivated.
 
 2.9
 

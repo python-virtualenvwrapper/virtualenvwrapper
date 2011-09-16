@@ -905,6 +905,46 @@ function cdproject {
     return 0
 }
 
+#
+# Temporary virtualenv
+#
+# Originally part of virtualenvwrapper.tmpenv plugin
+#
+mktmpenv() {
+    typeset tmpenvname
+
+    # Generate a unique temporary name, if one is not given.
+    if [ $# -eq 0 ]
+    then
+        tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import uuid; print uuid.uuid4()')
+        mkvirtualenv "$tmpenvname"
+    else
+        mkvirtualenv "$@"
+    fi
+
+    # Create the environment
+    RC=$?
+    if [ $RC -ne 0 ]
+    then
+        return $RC
+    fi
+
+    # Change working directory
+    cdvirtualenv
+
+    # Create the tmpenv marker file
+    echo "This is a temporary environment. It will be deleted when you run 'deactivate'." | tee "$VIRTUAL_ENV/README.tmpenv"
+
+    # Update the postdeactivate script
+    cat - >> "$VIRTUAL_ENV/bin/postdeactivate" <<EOF
+if [ -f "$VIRTUAL_ENV/README.tmpenv" ]
+then
+    echo "Removing temporary environment:" $(basename "$VIRTUAL_ENV")
+    rmvirtualenv $(basename "$VIRTUAL_ENV")
+fi
+EOF
+}
+
 
 #
 # Invoke the initialization hooks
