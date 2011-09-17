@@ -878,7 +878,10 @@ function mkproject {
     do
         echo
         echo "Applying template $t"
-        virtualenvwrapper_run_hook --name $t project.template $envname
+        # For some reason zsh insists on prefixing the template
+        # names with a space, so strip them out before passing
+        # the value to the hook loader.
+        virtualenvwrapper_run_hook --name $(echo $t | sed 's/^ //') project.template $envname
     done
 
     virtualenvwrapper_run_hook project.post_mkproject
