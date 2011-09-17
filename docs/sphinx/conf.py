@@ -12,6 +12,7 @@
 # serve to show the default.
 
 import sys, os
+import subprocess
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -47,7 +48,8 @@ copyright = u'2009-2011, Doug Hellmann'
 # built documents.
 #
 # The short X.Y version.
-version = '2.9'
+version = subprocess.check_output(['sh', '-c', 'cd ../..; python setup.py --version'])
+version = version.strip()
 # The full version, including alpha/beta/rc tags.
 release = version
 
