@@ -28,7 +28,7 @@ setUp () {
 
 test_list_templates () {
     output=$(mkproject -h 2>&1)
-    assertTrue "Did not find test template in \"$output\"" "echo \"$output\" | grep -q test"
+    assertTrue "Did not find test template in \"$output\"" "echo \"$output\" | grep -q 'Creates a test file'"
 }
 
 test_apply_template () {

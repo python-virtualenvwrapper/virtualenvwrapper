@@ -802,7 +802,7 @@ function mkproject_help {
     echo
     echo "Available project templates:"
     echo
-    "$VIRTUALENVWRAPPER_PYTHON" -m virtualenvwrapper.hook_loader -l project.template
+    "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' -l project.template
 }
 
 # Create a new project directory and its associated virtualenv.
