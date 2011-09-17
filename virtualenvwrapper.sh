@@ -916,7 +916,12 @@ mktmpenv() {
     # Generate a unique temporary name, if one is not given.
     if [ $# -eq 0 ]
     then
-        tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import uuid; print uuid.uuid4()')
+        tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import uuid; print uuid.uuid4()' 2>/dev/null)
+        if [ -z "$tmpenvname" ]
+        then
+            # This python does not support uuid
+            tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import random; print hex(random.getrandbits(64))[2:-1]' 2>/dev/null)
+        fi
         mkvirtualenv "$tmpenvname"
     else
         mkvirtualenv "$@"
