@@ -12,6 +12,8 @@ dev
     deactivated.
   - Fixed a problem with hook_loader that prevented it from working
     under Python 2.5 and 2.4.
+  - Fix a problem with the way template names were processed under
+    zsh. (:bbissue:`111`)
 
 2.9
 
