@@ -10,6 +10,8 @@ dev
   - Add :ref:`command-mktmpenv` command for creating temporary
     environments that are automatically removed when they are
     deactivated.
+  - Fixed a problem with hook_loader that prevented it from working
+    under Python 2.5 and 2.4.
 
 2.9
 
