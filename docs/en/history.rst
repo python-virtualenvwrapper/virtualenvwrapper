@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+2.10
 
   - Incorporated patch to add ``-d`` option to
     :ref:`command-add2virtualenv`, contributed by :bbuser:`miracle2k`.
