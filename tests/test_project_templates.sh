@@ -8,6 +8,7 @@ export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
 export PROJECT_HOME="$(echo ${TMPDIR:-/tmp}/PROJECT_HOME | sed 's|//|/|g')"
 
 oneTimeSetUp() {
+    (cd "$test_dir/testtemplate" && python setup.py install)
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     rm -rf "$PROJECT_HOME"
@@ -26,11 +27,14 @@ setUp () {
 }
 
 test_list_templates () {
-    mkproject myproject >/dev/null 2>&1
-    output=`mkproject myproject 2>&1`
-    assertTrue "Did not see expected message" "echo $output | grep 'already exists'"
-    deactivate
+    output=$(mkproject -h 2>&1)
+    assertTrue "Did not find test template in \"$output\"" "echo \"$output\" | grep -q test"
 }
 
+test_apply_template () {
+    mkproject -t test proj1
+    assertTrue "Test file not created" "[ -f TEST_FILE ]"
+    assertTrue "project name not found" "grep -q proj1 TEST_FILE"
+}
 
 . "$test_dir/shunit2"

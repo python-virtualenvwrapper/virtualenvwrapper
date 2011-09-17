@@ -13,6 +13,9 @@ tests/catch_output
 tests/testpackage/build
 tests/testpackage/dist
 tests/testpackage/testpackage.egg-info
+tests/testtemplate/build
+tests/testtemplate/dist
+tests/testtemplate/testtemplate.egg-info
 trace.txt
 virtualenvwrapper.egg-info
 virtualenvwrapper/docs
