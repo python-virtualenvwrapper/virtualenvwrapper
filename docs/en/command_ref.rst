@@ -65,9 +65,9 @@ Create a new virtualenv in the ``WORKON_HOME`` directory.
 
 Syntax::
 
-    mktmpenv [ENVNAME]
+    mktmpenv [VIRTUALENV_OPTIONS]
 
-If no environment name is given, a temporary unique name is generated.
+A unique virtualenv name is generated.
 
 ::
 

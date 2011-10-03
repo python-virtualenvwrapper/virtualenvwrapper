@@ -2,6 +2,11 @@
 Release History
 ===============
 
+dev
+
+  - Changed arguments to :ref:`command-mktmpenv` so it always creates
+    an environment name for you. (:bbissue:`114`)
+
 2.10
 
   - Incorporated patch to add ``-d`` option to

@@ -28,19 +28,23 @@ test_mktmpenv_no_name() {
 }
 
 test_mktmpenv_name() {
-    assertFalse "Environment already exists" "[ -d \"$WORKON_HOME/name-given-by-user\" ]"
     mktmpenv name-given-by-user >/dev/null 2>&1
-    assertTrue "Environment was not created" "[ -d \"$WORKON_HOME/name-given-by-user\" ]"
-    assertSame $(basename "$VIRTUAL_ENV") "name-given-by-user"
+    RC=$?
+    assertTrue "Error was not detected" "[ $RC -ne 0 ]"
+}
+
+test_mktmpenv_virtualenv_args() {
+    mktmpenv --no-site-packages >/dev/null 2>&1
+    RC=$?
+    assertTrue "Error was detected" "[ $RC -eq 0 ]"
 }
 
 test_deactivate() {
-    assertFalse "Environment already exists" "[ -d \"$WORKON_HOME/automatically-deleted\" ]"
-    mktmpenv automatically-deleted >/dev/null 2>&1
-    assertSame $(basename "$VIRTUAL_ENV") "automatically-deleted"
-    assertTrue "Environment was not created" "[ -d \"$WORKON_HOME/automatically-deleted\" ]"
+    mktmpenv >/dev/null 2>&1
+    assertTrue "Environment was not created" "[ ! -z \"$VIRTUAL_ENV\" ]"
+    env_name=$(basename "$VIRTUAL_ENV")
     deactivate >/dev/null 2>&1
-    assertFalse "Environment still exists" "[ -d \"$WORKON_HOME/automatically-deleted\" ]"
+    assertFalse "Environment still exists" "[ -d \"$WORKON_HOME/$env_name\" ]"
 }
 
 . "$test_dir/shunit2"
