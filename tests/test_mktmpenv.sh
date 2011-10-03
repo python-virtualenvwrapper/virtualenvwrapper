@@ -35,8 +35,8 @@ test_mktmpenv_name() {
 
 test_mktmpenv_virtualenv_args() {
     mktmpenv --no-site-packages >/dev/null 2>&1
-    RC=$?
-    assertTrue "Error was detected" "[ $RC -eq 0 ]"
+    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
 }
 
 test_deactivate() {
