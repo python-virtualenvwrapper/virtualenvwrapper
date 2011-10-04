@@ -1,6 +1,6 @@
-========================
- virtualenvwrapper 2.10
-========================
+==========================
+ virtualenvwrapper 2.10.1
+==========================
 
 What is virtualenvwrapper
 =========================
@@ -11,27 +11,19 @@ virtual environments and otherwise managing your development workflow,
 making it easier to work on more than one project at a time without
 introducing conflicts in their dependencies.
 
-What's New in 2.10
-==================
+What's New in 2.10.1
+====================
 
-- Incorporated patch to add ``-d`` option to
-  ``add2virtualenv``, contributed by ``miracle2k``.
-- Add ``-i`` option to ``mkvirtualenv``.
-- Add ``mktmpenv`` command for creating temporary
-  environments that are automatically removed when they are
-  deactivated.
-- Fixed a problem with hook_loader that prevented it from working
-  under Python 2.5 and 2.4.
-- Fix a problem with the way template names were processed under
-  zsh. (issue #111)
+This bug-fix release includes a change to ``mktmpenv`` to resolve a
+problem with the way command line arguments were being handled. All
+temporary environments are now given automatically-generated names and
+the ability to name a temporary environment has been removed.
 
-Upgrading to 2.10
-=================
+Installing
+==========
 
-Version 2.10 includes the features previously delivered separately by
-``virtualenvwrapper.tmpenv``.  If you have an older verison of the
-temporary environment extensions installed, remove it before
-upgrading.
+Visit the virtualenvwrapper_ project page for download links and
+installation instructions.
 
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 

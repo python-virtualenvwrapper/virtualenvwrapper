@@ -2,10 +2,11 @@
 Release History
 ===============
 
-dev
+2.10.1
 
   - Changed arguments to :ref:`command-mktmpenv` so it always creates
-    an environment name for you. (:bbissue:`114`)
+    an environment name for you. (:bbissue:`114` reported by
+    :bbuser:`alex_gaynor`)
 
 2.10
 
