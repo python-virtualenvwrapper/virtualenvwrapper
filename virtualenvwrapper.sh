@@ -273,6 +273,11 @@ function virtualenvwrapper_verify_active_environment {
 function mkvirtualenv_help {
     echo "Usage: mkvirtualenv [-i package] [-r requirements_file] [virtualenv options] env_name"
     echo
+    echo " -a project_path"
+    echo
+    echo "    Provide a full path to a project directory to associate with"
+    echo "    the new environment."
+    echo
     echo " -i package"
     echo
     echo "    Install a package after the environment is created."
@@ -318,6 +323,9 @@ function mkvirtualenv {
         a="${in_args[$i]}"
         # echo "arg $i : $a"
         case "$a" in
+            -a)
+                i=$(( $i + 1 ));
+                project="${in_args[$i]}";;
             -h)
                 mkvirtualenv_help;
                 return;;
@@ -369,6 +377,11 @@ function mkvirtualenv {
     do
         pip install $a
     done
+
+    if [ ! -z "$project" ]
+    then
+        setvirtualenvproject "" "$project"
+    fi
 
     virtualenvwrapper_run_hook "post_mkvirtualenv"
 }
