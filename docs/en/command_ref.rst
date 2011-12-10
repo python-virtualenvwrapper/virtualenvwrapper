@@ -22,9 +22,9 @@ Create a new environment, in the WORKON_HOME.
 
 Syntax::
 
-    mkvirtualenv [-i package] [-r requirements_file] [virtualenv options] ENVNAME
+    mkvirtualenv [-a project_path] [-i package] [-r requirements_file] [virtualenv options] ENVNAME
 
-All command line options except ``-i``, ``-r``, and ``-h`` are passed
+All command line options except ``-a``, ``-i``, ``-r``, and ``-h`` are passed
 directly to ``virtualenv``.  The new environment is automatically
 activated after being initialized.
 
@@ -40,6 +40,8 @@ activated after being initialized.
     (mynewenv)$ workon
     mynewenv
     (mynewenv)$ 
+
+The ``-a`` option can be used to associate a project with the new environment.
 
 The ``-i`` option can be used to install one or more packages (by
 repeating the option) after the environment is created.

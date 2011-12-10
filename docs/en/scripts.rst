@@ -65,7 +65,8 @@ postmkvirtualenv
   :Sourced/Run: sourced
 
 ``$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv`` is sourced after the new environment
-is created and activated.
+is created and activated. If the ``-a`` <project_path> flag was used,
+the link to the project directory is set up before this script is sourced.
 
 .. _scripts-precpvirtualenv:
 
