@@ -2,6 +2,12 @@
 Release History
 ===============
 
+dev
+
+  - Add ``-a`` option to :ref:`command-mkvirtualenv` to associate a
+    new virtualenv with an existing project directory. Contributed by
+    Mike Fogel (:bbuser:`mfogel`).
+
 2.10.1
 
   - Changed arguments to :ref:`command-mktmpenv` so it always creates

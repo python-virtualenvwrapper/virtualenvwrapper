@@ -41,7 +41,8 @@ activated after being initialized.
     mynewenv
     (mynewenv)$ 
 
-The ``-a`` option can be used to associate a project with the new environment.
+The ``-a`` option can be used to associate an existing project
+directory with the new environment.
 
 The ``-i`` option can be used to install one or more packages (by
 repeating the option) after the environment is created.
