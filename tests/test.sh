@@ -92,18 +92,18 @@ test_get_python_version() {
 test_python_interpreter_set_incorrectly() {
     return_to="$(pwd)"
     cd "$WORKON_HOME"
-    mkvirtualenv --no-site-packages no_wrappers
+    mkvirtualenv no_wrappers
     expected="ImportError: No module named virtualenvwrapper.hook_loader"
     # test_shell is set by tests/run_tests
     if [ "$test_shell" = "" ]
     then
-	export test_shell=$SHELL
+        export test_shell=$SHELL
     fi
     subshell_output=$(VIRTUALENVWRAPPER_PYTHON="$WORKON_HOME/no_wrappers/bin/python" $test_shell $return_to/virtualenvwrapper.sh 2>&1)
-    echo "$subshell_output"
+    #echo "$subshell_output"
     echo "$subshell_output" | grep -q "$expected" 2>&1
     found_it=$?
-    echo "$found_it"
+    #echo "$found_it"
     assertTrue "Expected \'$expected\', got: \'$subshell_output\'" "[ $found_it -eq 0 ]"
     assertFalse "Failed to detect invalid Python location" "VIRTUALENVWRAPPER_PYTHON=$VIRTUAL_ENV/bin/python $SHELL $return_to/virtualenvwrapper.sh >/dev/null 2>&1"
     cd "$return_to"

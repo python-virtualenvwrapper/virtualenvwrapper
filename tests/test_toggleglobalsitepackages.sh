@@ -19,7 +19,7 @@ oneTimeTearDown() {
 setUp () {
     echo
     rm -f "$test_dir/catch_output"
-    mkvirtualenv --no-site-packages "globaltest"
+    mkvirtualenv --system-site-packages "globaltest"
 }
 
 tearDown () {

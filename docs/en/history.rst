@@ -7,6 +7,9 @@ dev
   - Add ``-a`` option to :ref:`command-mkvirtualenv` to associate a
     new virtualenv with an existing project directory. Contributed by
     Mike Fogel (:bbuser:`mfogel`).
+  - Drops support for Python 2.4 and 2.5. The tools may still work,
+    but I no longer have a development environment set up for testing
+    them, so I do not officially support them.
 
 2.10.1
 
