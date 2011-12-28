@@ -10,6 +10,7 @@ dev
   - Drops support for Python 2.4 and 2.5. The tools may still work,
     but I no longer have a development environment set up for testing
     them, so I do not officially support them.
+  - Shortcut initialization if it has run before.
 
 2.10.1
 
