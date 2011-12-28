@@ -81,4 +81,12 @@ test_same_workon_and_project_home () {
     PROJECT_HOME="$old_project_home"
 }
 
+test_alternate_linkage_filename () {
+    export VIRTUALENVWRAPPER_PROJECT_FILENAME=".not-project"
+    mkproject myproject6 >/dev/null 2>&1
+    assertSame "myproject6" $(basename "$VIRTUAL_ENV")
+    assertSame "$PROJECT_HOME/myproject6" "$(cat $VIRTUAL_ENV/.not-project)"
+    export VIRTUALENVWRAPPER_PROJECT_FILENAME=".project"
+}
+
 . "$test_dir/shunit2"

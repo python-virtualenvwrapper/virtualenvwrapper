@@ -158,6 +158,19 @@ directory created before :ref:`command-mkproject` is used.
 
    * :ref:`project-management`
 
+.. _variable-VIRTUALENVWRAPPER_PROJECT_FILENAME:
+
+Project Linkage Filename
+------------------------
+
+The variable ``VIRTUALENVWRAPPER_PROJECT_FILENAME`` tells
+virtualenvwrapper how to name the file linking a virtualenv to a
+project working directory. The default is ``.project``.
+
+.. seealso::
+
+   * :ref:`project-management`
+
 .. _variable-VIRTUALENVWRAPPER_HOOK_DIR:
 
 Location of Hook Scripts

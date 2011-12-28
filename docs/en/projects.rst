@@ -34,3 +34,5 @@ site, combine the :ref:`templates-bitbucket` and
 .. seealso::
 
    * :ref:`extensions-templates`
+   * :ref:`variable-PROJECT_HOME`
+   * :ref:`variable-VIRTUALENVWRAPPER_PROJECT_FILENAME`

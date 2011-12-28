@@ -56,5 +56,5 @@ def post_activate_source(args):
 #
 # Change to the project directory
 #
-[ -f "$VIRTUAL_ENV/.project" ] && cd "$(cat \"$VIRTUAL_ENV/.project\")"
+[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ] && cd "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")"
 """

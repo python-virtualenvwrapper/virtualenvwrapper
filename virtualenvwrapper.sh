@@ -65,6 +65,13 @@ then
 	VIRTUALENVWRAPPER_ENV_BIN_DIR="Scripts"
 fi
 
+# Let the user override the name of the file that holds the project
+# directory name.
+if [ "$VIRTUALENVWRAPPER_PROJECT_FILENAME" = "" ]
+then
+    export VIRTUALENVWRAPPER_PROJECT_FILENAME=".project"
+fi
+
 function virtualenvwrapper_derive_workon_home {
     typeset workon_home_dir="$WORKON_HOME"
 
@@ -806,7 +813,7 @@ function setvirtualenvproject {
         prj="$(pwd)"
     fi
     echo "Setting project for $(basename $venv) to $prj"
-    echo "$prj" > "$venv/.project"
+    echo "$prj" > "$venv/$VIRTUALENVWRAPPER_PROJECT_FILENAME"
 }
 
 # Show help for mkproject
@@ -911,9 +918,9 @@ function mkproject {
 function cdproject {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    if [ -f "$VIRTUAL_ENV/.project" ]
+    if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]
     then
-        project_dir=$(cat "$VIRTUAL_ENV/.project")
+        project_dir=$(cat "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME")
         if [ ! -z "$project_dir" ]
         then
             cd "$project_dir"
@@ -922,7 +929,7 @@ function cdproject {
             return 1
         fi
     else
-        echo "No project set in $VIRTUAL_ENV/.project" 1>&2
+        echo "No project set in $VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" 1>&2
         return 1
     fi
     return 0

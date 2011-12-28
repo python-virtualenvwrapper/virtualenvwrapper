@@ -13,6 +13,10 @@ dev
   - Shortcut initialization if it has run before.
   - Set hook log file permissions to be group-writable. (:bbissue:`62`
     reported by :bbuser:`hedgeddown`)
+  - Add ``VIRTUALENVWRAPPER_PROJECT_FILENAME`` variable so the
+    ``.project`` file used to link a virtualenv to a project can be
+    renamed to avoid conflicts with other tools. (:bbissue:`120`
+    reported by :bbuser:`arthuralvim`)
 
 2.10.1
 
