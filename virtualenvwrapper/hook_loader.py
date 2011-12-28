@@ -15,6 +15,15 @@ import sys
 
 import pkg_resources
 
+class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
+    """Taken from http://stackoverflow.com/questions/1407474/does-python-logging-handlers-rotatingfilehandler-allow-creation-of-a-group-writa
+    """
+    def _open(self):
+        prevumask = os.umask(0o002)
+        rtv = logging.handlers.RotatingFileHandler._open(self)
+        os.umask(prevumask)
+        return rtv
+
 def main():
     parser = optparse.OptionParser(
         usage='usage: %prog [options] <hook> [<arguments>]',
@@ -66,7 +75,7 @@ def main():
 
     # Set up logging to a file
     root_logger.setLevel(logging.DEBUG)
-    file_handler = logging.handlers.RotatingFileHandler(
+    file_handler = GroupWriteRotatingFileHandler(
         os.path.expandvars(os.path.join('$VIRTUALENVWRAPPER_LOG_DIR', 'hook.log')),
         maxBytes=10240,
         backupCount=1,

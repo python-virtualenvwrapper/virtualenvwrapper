@@ -11,6 +11,8 @@ dev
     but I no longer have a development environment set up for testing
     them, so I do not officially support them.
   - Shortcut initialization if it has run before.
+  - Set hook log file permissions to be group-writable. (:bbissue:`62`
+    reported by :bbuser:`hedgeddown`)
 
 2.10.1
 
