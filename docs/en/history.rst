@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+2.11
 
   - Add ``-a`` option to :ref:`command-mkvirtualenv` to associate a
     new virtualenv with an existing project directory. Contributed by
