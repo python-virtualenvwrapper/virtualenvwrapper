@@ -2,6 +2,12 @@
 Release History
 ===============
 
+2.11.1
+
+  - Remove the initialization shortcut because it breaks tab
+    completion in sub-shell environments like screen and
+    tmux. (:bbissue:`121`)
+
 2.11
 
   - Add ``-a`` option to :ref:`command-mkvirtualenv` to associate a
