@@ -211,10 +211,6 @@ function virtualenvwrapper_setup_tab_completion {
 
 # Set up virtualenvwrapper properly
 function virtualenvwrapper_initialize {
-    if [ ! -z "$VIRTUALENVWRAPPER_INITIALIZED" ]
-    then
-        return 0
-    fi
     export WORKON_HOME="$(virtualenvwrapper_derive_workon_home)"
 
     virtualenvwrapper_verify_workon_home -q || return 1
@@ -239,8 +235,6 @@ function virtualenvwrapper_initialize {
     fi
 
     virtualenvwrapper_setup_tab_completion
-
-    export VIRTUALENVWRAPPER_INITIALIZED=1
 
     return 0
 }
