@@ -26,7 +26,7 @@ setUp () {
 }
 
 test_activate () {
-    mkproject myproject
+    mkproject myproject >/dev/null 2>&1
     deactivate
     cd $TMPDIR
     assertSame "" "$VIRTUAL_ENV"

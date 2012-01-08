@@ -10,8 +10,8 @@ oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     source "$test_dir/../virtualenvwrapper.sh"
-    mkvirtualenv "env1"
-    mkvirtualenv "env2"
+    mkvirtualenv "env1" >/dev/null 2>&1
+    mkvirtualenv "env2" >/dev/null 2>&1
     deactivate >/dev/null 2>&1 
 }
 
