@@ -134,7 +134,7 @@ def run_hooks(hook, options, args, output=None):
             continue
         plugin = ep.load()
         if options.listing:
-            sys.stdout.write('  %-10s -- %s' % (ep.name, inspect.getdoc(plugin) or '')
+            sys.stdout.write('  %-10s -- %s' % (ep.name, inspect.getdoc(plugin) or ''))
             continue
         if options.sourcing:
             # Show the shell commands so they can
