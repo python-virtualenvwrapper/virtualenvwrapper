@@ -1,5 +1,5 @@
 ========================
- virtualenvwrapper 2.11
+ virtualenvwrapper 3.0
 ========================
 
 What is virtualenvwrapper
@@ -11,20 +11,11 @@ virtual environments and otherwise managing your development workflow,
 making it easier to work on more than one project at a time without
 introducing conflicts in their dependencies.
 
-What's New in 2.11
-==================
+What's New in 3.0
+=================
 
-- Add ``-a`` option to ``mkvirtualenv`` to associate a
-  new virtualenv with an existing project directory. Contributed by
-  Mike Fogel.
-- Drops support for Python 2.4 and 2.5. The tools may still work,
-  but I no longer have a development environment set up for testing
-  them, so I do not officially support them.
-- Shortcut initialization if it has run before.
-- Set hook log file permissions to be group-writable. (issue 62)
-- Add ``VIRTUALENVWRAPPER_PROJECT_FILENAME`` variable so the
-  ``.project`` file used to link a virtualenv to a project can be
-  renamed to avoid conflicts with other tools. (issue 120)
+- Add Python 3 support, thanks in large part to the efforts of Daniel
+  Kraus. Tested under Python 2.6, 2.7, and 3.2.
 
 Installing
 ==========

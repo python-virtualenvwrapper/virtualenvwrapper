@@ -2,6 +2,12 @@
 Release History
 ===============
 
+3.0
+
+  - Add Python 3 support, thanks in large part to the efforts of
+    Daniel Kraus (:bbuser:`dakra`). Tested under Python 2.6, 2.7, and
+    3.2.
+
 2.11
 
   - Add ``-a`` option to :ref:`command-mkvirtualenv` to associate a
