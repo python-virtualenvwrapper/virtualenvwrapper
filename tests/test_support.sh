@@ -22,7 +22,7 @@ setUp () {
 }
 
 test_get_python_version () {
-    expected="$($VIRTUALENVWRAPPER_PYTHON -c 'import sys; sys.stdout.write("%s.%s\n" % sys.version_info[:2])')"
+    expected="$($VIRTUAL_ENV/bin/python -c 'import sys; sys.stdout.write("%s.%s\n" % sys.version_info[:2])')"
     echo "Expecting: $expected"
     vers=$(virtualenvwrapper_get_python_version)
     echo "Got      : $vers"

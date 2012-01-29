@@ -591,10 +591,11 @@ function workon {
 
 # Prints the Python version string for the current interpreter.
 function virtualenvwrapper_get_python_version {
-    # Uses the Python from the virtualenv because we're trying to
-    # determine the version installed there so we can build
-    # up the path to the site-packages directory.
-    python -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.
+    # Uses the Python from the virtualenv rather than
+    # VIRTUALENVWRAPPER_PYTHON because we're trying to determine the
+    # version installed there so we can build up the path to the
+    # site-packages directory.
+    "$VIRTUAL_ENV/bin/python" -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.
 }
 
 # Prints the path to the site-packages directory for the current environment.
