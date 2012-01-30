@@ -8,7 +8,7 @@ export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
 export PROJECT_HOME="$(echo ${TMPDIR:-/tmp}/PROJECT_HOME | sed 's|//|/|g')"
 
 oneTimeSetUp() {
-    (cd "$test_dir/testtemplate" && rm -rf build && python setup.py install)
+    (cd "$test_dir/testtemplate" && rm -rf build && "$VIRTUAL_ENV/bin/python" setup.py install)
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     rm -rf "$PROJECT_HOME"
