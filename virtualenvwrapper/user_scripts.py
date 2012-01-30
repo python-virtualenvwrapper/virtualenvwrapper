@@ -37,7 +37,8 @@ def run_script(script_path, *args):
         log.debug('running %s', str(cmd))
         try:
             return_code = subprocess.call(cmd)
-        except OSError, msg:
+        except OSError:
+            _,  msg, _ = sys.exc_info()
             log.error('could not run "%s": %s', script_path, str(msg))
         #log.debug('Returned %s', return_code)
     return

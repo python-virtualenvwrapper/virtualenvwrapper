@@ -84,12 +84,6 @@ test_virtualenvwrapper_verify_workon_home_missing_dir_grep_options() {
     unset GREP_OPTIONS
 }
 
-test_get_python_version() {
-    expected=$(python -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.)
-    actual=$(virtualenvwrapper_get_python_version)
-    assertSame "$expected" "$actual"
-}
-
 test_python_interpreter_set_incorrectly() {
     return_to="$(pwd)"
     cd "$WORKON_HOME"

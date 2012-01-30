@@ -49,11 +49,11 @@ do
 
     for test_shell in bash ksh zsh
     do
-	test_shell_opts=
-	if [ $test_shell = "zsh" ]; then
+        test_shell_opts=
+        if [ $test_shell = "zsh" ]; then
             test_shell_opts="-o shwordsplit"
-	fi
-	export test_shell=$(which $test_shell)
+        fi
+        export test_shell=$(which $test_shell)
 
         echo
         echo '********************************************************************************'

@@ -99,7 +99,7 @@ function virtualenvwrapper_derive_workon_home {
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
         # - Expanding variables (e.g., $foo)
         # - Converting ~s to complete paths (e.g., ~/ to /home/brian/ and ~arthur to /home/arthur)
-        workon_home_dir=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.expandvars(os.path.expanduser(\"$workon_home_dir\"))")
+        workon_home_dir=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.expandvars(os.path.expanduser(\"$workon_home_dir\"))+'\n')")
     fi
 
     echo "$workon_home_dir"
@@ -591,10 +591,11 @@ function workon {
 
 # Prints the Python version string for the current interpreter.
 function virtualenvwrapper_get_python_version {
-    # Uses the Python from the virtualenv because we're trying to
-    # determine the version installed there so we can build
-    # up the path to the site-packages directory.
-    python -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.
+    # Uses the Python from the virtualenv rather than
+    # VIRTUALENVWRAPPER_PYTHON because we're trying to determine the
+    # version installed there so we can build up the path to the
+    # site-packages directory.
+    "$VIRTUAL_ENV/bin/python" -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.
 }
 
 # Prints the path to the site-packages directory for the current environment.
@@ -656,7 +657,7 @@ function add2virtualenv {
 
     for pydir in "$@"
     do
-        absolute_path=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os; print os.path.abspath(\"$pydir\")")
+        absolute_path=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.abspath(\"$pydir\")+'\n')")
         if [ "$absolute_path" != "$pydir" ]
         then
             echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
@@ -939,11 +940,11 @@ mktmpenv() {
     typeset RC
 
     # Generate a unique temporary name
-    tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import uuid; print uuid.uuid4()' 2>/dev/null)
+    tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import uuid,sys; sys.stdout.write(uuid.uuid4()+"\n")' 2>/dev/null)
     if [ -z "$tmpenvname" ]
     then
         # This python does not support uuid
-        tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import random; print hex(random.getrandbits(64))[2:-1]' 2>/dev/null)
+        tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import random,sys; sys.stdout.write(hex(random.getrandbits(64))[2:-1]+"\n")' 2>/dev/null)
     fi
 
     # Create the environment

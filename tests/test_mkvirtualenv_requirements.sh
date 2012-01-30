@@ -23,10 +23,10 @@ setUp () {
 }
 
 test_requirements_file () {
-    echo "commandlineapp" > "$test_dir/requirements.txt"
+    echo "IPy" > "$test_dir/requirements.txt"
     mkvirtualenv -r "$test_dir/requirements.txt" "env3" >/dev/null 2>&1
     installed=$(pip freeze)
-    assertTrue "CommandLineApp not found in $installed" "echo $installed | grep CommandLineApp"
+    assertTrue "IPy not found in $installed" "pip freeze | grep IPy"
 }
 
 . "$test_dir/shunit2"
