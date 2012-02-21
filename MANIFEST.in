@@ -1,5 +1,11 @@
 include setup.py
 include distribute_setup.py
 include tests/*
+include tests/testpackage/setup.py
+include tests/testpackage/testscript.py
+include tests/testtemplate/distribute_setup.py
+include tests/testtemplate/setup.py
+include tests/testtemplate/mytemplates/*.py
 recursive-include docs *.rst *.py *.html *.css *.js *.png *.txt
+include tox.ini
 
