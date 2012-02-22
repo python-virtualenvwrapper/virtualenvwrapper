@@ -1,6 +1,6 @@
-========================
- virtualenvwrapper 3.0
-========================
+=========================
+ virtualenvwrapper 3.0.1
+=========================
 
 What is virtualenvwrapper
 =========================
@@ -11,11 +11,11 @@ virtual environments and otherwise managing your development workflow,
 making it easier to work on more than one project at a time without
 introducing conflicts in their dependencies.
 
-What's New in 3.0
-=================
+What's New in 3.0.1
+===================
 
-- Add Python 3 support, thanks in large part to the efforts of Daniel
-  Kraus. Tested under Python 2.6, 2.7, and 3.2.
+- Fix some packaging issues that made it more difficult to run the
+  tests directly from the sdist package.
 
 Installing
 ==========

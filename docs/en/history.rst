@@ -2,6 +2,11 @@
 Release History
 ===============
 
+3.0.1
+
+  - Fix some packaging issues that made it more difficult to run the
+    tests directly from the sdist package. (:bbissue:`126`)
+
 3.0
 
   - Add Python 3 support, thanks in large part to the efforts of
