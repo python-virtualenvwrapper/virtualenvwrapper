@@ -119,6 +119,8 @@ def main():
         output = open(options.script_filename, "w")
         try:
             output.write('# %s\n' % hook)
+            # output.write('echo %s\n' % hook)
+            # output.write('set -x\n')
             run_hooks(hook + '_source', options, args, output)
         finally:
             output.close()
