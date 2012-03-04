@@ -2,6 +2,8 @@
  virtualenvwrapper 3.0.1
 =========================
 
+.. tags:: virtualenvwrapper release python
+
 What is virtualenvwrapper
 =========================
 
