@@ -6,6 +6,8 @@ dev
 
   - Fix a problem with activation hooks when associating a new
     virtualenv with an existing project directory. (:bbissue:`122`)
+  - Fix a problem with :ref:`command-add2virtualenv` and paths
+    containing "special" characters such as ``&``. (:bbissue:`132`)
 
 3.0.1
 

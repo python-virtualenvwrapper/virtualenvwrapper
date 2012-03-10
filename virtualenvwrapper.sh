@@ -671,7 +671,7 @@ function add2virtualenv {
             sed -i.tmp "\:^$absolute_path$: d" "$path_file"
         else
             sed -i.tmp '1 a\
-'$absolute_path'
+'"$absolute_path"'
 ' "$path_file"
         fi
         rm -f "${path_file}.tmp"
