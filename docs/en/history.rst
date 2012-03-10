@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+3.1
 
   - Fix a problem with activation hooks when associating a new
     virtualenv with an existing project directory. (:bbissue:`122`)
