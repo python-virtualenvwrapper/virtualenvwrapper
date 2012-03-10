@@ -373,6 +373,14 @@ function mkvirtualenv {
     # the environment won't exist.  Use that to tell whether
     # we should switch to the environment and run the hook.
     [ ! -d "$WORKON_HOME/$envname" ] && return 0
+
+	# If they gave us a project directory, set it up now
+	# so the activate hooks can find it.
+    if [ ! -z "$project" ]
+    then
+        setvirtualenvproject "$WORKON_HOME/$envname" "$project"
+    fi
+
     # Now activate the new environment
     workon "$envname"
 
@@ -385,11 +393,6 @@ function mkvirtualenv {
     do
         pip install $a
     done
-
-    if [ ! -z "$project" ]
-    then
-        setvirtualenvproject "" "$project"
-    fi
 
     virtualenvwrapper_run_hook "post_mkvirtualenv"
 }
