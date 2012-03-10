@@ -2,6 +2,11 @@
 Release History
 ===============
 
+dev
+
+  - Fix a problem with activation hooks when associating a new
+    virtualenv with an existing project directory. (:bbissue:`122`)
+
 3.0.1
 
   - Fix some packaging issues that made it more difficult to run the
