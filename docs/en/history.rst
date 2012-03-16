@@ -2,6 +2,12 @@
 Release History
 ===============
 
+dev
+
+  - Make ``project_dir`` a local variable so that
+    :ref:`command-cdproject` does not interfere with other variables
+    the user might have set. (contributed by :bbuser:`slackorama`)
+
 3.1
 
   - Fix a problem with activation hooks when associating a new

@@ -918,7 +918,7 @@ function cdproject {
     virtualenvwrapper_verify_active_environment || return 1
     if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]
     then
-        local project_dir=$(cat "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME")
+        typeset project_dir=$(cat "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME")
         if [ ! -z "$project_dir" ]
         then
             cd "$project_dir"
