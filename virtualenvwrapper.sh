@@ -410,7 +410,7 @@ function rmvirtualenv {
     typeset env_name
     for env_name in $@
     do
-        echo "Erasing $env_name..."
+        echo "Removing $env_name..."
         typeset env_dir="$WORKON_HOME/$env_name"
         if [ "$VIRTUAL_ENV" = "$env_dir" ]
         then
