@@ -399,35 +399,41 @@ function mkvirtualenv {
 
 # Remove an environment, in the WORKON_HOME.
 function rmvirtualenv {
-    typeset env_name="$1"
     virtualenvwrapper_verify_workon_home || return 1
-    if [ "$env_name" = "" ]
+    if [ ${#@} = 0 ]
     then
         echo "Please specify an enviroment." >&2
         return 1
     fi
-    env_dir="$WORKON_HOME/$env_name"
-    if [ "$VIRTUAL_ENV" = "$env_dir" ]
-    then
-        echo "ERROR: You cannot remove the active environment ('$env_name')." >&2
-        echo "Either switch to another environment, or run 'deactivate'." >&2
-        return 1
-    fi
 
-    # Move out of the current directory to one known to be
-    # safe, in case we are inside the environment somewhere.
-    typeset prior_dir="$(pwd)"
-    \cd "$WORKON_HOME"
+    # support to remove several environments
+    typeset env_name
+    for env_name in $@
+    do
+        echo "Erasing $env_name..."
+        typeset env_dir="$WORKON_HOME/$env_name"
+        if [ "$VIRTUAL_ENV" = "$env_dir" ]
+        then
+            echo "ERROR: You cannot remove the active environment ('$env_name')." >&2
+            echo "Either switch to another environment, or run 'deactivate'." >&2
+            return 1
+        fi
 
-    virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
-    \rm -rf "$env_dir"
-    virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
+        # Move out of the current directory to one known to be
+        # safe, in case we are inside the environment somewhere.
+        typeset prior_dir="$(pwd)"
+        \cd "$WORKON_HOME"
 
-    # If the directory we used to be in still exists, move back to it.
-    if [ -d "$prior_dir" ]
-    then
-        \cd "$prior_dir"
-    fi
+        virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
+        \rm -rf "$env_dir"
+        virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
+
+        # If the directory we used to be in still exists, move back to it.
+        if [ -d "$prior_dir" ]
+        then
+            \cd "$prior_dir"
+        fi
+    done
 }
 
 # List the available environments.
