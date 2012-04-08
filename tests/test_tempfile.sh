@@ -3,11 +3,9 @@
 #set -x
 
 test_dir=$(cd $(dirname $0) && pwd)
+source "$test_dir/setup.sh"
 
-tmplocation=${TMPDIR:-/tmp}
-export WORKON_HOME="$(echo ${tmplocation}/WORKON_HOME | sed 's|//|/|g')"
-
-export HOOK_VERBOSE_OPTION=-v
+#export HOOK_VERBOSE_OPTION=-v
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"

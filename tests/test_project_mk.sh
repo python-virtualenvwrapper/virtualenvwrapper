@@ -3,9 +3,7 @@
 #set -x
 
 test_dir=$(dirname $0)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
-export PROJECT_HOME="$(echo ${TMPDIR:-/tmp}/PROJECT_HOME | sed 's|//|/|g')"
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
