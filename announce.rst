@@ -1,5 +1,5 @@
 =======================
- virtualenvwrapper 3.1
+ virtualenvwrapper 3.2
 =======================
 
 .. tags:: virtualenvwrapper release python
@@ -13,13 +13,25 @@ virtual environments and otherwise managing your development workflow,
 making it easier to work on more than one project at a time without
 introducing conflicts in their dependencies.
 
-What's New in 3.1
+What's New in 3.2
 =================
 
-- Fix a problem with activation hooks when associating a new
-  virtualenv with an existing project directory.
-- Fix a problem with ``add2virtualenv`` and paths containing "special"
-  characters such as ``&``.
+- Make ``project_dir`` a local variable so that
+  ``cdproject`` does not interfere with other variables
+  the user might have set. (contributed by ``slackorama``)
+- Fix typo in documentation reported by Nick Martin.
+- Change trove classifier for license "MIT" to reflect the license
+  text presented in the documentation. *This does not indicate a
+  change in the license, just a correction to the expression of that
+  intent.* (contributed by ``ralphbean`` as fix for issue 134)
+- Extend ``rmvirtualenv`` to allow removing more than one
+  environment at a time. (contributed by ``ciberglo``)
+- Change the definition of ``virtualenvwrapper_get_site_packages_dir``
+  to ask ``distutils`` for the ``site-packages`` directory instead of
+  trying to build the path ourselves in the shell script. This should
+  resolve issue 112 and improve support for Python interpreters other
+  than C Python. Thanks to Carl Meyer and Dario Bertini for their
+  contributions toward the fix.
 
 Installing
 ==========
