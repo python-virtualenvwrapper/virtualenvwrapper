@@ -8,6 +8,11 @@ dev
     :ref:`command-cdproject` does not interfere with other variables
     the user might have set. (contributed by :bbuser:`slackorama`)
   - Fix typo in documentation reported by Nick Martin.
+  - Change trove classifier for license "MIT" to reflect the license
+    text presented in the documentation. *This does not indicate a
+    change in the license, just a correction to the expression of that
+    intent. See :ref:`license`* (contributed by :bbuser:`ralphbean` as
+    fix for :bbissue:`134`)
 
 3.1
 

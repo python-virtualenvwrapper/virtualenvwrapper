@@ -226,6 +226,8 @@ issues.  Before reporting bugs in the bug tracker, please test
 *without* your aliases enabled.  If you can identify the alias causing
 the problem, that will help make virtualenvwrapper more robust.
 
+.. _license:
+
 =======
 License
 =======
