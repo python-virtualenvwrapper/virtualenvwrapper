@@ -122,6 +122,8 @@ Syntax::
 
    * :ref:`scripts-get_env_details`
 
+.. _command-rmvirtualenv:
+
 rmvirtualenv
 ------------
 
