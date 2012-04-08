@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+3.2
 
   - Make ``project_dir`` a local variable so that
     :ref:`command-cdproject` does not interfere with other variables
