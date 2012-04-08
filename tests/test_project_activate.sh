@@ -1,7 +1,5 @@
 #!/bin/sh
 
-#set -x
-
 test_dir=$(dirname $0)
 source "$test_dir/setup.sh"
 

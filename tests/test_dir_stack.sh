@@ -1,11 +1,7 @@
 #!/bin/sh
 
-#set -x
-
 test_dir=$(cd $(dirname $0) && pwd)
 source "$test_dir/setup.sh"
-
-#unset HOOK_VERBOSE_OPTION
 
 oneTimeSetUp() {
     test_begin_dir=$(pwd)

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-#set -x
-
 test_dir=$(cd $(dirname $0) && pwd)
 source "$test_dir/setup.sh"
 
