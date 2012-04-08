@@ -13,6 +13,8 @@ dev
     change in the license, just a correction to the expression of that
     intent. See :ref:`license`* (contributed by :bbuser:`ralphbean` as
     fix for :bbissue:`134`)
+  - Extend :ref:`command-rmvirtualenv` to allow removing more than one
+    environment at a time. (contributed by :bbuser:`ciberglo`)
 
 3.1
 
