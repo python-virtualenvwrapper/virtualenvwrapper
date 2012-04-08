@@ -108,7 +108,7 @@ Shell Startup File
 
 Add three lines to your shell startup file (``.bashrc``, ``.profile``,
 etc.) to set the location where the virtual environments should live,
-the location of your development project directorkes, and the location
+the location of your development project directories, and the location
 of the script installed with this package::
 
     export WORKON_HOME=$HOME/.virtualenvs
