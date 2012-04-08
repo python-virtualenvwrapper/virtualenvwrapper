@@ -7,6 +7,7 @@ dev
   - Make ``project_dir`` a local variable so that
     :ref:`command-cdproject` does not interfere with other variables
     the user might have set. (contributed by :bbuser:`slackorama`)
+  - Fix typo in documentation reported by Nick Martin.
 
 3.1
 
