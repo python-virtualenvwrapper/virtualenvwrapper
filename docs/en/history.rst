@@ -15,6 +15,13 @@ dev
     fix for :bbissue:`134`)
   - Extend :ref:`command-rmvirtualenv` to allow removing more than one
     environment at a time. (contributed by :bbuser:`ciberglo`)
+  - Change the definition of
+    ``virtualenvwrapper_get_site_packages_dir`` to ask ``distutils``
+    for the ``site-packages`` directory instead of trying to build the
+    path ourselves in the shell script. This should resolve
+    :bbissue:`112` and improve support for Python interpreters other
+    than C Python. Thanks to Carl Meyer and Dario Bertini for their
+    contributions toward the fix.
 
 3.1
 

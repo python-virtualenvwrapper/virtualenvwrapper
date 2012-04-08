@@ -3,8 +3,6 @@
 test_dir=$(cd $(dirname $0) && pwd)
 source "$test_dir/setup.sh"
 
-#unset HOOK_VERBOSE_OPTION
-
 setUp () {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
