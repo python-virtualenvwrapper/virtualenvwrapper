@@ -29,6 +29,18 @@ test_remove () {
     assertFalse "[ -d $WORKON_HOME/deleteme ]"
 }
 
+test_remove_several_envs () {
+    mkvirtualenv "deleteme" >/dev/null 2>&1
+    assertTrue "[ -d $WORKON_HOME/deleteme ]"
+    deactivate
+    mkvirtualenv "deleteme2" >/dev/null 2>&1
+    assertTrue "[ -d $WORKON_HOME/deleteme2 ]"
+    deactivate
+    rmvirtualenv "deleteme deleteme2"
+    assertFalse "[ -d $WORKON_HOME/deleteme ]"
+    assertFalse "[ -d $WORKON_HOME/deleteme2 ]"
+}
+
 test_within_virtualenv () {
     mkvirtualenv "deleteme" >/dev/null 2>&1
     assertTrue "[ -d $WORKON_HOME/deleteme ]"

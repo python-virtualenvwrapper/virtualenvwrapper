@@ -61,7 +61,7 @@ VIRTUALENVWRAPPER_ENV_BIN_DIR="bin"
 if [ "$OS" = "Windows_NT" ] && [ "$MSYSTEM" = "MINGW32" ]
 then
 	# Only assign this for msys, cygwin use standard Unix paths
-	# and its own python installation 
+	# and its own python installation
 	VIRTUALENVWRAPPER_ENV_BIN_DIR="Scripts"
 fi
 
@@ -156,7 +156,7 @@ function virtualenvwrapper_run_hook {
     fi
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
     result=$?
-    
+
     if [ $result -eq 0 ]
     then
         if [ ! -f "$hook_script" ]
@@ -171,7 +171,7 @@ function virtualenvwrapper_run_hook {
     return $result
 }
 
-# Set up tab completion.  (Adapted from Arthur Koziel's version at 
+# Set up tab completion.  (Adapted from Arthur Koziel's version at
 # http://arthurkoziel.com/2008/10/11/virtualenvwrapper-bash-completion/)
 function virtualenvwrapper_setup_tab_completion {
     if [ -n "$BASH" ] ; then
@@ -203,7 +203,7 @@ function virtualenvwrapper_setup_tab_completion {
         _cdsitepackages_complete () {
             reply=( $(cdsitepackages && ls -d ${1}*) )
         }
-        compctl -K _virtualenvs workon rmvirtualenv cpvirtualenv showvirtualenv 
+        compctl -K _virtualenvs workon rmvirtualenv cpvirtualenv showvirtualenv
         compctl -K _cdvirtualenv_complete cdvirtualenv
         compctl -K _cdsitepackages_complete cdsitepackages
     fi
@@ -399,35 +399,41 @@ function mkvirtualenv {
 
 # Remove an environment, in the WORKON_HOME.
 function rmvirtualenv {
-    typeset env_name="$1"
     virtualenvwrapper_verify_workon_home || return 1
-    if [ "$env_name" = "" ]
+    if [ ${#@} = 0 ]
     then
         echo "Please specify an enviroment." >&2
         return 1
     fi
-    env_dir="$WORKON_HOME/$env_name"
-    if [ "$VIRTUAL_ENV" = "$env_dir" ]
-    then
-        echo "ERROR: You cannot remove the active environment ('$env_name')." >&2
-        echo "Either switch to another environment, or run 'deactivate'." >&2
-        return 1
-    fi
 
-    # Move out of the current directory to one known to be
-    # safe, in case we are inside the environment somewhere.
-    typeset prior_dir="$(pwd)"
-    \cd "$WORKON_HOME"
+    # support to remove several environments
+    typeset env_name
+    for env_name in $@
+    do
+        echo "Removing $env_name..."
+        typeset env_dir="$WORKON_HOME/$env_name"
+        if [ "$VIRTUAL_ENV" = "$env_dir" ]
+        then
+            echo "ERROR: You cannot remove the active environment ('$env_name')." >&2
+            echo "Either switch to another environment, or run 'deactivate'." >&2
+            return 1
+        fi
 
-    virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
-    \rm -rf "$env_dir"
-    virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
+        # Move out of the current directory to one known to be
+        # safe, in case we are inside the environment somewhere.
+        typeset prior_dir="$(pwd)"
+        \cd "$WORKON_HOME"
 
-    # If the directory we used to be in still exists, move back to it.
-    if [ -d "$prior_dir" ]
-    then
-        \cd "$prior_dir"
-    fi
+        virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
+        \rm -rf "$env_dir"
+        virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
+
+        # If the directory we used to be in still exists, move back to it.
+        if [ -d "$prior_dir" ]
+        then
+            \cd "$prior_dir"
+        fi
+    done
 }
 
 # List the available environments.
@@ -452,9 +458,9 @@ function _lsvirtualenv_usage {
 #
 # Usage: lsvirtualenv [-l]
 function lsvirtualenv {
-    
+
     typeset long_mode=true
-    if command -v "getopts" &> /dev/null 
+    if command -v "getopts" &> /dev/null
     then
 		# Use getopts when possible
     	OPTIND=1
@@ -535,14 +541,14 @@ function workon {
 
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_workon_environment $env_name || return 1
-    
+
     activate="$WORKON_HOME/$env_name/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate"
     if [ ! -f "$activate" ]
     then
         echo "ERROR: Environment '$WORKON_HOME/$env_name' does not contain an activate script." >&2
         return 1
     fi
-    
+
     # Deactivate any current environment "destructively"
     # before switching so we use our override function,
     # if it exists.
@@ -554,9 +560,9 @@ function workon {
     fi
 
     virtualenvwrapper_run_hook "pre_activate" "$env_name"
-    
+
     source "$activate"
-    
+
     # Save the deactivate function from virtualenv under a different name
     virtualenvwrapper_original_deactivate=`typeset -f deactivate | sed 's/deactivate/virtualenv_deactivate/g'`
     eval "$virtualenvwrapper_original_deactivate"
@@ -568,10 +574,10 @@ function workon {
         # Call the local hook before the global so we can undo
         # any settings made by the local postactivate first.
         virtualenvwrapper_run_hook "pre_deactivate"
-        
+
         env_postdeactivate_hook="$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postdeactivate"
         old_env=$(basename "$VIRTUAL_ENV")
-        
+
         # Call the original function.
         virtualenv_deactivate $1
 
@@ -585,9 +591,9 @@ function workon {
         fi
 
     }'
-    
+
     virtualenvwrapper_run_hook "post_activate"
-    
+
 	return 0
 }
 
@@ -603,7 +609,7 @@ function virtualenvwrapper_get_python_version {
 
 # Prints the path to the site-packages directory for the current environment.
 function virtualenvwrapper_get_site_packages_dir {
-    echo "$VIRTUAL_ENV/lib/python`virtualenvwrapper_get_python_version`/site-packages"    
+    echo "$VIRTUAL_ENV/lib/python`virtualenvwrapper_get_python_version`/site-packages"
 }
 
 # Path management for packages outside of the virtual env.
@@ -620,15 +626,15 @@ function virtualenvwrapper_get_site_packages_dir {
 function add2virtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    
+
     site_packages="`virtualenvwrapper_get_site_packages_dir`"
-    
+
     if [ ! -d "${site_packages}" ]
     then
         echo "ERROR: currently-active virtualenv does not appear to have a site-packages directory" >&2
         return 1
     fi
-    
+
     # Prefix with _ to ensure we are loaded as early as possible,
     # and at least before easy_install.pth.
     path_file="$site_packages/_virtualenv_path_extensions.pth"
@@ -702,7 +708,7 @@ function lssitepackages {
     virtualenvwrapper_verify_active_environment || return 1
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
     ls $@ $site_packages
-    
+
     path_file="$site_packages/_virtualenv_path_extensions.pth"
     if [ -f "$path_file" ]
     then
@@ -749,7 +755,7 @@ function cpvirtualenv {
     fi
     typeset source_env="$env_home$env_name"
     typeset target_env="$env_home$new_env"
-    
+
     if [ ! -e "$source_env" ]
     then
         echo "$env_name virtualenv doesn't exist"
@@ -768,7 +774,7 @@ function cpvirtualenv {
     "$VIRTUALENVWRAPPER_VIRTUALENV" "$target_env" --relocatable
     \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate" > "$target_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate"
 
-    (\cd "$WORKON_HOME" && ( 
+    (\cd "$WORKON_HOME" && (
         virtualenvwrapper_run_hook "pre_cpvirtualenv" "$env_name" "$new_env";
         virtualenvwrapper_run_hook "pre_mkvirtualenv" "$new_env"
         ))
@@ -797,7 +803,7 @@ function virtualenvwrapper_verify_project_home {
 }
 
 # Given a virtualenv directory and a project directory,
-# set the virtualenv up to be associated with the 
+# set the virtualenv up to be associated with the
 # project
 function setvirtualenvproject {
     typeset venv="$1"
