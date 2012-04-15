@@ -55,10 +55,18 @@ GLOBAL postmkvirtualenv"
 }
 
 test_no_virtualenv () {
+	# Find "which" before we change the path
+	which=$(which which)
     old_path="$PATH"
     PATH="/bin:/usr/sbin:/sbin"
-    assertFalse "Found virtualenv in $(which virtualenv)" "which virtualenv"
-    mkvirtualenv should_not_be_created 2>/dev/null
+    venv=$($which virtualenv 2>/dev/null)
+	if [ ! -z "$venv" ]
+	then
+        echo "FOUND \"$venv\" in PATH so skipping this test"
+        export PATH="$old_path"
+		return 0
+	fi
+    mkvirtualenv should_not_be_created >/dev/null 2>&1
     RC=$?
     # Restore the path before testing because
     # the test script depends on commands in the
@@ -109,6 +117,25 @@ test_mkvirtualenv_args () {
     assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
     rmvirtualenv "env4"
     unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
+}
+
+test_no_such_virtualenv () {
+    VIRTUALENVWRAPPER_VIRTUALENV=/path/to/missing/program
+
+    echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    chmod +x "$WORKON_HOME/premkvirtualenv"
+
+    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    mkvirtualenv "env3" >/dev/null 2>&1
+    output=$(cat "$test_dir/catch_output" 2>/dev/null)
+    workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
+    expected=""
+    assertSame "$expected" "$output"
+    rm -f "$WORKON_HOME/premkvirtualenv"
+    rm -f "$WORKON_HOME/postmkvirtualenv"
+
+    VIRTUALENVWRAPPER_VIRTUALENV=virtualenv
 }
 
 test_virtualenv_fails () {
