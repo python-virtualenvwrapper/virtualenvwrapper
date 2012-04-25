@@ -8,6 +8,11 @@ The end-user customization scripts are either *sourced* (allowing them
 to modify your shell environment) or *run* as an external program at
 the appropriate trigger time.
 
+The global scripts applied to all environments should be placed in the
+directory named by :ref:`VIRTUALENVWRAPPER_HOOK_DIR
+<variable-VIRTUALENVWRAPPER_HOOK_DIR>`. The local scripts should be
+placed in the ``bin`` directory of the virtualenv.
+
 .. _scripts-get_env_details:
 
 get_env_details
@@ -17,7 +22,7 @@ get_env_details
   :Argument(s): env name
   :Sourced/Run: run
 
-``$WORKON_HOME/get_env_details`` is run when ``workon`` is run with no
+``$VIRTUALENVWRAPPER_HOOK_DIR/get_env_details`` is run when ``workon`` is run with no
 arguments and a list of the virtual environments is printed.  The hook
 is run once for each environment, after the name is printed, and can
 print additional information about that environment.
@@ -31,7 +36,7 @@ initialize
   :Argument(s): None
   :Sourced/Run: sourced
 
-``$WORKON_HOME/initialize`` is sourced when ``virtualenvwrapper.sh``
+``$VIRTUALENVWRAPPER_HOOK_DIR/initialize`` is sourced when ``virtualenvwrapper.sh``
 is loaded into your environment.  Use it to adjust global settings
 when virtualenvwrapper is enabled.
 
@@ -44,7 +49,7 @@ premkvirtualenv
   :Argument(s): name of new environment
   :Sourced/Run: run
 
-``$WORKON_HOME/premkvirtualenv`` is run as an external program after
+``$VIRTUALENVWRAPPER_HOOK_DIR/premkvirtualenv`` is run as an external program after
 the virtual environment is created but before the current environment
 is switched to point to the new env. The current working directory for
 the script is ``$WORKON_HOME`` and the name of the new environment is
@@ -59,8 +64,9 @@ postmkvirtualenv
   :Argument(s): none
   :Sourced/Run: sourced
 
-``$WORKON_HOME/postmkvirtualenv`` is sourced after the new environment
-is created and activated.
+``$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv`` is sourced after the new environment
+is created and activated. If the ``-a`` <project_path> flag was used,
+the link to the project directory is set up before this script is sourced.
 
 .. _scripts-precpvirtualenv:
 
@@ -71,7 +77,7 @@ precpvirtualenv
   :Argument(s): name of original environment, name of new environment
   :Sourced/Run: run
 
-``$WORKON_HOME/precpvirtualenv`` is run as an external program after
+``$VIRTUALENVWRAPPER_HOOK_DIR/precpvirtualenv`` is run as an external program after
 the source environment is duplicated and made relocatable, but before
 the ``premkvirtualenv`` hook is run or the current environment is
 switched to point to the new env. The current working directory for
@@ -87,7 +93,7 @@ postcpvirtualenv
   :Argument(s): none
   :Sourced/Run: sourced
 
-``$WORKON_HOME/postcpvirtualenv`` is sourced after the new environment
+``$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv`` is sourced after the new environment
 is created and activated.
 
 .. _scripts-preactivate:
@@ -99,7 +105,7 @@ preactivate
   :Argument(s): environment name
   :Sourced/Run: run
 
-The global ``$WORKON_HOME/preactivate`` script is run before the new
+The global ``$VIRTUALENVWRAPPER_HOOK_DIR/preactivate`` script is run before the new
 environment is enabled.  The environment name is passed as the first
 argument.
 
@@ -116,7 +122,7 @@ postactivate
   :Argument(s): none
   :Sourced/Run: sourced
 
-The global ``$WORKON_HOME/postactivate`` script is sourced after the
+The global ``$VIRTUALENVWRAPPER_HOOK_DIR/postactivate`` script is sourced after the
 new environment is enabled. ``$VIRTUAL_ENV`` refers to the new
 environment at the time the script runs.
 
@@ -155,7 +161,7 @@ current environment is deactivated, and can be used to disable or
 clear settings in your environment. ``$VIRTUAL_ENV`` refers to the old
 environment at the time the script runs.
 
-The global ``$WORKON_HOME/predeactivate`` script is sourced before the
+The global ``$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate`` script is sourced before the
 current environment is deactivated.  ``$VIRTUAL_ENV`` refers to the
 old environment at the time the script runs.
 
@@ -182,7 +188,7 @@ prermvirtualenv
   :Argument(s): environment name
   :Sourced/Run: run
 
-The ``$WORKON_HOME/prermvirtualenv`` script is run as an external
+The ``$VIRTUALENVWRAPPER_HOOK_DIR/prermvirtualenv`` script is run as an external
 program before the environment is removed. The full path to the
 environment directory is passed as an argument to the script.
 
@@ -195,6 +201,35 @@ postrmvirtualenv
   :Argument(s): environment name
   :Sourced/Run: run
 
-The ``$WORKON_HOME/postrmvirtualenv`` script is run as an external
+The ``$VIRTUALENVWRAPPER_HOOK_DIR/postrmvirtualenv`` script is run as an external
 program after the environment is removed. The full path to the
 environment directory is passed as an argument to the script.
+
+.. _scripts-premkproject:
+
+premkproject
+===============
+
+  :Global/Local: global
+  :Argument(s): name of new project
+  :Sourced/Run: run
+
+``$WORKON_HOME/premkproject`` is run as an external program after the
+virtual environment is created and after the current environment is
+switched to point to the new env, but before the new project directory
+is created. The current working directory for the script is
+``$PROJECT_HOME`` and the name of the new project is passed as an
+argument to the script.
+
+.. _scripts-postmkproject:
+
+postmkproject
+================
+
+  :Global/Local: global
+  :Argument(s): none
+  :Sourced/Run: sourced
+
+``$WORKON_HOME/postmkproject`` is sourced after the new environment
+and project directories are created and the virtualenv is activated.
+The current working directory is the project directory.

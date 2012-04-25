@@ -11,6 +11,7 @@ oneTimeSetUp() {
 
 oneTimeTearDown() {
     rm -rf "$WORKON_HOME"
+    rm -f "$test_dir/requirements.txt"
 }
 
 setUp () {
@@ -18,13 +19,11 @@ setUp () {
     rm -f "$test_dir/catch_output"
 }
 
-test_get_python_version () {
-    expected="$($VIRTUAL_ENV/bin/python -c 'import sys; sys.stdout.write("%s.%s\n" % sys.version_info[:2])')"
-    echo "Expecting: $expected"
-    vers=$(virtualenvwrapper_get_python_version)
-    echo "Got      : $vers"
-    assertSame "$expected" "$vers"
+test_requirements_file () {
+    echo "IPy" > "$test_dir/requirements.txt"
+    mkvirtualenv -r "$test_dir/requirements.txt" "env3" >/dev/null 2>&1
+    installed=$(pip freeze)
+    assertTrue "IPy not found in $installed" "pip freeze | grep IPy"
 }
-
 
 . "$test_dir/shunit2"

@@ -1,10 +1,7 @@
 #!/bin/sh
 
-#set -x
-
 test_dir=$(cd $(dirname $0) && pwd)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
@@ -22,7 +19,7 @@ setUp () {
 }
 
 test_get_site_packages_dir () {
-    mkvirtualenv "lssitepackagestest"
+    mkvirtualenv "lssitepackagestest" >/dev/null 2>&1
     d=$(virtualenvwrapper_get_site_packages_dir)
     echo "site-packages in $d"
     assertTrue "site-packages dir $d does not exist" "[ -d $d ]"
@@ -30,7 +27,7 @@ test_get_site_packages_dir () {
 }
 
 test_lssitepackages () {
-    mkvirtualenv "lssitepackagestest"
+    mkvirtualenv "lssitepackagestest" >/dev/null 2>&1
     contents="$(lssitepackages)"    
     actual=$(echo $contents | grep easy-install.pth)
     expected=$(echo $contents)
@@ -39,7 +36,7 @@ test_lssitepackages () {
 }
 
 test_lssitepackages_add2virtualenv () {
-    mkvirtualenv "lssitepackagestest"
+    mkvirtualenv "lssitepackagestest" >/dev/null 2>&1
     parent_dir=$(dirname $(pwd))
     base_dir=$(basename $(pwd))
     add2virtualenv "../$base_dir"
@@ -53,7 +50,8 @@ test_lssitepackages_add2virtualenv () {
 test_no_workon_home () {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=`lssitepackages should_not_be_created 2>&1`
+    lssitepackages >"$old_home/output" 2>&1
+    output=$(cat "$old_home/output")
     assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
     WORKON_HOME="$old_home"
 }

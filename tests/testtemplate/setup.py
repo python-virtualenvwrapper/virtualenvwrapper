@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-PROJECT = 'virtualenvwrapper'
-
-# Change docs/sphinx/conf.py too!
-VERSION = '3.2'
+PROJECT = 'testtemplate'
+VERSION = '1.0'
 
 # Bootstrap installation of Distribute
 import distribute_setup
@@ -13,13 +11,9 @@ from setuptools import setup, find_packages
 
 from distutils.util import convert_path
 from fnmatch import fnmatchcase
+
 import os
 import sys
-
-try:
-    long_description = open('README.txt', 'rt').read()
-except IOError:
-    long_description = ''
 
 ################################################################################
 # find_package_data is an Ian Bicking creation.
@@ -109,111 +103,46 @@ def find_package_data(
                 out.setdefault(package, []).append(prefix+name)
     return out
 ################################################################################
-    
 
 setup(
     name = PROJECT,
     version = VERSION,
     
-    description = 'Enhancements to virtualenv',
-    long_description = long_description,
+    description = 'template for testing mkproject',
     
     author = 'Doug Hellmann',
     author_email = 'doug.hellmann@gmail.com',
 
-    url = 'http://www.doughellmann.com/projects/%s/' % PROJECT,
-    #download_url = 'http://www.doughellmann.com/downloads/%s-%s.tar.gz' % \
-    #                (PROJECT, VERSION),
+    url = 'http://www.doughellmann.com/projects/virtualenvwrapper/',
 
     classifiers = [ 'Development Status :: 5 - Production/Stable',
-                    'License :: OSI Approved :: MIT License',
+                    'License :: OSI Approved :: BSD License',
                     'Programming Language :: Python',
-                    'Programming Language :: Python :: 2',
-                    'Programming Language :: Python :: 2.6',
-                    'Programming Language :: Python :: 2.7',
-                    'Programming Language :: Python :: 3',
-                    'Programming Language :: Python :: 3.2',
                     'Intended Audience :: Developers',
                     'Environment :: Console',
                     ],
 
     platforms = ['Any'],
 
-    scripts = ['virtualenvwrapper.sh', 
-               ],
-
-    provides=['virtualenvwrapper',
-              'virtualenvwrapper.user_scripts',
-              'virtualenvwrapper.project',
+    provides=['testtemplate',
               ],
-    install_requires=['virtualenv'],
+    requires=['virtualenv',
+              'virtualenvwrapper (>=2.9)',
+              ],
 
-    namespace_packages = [ 'virtualenvwrapper' ],
     packages = find_packages(),
     include_package_data = True,
     # Scan the input for package information
     # to grab any data files (text, images, etc.) 
     # associated with sub-packages.
-    package_data = find_package_data(PROJECT, 
-                                     package=PROJECT,
+    package_data = find_package_data('mytemplates', 
+                                     package='mytemplates',
                                      only_in_packages=False,
                                      ),
 
     entry_points = {
-        #'console_scripts': [ 'venvw_hook = virtualenvwrapper.hook_loader:main' ],
-        'virtualenvwrapper.initialize': [
-            'user_scripts = virtualenvwrapper.user_scripts:initialize',
-            'project = virtualenvwrapper.project:initialize',
-            ],
-        'virtualenvwrapper.initialize_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:initialize_source',
-            ],
-
-        'virtualenvwrapper.pre_mkvirtualenv': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_mkvirtualenv',
-            ],
-        'virtualenvwrapper.post_mkvirtualenv_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_mkvirtualenv_source',
-            ],
-
-        'virtualenvwrapper.pre_cpvirtualenv': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_cpvirtualenv',
-            ],
-        'virtualenvwrapper.post_cpvirtualenv_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_cpvirtualenv_source',
-            ],
-
-        'virtualenvwrapper.pre_rmvirtualenv': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_rmvirtualenv',
-            ],
-        'virtualenvwrapper.post_rmvirtualenv': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_rmvirtualenv',
-            ],
-
-        'virtualenvwrapper.project.pre_mkproject': [
-            'project = virtualenvwrapper.project:pre_mkproject',
-            ],
-        'virtualenvwrapper.project.post_mkproject_source': [
-            'project = virtualenvwrapper.project:post_mkproject_source',
-            ],
-
-        'virtualenvwrapper.pre_activate': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_activate',
-            ],
-        'virtualenvwrapper.post_activate_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_activate_source',
-            'project = virtualenvwrapper.project:post_activate_source',
-            ],
-
-        'virtualenvwrapper.pre_deactivate_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_deactivate_source',
-            ],
-        'virtualenvwrapper.post_deactivate_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_deactivate_source',
-            ],
-
-        'virtualenvwrapper.get_env_details': [
-            'user_scripts = virtualenvwrapper.user_scripts:get_env_details',
+        'virtualenvwrapper.project.template': [
+            'test = mytemplates.main:template',
             ],
         },
 

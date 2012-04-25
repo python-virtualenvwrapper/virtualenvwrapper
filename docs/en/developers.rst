@@ -64,9 +64,57 @@ The output version of the documentation ends up in
 Running Tests
 =============
 
-The test suite for virtualenvwrapper uses `shunit2
-<http://shunit2.googlecode.com/>`_ and `tox
-<http://codespeak.net/tox>`_.  To run the tests under bash, sh, and
-zsh, use ``make test`` or just ``tox``.  In order to add new tests,
-you will need to modify or create an appropriate script in the
-``tests`` directory.
+The test suite for virtualenvwrapper uses shunit2_ and tox_.  The
+shunit2 source is included in the ``tests`` directory, but tox must be
+installed separately (``pip install tox``).
+
+To run the tests under bash, zsh, and ksh for Python 2.4 through 2.7,
+run ``tox`` from the top level directory of the hg repository.
+
+To run individual test scripts, use a command like::
+
+  $ tox tests/test_cd.sh
+
+To run tests under a single version of Python, specify the appropriate
+environment when running tox::
+
+  $ tox -e py27
+
+Combine the two modes to run specific tests with a single version of
+Python::
+
+  $ tox -e py27 tests/test_cd.sh
+
+Add new tests by modifying an existing file or creating new script in
+the ``tests`` directory.
+
+.. _shunit2: http://shunit2.googlecode.com/
+
+.. _tox: http://codespeak.net/tox
+
+.. _developer-templates:
+
+Creating a New Template
+=======================
+
+virtualenvwrapper.project templates work like `virtualenvwrapper
+plugins
+<http://www.doughellmann.com/docs/virtualenvwrapper/plugins.html>`__.
+The *entry point* group name is
+``virtualenvwrapper.project.template``.  Configure your entry point to
+refer to a function that will **run** (source hooks are not supported
+for templates).
+
+The argument to the template function is the name of the project being
+created.  The current working directory is the directory created to
+hold the project files (``$PROJECT_HOME/$envname``).
+
+Help Text
+---------
+
+One difference between project templates and other virtualenvwrapper
+extensions is that only the templates specified by the user are run.
+The ``mkproject`` command has a help option to give the user a list of
+the available templates.  The names are taken from the registered
+entry point names, and the descriptions are taken from the docstrings
+for the template functions.

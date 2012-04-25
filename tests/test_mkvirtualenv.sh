@@ -1,10 +1,7 @@
 #!/bin/sh
 
-#set -x
-
 test_dir=$(cd $(dirname $0) && pwd)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
@@ -22,7 +19,7 @@ setUp () {
 }
 
 test_create() {
-    mkvirtualenv "env1"
+    mkvirtualenv "env1" >/dev/null 2>&1
     assertTrue "Environment directory was not created" "[ -d $WORKON_HOME/env1 ]"
     for hook in postactivate predeactivate postdeactivate
     do
@@ -32,7 +29,7 @@ test_create() {
 }
 
 test_activates () {
-    mkvirtualenv "env2"
+    mkvirtualenv "env2" >/dev/null 2>&1
     assertTrue virtualenvwrapper_verify_active_environment
     assertSame "env2" $(basename "$VIRTUAL_ENV")
 }
@@ -45,7 +42,7 @@ test_hooks () {
     chmod +x "$WORKON_HOME/premkvirtualenv"
 
     echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
-    mkvirtualenv "env3"
+    mkvirtualenv "env3" >/dev/null 2>&1
     output=$(cat "$test_dir/catch_output")
     workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
     expected="GLOBAL premkvirtualenv $workon_home_as_pwd env3
@@ -58,10 +55,18 @@ GLOBAL postmkvirtualenv"
 }
 
 test_no_virtualenv () {
+	# Find "which" before we change the path
+	which=$(which which)
     old_path="$PATH"
-    PATH="/usr/bin:/bin:/usr/sbin:/sbin"
-    assertFalse "Found virtualenv in $(which virtualenv)" "which virtualenv"
-    mkvirtualenv should_not_be_created 2>/dev/null
+    PATH="/bin:/usr/sbin:/sbin"
+    venv=$($which virtualenv 2>/dev/null)
+	if [ ! -z "$venv" ]
+	then
+        echo "FOUND \"$venv\" in PATH so skipping this test"
+        export PATH="$old_path"
+		return 0
+	fi
+    mkvirtualenv should_not_be_created >/dev/null 2>&1
     RC=$?
     # Restore the path before testing because
     # the test script depends on commands in the
@@ -79,9 +84,58 @@ test_no_args () {
 test_no_workon_home () {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/not_there"
-    output=`mkvirtualenv should_not_be_created 2>&1`
-    assertTrue "Did not see expected message" "echo $output | grep 'does not exist'"
+    mkvirtualenv should_be_created >"$old_home/output" 2>&1
+    output=$(cat "$old_home/output")
+    assertTrue "Did not see expected message in \"$output\"" "cat \"$old_home/output\" | grep 'does not exist'"
+    assertTrue "Did not create environment" "[ -d \"$WORKON_HOME/should_be_created\" ]"
     WORKON_HOME="$old_home"
+}
+
+test_mkvirtualenv_sitepackages () {
+    # This part of the test is not reliable because
+    # creating a new virtualenv from inside the
+    # tox virtualenv inherits the setting from there.
+#     # Without the option, verify that site-packages are copied.
+# 	mkvirtualenv "with_sp" >/dev/null 2>&1
+#     ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+#     assertFalse "$ngsp_file exists" "[ -f \"$ngsp_file\" ]"
+#     rmvirtualenv "env3"
+    
+    # With the argument, verify that they are not copied.
+    mkvirtualenv --no-site-packages "without_sp" >/dev/null 2>&1
+    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
+    rmvirtualenv "env4"
+}
+
+test_mkvirtualenv_args () {
+    # See issue #102
+    VIRTUALENVWRAPPER_VIRTUALENV_ARGS="--no-site-packages"
+    # With the argument, verify that they are not copied.
+    mkvirtualenv "without_sp2" >/dev/null 2>&1
+    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
+    rmvirtualenv "env4"
+    unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
+}
+
+test_no_such_virtualenv () {
+    VIRTUALENVWRAPPER_VIRTUALENV=/path/to/missing/program
+
+    echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    chmod +x "$WORKON_HOME/premkvirtualenv"
+
+    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    mkvirtualenv "env3" >/dev/null 2>&1
+    output=$(cat "$test_dir/catch_output" 2>/dev/null)
+    workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
+    expected=""
+    assertSame "$expected" "$output"
+    rm -f "$WORKON_HOME/premkvirtualenv"
+    rm -f "$WORKON_HOME/postmkvirtualenv"
+
+    VIRTUALENVWRAPPER_VIRTUALENV=virtualenv
 }
 
 test_virtualenv_fails () {
@@ -101,7 +155,7 @@ test_virtualenv_fails () {
     chmod +x "$WORKON_HOME/premkvirtualenv"
 
     echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
-    mkvirtualenv "env3"
+    mkvirtualenv "env3" >/dev/null 2>&1
     output=$(cat "$test_dir/catch_output" 2>/dev/null)
     workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
     expected=""
@@ -111,27 +165,6 @@ test_virtualenv_fails () {
 
     VIRTUALENVWRAPPER_VIRTUALENV=virtualenv
 }
-
-# test_mkvirtualenv_sitepackages () {
-#     # Without the option verify that site-packages are copied.
-#     mkvirtualenv "env3"
-#     assertSame "env3" "$(basename $VIRTUAL_ENV)"
-#     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
-#     sitepackages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
-#     #cat "$sitepackages/easy-install.pth"
-#     assertTrue "Do not have expected virtualenv.py" "[ -f $sitepackages/virtualenv.py ]"
-#     rmvirtualenv "env3"
-#     
-#     # With the argument, verify that they are not copied.
-#     mkvirtualenv --no-site-packages "env4"
-#     assertSame "env4" $(basename "$VIRTUAL_ENV")
-#     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
-#     sitepackages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
-#     assertTrue "[ -f $sitepackages/setuptools.pth ]"
-#     assertTrue "[ -f $sitepackages/easy-install.pth ]"
-#     assertFalse "Have virtualenv.py but should not" "[ -f $sitepackages/virtualenv.py ]"    
-#     rmvirtualenv "env4"
-# }
 
 
 . "$test_dir/shunit2"

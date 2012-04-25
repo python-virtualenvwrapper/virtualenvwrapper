@@ -58,6 +58,13 @@ Python Versions
 
 virtualenvwrapper is tested under Python 2.4 - 2.7.
 
+Upgrading to 2.9
+================
+
+Version 2.9 includes the features previously delivered separately by
+``virtualenvwrapper.project``.  If you have an older verison of the
+project extensions installed, remove them before upgrading.
+
 Upgrading from 1.x
 ==================
 
@@ -98,6 +105,14 @@ use of shell aliases or other customizations, you may encounter
 issues.  Before reporting bugs in the bug tracker, please test
 *without* your aliases enabled.  If you can identify the alias causing
 the problem, that will help make virtualenvwrapper more robust.
+
+==========
+Change Log
+==========
+
+The `release history`_ is part of the project documentation.
+
+.. _release history: http://www.doughellmann.com/docs/virtualenvwrapper/history.html
 
 =======
 License

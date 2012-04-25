@@ -1,12 +1,7 @@
 #!/bin/sh
 
-#set -x
-
 test_dir=$(cd $(dirname $0) && pwd)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
-
-unset HOOK_VERBOSE_OPTION
+source "$test_dir/setup.sh"
 
 setUp () {
     rm -rf "$WORKON_HOME"
@@ -41,6 +36,20 @@ test_virtual_env_variable () {
     cpvirtualenv "source" "destination"
     assertSame "Wrong virtualenv name" "destination" $(basename "$VIRTUAL_ENV")
     assertTrue "$WORKON_HOME not in $VIRTUAL_ENV" "echo $VIRTUAL_ENV | grep -q $WORKON_HOME"
+}
+
+fake_virtualenv () {
+    typeset envname="$1"
+    touch "$envname/fake_virtualenv_was_here"
+    virtualenv $@
+}
+
+test_virtualenvwrapper_virtualenv_variable () {
+    mkvirtualenv "source"
+    export VIRTUALENVWRAPPER_VIRTUALENV=fake_virtualenv
+    cpvirtualenv "source" "destination"
+    unset VIRTUALENVWRAPPER_VIRTUALENV
+    assertTrue "wrapper was not run" "[ -f $VIRTUAL_ENV/fake_virtualenv_was_here ]"
 }
 
 test_source_relocatable () {
@@ -94,6 +103,34 @@ GLOBAL postcpvirtualenv"
 
     rm -f "$WORKON_HOME/premkvirtualenv"
     rm -f "$WORKON_HOME/postmkvirtualenv"
+}
+
+test_no_site_packages () {
+    # See issue #102
+    mkvirtualenv "source" --no-site-packages >/dev/null 2>&1
+    cpvirtualenv "source" "destination"
+    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+    assertTrue "$ngsp_file does not exist in copied env" "[ -f \"$ngsp_file\" ]"
+}
+
+test_no_site_packages_default_args () {
+    # See issue #102
+    VIRTUALENVWRAPPER_VIRTUALENV_ARGS="--no-site-packages"
+    # With the argument, verify that they are not copied.
+    mkvirtualenv "source" >/dev/null 2>&1
+    cpvirtualenv "source" "destination"
+    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
+    unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
+}
+
+test_no_site_packages_default_behavior () {
+    # See issue #102
+    # virtualenv 1.7 changed to make --no-site-packages the default
+    mkvirtualenv "source" >/dev/null 2>&1
+    cpvirtualenv "source" "destination"
+    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
+    assertTrue "$ngsp_file does not exist in copied env" "[ -f \"$ngsp_file\" ]"
 }
 
 . "$test_dir/shunit2"

@@ -22,10 +22,11 @@ Create a new environment, in the WORKON_HOME.
 
 Syntax::
 
-    mkvirtualenv [options] ENVNAME
+    mkvirtualenv [-a project_path] [-i package] [-r requirements_file] [virtualenv options] ENVNAME
 
-All command line options are passed directly to ``virtualenv``.  The
-new environment is automatically activated after being initialized.
+All command line options except ``-a``, ``-i``, ``-r``, and ``-h`` are passed
+directly to ``virtualenv``.  The new environment is automatically
+activated after being initialized.
 
 ::
 
@@ -40,10 +41,49 @@ new environment is automatically activated after being initialized.
     mynewenv
     (mynewenv)$ 
 
+The ``-a`` option can be used to associate an existing project
+directory with the new environment.
+
+The ``-i`` option can be used to install one or more packages (by
+repeating the option) after the environment is created.
+
+The ``-r`` option can be used to specify a text file listing packages
+to be installed. The argument value is passed to ``pip -r`` to be
+installed.
+
 .. seealso::
 
    * :ref:`scripts-premkvirtualenv`
    * :ref:`scripts-postmkvirtualenv`
+   * `requirements file format`_
+
+.. _requirements file format: http://www.pip-installer.org/en/latest/requirement-format.html
+
+.. _command-mktmpenv:
+
+mktmpenv
+--------
+
+Create a new virtualenv in the ``WORKON_HOME`` directory.
+
+Syntax::
+
+    mktmpenv [VIRTUALENV_OPTIONS]
+
+A unique virtualenv name is generated.
+
+::
+
+    $ mktmpenv
+    Using real prefix '/Library/Frameworks/Python.framework/Versions/2.7'
+    New python executable in 1e513ac6-616e-4d56-9aa5-9d0a3b305e20/bin/python
+    Overwriting 1e513ac6-616e-4d56-9aa5-9d0a3b305e20/lib/python2.7/distutils/__init__.py 
+    with new content
+    Installing distribute...............................................
+    ....................................................................
+    .................................................................done.
+    This is a temporary environment. It will be deleted when deactivated.
+    (1e513ac6-616e-4d56-9aa5-9d0a3b305e20) $
 
 .. _command-lsvirtualenv:
 
@@ -81,6 +121,8 @@ Syntax::
 .. seealso::
 
    * :ref:`scripts-get_env_details`
+
+.. _command-rmvirtualenv:
 
 rmvirtualenv
 ------------
@@ -364,3 +406,129 @@ The directory names are added to a path file named
 for the environment.
 
 *Based on a contribution from James Bennett and Jannis Leidel.*
+
+.. _command-toggleglobalsitepackages:
+
+toggleglobalsitepackages
+------------------------
+
+Controls whether the active virtualenv will access the packages in the
+global Python ``site-packages`` directory.
+
+Syntax::
+
+    toggleglobalsitepackages [-q]
+
+Outputs the new state of the virtualenv. Use the ``-q`` switch to turn off all
+output.
+
+::
+
+    $ mkvirtualenv env1
+    New python executable in env1/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env1)$ toggleglobalsitepackages
+    Disabled global site-packages
+    (env1)$ toggleglobalsitepackages
+    Enabled global site-packages
+    (env1)$ toggleglobalsitepackages -q
+    (env1)$
+
+============================
+Project Directory Management
+============================
+
+.. seealso::
+
+   :ref:`project-management`
+
+.. _command-mkproject:
+
+mkproject
+---------
+
+Create a new virtualenv in the WORKON_HOME and project directory in
+PROJECT_HOME.
+
+Syntax::
+
+    mkproject [-t template] [virtualenv_options] ENVNAME
+
+The template option may be repeated to have several templates used to
+create a new project.  The templates are applied in the order named on
+the command line.  All other options are passed to ``mkvirtualenv`` to
+create a virtual environment with the same name as the project.
+
+::
+
+    $ mkproject myproj
+    New python executable in myproj/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    Creating /Users/dhellmann/Devel/myproj
+    (myproj)$ pwd
+    /Users/dhellmann/Devel/myproj
+    (myproj)$ echo $VIRTUAL_ENV
+    /Users/dhellmann/Envs/myproj
+    (myproj)$ 
+
+.. seealso::
+
+  * :ref:`scripts-premkproject`
+  * :ref:`scripts-postmkproject`
+
+setvirtualenvproject
+--------------------
+
+Bind an existing virtualenv to an existing project.
+
+Syntax::
+
+  setvirtualenvproject [virtualenv_path project_path]
+
+The arguments to ``setvirtualenvproject`` are the full paths to the
+virtualenv and project directory.  An association is made so that when
+``workon`` activates the virtualenv the project is also activated.
+
+::
+
+    $ mkproject myproj
+    New python executable in myproj/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    Creating /Users/dhellmann/Devel/myproj
+    (myproj)$ mkvirtualenv myproj_new_libs
+    New python executable in myproj/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    Creating /Users/dhellmann/Devel/myproj
+    (myproj_new_libs)$ setvirtualenvproject $VIRTUAL_ENV $(pwd)
+
+When no arguments are given, the current virtualenv and current
+directory are assumed.
+
+Any number of virtualenvs can refer to the same project directory,
+making it easy to switch between versions of Python or other
+dependencies for testing.
+
+.. _command-cdproject:
+
+cdproject
+---------
+
+Change the current working directory to the one specified as the
+project directory for the active virtualenv.
+
+Syntax::
+
+  cdproject
+

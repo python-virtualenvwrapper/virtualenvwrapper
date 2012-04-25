@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -14,6 +13,15 @@ import os
 import sys
 
 import pkg_resources
+
+class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
+    """Taken from http://stackoverflow.com/questions/1407474/does-python-logging-handlers-rotatingfilehandler-allow-creation-of-a-group-writa
+    """
+    def _open(self):
+        prevumask = os.umask(0o002)
+        rtv = logging.handlers.RotatingFileHandler._open(self)
+        os.umask(prevumask)
+        return rtv
 
 def main():
     parser = optparse.OptionParser(
@@ -66,8 +74,8 @@ def main():
 
     # Set up logging to a file
     root_logger.setLevel(logging.DEBUG)
-    file_handler = logging.handlers.RotatingFileHandler(
-        os.path.expandvars(os.path.join('$WORKON_HOME', 'hook.log')),
+    file_handler = GroupWriteRotatingFileHandler(
+        os.path.expandvars(os.path.join('$VIRTUALENVWRAPPER_LOG_DIR', 'hook.log')),
         maxBytes=10240,
         backupCount=1,
         )
@@ -110,6 +118,8 @@ def main():
         output = open(options.script_filename, "w")
         try:
             output.write('# %s\n' % hook)
+            # output.write('echo %s\n' % hook)
+            # output.write('set -x\n')
             run_hooks(hook + '_source', options, args, output)
         finally:
             output.close()
@@ -125,7 +135,7 @@ def run_hooks(hook, options, args, output=None):
             continue
         plugin = ep.load()
         if options.listing:
-            print '  {0:10} -- {1}'.format(ep.name, inspect.getdoc(plugin) or '')
+            sys.stdout.write('  %-10s -- %s\n' % (ep.name, inspect.getdoc(plugin) or ''))
             continue
         if options.sourcing:
             # Show the shell commands so they can

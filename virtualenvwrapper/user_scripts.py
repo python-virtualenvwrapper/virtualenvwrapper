@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # encoding: utf-8
 #
 # Copyright (c) 2010 Doug Hellmann.  All rights reserved.
@@ -8,36 +7,46 @@
 
 import logging
 import os
+import re
 import stat
 import subprocess
+import sys
 
 import pkg_resources
 
 log = logging.getLogger(__name__)
+
+    
+# Are we running under msys
+if sys.platform == 'win32' and os.environ.get('OS') == 'Windows_NT' and os.environ.get('MSYSTEM') == 'MINGW32':
+    is_msys = True
+    script_folder = 'Scripts'
+else:
+    is_msys = False
+    script_folder = 'bin'
 
 
 def run_script(script_path, *args):
     """Execute a script in a subshell.
     """
     if os.path.exists(script_path):
-#         with open(script_path, 'rt') as f:
-#             print '+' * 80
-#             print f.read()
-#             print '+' * 80
         cmd = [script_path] + list(args)
+        if is_msys:
+            cmd = [get_path(os.environ['MSYS_HOME'],'bin','sh.exe')] + cmd
         log.debug('running %s', str(cmd))
         try:
             return_code = subprocess.call(cmd)
-        except OSError, msg:
+        except OSError:
+            _,  msg, _ = sys.exc_info()
             log.error('could not run "%s": %s', script_path, str(msg))
         #log.debug('Returned %s', return_code)
     return
 
 
 def run_global(script_name, *args):
-    """Run a script from $WORKON_HOME.
+    """Run a script from $VIRTUALENVWRAPPER_HOOK_DIR.
     """
-    script_path = os.path.expandvars(os.path.join('$WORKON_HOME', script_name))
+    script_path = get_path('$VIRTUALENVWRAPPER_HOOK_DIR', script_name)
     run_script(script_path, *args)
     return
 
@@ -105,9 +114,9 @@ def make_hook(filename, comment):
     :param filename: The name of the file to write.
     :param comment: The comment to insert into the file.
     """
-    filename = os.path.expanduser(os.path.expandvars(filename))
+    filename = get_path(filename)
     if not os.path.exists(filename):
-        log.warning('creating %s', filename)
+        log.info('creating %s', filename)
         f = open(filename, 'w')
         try:
             f.write("""#!%(shell)s
@@ -126,7 +135,7 @@ def make_hook(filename, comment):
 
 def initialize(args):
     for filename, comment in GLOBAL_HOOKS:
-        make_hook(os.path.join('$WORKON_HOME', filename), comment)
+        make_hook(get_path('$VIRTUALENVWRAPPER_HOOK_DIR', filename), comment)
     return
 
 
@@ -135,14 +144,14 @@ def initialize_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/initialize" ] && source "$WORKON_HOME/initialize"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/initialize" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/initialize"
 """
 
 def pre_mkvirtualenv(args):
     log.debug('pre_mkvirtualenv %s', str(args))
     envname=args[0]
     for filename, comment in LOCAL_HOOKS:
-        make_hook(os.path.join('$WORKON_HOME', envname, 'bin', filename), comment)
+        make_hook(get_path('$WORKON_HOME', envname, script_folder, filename), comment)
     run_global('premkvirtualenv', *args)
     return
 
@@ -152,14 +161,14 @@ def post_mkvirtualenv_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/postmkvirtualenv" ] && source "$WORKON_HOME/postmkvirtualenv"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv"
 """
 
 def pre_cpvirtualenv(args):
     log.debug('pre_cpvirtualenv %s', str(args))
     envname=args[0]
     for filename, comment in LOCAL_HOOKS:
-        make_hook(os.path.join('$WORKON_HOME', envname, 'bin', filename), comment)
+        make_hook(get_path('$WORKON_HOME', envname, script_folder, filename), comment)
     run_global('precpvirtualenv', *args)
     return
 
@@ -169,7 +178,7 @@ def post_cpvirtualenv_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/postcpvirtualenv" ] && source "$WORKON_HOME/postcpvirtualenv"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv"
 """
 
 
@@ -188,7 +197,7 @@ def post_rmvirtualenv(args):
 def pre_activate(args):
     log.debug('pre_activate')
     run_global('preactivate', *args)
-    script_path = os.path.expandvars(os.path.join('$WORKON_HOME', args[0], 'bin', 'preactivate'))
+    script_path = get_path('$WORKON_HOME', args[0], script_folder, 'preactivate')
     run_script(script_path, *args)
     return
 
@@ -199,8 +208,8 @@ def post_activate_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/postactivate" ] && source "$WORKON_HOME/postactivate"
-[ -f "$VIRTUAL_ENV/bin/postactivate" ] && source "$VIRTUAL_ENV/bin/postactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate"
+[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postactivate" ] && source "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postactivate"
 """
 
 
@@ -210,8 +219,8 @@ def pre_deactivate_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$VIRTUAL_ENV/bin/predeactivate" ] && source "$VIRTUAL_ENV/bin/predeactivate"
-[ -f "$WORKON_HOME/predeactivate" ] && source "$WORKON_HOME/predeactivate"
+[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/predeactivate" ] && source "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/predeactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate"
 """
 
 
@@ -223,7 +232,7 @@ def post_deactivate_source(args):
 #
 VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV="$WORKON_HOME/%(env_name)s"
 [ -f "$WORKON_HOME/%(env_name)s/bin/postdeactivate" ] && source "$WORKON_HOME/%(env_name)s/bin/postdeactivate"
-[ -f "$WORKON_HOME/postdeactivate" ] && source "$WORKON_HOME/postdeactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postdeactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postdeactivate"
 unset VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV
 """ % { 'env_name':args[0] }
 
@@ -231,6 +240,22 @@ unset VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV
 def get_env_details(args):
     log.debug('get_env_details')
     run_global('get_env_details', *args)
-    script_path = os.path.expandvars(os.path.join('$WORKON_HOME', args[0], 'bin', 'get_env_details'))
+    script_path = get_path('$WORKON_HOME', args[0], script_folder, 'get_env_details')
     run_script(script_path, *args)
     return
+
+def get_path(*args):
+    '''
+    Get a full path from args.
+    Path separator is determined according to the os and the shell and allow to use is_msys.
+    Variables and user are expanded during the process.
+    '''
+    path = os.path.expanduser(os.path.expandvars(os.path.join(*args)))
+    if is_msys:
+        # MSYS accept unix or Win32 and sometimes it drives to mixed style paths
+        if re.match(r'^/[a-zA-Z](/|^)', path):
+            # msys path could starts with '/c/'-form drive letter
+            path = ''.join((path[1],':',path[2:]))
+        path = path.replace('/', os.sep)
+        
+    return os.path.abspath(path)

@@ -1,10 +1,7 @@
 #!/bin/sh
 
-#set -x
-
 test_dir=$(cd $(dirname $0) && pwd)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
@@ -19,14 +16,15 @@ oneTimeTearDown() {
 setUp () {
     echo
     rm -f "$test_dir/catch_output"
+    unset VIRTUALENVWRAPPER_INITIALIZED
 }
 
 test_virtualenvwrapper_initialize() {
-    virtualenvwrapper_initialize
+    assertTrue "Initialized" virtualenvwrapper_initialize
     for hook in premkvirtualenv postmkvirtualenv prermvirtualenv postrmvirtualenv preactivate postactivate predeactivate postdeactivate
     do
-        assertTrue "Global $hook was not created" "[ -f $WORKON_HOME/$hook ]"
-        assertTrue "Global $hook is not executable" "[ -x $WORKON_HOME/$hook ]"
+        assertTrue "Global $WORKON_HOME/$hook was not created" "[ -f $WORKON_HOME/$hook ]"
+        assertTrue "Global $WORKON_HOME/$hook is not executable" "[ -x $WORKON_HOME/$hook ]"
     done
     assertTrue "Log file was not created" "[ -f $WORKON_HOME/hook.log ]"
     export pre_test_dir=$(cd "$test_dir"; pwd)
@@ -56,7 +54,19 @@ test_virtualenvwrapper_verify_workon_home() {
 test_virtualenvwrapper_verify_workon_home_missing_dir() {
     old_home="$WORKON_HOME"
     WORKON_HOME="$WORKON_HOME/not_there"
-    assertFalse "WORKON_HOME verified unexpectedly" virtualenvwrapper_verify_workon_home
+    assertTrue "Directory already exists" "[ ! -d \"$WORKON_HOME\" ]"
+    virtualenvwrapper_verify_workon_home >"$old_home/output" 2>&1
+    output=$(cat "$old_home/output")
+    assertSame "NOTE: Virtual environments directory $WORKON_HOME does not exist. Creating..." "$output"
+    WORKON_HOME="$old_home"
+}
+
+test_virtualenvwrapper_verify_workon_home_missing_dir_quiet() {
+    old_home="$WORKON_HOME"
+    WORKON_HOME="$WORKON_HOME/not_there_quiet"
+    assertTrue "Directory already exists" "[ ! -d \"$WORKON_HOME\" ]"
+    output=$(virtualenvwrapper_verify_workon_home -q 2>&1)
+    assertSame "" "$output"
     WORKON_HOME="$old_home"
 }
 
@@ -66,34 +76,27 @@ test_virtualenvwrapper_verify_workon_home_missing_dir_grep_options() {
     # This should prevent the message from being found if it isn't
     # unset correctly.
     export GREP_OPTIONS="--count"
-    assertFalse "WORKON_HOME verified unexpectedly" virtualenvwrapper_verify_workon_home
+    assertTrue "WORKON_HOME not verified" virtualenvwrapper_verify_workon_home
     WORKON_HOME="$old_home"
     unset GREP_OPTIONS
-}
-
-test_virtualenvwrapper_verify_workon_home_missing_dir_quiet_init() {
-    old_home="$WORKON_HOME"
-    export WORKON_HOME="$WORKON_HOME/not_there"
-    output=$(source $test_dir/../virtualenvwrapper.sh 2>&1)
-    assertSame "" "$output"
-    WORKON_HOME="$old_home"
-}
-
-test_get_python_version() {
-    expected=$(python -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.)
-    actual=$(virtualenvwrapper_get_python_version)
-    assertSame "$expected" "$actual"
 }
 
 test_python_interpreter_set_incorrectly() {
     return_to="$(pwd)"
     cd "$WORKON_HOME"
-    mkvirtualenv --no-site-packages no_wrappers
+    mkvirtualenv no_wrappers
     expected="ImportError: No module named virtualenvwrapper.hook_loader"
-    output=$(VIRTUALENVWRAPPER_PYTHON=$(which python) $SHELL $return_to/virtualenvwrapper.sh 2>&1)
-    echo "$output" | grep -q "$expected" 2>&1
-    found=$?
-    assertTrue "Expected \"$expected\", got: \"$output\"" "[ $found -eq 0 ]"
+    # test_shell is set by tests/run_tests
+    if [ "$test_shell" = "" ]
+    then
+        export test_shell=$SHELL
+    fi
+    subshell_output=$(VIRTUALENVWRAPPER_PYTHON="$WORKON_HOME/no_wrappers/bin/python" $test_shell $return_to/virtualenvwrapper.sh 2>&1)
+    #echo "$subshell_output"
+    echo "$subshell_output" | grep -q "$expected" 2>&1
+    found_it=$?
+    #echo "$found_it"
+    assertTrue "Expected \'$expected\', got: \'$subshell_output\'" "[ $found_it -eq 0 ]"
     assertFalse "Failed to detect invalid Python location" "VIRTUALENVWRAPPER_PYTHON=$VIRTUAL_ENV/bin/python $SHELL $return_to/virtualenvwrapper.sh >/dev/null 2>&1"
     cd "$return_to"
     deactivate
