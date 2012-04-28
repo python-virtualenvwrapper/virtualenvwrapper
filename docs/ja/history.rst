@@ -7,6 +7,160 @@
 リリース履歴
 ============
 
+dev
+
+  - Clean up file permissions and remove shebangs from scripts not
+    intended to be executed on the command line. (contributed by
+    :bbuser:`ralphbean`)
+  - Worked on some brittle tests.
+
+3.2
+
+  - Make ``project_dir`` a local variable so that
+    :ref:`command-cdproject` does not interfere with other variables
+    the user might have set. (contributed by :bbuser:`slackorama`)
+  - Fix typo in documentation reported by Nick Martin.
+  - Change trove classifier for license "MIT" to reflect the license
+    text presented in the documentation. *This does not indicate a
+    change in the license, just a correction to the expression of that
+    intent. See :ref:`license`* (contributed by :bbuser:`ralphbean` as
+    fix for :bbissue:`134`)
+  - Extend :ref:`command-rmvirtualenv` to allow removing more than one
+    environment at a time. (contributed by :bbuser:`ciberglo`)
+  - Change the definition of
+    ``virtualenvwrapper_get_site_packages_dir`` to ask ``distutils``
+    for the ``site-packages`` directory instead of trying to build the
+    path ourselves in the shell script. This should resolve
+    :bbissue:`112` and improve support for Python interpreters other
+    than C Python. Thanks to Carl Meyer and Dario Bertini for their
+    contributions toward the fix.
+
+3.1
+
+  - Fix a problem with activation hooks when associating a new
+    virtualenv with an existing project directory. (:bbissue:`122`)
+  - Fix a problem with :ref:`command-add2virtualenv` and paths
+    containing "special" characters such as ``&``. (:bbissue:`132`)
+
+3.0.1
+
+  - Fix some packaging issues that made it more difficult to run the
+    tests directly from the sdist package. (:bbissue:`126`)
+
+3.0
+
+  - Add Python 3 support, thanks in large part to the efforts of
+    Daniel Kraus (:bbuser:`dakra`). Tested under Python 2.6, 2.7, and
+    3.2.
+
+2.11.1
+
+  - Remove the initialization shortcut because it breaks tab
+    completion in sub-shell environments like screen and
+    tmux. (:bbissue:`121`)
+
+2.11
+
+  - Add ``-a`` option to :ref:`command-mkvirtualenv` to associate a
+    new virtualenv with an existing project directory. Contributed by
+    Mike Fogel (:bbuser:`mfogel`).
+  - Drops support for Python 2.4 and 2.5. The tools may still work,
+    but I no longer have a development environment set up for testing
+    them, so I do not officially support them.
+  - Shortcut initialization if it has run before.
+  - Set hook log file permissions to be group-writable. (:bbissue:`62`
+    reported by :bbuser:`hedgeddown`)
+  - Add ``VIRTUALENVWRAPPER_PROJECT_FILENAME`` variable so the
+    ``.project`` file used to link a virtualenv to a project can be
+    renamed to avoid conflicts with other tools. (:bbissue:`120`
+    reported by :bbuser:`arthuralvim`)
+
+2.10.1
+
+  - Changed arguments to :ref:`command-mktmpenv` so it always creates
+    an environment name for you. (:bbissue:`114` reported by
+    :bbuser:`alex_gaynor`)
+
+2.10
+
+  - Incorporated patch to add ``-d`` option to
+    :ref:`command-add2virtualenv`, contributed by :bbuser:`miracle2k`.
+  - Add ``-i`` option to :ref:`command-mkvirtualenv`.
+  - Add :ref:`command-mktmpenv` command for creating temporary
+    environments that are automatically removed when they are
+    deactivated.
+  - Fixed a problem with hook_loader that prevented it from working
+    under Python 2.5 and 2.4.
+  - Fix a problem with the way template names were processed under
+    zsh. (:bbissue:`111`)
+
+2.9
+
+  - Change the shell function shell definition syntax so that ksh will
+    treat typeset-declared variables as local. No kidding.
+  - Merge the "project directory" features of the
+    ``virtualenvwrapper.project`` plugin into the main project, adding
+    :ref:`command-mkproject`, :ref:`command-cdproject`, and
+    :ref:`command-setvirtualenvproject` commands.
+  - Add ``-r`` option to :ref:`command-mkvirtualenv` to install
+    dependencies using a pip requirements file.
+
+2.8
+
+  - Use VIRTUALENVWRAPPER_VIRTUALENV in `cpvirtualenv` (:bbissue:`104`).
+  - Add support for `MSYS <http://www.mingw.org/wiki/MSYS>`_
+    environment under Windows. Contributed by Axel
+    H. (:bbuser:`noirbizarre`).
+
+2.7.2
+
+  - Move setup code for tab completion later in the startup code so
+    all of the needed variables are configured. (:bbissue:`97`)
+  - Expand tab completion for zsh to work for all commands.
+
+2.7.1
+
+  - When testing for WORKON_HOME during startup, dereference any
+    symlink to make sure it is a directory.
+  - Set VIRTUALENVWRAPPER_HOOK_DIR and VIRTUALENV_WRAPPER_LOG DIR in
+    virtualenvwrapper_initialize after WORKON_HOME is set
+    (:bbissue:`94`).
+  - Update the :ref:`install-basic` instructions to be more explicit
+    about needing to install virtualenvwrapper globally (or at least
+    outside of a virtualenv).
+
+2.7
+
+  - Fix problem with space in WORKON_HOME path (:bbissue:`79`).
+  - Fix problem with argument processing in lsvirtualenv under zsh
+    (:bbissue:`86`). Thanks to Nat Williams (:bbuser:`natw`) for the
+    bug report and patch.
+  - If WORKON_HOME does not exist, create it. Patch from Carl Karsten
+    (:bbuser:`CarlFK`). Test updates based on patches from Matt Austin
+    (:bbuser:`maafy6`) and Hugo Lopes Tavares (:bbuser:`hltbra`).
+  - Merge in contributions from Paul McLanahan (:bbuser:`pmclanahan`)
+    to fix the test harness to ensure that the test scripts are
+    actually running under the expected shell.
+  - Merge in new shell command :ref:`command-toggleglobalsitepackages`
+    from Paul McLanahan (:bbuser:`pmclanahan`). The new command
+    changes the configuration of the active virtualenv to enable or
+    disable the global ``site-packages`` directory.
+  - Fixed some tests that were failing under ksh on Ubuntu 10.10.
+  - Document the :ref:`VIRTUALENVWRAPPER_VIRTUALENV
+    <variable-VIRTUALENVWRAPPER_VIRTUALENV>` variable.
+  - Implement suggestion by Van Lindberg to have
+    :ref:`VIRTUALENVWRAPPER_HOOK_DIR
+    <variable-VIRTUALENVWRAPPER_HOOK_DIR>` and
+    :ref:`VIRTUALENVWRAPPER_LOG_DIR
+    <variable-VIRTUALENVWRAPPER_LOG_DIR>` variables to control the
+    locations of hooks and logs.
+  - Enabled tab completion for :ref:`command-showvirtualenv`
+    (:bbissue:`78`).
+  - Fixed a problem with running :ref:`command-rmvirtualenv` from
+    within the environment being removed (:bbissue:`83`).
+  - Removed use of -e option in calls to grep for better portability
+    (:bbissue:`85`).
+
 2.6.3
 
   .. - Hard-code the version information in the setup.py and conf.py
@@ -22,11 +176,11 @@
                 Tetsuya Morimoto.
      - Incorporate a suggestion from Ales Zoulek to let the user specify
        the virtualenv binary through an environment variable
-       (``VIRTUALENVWRAPPER_VIRTUALENV``).
+       (:ref:`VIRTUALENVWRAPPER_VIRTUALENV <variable-VIRTUALENVWRAPPER_VIRTUALENV>`).
 
   - http://readthedocs.org でドキュメントを生成してみました。
   - Tetsuya Morimoto からの `日本語の翻訳ドキュメント <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ を取り込みました。
-  - 環境変数(``VIRTUALENVWRAPPER_VIRTUALENV``)で virtualenv バイナリをユーザが指定できるように Ales Zoulek からの提案を取り入れました。
+  - 環境変数 (:ref:`VIRTUALENVWRAPPER_VIRTUALENV <variable-VIRTUALENVWRAPPER_VIRTUALENV>`) で virtualenv バイナリをユーザが指定できるように Ales Zoulek からの提案を取り入れました。
 
 2.6.1
 
