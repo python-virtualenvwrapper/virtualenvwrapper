@@ -146,11 +146,11 @@ Python のあるバージョンでテストを実行するには、tox を実行
 
 .. _tox: http://codespeak.net/tox
 
-.. _developer-templates:
-
 ..
     Creating a New Template
     =======================
+
+.. _developer-templates:
 
 新しいテンプレートの作成
 ========================
