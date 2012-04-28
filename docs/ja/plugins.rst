@@ -18,7 +18,7 @@ virtualenvwrapper を拡張する
     to modify their tools to work the way they want, rather than the other
     way around.
 
-開発環境をカスタマイズするために自作で解決してきた長い経験から、共通タスクを自動化して何度も繰り返す苛々する作業を取り除く機能はどれだけ価値があるかが分かりました。大工は治具を組み立て、ソフトウェア開発者はシェルスクリプトを書きます。virtualenvwrapper は逆になりますが、求める方法で動作するようにツールを修正する職人を励ます伝統を受け継いでいます。
+開発環境をカスタマイズするために自作で解決してきた長い経験から、共通タスクを自動化して、何度も繰り返す苛々するような作業を取り除く機能がどれほどの価値をもつか分かりました。大工は治具を組み立て、ソフトウェア開発者はシェルスクリプトを書きます。virtualenvwrapper は逆になりますが、求める方法で動作するようにツールを修正する職人を励ます伝統を受け継いでいます。
 
 ..
     Use the hooks provided to eliminate repetitive manual operations and
@@ -43,7 +43,7 @@ virtualenvwrapper を拡張する
     implemented in Python by using Distribute_ *entry points*, making it
     possible to share common behaviors between systems and developers.
 
-virtualenvwrapper がそういったことを実行できるようにあなたのコードをアタッチする方法が2つあります。エンドユーザはシェルスクリプトか、個人的なカスタマイズを施したプログラムを使用することができます(:ref:`scripts` を参照)。さらに拡張機能は、システムと開発者間で共通の振る舞いを共有できるようにする Distribute_ *エントリポイント* を使用して Python で実装することもできます。
+virtualenvwrapper がそういったことを実行できるようにあなたのコードをアタッチする方法が2つあります。エンドユーザはシェルスクリプトか、個人的なカスタマイズを施したプログラムを使用できます(:ref:`scripts` を参照)。さらに拡張機能は、システムと開発者間で共通の振る舞いを共有できるようにする Distribute_ *エントリポイント* を使用して Python で実装することもできます。
 
 ..
     Defining an Extension
@@ -75,7 +75,7 @@ virtualenvwrapper がそういったことを実行できるようにあなた�
     directory.  Extensions can (optionally) use the ``virtualenvwrapper``
     namespace by setting up their source tree like:
 
-``virtualenvwrapper`` の Python パッケージは *名前空間パッケージ* です。複数のライブラリが一緒に配布されていなかったり同じディレクトリ内にインストールされていなかったとしても、そのパッケージ内へインストールすることができます。拡張機能は次のようにソースツリーを設定することで ``virtualenvwrapper`` の名前空間を(オプションで)使用することが出来ます。
+``virtualenvwrapper`` の Python パッケージは *名前空間パッケージ* です。複数のライブラリが一緒に配布されていなかったり同じディレクトリ内にインストールされていなかったとしても、そのパッケージ内へインストールできます。拡張機能は次のようにソースツリーを設定することで ``virtualenvwrapper`` の名前空間を(オプションで)使用することが出来ます。
 
 * virtualenvwrapper/
 
@@ -116,7 +116,7 @@ virtualenvwrapper がそういったことを実行できるようにあなた�
     imported from elsewhere using standard Python code organization
     techniques.
 
-パッケージを作成した次のステップは拡張コードを保持するモジュールを作成することです。例えば ``virtualenvwrapper/user_scripts.py`` です。そのモジュールは実際の拡張機能のエントリポイントを含むべきです。サポートするコードが含められるか、標準の Python コードの構成テクニックを使用してどこかからインポートされます。
+パッケージを作成した後の次のステップとして、拡張コードを保持するモジュールを作成します。例えば ``virtualenvwrapper/user_scripts.py`` です。そのモジュールは実際の拡張機能のエントリポイントを含みます。サポートするコードが含められるか、標準の Python コードの構成テクニックを利用してインポートされます。
 
 ..
     The API is the same for every extension point.  Each uses a Python
@@ -242,7 +242,7 @@ API は全ての拡張ポイントで同じです。それぞれは1つの引数
     package by mapping the entry point name to the function in the package
     that implements it.
 
-プラグインで定義された関数は virtualenvwrapper のフックローダが見つけられるために *エントリポイント* として登録される必要があります。 Distribute_ エントリポイントは関数を実装するパッケージでその関数に対するエントリポイントの名前をマッピングすることにより、そのパッケージの ``setup.py`` で設定されます。
+プラグインで定義された関数は virtualenvwrapper のフックローダが見つけられるために *エントリポイント* として登録する必要があります。 Distribute_ エントリポイントは関数を実装するパッケージでその関数に対するエントリポイントの名前をマッピングすることにより、そのパッケージの ``setup.py`` で設定されます。
 
 ..
     This partial copy of virtualenvwrapper's ``setup.py`` illustrates how
@@ -295,8 +295,7 @@ API は全ての拡張ポイントで同じです。それぞれは1つの引数
     point is the plugin name, but that is not required (the names are not
     used).
 
-エントリポイント指定子は ``name = package.module:function`` という構文の文字列です。
-慣例により、それぞれのエントリポイントの *名前* はプラグインの名前ですが、それが必要ではありません(その名前は使用されない)。
+エントリポイント指定子は ``name = package.module:function`` という構文の文字列です。慣例からエントリポイントの *名前* はプラグインの名前を付けますが、必須だというわけではありません (その名前を使わなくても構いません) 。
 
 .. seealso::
 
@@ -576,7 +575,7 @@ post_rmvirtualenv
     ``virtualenvwrapper_run_hook`` is sufficient to cause them to be
     invoked.  
 
-さらに新しい操作を定義するプラグインは新しい拡張ポイントを定義することもできます。フックローダが拡張機能を見つけるために行う設定は必要ありません。名前を記述して ``virtualenvwrapper_run_hook`` の呼び出しを追加することで、追加した拡張機能が実行されるようになります。
+さらに新しい操作を定義するプラグインは新しい拡張ポイントも定義できます。フックローダが拡張機能を見つけるために行う設定は必要ありません。名前を記述して ``virtualenvwrapper_run_hook`` の呼び出しを追加することで、追加した拡張機能が実行されるようになります。
 
 ..
     The hook loader assumes all extension point names start with
