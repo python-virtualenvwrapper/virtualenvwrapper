@@ -160,13 +160,13 @@ Python パスへそのディレクトリを追加してからそこへ移動し�
 
 ..
     `Justin Lily posted
-    <http://justinlilly.com/blog/2009/mar/28/virtualenv-wrapper-helper/>`__
+    <http://justinlilly.com/python/virtualenv_wrapper_helper.html>`__
     about some code he added to his shell environment to look at the
     directory each time he runs ``cd``.  If it finds a ``.venv`` file, it
     activates the environment named within.  On leaving that directory,
     the current virtualenv is automatically deactivated.
 
-``cd`` を実行する毎にそのディレクトリでシェル環境を調べるように追加したコードを `Justin Lily が投稿しました <http://justinlilly.com/blog/2009/mar/28/virtualenv-wrapper-helper/>`__ 。 ``.venv`` ファイルを見つけたら、そのファイルに含まれる環境の名前でアクティブ化します。そのディレクトリから移動すると、カレントの仮想環境は自動的に非アクティブ化します。
+``cd`` を実行する毎にそのディレクトリでシェル環境を調べるように追加したコードを `Justin Lily が投稿しました <http://justinlilly.com/python/virtualenv_wrapper_helper.html>`__ 。 ``.venv`` ファイルを見つけたら、そのファイルに含まれる環境の名前でアクティブ化します。そのディレクトリから移動すると、カレントの仮想環境は自動的に非アクティブ化します。
 
 ..
     `Harry Marr <http://www.blogger.com/profile/17141199633387157732>`__
