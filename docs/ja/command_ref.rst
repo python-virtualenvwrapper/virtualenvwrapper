@@ -41,13 +41,14 @@ WORKON_HOME に新たな仮想環境を作成します。
 
 構文::
 
-    mkvirtualenv [options] ENVNAME
+    mkvirtualenv [-a project_path] [-i package] [-r requirements_file] [virtualenv options] ENVNAME
 
 ..
-    All command line options are passed directly to ``virtualenv``.  The
-    new environment is automatically activated after being initialized.
+    All command line options except ``-a``, ``-i``, ``-r``, and ``-h`` are passed
+    directly to ``virtualenv``.  The new environment is automatically
+    activated after being initialized.
 
-全てのコマンドラインオプションは ``virtualenv`` へ直接渡されます。新しい仮想環境は初期化された後に自動的にアクティブ化されます。
+``-a``, ``-i``, ``-r``, ``-h`` を除いた全てのコマンドラインオプションは ``virtualenv`` へ直接的に渡されます。新しい仮想環境は初期化された後に自動的にアクティブ化されます。
 
 ::
 
@@ -62,10 +63,68 @@ WORKON_HOME に新たな仮想環境を作成します。
     mynewenv
     (mynewenv)$ 
 
+..
+    The ``-a`` option can be used to associate an existing project
+    directory with the new environment.
+
+``-a`` オプションは、既存のプロジェクトディレクトリに新しい環境を関連付けるのに使います。
+
+..
+    The ``-i`` option can be used to install one or more packages (by
+    repeating the option) after the environment is created.
+
+``-i`` オプションは、その環境を作成した後に指定したパッケージをインストールできます (このオプションを繰り返し使うことで複数のパッケージもインストールできます) 。
+
+..
+    The ``-r`` option can be used to specify a text file listing packages
+    to be installed. The argument value is passed to ``pip -r`` to be
+    installed.
+
+``-r`` オプションは、インストールしたいパッケージ一覧を保存したテキストファイルを指定するのに使います。この引数のファイル名は ``pip -r`` へ渡されてインストールが行われます。
+
 .. seealso::
 
    * :ref:`scripts-premkvirtualenv`
    * :ref:`scripts-postmkvirtualenv`
+   * `requirements ファイルのフォーマット`_
+
+.. _requirements file format: http://www.pip-installer.org/en/latest/requirement-format.html
+.. _requirements ファイルのフォーマット: http://www.pip-installer.org/en/latest/requirements.html#the-requirements-file-format
+
+.. _command-mktmpenv:
+
+mktmpenv
+--------
+
+..
+    Create a new virtualenv in the ``WORKON_HOME`` directory.
+
+``WORKON_HOME`` ディレクトリに新しい環境を作成します。
+
+..
+    Syntax::
+
+構文::
+
+    mktmpenv [VIRTUALENV_OPTIONS]
+
+..
+    A unique virtualenv name is generated.
+
+一意な名前をもつ virtualenv 環境が生成されます。
+
+::
+
+    $ mktmpenv
+    Using real prefix '/Library/Frameworks/Python.framework/Versions/2.7'
+    New python executable in 1e513ac6-616e-4d56-9aa5-9d0a3b305e20/bin/python
+    Overwriting 1e513ac6-616e-4d56-9aa5-9d0a3b305e20/lib/python2.7/distutils/__init__.py 
+    with new content
+    Installing distribute...............................................
+    ....................................................................
+    .................................................................done.
+    This is a temporary environment. It will be deleted when deactivated.
+    (1e513ac6-616e-4d56-9aa5-9d0a3b305e20) $
 
 .. _command-lsvirtualenv:
 
@@ -123,6 +182,8 @@ showvirtualenv
 .. seealso::
 
    * :ref:`scripts-get_env_details`
+
+.. _command-rmvirtualenv:
 
 rmvirtualenv
 ------------
@@ -503,3 +564,174 @@ site-packages ディレクトリ内の ``virtualenv_path_extensions.pth`` と名
     *Based on a contribution from James Bennett and Jannis Leidel.*
 
 *James Bennett と Jannis Leidel から提供されたものに基づいています。*
+
+.. _command-toggleglobalsitepackages:
+
+toggleglobalsitepackages
+------------------------
+
+..
+    Controls whether the active virtualenv will access the packages in the
+    global Python ``site-packages`` directory.
+
+アクティブな virtualenv が、グローバルの Python ``site-packages`` ディレクトリにあるパッケージにアクセスさせるかどうかを制御します。
+
+..
+    Syntax::
+
+構文::
+
+    toggleglobalsitepackages [-q]
+
+..
+    Outputs the new state of the virtualenv. Use the ``-q`` switch to turn off all
+    output.
+
+実行すると virtualenv の更新後の状態を表示します。非表示にするには ``-q`` を指定してください。
+
+::
+
+    $ mkvirtualenv env1
+    New python executable in env1/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    (env1)$ toggleglobalsitepackages
+    Disabled global site-packages
+    (env1)$ toggleglobalsitepackages
+    Enabled global site-packages
+    (env1)$ toggleglobalsitepackages -q
+    (env1)$
+
+..
+    ============================
+    Project Directory Management
+    ============================
+
+==============================
+プロジェクトディレクトリの管理
+==============================
+
+.. seealso::
+
+   :ref:`project-management`
+
+.. _command-mkproject:
+
+mkproject
+---------
+
+..
+    Create a new virtualenv in the WORKON_HOME and project directory in
+    PROJECT_HOME.
+
+PROJECT_HOME にプロジェクトディレクトリと WORKON_HOME に新しい virtualenv を作成します。
+
+..
+    Syntax::
+
+構文::
+
+    mkproject [-t template] [virtualenv_options] ENVNAME
+
+..
+    The template option may be repeated to have several templates used to
+    create a new project.  The templates are applied in the order named on
+    the command line.  All other options are passed to ``mkvirtualenv`` to
+    create a virtual environment with the same name as the project.
+
+テンプレートオプションは、新しいプロジェクトを作成するのに使うテンプレートを複数指定できます。テンプレートはコマンドラインで指定した順番で適用されます。その他の全てのオプションは、プロジェクトと同じ名前をもつ仮想環境を作成するために ``mkvirtualenv`` に渡されます。
+
+::
+
+    $ mkproject myproj
+    New python executable in myproj/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    Creating /Users/dhellmann/Devel/myproj
+    (myproj)$ pwd
+    /Users/dhellmann/Devel/myproj
+    (myproj)$ echo $VIRTUAL_ENV
+    /Users/dhellmann/Envs/myproj
+    (myproj)$ 
+
+.. seealso::
+
+  * :ref:`scripts-premkproject`
+  * :ref:`scripts-postmkproject`
+
+setvirtualenvproject
+--------------------
+
+..
+    Bind an existing virtualenv to an existing project.
+
+既存の virtualenv を既存のプロジェクトに束縛します。
+
+..
+    Syntax::
+
+構文::
+
+  setvirtualenvproject [virtualenv_path project_path]
+
+..
+    The arguments to ``setvirtualenvproject`` are the full paths to the
+    virtualenv and project directory.  An association is made so that when
+    ``workon`` activates the virtualenv the project is also activated.
+
+``setvirtualenvproject`` への引数は、virtualenv とプロジェクトディレクトリへのフルパスです。仮想環境のアクティブ化を ``workon`` で行うときに、そのプロジェクトもアクティブ化されるように連携します。
+
+::
+
+    $ mkproject myproj
+    New python executable in myproj/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    Creating /Users/dhellmann/Devel/myproj
+    (myproj)$ mkvirtualenv myproj_new_libs
+    New python executable in myproj/bin/python
+    Installing distribute.............................................
+    ..................................................................
+    ..................................................................
+    done.
+    Creating /Users/dhellmann/Devel/myproj
+    (myproj_new_libs)$ setvirtualenvproject $VIRTUAL_ENV $(pwd)
+
+..
+    When no arguments are given, the current virtualenv and current
+    directory are assumed.
+
+引数を指定しない場合は、カレントの virtualenv とカレントディレクトリが指定されたと見なします。
+
+..
+    Any number of virtualenvs can refer to the same project directory,
+    making it easy to switch between versions of Python or other
+    dependencies for testing.
+
+任意の数の virtualenv が、Python またはその他のテスト向けの依存関係をもったバージョン間で切り替えやすいように、同じプロジェクトディレクトリを参照できます。
+
+.. _command-cdproject:
+
+cdproject
+---------
+
+..
+    Change the current working directory to the one specified as the
+    project directory for the active virtualenv.
+
+カレントのワークディレクトリから、アクティブな virtualenv のプロジェクトディレクトリとして指定したディレクトリに変更します。
+
+..
+    Syntax::
+
+構文::
+
+
+  cdproject
+
