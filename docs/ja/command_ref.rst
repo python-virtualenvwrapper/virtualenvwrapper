@@ -663,6 +663,8 @@ PROJECT_HOME にプロジェクトディレクトリと WORKON_HOME に新しい
   * :ref:`scripts-premkproject`
   * :ref:`scripts-postmkproject`
 
+.. _command-setvirtualenvproject:
+
 setvirtualenvproject
 --------------------
 

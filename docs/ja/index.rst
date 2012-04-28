@@ -234,6 +234,7 @@ virtualenvwrapper が提供する機能を説明する最善の方法は実際�
    install
    command_ref
    hooks
+   projects
    tips
    developers
    extensions
@@ -328,6 +329,8 @@ virtualenvwrapper は大きなシェルスクリプトなので、多くのア�
     =======
     License
     =======
+
+.. _license:
 
 ==========
 ライセンス
