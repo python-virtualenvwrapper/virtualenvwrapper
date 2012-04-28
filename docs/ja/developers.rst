@@ -94,11 +94,105 @@ virtualenvwrapper のドキュメントは reStructuredText で書かれてい�
 ================
 
 ..
-    The test suite for virtualenvwrapper uses `shunit2
-    <http://shunit2.googlecode.com/>`_ and `tox
-    <http://codespeak.net/tox>`_.  To run the tests under bash, sh, and
-    zsh, use ``make test`` or just ``tox``.  In order to add new tests,
-    you will need to modify or create an appropriate script in the
-    ``tests`` directory.
+    The test suite for virtualenvwrapper uses shunit2_ and tox_.  The
+    shunit2 source is included in the ``tests`` directory, but tox must be
+    installed separately (``pip install tox``).
 
-virtualenvwrapper のテストセットは `shunit2 <http://shunit2.googlecode.com/>`_ と `tox <http://codespeak.net/tox>`_ を使用します。bash, sh や zsh でテストを実行するには ``make test`` か、ただ ``tox`` を実行してください。新しくテストを追加するには、 ``tests`` ディレクトリの適切なスクリプトを作成したり、修正する必要があります。
+virtualenvwrapper のテストスイートは shunit2_ と tox_ を使います。shunit2 のソースは ``tests`` ディレクトリに含まれていますが、tox は別途インストールする必要があります (``pip install tox``) 。
+
+..
+    To run the tests under bash, zsh, and ksh for Python 2.4 through 2.7,
+    run ``tox`` from the top level directory of the hg repository.
+
+bash, zsh, ksh 環境で Python 2.4 - 2.7 のテストを実行するには、hg リポジトリの最上位ディレクトリから ``tox`` を実行してください。
+
+..
+    To run individual test scripts, use a command like::
+
+個別のテストスクリプトを実行するには、次のように実行します。
+
+::
+
+  $ tox tests/test_cd.sh
+
+..
+    To run tests under a single version of Python, specify the appropriate
+    environment when running tox::
+
+Python のあるバージョンでテストを実行するには、tox を実行するときに適切な環境を指定します。
+
+::
+
+
+  $ tox -e py27
+
+..
+    Combine the two modes to run specific tests with a single version of
+    Python::
+
+前述した特定テストと Python バージョンのテストを実行するには、2つの方法を組み合わせてください。
+
+::
+
+  $ tox -e py27 tests/test_cd.sh
+
+..
+    Add new tests by modifying an existing file or creating new script in
+    the ``tests`` directory.
+
+既存のファイルを変更して新しいテストを追加するか、 ``tests`` ディレクトリに新しいスクリプトを作成してください。
+
+.. _shunit2: http://shunit2.googlecode.com/
+
+.. _tox: http://codespeak.net/tox
+
+.. _developer-templates:
+
+..
+    Creating a New Template
+    =======================
+
+新しいテンプレートの作成
+========================
+
+..
+    virtualenvwrapper.project templates work like `virtualenvwrapper
+    plugins
+    <http://www.doughellmann.com/docs/virtualenvwrapper/plugins.html>`__.
+    The *entry point* group name is
+    ``virtualenvwrapper.project.template``.  Configure your entry point to
+    refer to a function that will **run** (source hooks are not supported
+    for templates).
+
+virtualenvwrapper.project テンプレートは `virtualenvwrapper plugins <http://www.doughellmann.com/docs/virtualenvwrapper/plugins.html>`__ と同じように動作します。
+*entry point* グループの名前は ``virtualenvwrapper.project.template`` です。
+**run** を実行する関数を参照する独自のエントリーポイントを設定してください
+(ソースフックはテンプレートをサポートしていません) 。
+
+..
+    The argument to the template function is the name of the project being
+    created.  The current working directory is the directory created to
+    hold the project files (``$PROJECT_HOME/$envname``).
+
+テンプレート関数の引数は、作成するプロジェクトの名前です。
+カレントワークディレクトリは、プロジェクトのファイルを保持するために作成されたディレクトリです (``$PROJECT_HOME/$envname``) 。
+
+..
+    Help Text
+    ---------
+
+ヘルプテキスト
+--------------
+
+..
+    One difference between project templates and other virtualenvwrapper
+    extensions is that only the templates specified by the user are run.
+    The ``mkproject`` command has a help option to give the user a list of
+    the available templates.  The names are taken from the registered
+    entry point names, and the descriptions are taken from the docstrings
+    for the template functions.
+
+プロジェクトテンプレートとその他の virtualenvwrapper 拡張との違いは、ユーザーが指定したテンプレートのみが実行されることです。
+``mkproject`` コマンドは、ユーザーへ利用できるテンプレート一覧表示するヘルプオプションがあります。
+テンプレート名は、登録されたエントリーポイントから取得される名前です。
+そして、テンプレートの説明は、テンプレート関数の docstrings を表示します。
