@@ -15,7 +15,7 @@ virtualenvwrapper |release|
     on more than one project at a time without introducing conflicts in
     their dependencies.
 
-virtualenvwrapper は Ian Bicking の `virtualenv <http://pypi.python.org/pypi/virtualenv>`_ ツールの拡張機能です。この拡張機能は仮想環境の作成・削除を行ったり、開発ワークフローを管理するラッパーを提供します。このラッパーを使用することで、開発環境の依存による競合を発生させず、1つ以上のプロジェクトで同時に作業し易くなります。
+virtualenvwrapper は Ian Bicking の `virtualenv <http://pypi.python.org/pypi/virtualenv>`_ ツールの拡張機能です。この拡張機能は仮想環境の作成・削除を行ったり、開発ワークフローを管理するラッパーを提供します。このラッパーを使うことで、開発環境の依存関係による競合を起こさず、同時に複数のプロジェクトで作業しやすくなります。
 
 ..
     ========
@@ -37,12 +37,12 @@ virtualenvwrapper は Ian Bicking の `virtualenv <http://pypi.python.org/pypi/v
     6. Plugin system for more creating sharable extensions (see
        :ref:`plugins`).
 
-1. 1つの開発環境で全ての仮想環境を構成する
+1. 1つの場所に全ての仮想環境を構成する
 2. 仮想環境を管理(作成、削除、コピー)するラッパー
-3. たった1つのコマンドで仮想環境を切り替える
-4. コマンドの引数として仮想環境がタブ補完できる
-5. 全ての操作に対してユーザ設定でフックできる(:ref:`scripts` を参照)
-6. さらに共有可能な拡張機能を作成できるプラグインシステム(:ref:`plugins` を参照)
+3. 1つのコマンドで仮想環境を切り替える
+4. コマンドの引数から仮想環境をタブ補完できる
+5. 全ての操作をユーザ設定でフックできる(:ref:`scripts` を参照)
+6. 共有できる拡張機能を作成できるプラグインシステム(:ref:`plugins` を参照)
 
 ..
     ============
@@ -57,7 +57,7 @@ virtualenvwrapper は Ian Bicking の `virtualenv <http://pypi.python.org/pypi/v
     The best way to explain the features virtualenvwrapper gives you is to
     show it in use.
 
-virtualenvwrapper が提供する機能を説明する最善の方法は実際に使ってみることです。
+virtualenvwrapper が提供する機能を説明するには、実際に使ってみるのが最も良い方法です。
 
 ..
     First, some initialization steps.  Most of this only needs to be done
@@ -66,7 +66,7 @@ virtualenvwrapper が提供する機能を説明する最善の方法は実際�
     changing the path to virtualenvwrapper.sh depending on where it was
     installed by pip.
 
-まず初期化の作業があります。この作業の大半は同時に行う必要があります。pip によりインストールされた場所に依存する virtualenvwrapper.sh のパスを変更して、きっと ``source /usr/local/bin/virtualenvwrapper.sh`` に対するコマンドをシェル起動時に読み込まれるファイルへ追加したくなるでしょう。
+まず初期化の作業があります。この作業の大半は一度だけ行う必要があります。pip でインストールした場所に依存する virtualenvwrapper.sh のパスを変更したり、 ``source /usr/local/bin/virtualenvwrapper.sh`` のコマンドをシェル起動時に読み込まれるファイルへ追加したりするでしょう。
 
 ::
 
@@ -91,7 +91,7 @@ virtualenvwrapper が提供する機能を説明する最善の方法は実際�
 ..
     Now we can install some software into the environment.
 
-いま、作成した仮想環境内にソフトウェアをインストールできます。
+これで作成した仮想環境へソフトウェアをインストールできます。
 
 ::
 
@@ -108,7 +108,7 @@ virtualenvwrapper が提供する機能を説明する最善の方法は実際�
 ..
     We can see the new package with ``lssitepackages``
 
-``lssitepackages`` で新たにインストールしたパッケージを調べることができます。
+``lssitepackages`` で新たにインストールしたパッケージを調べられます。
 
 ::
 
@@ -120,7 +120,7 @@ virtualenvwrapper が提供する機能を説明する最善の方法は実際�
 ..
     Of course we are not limited to a single virtualenv
 
-もちろん、たった1つの仮想環境に制限されるものではありません。
+当然、1つだけの仮想環境に制限されるわけではりません。
 
 ::
 
@@ -155,7 +155,7 @@ virtualenvwrapper が提供する機能を説明する最善の方法は実際�
     environment names, and invokes customization scripts as an environment
     is activated or deactivated (see :ref:`scripts`).
 
-さらに ``workon`` コマンドは仮想環境名をタブ補完することもできます。そして、ある仮想環境がアクティブ化または非アクティブ化されるようにカスタムスクリプトを実行します(:ref:`scripts` を参照)。
+さらに ``workon`` コマンドは仮想環境名をタブ補完できます。そして、ある仮想環境がアクティブ化または非アクティブ化されるようにカスタムスクリプトを実行します(:ref:`scripts` を参照)。
 
 ::
 
@@ -217,7 +217,7 @@ virtualenvwrapper が提供する機能を説明する最善の方法は実際�
     virtualenvwrapper gives you a wide variety of opportunities to
     automate repetitive operations.
 
-コアパッケージで定義された既存機能(:ref:`command` を参照)、サードパーティのプラグイン(:ref:`plugins` を参照)やユーザ定義スクリプト(:ref:`scripts` を参照)を組み合わせて、virtualenvwrapper は多種多様な繰り返し行うような操作を自動化する機会を提供します。
+コアパッケージで定義された既存機能(:ref:`command` を参照)、サードパーティのプラグイン(:ref:`plugins` を参照)やユーザ定義スクリプト(:ref:`scripts` を参照)を組み合わせて、virtualenvwrapper は雑多な繰り返し行う操作を自動化する機会を提供します。
 
 ..
     =======
