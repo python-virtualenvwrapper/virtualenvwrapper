@@ -2,7 +2,7 @@
 #
 
 # If doc language is English you don't need to set this variable
-LANGUAGE      = en
+LANGUAGE      = ja
 
 # You can set these variables from the command line.
 SPHINXOPTS    = -c sphinx
