@@ -8,6 +8,8 @@ dev
     intended to be executed on the command line. (contributed by
     :bbuser:`ralphbean`)
   - Worked on some brittle tests.
+  - Received updates to Japanese translation of the documentation from
+    :bbuser:`t2y`.
 
 3.2
 
