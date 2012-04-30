@@ -707,7 +707,7 @@ function lssitepackages {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
-    ls $@ $site_packages
+    ls $@ "$site_packages"
 
     path_file="$site_packages/_virtualenv_path_extensions.pth"
     if [ -f "$path_file" ]
