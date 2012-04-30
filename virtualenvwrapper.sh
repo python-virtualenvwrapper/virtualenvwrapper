@@ -118,7 +118,7 @@ function virtualenvwrapper_verify_workon_home {
         then
             echo "NOTE: Virtual environments directory $WORKON_HOME does not exist. Creating..." 1>&2
         fi
-        mkdir -p $WORKON_HOME
+        mkdir -p "$WORKON_HOME"
         RC=$?
     fi
     return $RC
