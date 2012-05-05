@@ -21,6 +21,24 @@ then
     fi
 fi
 
+# Make sure the test shells exist before proceeding, otherwise tests are
+# going to fail later.
+missing_shells=""
+test_shells=""
+for shell in bash ksh zsh
+do
+    if test_shell=$(which $shell); then
+        test_shells="$test_shells $test_shell"
+    else
+        missing_shells="$missing_shells $shell"
+    fi
+done
+if [ -n "$missing_shells" ]
+then
+    echo "Couldn't find the following shells: $missing_shells" 1>&2
+    exit 1
+fi
+
 # Force the tox virtualenv to be active.  
 #
 # Since this script runs from within a separate shell created by tox,
@@ -49,13 +67,13 @@ unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
 for test_script in $scripts
 do
 
-    for test_shell in bash ksh zsh
+    for test_shell in $test_shells
     do
         test_shell_opts=
-        if [ $test_shell = "zsh" ]; then
-            test_shell_opts="-o shwordsplit"
-        fi
-        export test_shell=$(which $test_shell)
+        case /$test_shell in
+            */zsh) test_shell_opts="-o shwordsplit" ;;
+        esac
+        export test_shell
 
         echo
         echo '********************************************************************************'
