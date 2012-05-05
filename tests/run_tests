@@ -1,10 +1,12 @@
 #!/bin/sh
 
-##
-## ONLY RUN THIS VIA TOX
-##
-
 #set -x
+
+if [ -z "$TOXIC" ]
+then
+    echo "Only run this via tox" 1>&2
+    exit 1
+fi
 
 envdir="$1"
 shift
