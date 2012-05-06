@@ -130,28 +130,29 @@ function virtualenvwrapper_verify_workon_home {
 function virtualenvwrapper_tempfile {
     # Note: the 'X's must come last
     typeset suffix=${1:-hook}
-    typeset file="`\mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX`"
-    if [ $? -ne 0 ]
+    typeset file
+    
+    file="`\mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX`"
+    if [ $? -ne 0 ] || [ -z "$file" ] || [ ! -f "$file" ]
     then
         echo "ERROR: virtualenvwrapper could not create a temporary file name." 1>&2
         return 1
     fi
-    trap "\rm -f '$file' >/dev/null 2>&1" EXIT
     echo $file
     return 0
 }
 
 # Run the hooks
 function virtualenvwrapper_run_hook {
-    typeset hook_script="$(virtualenvwrapper_tempfile ${1}-hook)"
-    if [ -z "$hook_script" ]
-    then
-        echo "ERROR: Could not create temporary file name. Make sure TMPDIR is set." 1>&2
-        return 1
-    fi
+    typeset hook_script
+    typeset result
+    
+    hook_script="$(virtualenvwrapper_tempfile ${1}-hook)" || return 1
+
     if [ -z "$VIRTUALENVWRAPPER_LOG_DIR" ]
     then
         echo "ERROR: VIRTUALENVWRAPPER_LOG_DIR is not set." 1>&2
+	\rm -f "$hook_script"
         return 1
     fi
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
@@ -162,12 +163,13 @@ function virtualenvwrapper_run_hook {
         if [ ! -f "$hook_script" ]
         then
             echo "ERROR: virtualenvwrapper_run_hook could not find temporary file $hook_script" 1>&2
+	    \rm -f "$hook_script"
             return 2
         fi
         # cat "$hook_script"
         source "$hook_script"
     fi
-    \rm -f "$hook_script" >/dev/null 2>&1
+    \rm -f "$hook_script"
     return $result
 }
 
