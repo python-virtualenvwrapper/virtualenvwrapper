@@ -15,6 +15,7 @@ import sys
 
 import pkg_resources
 
+
 class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
     """Taken from http://stackoverflow.com/questions/1407474/does-python-logging-handlers-rotatingfilehandler-allow-creation-of-a-group-writa
     """
@@ -23,6 +24,7 @@ class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
         rtv = logging.handlers.RotatingFileHandler._open(self)
         os.umask(prevumask)
         return rtv
+
 
 def main():
     parser = optparse.OptionParser(
@@ -68,7 +70,7 @@ def main():
                       dest='names',
                       default=[],
                       )
-    parser.disable_interspersed_args() # stop when we hit an option without an '-'
+    parser.disable_interspersed_args()  # stop when we hit an option without an '-'
     options, args = parser.parse_args()
 
     root_logger = logging.getLogger('')
@@ -86,10 +88,10 @@ def main():
 
     # Send higher-level messages to the console, too
     console = logging.StreamHandler()
-    console_level = [ logging.WARNING,
-                      logging.INFO,
-                      logging.DEBUG,
-                      ][options.verbose_level]
+    console_level = [logging.WARNING,
+                     logging.INFO,
+                     logging.DEBUG,
+                     ][options.verbose_level]
     console.setLevel(console_level)
     formatter = logging.Formatter('%(name)s %(message)s')
     console.setFormatter(formatter)
