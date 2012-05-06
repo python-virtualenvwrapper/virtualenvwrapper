@@ -298,7 +298,7 @@ function mkvirtualenv_help {
     echo;
     echo 'virtualenv help:';
     echo;
-    virtualenv -h;
+    virtualenv $@;
 }
 
 # Create a new environment, in the WORKON_HOME.
@@ -334,8 +334,8 @@ function mkvirtualenv {
             -a)
                 i=$(( $i + 1 ));
                 project="${in_args[$i]}";;
-            -h)
-                mkvirtualenv_help;
+            -h|--help)
+                mkvirtualenv_help $a;
                 return;;
             -i)
                 i=$(( $i + 1 ));

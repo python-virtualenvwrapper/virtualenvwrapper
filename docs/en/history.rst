@@ -17,6 +17,8 @@ dev
     name, it prints the list of core hooks.
   - Merge several fixes for path and variable handling for MSYS users
     from :bbuser:`bwanamarko`. Includes a fix for :bbissue:`138`.
+  - Change :ref:`command-mkvirtualenv` so it catches both ``-h`` and
+    ``--help``.
 
 3.2
 
