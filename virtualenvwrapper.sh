@@ -897,7 +897,7 @@ function mkproject {
 
     cd "$PROJECT_HOME"
 
-    virtualenvwrapper_run_hook project.pre_mkproject $envname
+    virtualenvwrapper_run_hook "project.pre_mkproject" $envname
 
     echo "Creating $PROJECT_HOME/$envname"
     mkdir -p "$PROJECT_HOME/$envname"
@@ -912,10 +912,10 @@ function mkproject {
         # For some reason zsh insists on prefixing the template
         # names with a space, so strip them out before passing
         # the value to the hook loader.
-        virtualenvwrapper_run_hook --name $(echo $t | sed 's/^ //') project.template $envname
+        virtualenvwrapper_run_hook --name $(echo $t | sed 's/^ //') "project.template" $envname
     done
 
-    virtualenvwrapper_run_hook project.post_mkproject
+    virtualenvwrapper_run_hook "project.post_mkproject"
 }
 
 # Change directory to the active project

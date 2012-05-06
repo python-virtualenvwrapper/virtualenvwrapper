@@ -13,6 +13,8 @@ dev
   - Fix the test script and runner so the user's ``$WORKON_HOME`` is
     not erased if they do not have some test shells installed.
     (big thanks to :bbuser:`agriffis`).
+  - If the hook loader is told to list plugins but is not given a hook
+    name, it prints the list of core hooks.
 
 3.2
 
