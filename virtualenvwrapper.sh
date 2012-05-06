@@ -72,6 +72,15 @@ then
     export VIRTUALENVWRAPPER_PROJECT_FILENAME=".project"
 fi
 
+function virtualenvwrapper_expandpath {
+        if [ "$1" = "" ]; then
+            return 1
+        else
+            "$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.realpath(os.path.expanduser(os.path.expandvars(\"$1\")))+'\n')"
+            return 0
+        fi
+}
+
 function virtualenvwrapper_derive_workon_home {
     typeset workon_home_dir="$WORKON_HOME"
 
@@ -99,7 +108,7 @@ function virtualenvwrapper_derive_workon_home {
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
         # - Expanding variables (e.g., $foo)
         # - Converting ~s to complete paths (e.g., ~/ to /home/brian/ and ~arthur to /home/arthur)
-        workon_home_dir=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.expandvars(os.path.expanduser(\"$workon_home_dir\"))+'\n')")
+        workon_home_dir=$(virtualenvwrapper_expandpath $workon_home_dir)
     fi
 
     echo "$workon_home_dir"
@@ -342,7 +351,8 @@ function mkvirtualenv {
                 packages="$packages ${in_args[$i]}";;
             -r)
                 i=$(( $i + 1 ));
-                requirements="${in_args[$i]}";;
+                requirements="${in_args[$i]}";
+                requirements=$(virtualenvwrapper_expandpath $requirements);;
             *)
                 if [ ${#out_args} -gt 0 ]
                 then
