@@ -15,6 +15,8 @@ dev
     (big thanks to :bbuser:`agriffis`).
   - If the hook loader is told to list plugins but is not given a hook
     name, it prints the list of core hooks.
+  - Merge several fixes for path and variable handling for MSYS users
+    from :bbuser:`bwanamarko`. Includes a fix for :bbissue:`138`.
 
 3.2
 
