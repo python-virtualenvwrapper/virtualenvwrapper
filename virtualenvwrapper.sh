@@ -152,6 +152,7 @@ function virtualenvwrapper_run_hook {
     if [ -z "$VIRTUALENVWRAPPER_LOG_DIR" ]
     then
         echo "ERROR: VIRTUALENVWRAPPER_LOG_DIR is not set." 1>&2
+	\rm -f "$hook_script"
         return 1
     fi
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
@@ -162,12 +163,13 @@ function virtualenvwrapper_run_hook {
         if [ ! -f "$hook_script" ]
         then
             echo "ERROR: virtualenvwrapper_run_hook could not find temporary file $hook_script" 1>&2
+	    \rm -f "$hook_script"
             return 2
         fi
         # cat "$hook_script"
         source "$hook_script"
     fi
-    \rm -f "$hook_script" >/dev/null 2>&1
+    \rm -f "$hook_script"
     return $result
 }
 
