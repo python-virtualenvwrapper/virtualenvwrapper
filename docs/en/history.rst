@@ -19,6 +19,8 @@ dev
     from :bbuser:`bwanamarko`. Includes a fix for :bbissue:`138`.
   - Change :ref:`command-mkvirtualenv` so it catches both ``-h`` and
     ``--help``.
+  - Fix some issues with the way temporary files are used for hook
+    scripts. (contributed by :bbuser:`agriffis`)
 
 3.2
 
