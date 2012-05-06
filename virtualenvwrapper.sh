@@ -108,7 +108,7 @@ function virtualenvwrapper_derive_workon_home {
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
         # - Expanding variables (e.g., $foo)
         # - Converting ~s to complete paths (e.g., ~/ to /home/brian/ and ~arthur to /home/arthur)
-        workon_home_dir=$(virtualenvwrapper_expandpath $workon_home_dir)
+        workon_home_dir=$(virtualenvwrapper_expandpath "$workon_home_dir")
     fi
 
     echo "$workon_home_dir"
@@ -352,7 +352,7 @@ function mkvirtualenv {
             -r)
                 i=$(( $i + 1 ));
                 requirements="${in_args[$i]}";
-                requirements=$(virtualenvwrapper_expandpath $requirements);;
+                requirements=$(virtualenvwrapper_expandpath "$requirements");;
             *)
                 if [ ${#out_args} -gt 0 ]
                 then
