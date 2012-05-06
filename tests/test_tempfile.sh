@@ -32,6 +32,25 @@ test_tempfile () {
     assertTrue "virtualenvwrapper-hook not in filename." "echo $filename | grep virtualenvwrapper-hook"
 }
 
+test_bad_mktemp() {
+    # All of the following bogus mktemp programs should cause
+    # virtualenvwrapper_tempfile to return non-zero status
+    mktemp_nonzero() { return 1; }
+    mktemp_empty_string() { return 0; }
+    mktemp_missing_executable() { /foo/bar/baz/qux 2>/dev/null; }   # returns status 127
+    mktemp_missing_result() { echo /foo/bar/baz/qux; }
+
+    for mktemp_func in mktemp_nonzero mktemp_empty_string \
+        mktemp_missing_executable mktemp_missing_result
+    do
+        mktemp() { $mktemp_func "$@"; }
+        filename=$(virtualenvwrapper_tempfile hook)
+        assertSame "($mktemp_func) Unexpected exit code $?" "1" "$?"
+    done
+
+    unset -f mktemp
+}
+
 test_no_such_tmpdir () {
     old_tmpdir="$TMPDIR"
     export TMPDIR="$tmplocation/does-not-exist"
