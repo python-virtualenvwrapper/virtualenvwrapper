@@ -24,6 +24,7 @@ setUp () {
 test_tempfile () {
     filename=$(virtualenvwrapper_tempfile hook)
     assertTrue "Filename is empty" "[ ! -z \"$filename\" ]"
+    assertTrue "File doesn't exist" "[ -f \"$filename\" ]"
     rm -f $filename
     comparable_tmpdir=$(echo $tmplocation | sed 's|/$||')
     comparable_dirname=$(dirname $filename | sed 's|/$||')
