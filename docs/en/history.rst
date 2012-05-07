@@ -10,6 +10,17 @@ dev
   - Worked on some brittle tests.
   - Received updates to Japanese translation of the documentation from
     :bbuser:`t2y`.
+  - Fix the test script and runner so the user's ``$WORKON_HOME`` is
+    not erased if they do not have some test shells installed.
+    (big thanks to :bbuser:`agriffis`).
+  - If the hook loader is told to list plugins but is not given a hook
+    name, it prints the list of core hooks.
+  - Merge several fixes for path and variable handling for MSYS users
+    from :bbuser:`bwanamarko`. Includes a fix for :bbissue:`138`.
+  - Change :ref:`command-mkvirtualenv` so it catches both ``-h`` and
+    ``--help``.
+  - Fix some issues with the way temporary files are used for hook
+    scripts. (contributed by :bbuser:`agriffis`)
 
 3.2
 

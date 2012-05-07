@@ -6,6 +6,7 @@
 """
 
 import inspect
+import itertools
 import logging
 import logging.handlers
 import optparse
@@ -13,6 +14,7 @@ import os
 import sys
 
 import pkg_resources
+
 
 class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
     """Taken from http://stackoverflow.com/questions/1407474/does-python-logging-handlers-rotatingfilehandler-allow-creation-of-a-group-writa
@@ -22,6 +24,7 @@ class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
         rtv = logging.handlers.RotatingFileHandler._open(self)
         os.umask(prevumask)
         return rtv
+
 
 def main():
     parser = optparse.OptionParser(
@@ -67,7 +70,7 @@ def main():
                       dest='names',
                       default=[],
                       )
-    parser.disable_interspersed_args() # stop when we hit an option without an '-'
+    parser.disable_interspersed_args()  # stop when we hit an option without an '-'
     options, args = parser.parse_args()
 
     root_logger = logging.getLogger('')
@@ -85,10 +88,10 @@ def main():
 
     # Send higher-level messages to the console, too
     console = logging.StreamHandler()
-    console_level = [ logging.WARNING,
-                      logging.INFO,
-                      logging.DEBUG,
-                      ][options.verbose_level]
+    console_level = [logging.WARNING,
+                     logging.INFO,
+                     logging.DEBUG,
+                     ][options.verbose_level]
     console.setLevel(console_level)
     formatter = logging.Formatter('%(name)s %(message)s')
     console.setFormatter(formatter)
@@ -98,7 +101,11 @@ def main():
 
     # Determine which hook we're running
     if not args:
-        parser.error('Please specify the hook to run')
+        if options.listing:
+            list_hooks()
+            return 0
+        else:
+            parser.error('Please specify the hook to run')
     hook = args[0]
 
     if options.sourcing and options.script_filename:
@@ -126,6 +133,7 @@ def main():
 
     return 0
 
+
 def run_hooks(hook, options, args, output=None):
     if output is None:
         output = sys.stdout
@@ -135,7 +143,7 @@ def run_hooks(hook, options, args, output=None):
             continue
         plugin = ep.load()
         if options.listing:
-            sys.stdout.write('  %-10s -- %s\n' % (ep.name, inspect.getdoc(plugin) or ''))
+            output.write('  %-10s -- %s\n' % (ep.name, inspect.getdoc(plugin) or ''))
             continue
         if options.sourcing:
             # Show the shell commands so they can
@@ -148,6 +156,30 @@ def run_hooks(hook, options, args, output=None):
         else:
             # Just run the plugin ourselves
             plugin(args[1:])
+
+
+def list_hooks(output=None):
+    if output is None:
+        output = sys.stdout
+    for hook in itertools.chain(
+        ('_'.join(h)
+         for h in itertools.product(['pre', 'post'],
+                                    ['mkvirtualenv',
+                                     'rmvirtualenv',
+                                     'activate',
+                                     'deactivate',
+                                     'cpvirtualenv',
+                                     ])
+         ),
+        ['initialize',
+         'get_env_details',
+         'project.pre_mkproject',
+         'project.post_mkproject',
+         'project.template',
+         ]
+        ):
+        output.write(hook + '\n')
+
 
 if __name__ == '__main__':
     main()

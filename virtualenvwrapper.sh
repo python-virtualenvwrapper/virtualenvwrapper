@@ -118,7 +118,7 @@ function virtualenvwrapper_verify_workon_home {
         then
             echo "NOTE: Virtual environments directory $WORKON_HOME does not exist. Creating..." 1>&2
         fi
-        mkdir -p $WORKON_HOME
+        mkdir -p "$WORKON_HOME"
         RC=$?
     fi
     return $RC
@@ -300,7 +300,7 @@ function mkvirtualenv_help {
     echo;
     echo 'virtualenv help:';
     echo;
-    virtualenv -h;
+    virtualenv $@;
 }
 
 # Create a new environment, in the WORKON_HOME.
@@ -336,8 +336,8 @@ function mkvirtualenv {
             -a)
                 i=$(( $i + 1 ));
                 project="${in_args[$i]}";;
-            -h)
-                mkvirtualenv_help;
+            -h|--help)
+                mkvirtualenv_help $a;
                 return;;
             -i)
                 i=$(( $i + 1 ));
@@ -611,7 +611,7 @@ function virtualenvwrapper_get_python_version {
 
 # Prints the path to the site-packages directory for the current environment.
 function virtualenvwrapper_get_site_packages_dir {
-    "$VIRTUAL_ENV/bin/python" -c "import distutils; print(distutils.sysconfig.get_python_lib())"
+    "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/python" -c "import distutils; print(distutils.sysconfig.get_python_lib())"
 }
 
 # Path management for packages outside of the virtual env.
@@ -709,7 +709,7 @@ function lssitepackages {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
-    ls $@ $site_packages
+    ls $@ "$site_packages"
 
     path_file="$site_packages/_virtualenv_path_extensions.pth"
     if [ -f "$path_file" ]
@@ -899,7 +899,7 @@ function mkproject {
 
     cd "$PROJECT_HOME"
 
-    virtualenvwrapper_run_hook project.pre_mkproject $envname
+    virtualenvwrapper_run_hook "project.pre_mkproject" $envname
 
     echo "Creating $PROJECT_HOME/$envname"
     mkdir -p "$PROJECT_HOME/$envname"
@@ -914,10 +914,10 @@ function mkproject {
         # For some reason zsh insists on prefixing the template
         # names with a space, so strip them out before passing
         # the value to the hook loader.
-        virtualenvwrapper_run_hook --name $(echo $t | sed 's/^ //') project.template $envname
+        virtualenvwrapper_run_hook --name $(echo $t | sed 's/^ //') "project.template" $envname
     done
 
-    virtualenvwrapper_run_hook project.post_mkproject
+    virtualenvwrapper_run_hook "project.post_mkproject"
 }
 
 # Change directory to the active project
