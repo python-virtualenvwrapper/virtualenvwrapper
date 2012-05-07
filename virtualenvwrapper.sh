@@ -60,9 +60,9 @@ fi
 VIRTUALENVWRAPPER_ENV_BIN_DIR="bin"
 if [ "$OS" = "Windows_NT" ] && [ "$MSYSTEM" = "MINGW32" ]
 then
-	# Only assign this for msys, cygwin use standard Unix paths
-	# and its own python installation
-	VIRTUALENVWRAPPER_ENV_BIN_DIR="Scripts"
+    # Only assign this for msys, cygwin use standard Unix paths
+    # and its own python installation
+    VIRTUALENVWRAPPER_ENV_BIN_DIR="Scripts"
 fi
 
 # Let the user override the name of the file that holds the project
@@ -131,7 +131,7 @@ function virtualenvwrapper_tempfile {
     # Note: the 'X's must come last
     typeset suffix=${1:-hook}
     typeset file
-    
+
     file="`\mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX`"
     if [ $? -ne 0 ] || [ -z "$file" ] || [ ! -f "$file" ]
     then
@@ -146,13 +146,13 @@ function virtualenvwrapper_tempfile {
 function virtualenvwrapper_run_hook {
     typeset hook_script
     typeset result
-    
+
     hook_script="$(virtualenvwrapper_tempfile ${1}-hook)" || return 1
 
     if [ -z "$VIRTUALENVWRAPPER_LOG_DIR" ]
     then
         echo "ERROR: VIRTUALENVWRAPPER_LOG_DIR is not set." 1>&2
-	\rm -f "$hook_script"
+        \rm -f "$hook_script"
         return 1
     fi
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
@@ -163,7 +163,7 @@ function virtualenvwrapper_run_hook {
         if [ ! -f "$hook_script" ]
         then
             echo "ERROR: virtualenvwrapper_run_hook could not find temporary file $hook_script" 1>&2
-	    \rm -f "$hook_script"
+            \rm -f "$hook_script"
             return 2
         fi
         # cat "$hook_script"
@@ -376,8 +376,8 @@ function mkvirtualenv {
     # we should switch to the environment and run the hook.
     [ ! -d "$WORKON_HOME/$envname" ] && return 0
 
-	# If they gave us a project directory, set it up now
-	# so the activate hooks can find it.
+    # If they gave us a project directory, set it up now
+    # so the activate hooks can find it.
     if [ ! -z "$project" ]
     then
         setvirtualenvproject "$WORKON_HOME/$envname" "$project"
@@ -464,38 +464,38 @@ function lsvirtualenv {
     typeset long_mode=true
     if command -v "getopts" &> /dev/null
     then
-		# Use getopts when possible
-    	OPTIND=1
-		while getopts ":blh" opt "$@"
-		do
-			case "$opt" in
-				l) long_mode=true;;
-				b) long_mode=false;;
-				h)  _lsvirtualenv_usage;
-					return 1;;
-				?) echo "Invalid option: -$OPTARG" >&2;
-					_lsvirtualenv_usage;
-					return 1;;
-			esac
-		done
+        # Use getopts when possible
+        OPTIND=1
+        while getopts ":blh" opt "$@"
+        do
+            case "$opt" in
+                l) long_mode=true;;
+                b) long_mode=false;;
+                h)  _lsvirtualenv_usage;
+                    return 1;;
+                ?) echo "Invalid option: -$OPTARG" >&2;
+                    _lsvirtualenv_usage;
+                    return 1;;
+            esac
+        done
     else
-    	# fallback on getopt for other shell
-	    typeset -a args
-	    args=($(getopt blh "$@"))
-	    if [ $? != 0 ]
-	    then
-	        _lsvirtualenv_usage
-	        return 1
-	    fi
-	    for opt in $args
-	    do
-	        case "$opt" in
-	            -l) long_mode=true;;
-	            -b) long_mode=false;;
-	            -h) _lsvirtualenv_usage;
-	                return 1;;
-	        esac
-	    done
+        # fallback on getopt for other shell
+        typeset -a args
+        args=($(getopt blh "$@"))
+        if [ $? != 0 ]
+        then
+            _lsvirtualenv_usage
+            return 1
+        fi
+        for opt in $args
+        do
+            case "$opt" in
+                -l) long_mode=true;;
+                -b) long_mode=false;;
+                -h) _lsvirtualenv_usage;
+                    return 1;;
+            esac
+        done
     fi
 
     if $long_mode
@@ -534,8 +534,8 @@ function showvirtualenv {
 # Usage: workon [environment_name]
 #
 function workon {
-	typeset env_name="$1"
-	if [ "$env_name" = "" ]
+    typeset env_name="$1"
+    if [ "$env_name" = "" ]
     then
         lsvirtualenv -b
         return 1
@@ -596,7 +596,7 @@ function workon {
 
     virtualenvwrapper_run_hook "post_activate"
 
-	return 0
+    return 0
 }
 
 
