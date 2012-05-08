@@ -23,6 +23,7 @@ dev
     scripts. (contributed by :bbuser:`agriffis`)
   - Allow relative path to requirements file with
     :ref:`command-mkvirtualenv` and ``-r`` option. (:bbuser:`barberj`)
+  - Make whitespace consistent. (:bbuser:`agriffis`)
 
 3.2
 
