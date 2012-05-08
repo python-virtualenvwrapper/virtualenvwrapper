@@ -21,6 +21,8 @@ dev
     ``--help``.
   - Fix some issues with the way temporary files are used for hook
     scripts. (contributed by :bbuser:`agriffis`)
+  - Allow relative path to requirements file with
+    :ref:`command-mkvirtualenv` and ``-r`` option. (:bbuser:`barberj`)
 
 3.2
 
