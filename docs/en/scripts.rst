@@ -208,7 +208,7 @@ environment directory is passed as an argument to the script.
 .. _scripts-premkproject:
 
 premkproject
-===============
+============
 
   :Global/Local: global
   :Argument(s): name of new project
@@ -224,7 +224,7 @@ argument to the script.
 .. _scripts-postmkproject:
 
 postmkproject
-================
+=============
 
   :Global/Local: global
   :Argument(s): none
