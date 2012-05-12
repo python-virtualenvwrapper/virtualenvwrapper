@@ -3,7 +3,7 @@
 PROJECT = 'virtualenvwrapper'
 
 # Change docs/sphinx/conf.py too!
-VERSION = '3.2'
+VERSION = '3.3'
 
 # Bootstrap installation of Distribute
 import distribute_setup

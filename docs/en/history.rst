@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+3.3
 
   - Clean up file permissions and remove shebangs from scripts not
     intended to be executed on the command line. (contributed by
