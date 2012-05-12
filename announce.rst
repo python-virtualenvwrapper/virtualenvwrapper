@@ -1,5 +1,5 @@
 =======================
- virtualenvwrapper 3.2
+ virtualenvwrapper 3.3
 =======================
 
 .. tags:: virtualenvwrapper release python
@@ -16,22 +16,26 @@ introducing conflicts in their dependencies.
 What's New in 3.2
 =================
 
-- Make ``project_dir`` a local variable so that
-  ``cdproject`` does not interfere with other variables
-  the user might have set. (contributed by ``slackorama``)
-- Fix typo in documentation reported by Nick Martin.
-- Change trove classifier for license "MIT" to reflect the license
-  text presented in the documentation. *This does not indicate a
-  change in the license, just a correction to the expression of that
-  intent.* (contributed by ``ralphbean`` as fix for issue 134)
-- Extend ``rmvirtualenv`` to allow removing more than one
-  environment at a time. (contributed by ``ciberglo``)
-- Change the definition of ``virtualenvwrapper_get_site_packages_dir``
-  to ask ``distutils`` for the ``site-packages`` directory instead of
-  trying to build the path ourselves in the shell script. This should
-  resolve issue 112 and improve support for Python interpreters other
-  than C Python. Thanks to Carl Meyer and Dario Bertini for their
-  contributions toward the fix.
+- Clean up file permissions and remove shebangs from scripts not
+  intended to be executed on the command line. (contributed by
+  ``ralphbean``)
+- Worked on some brittle tests.
+- Received updates to Japanese translation of the documentation from
+  ``t2y``.
+- Fix the test script and runner so the user's ``$WORKON_HOME`` is
+  not erased if they do not have some test shells installed.
+  (big thanks to ``agriffis``).
+- If the hook loader is told to list plugins but is not given a hook
+  name, it prints the list of core hooks.
+- Merge several fixes for path and variable handling for MSYS users
+  from ``bwanamarko``. Includes a fix for issue 138.
+- Change ``mkvirtualenv`` so it catches both ``-h`` and
+  ``--help``.
+- Fix some issues with the way temporary files are used for hook
+  scripts. (contributed by ``agriffis``)
+- Allow relative path to requirements file with
+  ``mkvirtualenv`` and ``-r`` option. (``barberj``)
+- Make whitespace consistent. (``agriffis``)
 
 Installing
 ==========
