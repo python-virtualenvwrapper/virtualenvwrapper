@@ -1,1 +1,1 @@
-sphinxcontrib.bitbucket
+sphinxcontrib-bitbucket
