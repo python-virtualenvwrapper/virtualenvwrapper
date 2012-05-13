@@ -13,8 +13,8 @@ virtual environments and otherwise managing your development workflow,
 making it easier to work on more than one project at a time without
 introducing conflicts in their dependencies.
 
-What's New in 3.2
-=================
+What's New
+==========
 
 - Clean up file permissions and remove shebangs from scripts not
   intended to be executed on the command line. (contributed by
