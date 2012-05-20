@@ -2,6 +2,10 @@
 Release History
 ===============
 
+3.4
+
+  - Add :ref:`install-lazy-loader` option.
+
 3.3
 
   - Clean up file permissions and remove shebangs from scripts not

@@ -139,7 +139,8 @@ setup(
 
     platforms = ['Any'],
 
-    scripts = ['virtualenvwrapper.sh', 
+    scripts = ['virtualenvwrapper.sh',
+               'virtualenvwrapper_lazy.sh',
                ],
 
     provides=['virtualenvwrapper',

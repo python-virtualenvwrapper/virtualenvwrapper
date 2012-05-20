@@ -118,6 +118,31 @@ of the script installed with this package::
 After editing it, reload the startup file (e.g., run ``source
 ~/.bashrc``).
 
+.. _install-lazy-loader:
+
+Lazy Loading
+------------
+
+An alternative initialization script is provided for loading
+virtualenvwrapper lazily. Instead of sourcing ``virtualenvwrapper.sh``
+directly, use ``virtualenvwrapper_lazy.sh``. If
+``virtualenvwrapper.sh`` is not on your ``$PATH``, set
+``VIRTUALENVWRAPPER_SCRIPT`` to point to it.
+
+::
+
+    export WORKON_HOME=$HOME/.virtualenvs
+    export PROJECT_HOME=$HOME/Devel
+    export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+    source /usr/local/bin/virtualenvwrapper_lazy.sh
+
+.. warning::
+
+   When the lazy-loading version of the startup script is used,
+   tab-completion does not work until after the first
+   virtualenvwrapper command has been run. For example, tab completion
+   does not work for the first instance of :ref:`command-workon`.
+
 Quick-Start
 ===========
 
