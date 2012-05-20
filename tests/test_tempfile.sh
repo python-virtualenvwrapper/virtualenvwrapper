@@ -44,7 +44,7 @@ test_bad_mktemp() {
         mktemp_missing_executable mktemp_missing_result
     do
         mktemp() { $mktemp_func "$@"; }
-        filename=$(virtualenvwrapper_tempfile hook)
+        filename=$(virtualenvwrapper_tempfile hook 2>/dev/null)
         assertSame "($mktemp_func) Unexpected exit code $?" "1" "$?"
     done
 
