@@ -56,6 +56,12 @@ then
     VIRTUALENVWRAPPER_VIRTUALENV="virtualenv"
 fi
 
+# Set the name of the virtualenv-clone app to use.
+if [ "$VIRTUALENVWRAPPER_VIRTUALENV_CLONE" = "" ]
+then
+    VIRTUALENVWRAPPER_VIRTUALENV_CLONE="virtualenv-clone"
+fi
+
 # Define script folder depending on the platorm (Win32/Unix)
 VIRTUALENVWRAPPER_ENV_BIN_DIR="bin"
 if [ "$OS" = "Windows_NT" ] && [ "$MSYSTEM" = "MINGW32" ]
@@ -76,7 +82,7 @@ function virtualenvwrapper_expandpath {
         if [ "$1" = "" ]; then
             return 1
         else
-            "$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.realpath(os.path.expanduser(os.path.expandvars(\"$1\")))+'\n')"
+            "$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.normpath(os.path.expanduser(os.path.expandvars(\"$1\")))+'\n')"
             return 0
         fi
 }
@@ -255,22 +261,33 @@ function virtualenvwrapper_initialize {
     return 0
 }
 
-
-# Verify that virtualenv is installed and visible
-function virtualenvwrapper_verify_virtualenv {
-    typeset venv=$(\which "$VIRTUALENVWRAPPER_VIRTUALENV" | (unset GREP_OPTIONS; \grep -v "not found"))
-    if [ "$venv" = "" ]
+# Verify that the passed resource is in path and exists
+function virtualenvwrapper_verify_resource {
+    typeset exe_path=$(\which "$1" | (unset GREP_OPTIONS; \grep -v "not found"))
+    if [ "$exe_path" = "" ]
     then
-        echo "ERROR: virtualenvwrapper could not find $VIRTUALENVWRAPPER_VIRTUALENV in your path" >&2
+        echo "ERROR: virtualenvwrapper could not find $1 in your path" >&2
         return 1
     fi
-    if [ ! -e "$venv" ]
+    if [ ! -e "$exe_path" ]
     then
-        echo "ERROR: Found $VIRTUALENVWRAPPER_VIRTUALENV in path as \"$venv\" but that does not exist" >&2
+        echo "ERROR: Found $1 in path as \"$exe_path\" but that does not exist" >&2
         return 1
     fi
     return 0
 }
+
+
+# Verify that virtualenv is installed and visible
+function virtualenvwrapper_verify_virtualenv {
+    virtualenvwrapper_verify_resource $VIRTUALENVWRAPPER_VIRTUALENV
+}
+
+
+function virtualenvwrapper_verify_virtualenv_clone {
+    virtualenvwrapper_verify_resource $VIRTUALENVWRAPPER_VIRTUALENV_CLONE
+}
+
 
 # Verify that the requested environment exists
 function virtualenvwrapper_verify_workon_environment {
@@ -752,50 +769,71 @@ function toggleglobalsitepackages {
 
 # Duplicate the named virtualenv to make a new one.
 function cpvirtualenv {
-    typeset env_name="$1"
-    if [ "$env_name" = "" ]
-    then
-        virtualenvwrapper_show_workon_options
+    virtualenvwrapper_verify_workon_home || return 1
+    virtualenvwrapper_verify_virtualenv_clone || return 1
+
+    typeset src_name="$1"
+    typeset trg_name="$2"
+    typeset src
+    typeset trg 
+
+    # without a source there is nothing to do
+    if [ "$src_name" = "" ]; then
+        echo "Please provide a valid virtualenv to copy."
         return 1
-    fi
-    typeset new_env="$2"
-    if [ "$new_env" = "" ]
-    then
-        echo "Please specify target virtualenv"
-        return 1
-    fi
-    if echo "$WORKON_HOME" | (unset GREP_OPTIONS; \grep "/$" > /dev/null)
-    then
-        typeset env_home="$WORKON_HOME"
     else
-        typeset env_home="$WORKON_HOME/"
+        # see if its already in workon
+        if [ ! -e "$WORKON_HOME/$src_name" ]; then
+            # so its a virtualenv we are importing
+            # make sure we have a full path
+            # and get the name
+            src=$(virtualenvwrapper_expandpath "$src_name")
+            # final verification
+            if [ ! -e "$src" ]; then
+                echo "Please provide a valid virtualenv to copy."
+                return 1
+            fi
+            src_name=$(basename "$src")
+        else
+           src="$WORKON_HOME/$src_name"
+        fi
     fi
-    typeset source_env="$env_home$env_name"
-    typeset target_env="$env_home$new_env"
 
-    if [ ! -e "$source_env" ]
-    then
-        echo "$env_name virtualenv doesn't exist"
+    if [ "$trg_name" = "" ]; then
+        # target not given, assume
+        # same as source
+        trg="$WORKON_HOME/$src_name"
+        trg_name="$src_name"
+    else
+        trg="$WORKON_HOME/$trg_name"
+    fi
+    trg=$(virtualenvwrapper_expandpath "$trg")
+
+    # validate trg does not already exist
+    # catch copying virtualenv in workon home
+    # to workon home
+    if [ -e "$trg" ]; then
+        echo "$trg_name virtualenv already exists."
         return 1
     fi
 
-    \cp -r "$source_env" "$target_env"
-    for script in $( \ls $target_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/* )
-    do
-        newscript="$script-new"
-        \sed "s|$source_env|$target_env|g" < "$script" > "$newscript"
-        \mv "$newscript" "$script"
-        \chmod a+x "$script"
-    done
+    echo "Copying $src_name as $trg_name..."
+    (
+        [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT 
+        \cd "$WORKON_HOME" &&
+        "$VIRTUALENVWRAPPER_VIRTUALENV_CLONE" "$src" "$trg" 
+        [ -d "$trg" ] && 
+            virtualenvwrapper_run_hook "pre_cpvirtualenv" "$src" "$trg_name" &&
+            virtualenvwrapper_run_hook "pre_mkvirtualenv" "$trg_name"
+    )
+    typeset RC=$?
+    [ $RC -ne 0 ] && return $RC
 
-    "$VIRTUALENVWRAPPER_VIRTUALENV" "$target_env" --relocatable
-    \sed "s/VIRTUAL_ENV\(.*\)$env_name/VIRTUAL_ENV\1$new_env/g" < "$source_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate" > "$target_env/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate"
+    [ ! -d "$WORKON_HOME/$trg_name" ] && return 0
 
-    (\cd "$WORKON_HOME" && (
-        virtualenvwrapper_run_hook "pre_cpvirtualenv" "$env_name" "$new_env";
-        virtualenvwrapper_run_hook "pre_mkvirtualenv" "$new_env"
-        ))
-    workon "$new_env"
+    # Now activate the new environment
+    workon "$trg_name"
+
     virtualenvwrapper_run_hook "post_mkvirtualenv"
     virtualenvwrapper_run_hook "post_cpvirtualenv"
 }

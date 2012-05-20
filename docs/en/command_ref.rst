@@ -153,16 +153,17 @@ environment.
 cpvirtualenv
 ------------
 
-Duplicate an environment, in the WORKON_HOME.
+In the WORKON_HOME, duplicate an environment or clone an external environment.
 
 Syntax::
 
-    cpvirtualenv ENVNAME TARGETENVNAME
+    cpvirtualenv ENVNAME [TARGETENVNAME]
+
+
 
 .. note::
 
-   The environment created by the copy operation is made `relocatable
-   <http://virtualenv.openplans.org/#making-environments-relocatable>`__.
+  Target environment name is required for WORKON_HOME duplications. However, target environment name can be ommited for external copies, causing the new environment to have the name of the original within the WORKON_HOME.
 
 ::
 

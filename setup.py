@@ -147,7 +147,9 @@ setup(
               'virtualenvwrapper.user_scripts',
               'virtualenvwrapper.project',
               ],
-    install_requires=['virtualenv'],
+    install_requires=['virtualenv',
+                      'virtualenv-clone',
+                      ],
 
     namespace_packages = [ 'virtualenvwrapper' ],
     packages = find_packages(),

@@ -102,4 +102,18 @@ test_python_interpreter_set_incorrectly() {
     deactivate
 }
 
+test_virtualenvwrapper_verify_virtualenv(){
+    assertTrue "Verified unable to verify virtualenv" virtualenvwrapper_verify_virtualenv
+
+    VIRTUALENVWRAPPER_VIRTUALENV="thiscannotpossiblyexist123"
+    assertFalse "Incorrectly verified virtualenv" virtualenvwrapper_verify_virtualenv
+}
+
+test_virtualenvwrapper_verify_virtualenv_clone(){
+    assertTrue "Verified unable to verify virtualenv_clone" virtualenvwrapper_verify_virtualenv_clone
+
+    VIRTUALENVWRAPPER_VIRTUALENV_CLONE="thiscannotpossiblyexist123"
+    assertFalse "Incorrectly verified virtualenv_clone" virtualenvwrapper_verify_virtualenv_clone
+}
+
 . "$test_dir/shunit2"
