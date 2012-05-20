@@ -139,9 +139,10 @@ directly, use ``virtualenvwrapper_lazy.sh``. If
 .. warning::
 
    When the lazy-loading version of the startup script is used,
-   tab-completion does not work until after the first
-   virtualenvwrapper command has been run. For example, tab completion
-   does not work for the first instance of :ref:`command-workon`.
+   tab-completion of arguments to virtualenvwrapper commands (such as
+   environment names) is not enabled until after the first command has
+   been run. For example, tab completion of environments does not work
+   for the first instance of :ref:`command-workon`.
 
 Quick-Start
 ===========
