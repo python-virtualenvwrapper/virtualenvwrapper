@@ -177,6 +177,16 @@ function virtualenvwrapper_run_hook {
         fi
         # cat "$hook_script"
         source "$hook_script"
+	elif [ "${1}" = "initialize" ]
+	then
+        cat - 1>&2 <<EOF 
+virtualenvwrapper.sh: There was a problem running the initialization hooks. 
+
+If Python could not import the module virtualenvwrapper.hook_loader,
+check that virtualenv has been installed for
+VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is
+set properly.
+EOF
     fi
     \rm -f "$hook_script"
     return $result
@@ -239,11 +249,6 @@ function virtualenvwrapper_initialize {
     fi
 
     virtualenvwrapper_run_hook "initialize"
-    if [ $? -ne 0 ]
-    then
-        echo "virtualenvwrapper.sh: There was a problem running the initialization hooks. If Python could not import the module virtualenvwrapper.hook_loader, check that virtualenv has been installed for VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is set properly." 1>&2
-        return 1
-    fi
 
     virtualenvwrapper_setup_tab_completion
 
@@ -994,6 +999,6 @@ EOF
 
 
 #
-# Invoke the initialization hooks
+# Invoke the initialization functions
 #
 virtualenvwrapper_initialize
