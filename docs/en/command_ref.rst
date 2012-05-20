@@ -197,6 +197,8 @@ Syntax::
 Controlling the Active Environment
 ==================================
 
+.. _command-workon:
+
 workon
 ------
 
