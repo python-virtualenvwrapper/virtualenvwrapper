@@ -16,7 +16,7 @@ tearDown () {
     then 
         deactivate
     fi
-    #rm -rf "$WORKON_HOME"
+    rm -rf "$WORKON_HOME"
 }
 
 test_no_arguments () {
