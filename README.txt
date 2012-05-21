@@ -56,34 +56,7 @@ from this page.
 Python Versions
 ===============
 
-virtualenvwrapper is tested under Python 2.4 - 2.7.
-
-Upgrading to 2.9
-================
-
-Version 2.9 includes the features previously delivered separately by
-``virtualenvwrapper.project``.  If you have an older verison of the
-project extensions installed, remove them before upgrading.
-
-Upgrading from 1.x
-==================
-
-The shell script containing the wrapper functions has been renamed in
-the 2.x series to reflect the fact that shells other than bash are
-supported.  In your startup file, change ``source
-/usr/local/bin/virtualenvwrapper_bashrc`` to ``source
-/usr/local/bin/virtualenvwrapper.sh``.
-
-============
-Contributing
-============
-
-Before contributing new features to virtualenvwrapper core, consider
-whether they should be implemented as an extension instead.
-
-Refer to the `developers docs
-<http://www.doughellmann.com/docs/virtualenvwrapper/developers.html>`__
-for tips on contributing patches.
+virtualenvwrapper is tested under Python 2.6, 2.7 and 3.2.
 
 =======
 Support
