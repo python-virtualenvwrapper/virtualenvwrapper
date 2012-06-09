@@ -829,7 +829,7 @@ function cpvirtualenv {
     typeset RC=$?
     [ $RC -ne 0 ] && return $RC
 
-    [ ! -d "$WORKON_HOME/$trg_name" ] && return 0
+    [ ! -d "$WORKON_HOME/$trg_name" ] && return 1
 
     # Now activate the new environment
     workon "$trg_name"
