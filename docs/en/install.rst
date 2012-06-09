@@ -24,6 +24,16 @@ from this page.
 
 .. _bitbucket project page: https://bitbucket.org/dhellmann/virtualenvwrapper/
 
+Windows Command Prompt
+----------------------
+
+David Marble has ported virtualenvwrapper to Windows batch scripts,
+which can be run under Microsoft Windows Command Prompt. This is also
+a separately distributed re-implementation. You can download
+`virtualenvwrapper-win`_ from PyPI.
+
+.. _virtualenvwrapper-win: http://pypi.python.org/pypi/virtualenvwrapper-win 
+
 MSYS
 ----
 

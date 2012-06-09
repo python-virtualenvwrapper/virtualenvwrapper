@@ -9,6 +9,12 @@ dev
     Justin Barber (:bbuser:`barberj`). This also resolves a problem
     with cpvirtualenv not honoring the ``--no-site-packages`` flag
     (:bbissue:`102`).
+  - Update docs with link to `virtualenvwrapper-win`_ port by David
+    Marble.
+
+.. _virtualenv-clone: http://pypi.python.org/pypi/virtualenv-clone
+.. _virtualenvwrapper-win: http://pypi.python.org/pypi/virtualenvwrapper-win 
+
 
 3.4
 
