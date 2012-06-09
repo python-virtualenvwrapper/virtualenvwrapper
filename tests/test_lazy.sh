@@ -88,21 +88,4 @@ test_mktmpenv_defined_lazy() {
     function_defined_lazy mktmpenv
 }
 
-
-# test_virtualenvwrapper_initialize() {
-#     assertTrue "Initialized" virtualenvwrapper_initialize
-#     for hook in premkvirtualenv postmkvirtualenv prermvirtualenv postrmvirtualenv preactivate postactivate predeactivate postdeactivate
-#     do
-#         assertTrue "Global $WORKON_HOME/$hook was not created" "[ -f $WORKON_HOME/$hook ]"
-#         assertTrue "Global $WORKON_HOME/$hook is not executable" "[ -x $WORKON_HOME/$hook ]"
-#     done
-#     assertTrue "Log file was not created" "[ -f $WORKON_HOME/hook.log ]"
-#     export pre_test_dir=$(cd "$test_dir"; pwd)
-#     echo "echo GLOBAL initialize >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/initialize"
-#     virtualenvwrapper_initialize
-#     output=$(cat "$test_dir/catch_output")
-#     expected="GLOBAL initialize"
-#     assertSame "$expected" "$output"
-# }
-
 . "$test_dir/shunit2"
