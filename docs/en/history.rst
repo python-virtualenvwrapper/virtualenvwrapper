@@ -2,6 +2,14 @@
 Release History
 ===============
 
+dev
+
+  - Rewrite :ref:`command-cpvirtualenv` to use `virtualenv-clone`_
+    instead of making the new environment relocatable. Contributed by
+    Justin Barber (:bbuser:`barberj`). This also resolves a problem
+    with cpvirtualenv not honoring the ``--no-site-packages`` flag
+    (:bbissue:`102`).
+
 3.4
 
   - Add :ref:`install-lazy-loader` option.
