@@ -153,17 +153,20 @@ environment.
 cpvirtualenv
 ------------
 
-In the WORKON_HOME, duplicate an environment or clone an external environment.
+Duplicate an existing virtualenv environment. The source can be an
+environment managed by virtualenvwrapper or an external environment
+created elsewhere.
 
 Syntax::
 
     cpvirtualenv ENVNAME [TARGETENVNAME]
 
-
-
 .. note::
 
-  Target environment name is required for WORKON_HOME duplications. However, target environment name can be ommited for external copies, causing the new environment to have the name of the original within the WORKON_HOME.
+  Target environment name is required for WORKON_HOME
+  duplications. However, target environment name can be ommited for
+  importing external environments. If omitted, the new environment is
+  given the same name as the original.
 
 ::
 
