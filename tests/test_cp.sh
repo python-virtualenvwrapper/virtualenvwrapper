@@ -21,6 +21,8 @@ tearDown() {
 
 test_new_env_activated () {
     mkvirtualenv "source" >/dev/null 2>&1
+	RC=$?
+	assertEquals "0" "$RC"
     (cd tests/testpackage && python setup.py install) >/dev/null 2>&1
     cpvirtualenv "source" "destination" >/dev/null 2>&1
     rmvirtualenv "source" >/dev/null 2>&1

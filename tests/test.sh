@@ -84,7 +84,9 @@ test_virtualenvwrapper_verify_workon_home_missing_dir_grep_options() {
 test_python_interpreter_set_incorrectly() {
     return_to="$(pwd)"
     cd "$WORKON_HOME"
-    mkvirtualenv no_wrappers
+    mkvirtualenv no_wrappers >/dev/null 2>&1
+	RC=$?
+	assertEquals "0" "$RC"
     expected="ImportError: No module named virtualenvwrapper.hook_loader"
     # test_shell is set by tests/run_tests
     if [ "$test_shell" = "" ]
