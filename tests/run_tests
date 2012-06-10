@@ -23,9 +23,10 @@ fi
 
 # Make sure the test shells exist before proceeding, otherwise tests are
 # going to fail later.
+DESIRED_SHELLS=${DESIRED_SHELLS:-"bash zsh ksh"}
 missing_shells=""
 test_shells=""
-for shell in bash ksh zsh
+for shell in $DESIRED_SHELLS
 do
     if test_shell=$(which $shell); then
         test_shells="$test_shells $test_shell"
@@ -69,11 +70,14 @@ do
 
     for test_shell in $test_shells
     do
+        unset BASH
+        unset ZSH_VERSION
         test_shell_opts=
         case /$test_shell in
             */zsh) test_shell_opts="-o shwordsplit" ;;
         esac
         export test_shell
+        export SHELL=$(which $test_shell)
 
         echo
         echo '********************************************************************************'
