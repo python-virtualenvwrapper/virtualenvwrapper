@@ -47,7 +47,7 @@
 # Locate the global Python where virtualenvwrapper is installed.
 if [ "$VIRTUALENVWRAPPER_PYTHON" = "" ]
 then
-    VIRTUALENVWRAPPER_PYTHON="$(\which python)"
+    VIRTUALENVWRAPPER_PYTHON="$(command \which python)"
 fi
 
 # Set the name of the virtualenv app to use.
@@ -78,6 +78,29 @@ then
     export VIRTUALENVWRAPPER_PROJECT_FILENAME=".project"
 fi
 
+# Portable shell scripting is hard, let's go shopping.
+#
+# People insist on aliasing commands like 'cd', either with a real
+# alias or even a shell function. Under bash and zsh, "builtin" forces
+# the use of a command that is part of the shell itself instead of an
+# alias, function, or external command, while "command" does something
+# similar but allows external commands. Under ksh "builtin" registers
+# a new command from a shared library, but "command" will pick up
+# existing builtin commands. We need to use a builtin for cd because
+# we are trying to change the state of the current shell, so we use
+# "builtin" for bash and zsh but "command" under ksh.
+function __virtualenvwrapper_cd {
+	if [ -n "$BASH" ]
+	then
+		builtin \cd "$@"
+	elif [ -n "$ZSH_VERSION" ]
+	then
+		builtin \cd "$@"
+	else
+		command \cd "$@"
+	fi
+}
+
 function virtualenvwrapper_expandpath {
         if [ "$1" = "" ]; then
             return 1
@@ -99,7 +122,7 @@ function virtualenvwrapper_derive_workon_home {
 
     # If the path is relative, prefix it with $HOME
     # (note: for compatibility)
-    if echo "$workon_home_dir" | (unset GREP_OPTIONS; \grep '^[^/~]' > /dev/null)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; command \grep '^[^/~]' > /dev/null)
     then
         workon_home_dir="$HOME/$WORKON_HOME"
     fi
@@ -108,7 +131,7 @@ function virtualenvwrapper_derive_workon_home {
     # path might contain stuff to expand.
     # (it might be possible to do this in shell, but I don't know a
     # cross-shell-safe way of doing it -wolever)
-    if echo "$workon_home_dir" | (unset GREP_OPTIONS; \egrep '([\$~]|//)' >/dev/null)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; command \egrep '([\$~]|//)' >/dev/null)
     then
         # This will normalize the path by:
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
@@ -141,13 +164,19 @@ function virtualenvwrapper_verify_workon_home {
 
 #HOOK_VERBOSE_OPTION="-q"
 
+# Function to wrap mktemp so tests can replace it for error condition
+# testing.
+function __virtualenvwrapper_mktemp {
+	command \mktemp "$@"
+}
+
 # Expects 1 argument, the suffix for the new file.
 function virtualenvwrapper_tempfile {
     # Note: the 'X's must come last
     typeset suffix=${1:-hook}
     typeset file
 
-    file="`\mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX`"
+    file="$(__virtualenvwrapper_mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX)"
     if [ $? -ne 0 ] || [ -z "$file" ] || [ ! -f "$file" ]
     then
         echo "ERROR: virtualenvwrapper could not create a temporary file name." 1>&2
@@ -167,7 +196,7 @@ function virtualenvwrapper_run_hook {
     if [ -z "$VIRTUALENVWRAPPER_LOG_DIR" ]
     then
         echo "ERROR: VIRTUALENVWRAPPER_LOG_DIR is not set." 1>&2
-        \rm -f "$hook_script"
+        command \rm -f "$hook_script"
         return 1
     fi
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
@@ -178,7 +207,7 @@ function virtualenvwrapper_run_hook {
         if [ ! -f "$hook_script" ]
         then
             echo "ERROR: virtualenvwrapper_run_hook could not find temporary file $hook_script" 1>&2
-            \rm -f "$hook_script"
+            command \rm -f "$hook_script"
             return 2
         fi
         # cat "$hook_script"
@@ -194,7 +223,7 @@ VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is
 set properly.
 EOF
     fi
-    \rm -f "$hook_script"
+    command \rm -f "$hook_script"
     return $result
 }
 
@@ -263,7 +292,7 @@ function virtualenvwrapper_initialize {
 
 # Verify that the passed resource is in path and exists
 function virtualenvwrapper_verify_resource {
-    typeset exe_path=$(\which "$1" | (unset GREP_OPTIONS; \grep -v "not found"))
+    typeset exe_path=$(command \which "$1" | (unset GREP_OPTIONS; command \grep -v "not found"))
     if [ "$exe_path" = "" ]
     then
         echo "ERROR: virtualenvwrapper could not find $1 in your path" >&2
@@ -395,7 +424,7 @@ function mkvirtualenv {
     virtualenvwrapper_verify_virtualenv || return 1
     (
         [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT
-        \cd "$WORKON_HOME" &&
+        __virtualenvwrapper_cd "$WORKON_HOME" &&
         "$VIRTUALENVWRAPPER_VIRTUALENV" $VIRTUALENVWRAPPER_VIRTUALENV_ARGS "$@" &&
         [ -d "$WORKON_HOME/$envname" ] && \
             virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
@@ -456,16 +485,16 @@ function rmvirtualenv {
         # Move out of the current directory to one known to be
         # safe, in case we are inside the environment somewhere.
         typeset prior_dir="$(pwd)"
-        \cd "$WORKON_HOME"
+        __virtualenvwrapper_cd "$WORKON_HOME"
 
         virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
-        \rm -rf "$env_dir"
+        command \rm -rf "$env_dir"
         virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
 
         # If the directory we used to be in still exists, move back to it.
         if [ -d "$prior_dir" ]
         then
-            \cd "$prior_dir"
+            __virtualenvwrapper_cd "$prior_dir"
         fi
     done
 }
@@ -476,9 +505,7 @@ function virtualenvwrapper_show_workon_options {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (\cd "$WORKON_HOME"; for f in */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate; do echo $f; done) 2>/dev/null | \sed 's|^\./||' | \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||" | \sort | (unset GREP_OPTIONS; \egrep -v '^\*$')
-
-#    (\cd "$WORKON_HOME"; find -L . -depth 3 -path '*/bin/activate') | sed 's|^\./||' | sed 's|/bin/activate||' | sort
+    (__virtualenvwrapper_cd "$WORKON_HOME"; for f in */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate; do echo $f; done) 2>/dev/null | command \sed 's|^\./||' | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||" | command \sort | (unset GREP_OPTIONS; command \egrep -v '^\*$')
 }
 
 function _lsvirtualenv_usage {
@@ -725,14 +752,14 @@ function cdsitepackages {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
-    \cd "$site_packages"/$1
+    __virtualenvwrapper_cd "$site_packages"/$1
 }
 
 # Does a ``cd`` to the root of the currently-active virtualenv.
 function cdvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    \cd $VIRTUAL_ENV/$1
+    __virtualenvwrapper_cd $VIRTUAL_ENV/$1
 }
 
 # Shows the content of the site-packages directory of the currently-active
@@ -820,7 +847,7 @@ function cpvirtualenv {
     echo "Copying $src_name as $trg_name..."
     (
         [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT 
-        \cd "$WORKON_HOME" &&
+        __virtualenvwrapper_cd "$WORKON_HOME" &&
         "$VIRTUALENVWRAPPER_VIRTUALENV_CLONE" "$src" "$trg" 
         [ -d "$trg" ] && 
             virtualenvwrapper_run_hook "pre_cpvirtualenv" "$src" "$trg_name" &&
