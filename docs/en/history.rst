@@ -11,6 +11,8 @@ dev
     (:bbissue:`102`).
   - Update docs with link to `virtualenvwrapper-win`_ port by David
     Marble.
+  - Use ``command`` to avoid functions named the same as common
+    utilities. (:bbissue:`119`)
 
 .. _virtualenv-clone: http://pypi.python.org/pypi/virtualenv-clone
 .. _virtualenvwrapper-win: http://pypi.python.org/pypi/virtualenvwrapper-win 
