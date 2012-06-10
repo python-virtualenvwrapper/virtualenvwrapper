@@ -89,25 +89,25 @@ fi
 # existing builtin commands. We need to use a builtin for cd because
 # we are trying to change the state of the current shell, so we use
 # "builtin" for bash and zsh but "command" under ksh.
-function __virtualenvwrapper_cd {
-	if [ -n "$BASH" ]
-	then
-		builtin \cd "$@"
-	elif [ -n "$ZSH_VERSION" ]
-	then
-		builtin \cd "$@"
-	else
-		command \cd "$@"
-	fi
+function virtualenvwrapper_cd {
+    if [ -n "$BASH" ]
+    then
+        builtin \cd "$@"
+    elif [ -n "$ZSH_VERSION" ]
+    then
+        builtin \cd "$@"
+    else
+        command \cd "$@"
+    fi
 }
 
 function virtualenvwrapper_expandpath {
-        if [ "$1" = "" ]; then
-            return 1
-        else
-            "$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.normpath(os.path.expanduser(os.path.expandvars(\"$1\")))+'\n')"
-            return 0
-        fi
+    if [ "$1" = "" ]; then
+        return 1
+    else
+        "$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.normpath(os.path.expanduser(os.path.expandvars(\"$1\")))+'\n')"
+        return 0
+    fi
 }
 
 function virtualenvwrapper_derive_workon_home {
@@ -166,8 +166,8 @@ function virtualenvwrapper_verify_workon_home {
 
 # Function to wrap mktemp so tests can replace it for error condition
 # testing.
-function __virtualenvwrapper_mktemp {
-	command \mktemp "$@"
+function virtualenvwrapper_mktemp {
+    command \mktemp "$@"
 }
 
 # Expects 1 argument, the suffix for the new file.
@@ -176,7 +176,7 @@ function virtualenvwrapper_tempfile {
     typeset suffix=${1:-hook}
     typeset file
 
-    file="$(__virtualenvwrapper_mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX)"
+    file="$(virtualenvwrapper_mktemp -t virtualenvwrapper-$suffix-XXXXXXXXXX)"
     if [ $? -ne 0 ] || [ -z "$file" ] || [ ! -f "$file" ]
     then
         echo "ERROR: virtualenvwrapper could not create a temporary file name." 1>&2
@@ -212,8 +212,8 @@ function virtualenvwrapper_run_hook {
         fi
         # cat "$hook_script"
         source "$hook_script"
-	elif [ "${1}" = "initialize" ]
-	then
+    elif [ "${1}" = "initialize" ]
+    then
         cat - 1>&2 <<EOF 
 virtualenvwrapper.sh: There was a problem running the initialization hooks. 
 
@@ -424,7 +424,7 @@ function mkvirtualenv {
     virtualenvwrapper_verify_virtualenv || return 1
     (
         [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT
-        __virtualenvwrapper_cd "$WORKON_HOME" &&
+        virtualenvwrapper_cd "$WORKON_HOME" &&
         "$VIRTUALENVWRAPPER_VIRTUALENV" $VIRTUALENVWRAPPER_VIRTUALENV_ARGS "$@" &&
         [ -d "$WORKON_HOME/$envname" ] && \
             virtualenvwrapper_run_hook "pre_mkvirtualenv" "$envname"
@@ -485,7 +485,7 @@ function rmvirtualenv {
         # Move out of the current directory to one known to be
         # safe, in case we are inside the environment somewhere.
         typeset prior_dir="$(pwd)"
-        __virtualenvwrapper_cd "$WORKON_HOME"
+        virtualenvwrapper_cd "$WORKON_HOME"
 
         virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
         command \rm -rf "$env_dir"
@@ -494,7 +494,7 @@ function rmvirtualenv {
         # If the directory we used to be in still exists, move back to it.
         if [ -d "$prior_dir" ]
         then
-            __virtualenvwrapper_cd "$prior_dir"
+            virtualenvwrapper_cd "$prior_dir"
         fi
     done
 }
@@ -505,7 +505,7 @@ function virtualenvwrapper_show_workon_options {
     # NOTE: DO NOT use ls here because colorized versions spew control characters
     #       into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (__virtualenvwrapper_cd "$WORKON_HOME"; for f in */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate; do echo $f; done) 2>/dev/null | command \sed 's|^\./||' | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||" | command \sort | (unset GREP_OPTIONS; command \egrep -v '^\*$')
+    (virtualenvwrapper_cd "$WORKON_HOME"; for f in */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate; do echo $f; done) 2>/dev/null | command \sed 's|^\./||' | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||" | command \sort | (unset GREP_OPTIONS; command \egrep -v '^\*$')
 }
 
 function _lsvirtualenv_usage {
@@ -752,14 +752,14 @@ function cdsitepackages {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
-    __virtualenvwrapper_cd "$site_packages"/$1
+    virtualenvwrapper_cd "$site_packages"/$1
 }
 
 # Does a ``cd`` to the root of the currently-active virtualenv.
 function cdvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    __virtualenvwrapper_cd $VIRTUAL_ENV/$1
+    virtualenvwrapper_cd $VIRTUAL_ENV/$1
 }
 
 # Shows the content of the site-packages directory of the currently-active
@@ -847,7 +847,7 @@ function cpvirtualenv {
     echo "Copying $src_name as $trg_name..."
     (
         [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT 
-        __virtualenvwrapper_cd "$WORKON_HOME" &&
+        virtualenvwrapper_cd "$WORKON_HOME" &&
         "$VIRTUALENVWRAPPER_VIRTUALENV_CLONE" "$src" "$trg" 
         [ -d "$trg" ] && 
             virtualenvwrapper_run_hook "pre_cpvirtualenv" "$src" "$trg_name" &&

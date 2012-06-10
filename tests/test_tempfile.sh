@@ -43,13 +43,13 @@ test_bad_mktemp() {
     for mktemp_func in mktemp_nonzero mktemp_empty_string \
         mktemp_missing_executable mktemp_missing_result
     do
-        __virtualenvwrapper_mktemp() { $mktemp_func "$@"; }
+        virtualenvwrapper_mktemp() { $mktemp_func "$@"; }
         filename=$(virtualenvwrapper_tempfile hook 2>/dev/null)
         assertSame "($mktemp_func) Unexpected exit code $?" "1" "$?"
     done
 
     # Restore the "real" definition of the replaceable function
-	__virtualenvwrapper_mktemp() { command mktemp "$@"; }
+	virtualenvwrapper_mktemp() { command mktemp "$@"; }
 }
 
 test_no_such_tmpdir () {
