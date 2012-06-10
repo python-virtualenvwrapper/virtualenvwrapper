@@ -16,7 +16,7 @@ introducing conflicts in their dependencies.
 What's New?
 ===========
 
-- Rewrite ``command-cpvirtualenv`` to use `virtualenv-clone`_
+- Rewrite ``cpvirtualenv`` to use `virtualenv-clone`_
   instead of making the new environment relocatable. Contributed by
   Justin Barber (barberj). This also resolves a problem
   with cpvirtualenv not honoring the ``--no-site-packages`` flag
