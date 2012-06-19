@@ -86,7 +86,7 @@ test_python_interpreter_set_incorrectly() {
     cd "$WORKON_HOME"
     mkvirtualenv no_wrappers >/dev/null 2>&1
 	RC=$?
-	assertEquals "0" "$RC"
+	assertEquals "mkvirtualenv return code wrong" "0" "$RC"
     expected="ImportError: No module named virtualenvwrapper.hook_loader"
     # test_shell is set by tests/run_tests
     if [ "$test_shell" = "" ]

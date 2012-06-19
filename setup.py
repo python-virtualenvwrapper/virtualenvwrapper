@@ -149,6 +149,7 @@ setup(
               ],
     install_requires=['virtualenv',
                       'virtualenv-clone',
+                      'stevedore',
                       ],
 
     namespace_packages = [ 'virtualenvwrapper' ],

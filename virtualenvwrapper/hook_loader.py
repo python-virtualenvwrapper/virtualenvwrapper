@@ -13,7 +13,8 @@ import optparse
 import os
 import sys
 
-import pkg_resources
+from stevedore import ExtensionManager
+from stevedore import NamedExtensionManager
 
 
 class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
@@ -138,24 +139,39 @@ def run_hooks(hook, options, args, output=None):
     if output is None:
         output = sys.stdout
 
-    for ep in pkg_resources.iter_entry_points('virtualenvwrapper.%s' % hook):
-        if options.names and ep.name not in options.names:
-            continue
-        plugin = ep.load()
-        if options.listing:
-            output.write('  %-10s -- %s\n' % (ep.name, inspect.getdoc(plugin) or ''))
-            continue
-        if options.sourcing:
+    namespace = 'virtualenvwrapper.%s' % hook
+    if options.names:
+        hook_mgr = NamedExtensionManager(namespace, options.names)
+    else:
+        hook_mgr = ExtensionManager(namespace)
+
+    if options.listing:
+        def show(ext):
+            output.write('  %-10s -- %s\n' % (ext.name, inspect.getdoc(ext.plugin) or ''))
+        hook_mgr.map(show)
+
+    elif options.sourcing:
+        def get_source(ext, args):
             # Show the shell commands so they can
             # be run in the calling shell.
-            contents = (plugin(args[1:]) or '').strip()
+            contents = (ext.plugin(args) or '').strip()
             if contents:
-                output.write('# %s\n' % ep.name)
+                output.write('# %s\n' % ext.name)
                 output.write(contents)
                 output.write("\n")
-        else:
-            # Just run the plugin ourselves
-            plugin(args[1:])
+        try:
+            hook_mgr.map(get_source, args[1:])
+        except RuntimeError:
+            pass
+
+    else:
+        # Just run the plugin ourselves
+        def invoke(ext, args):
+            ext.plugin(args)
+        try:
+            hook_mgr.map(invoke, args[1:])
+        except RuntimeError:
+            pass
 
 
 def list_hooks(output=None):

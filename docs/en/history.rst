@@ -4,6 +4,12 @@ Release History
 
 dev
 
+  - Switch to stevedore_ for plugin management
+
+.. _stevedore: http://pypi.python.org/pypi/stevedore
+
+3.5
+
   - Rewrite :ref:`command-cpvirtualenv` to use `virtualenv-clone`_
     instead of making the new environment relocatable. Contributed by
     Justin Barber (:bbuser:`barberj`). This also resolves a problem
