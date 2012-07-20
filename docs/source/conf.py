@@ -11,6 +11,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import datetime
 import sys, os
 import subprocess
 
@@ -41,7 +42,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'virtualenvwrapper'
-copyright = u'2009-2011, Doug Hellmann'
+copyright = u'2009-%s, Doug Hellmann' % datetime.datetime.today().year
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
