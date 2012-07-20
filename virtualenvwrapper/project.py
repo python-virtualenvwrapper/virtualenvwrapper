@@ -8,8 +8,6 @@
 import logging
 import os
 
-import pkg_resources
-
 from virtualenvwrapper.user_scripts import make_hook, run_global
 
 log = logging.getLogger(__name__)
@@ -28,6 +26,7 @@ GLOBAL_HOOKS = [
      "This hook is run after a project is deleted."),
     ]
 
+
 def initialize(args):
     """Set up user hooks
     """
@@ -38,9 +37,10 @@ def initialize(args):
 
 def pre_mkproject(args):
     log.debug('pre_mkproject %s', str(args))
-    envname=args[0]
+    envname = args[0]
     run_global('premkproject', *args)
     return
+
 
 def post_mkproject_source(args):
     return """
@@ -49,6 +49,7 @@ def post_mkproject_source(args):
 #
 [ -f "$WORKON_HOME/postmkproject" ] && source "$WORKON_HOME/postmkproject"
 """
+
 
 def post_activate_source(args):
     return """

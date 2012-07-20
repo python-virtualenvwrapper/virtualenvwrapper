@@ -16,9 +16,11 @@ import sys
 from stevedore import ExtensionManager
 from stevedore import NamedExtensionManager
 
+LOG_FORMAT = '%(asctime)s %(levelname)s %(name)s %(message)s'
+
 
 class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
-    """Taken from http://stackoverflow.com/questions/1407474/does-python-logging-handlers-rotatingfilehandler-allow-creation-of-a-group-writa
+    """Taken from http://stackoverflow.com/questions/1407474
     """
     def _open(self):
         prevumask = os.umask(0o002)
@@ -34,44 +36,50 @@ def main():
         description='Manage hooks for virtualenvwrapper',
         )
 
-    parser.add_option('-S', '--script',
-                      help='Runs "hook" then "<hook>_source", writing the ' +
-                           'result to <file>',
-                      dest='script_filename',
-                      default=None,
-                      )
-    parser.add_option('-s', '--source',
-                      help='Print the shell commands to be run in the current shell',
-                      action='store_true',
-                      dest='sourcing',
-                      default=False,
-                      )
-    parser.add_option('-l', '--list',
-                      help='Print a list of the plugins available for the given hook',
-                      action='store_true',
-                      default=False,
-                      dest='listing',
-                      )
-    parser.add_option('-v', '--verbose',
-                      help='Show more information on the console',
-                      action='store_const',
-                      const=2,
-                      default=1,
-                      dest='verbose_level',
-                      )
-    parser.add_option('-q', '--quiet',
-                      help='Show less information on the console',
-                      action='store_const',
-                      const=0,
-                      dest='verbose_level',
-                      )
-    parser.add_option('-n', '--name',
-                      help='Only run the hook from the named plugin',
-                      action='append',
-                      dest='names',
-                      default=[],
-                      )
-    parser.disable_interspersed_args()  # stop when we hit an option without an '-'
+    parser.add_option(
+        '-S', '--script',
+        help='Runs "hook" then "<hook>_source", writing the ' +
+        'result to <file>',
+        dest='script_filename',
+        default=None,
+        )
+    parser.add_option(
+        '-s', '--source',
+        help='Print the shell commands to be run in the current shell',
+        action='store_true',
+        dest='sourcing',
+        default=False,
+        )
+    parser.add_option(
+        '-l', '--list',
+        help='Print a list of the plugins available for the given hook',
+        action='store_true',
+        default=False,
+        dest='listing',
+        )
+    parser.add_option(
+        '-v', '--verbose',
+        help='Show more information on the console',
+        action='store_const',
+        const=2,
+        default=1,
+        dest='verbose_level',
+        )
+    parser.add_option(
+        '-q', '--quiet',
+        help='Show less information on the console',
+        action='store_const',
+        const=0,
+        dest='verbose_level',
+        )
+    parser.add_option(
+        '-n', '--name',
+        help='Only run the hook from the named plugin',
+        action='append',
+        dest='names',
+        default=[],
+        )
+    parser.disable_interspersed_args()  # stop when on option without an '-'
     options, args = parser.parse_args()
 
     root_logger = logging.getLogger('')
@@ -79,11 +87,12 @@ def main():
     # Set up logging to a file
     root_logger.setLevel(logging.DEBUG)
     file_handler = GroupWriteRotatingFileHandler(
-        os.path.expandvars(os.path.join('$VIRTUALENVWRAPPER_LOG_DIR', 'hook.log')),
+        os.path.expandvars(os.path.join('$VIRTUALENVWRAPPER_LOG_DIR',
+                                        'hook.log')),
         maxBytes=10240,
         backupCount=1,
         )
-    formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
+    formatter = logging.Formatter(LOG_FORMAT)
     file_handler.setFormatter(formatter)
     root_logger.addHandler(file_handler)
 
@@ -121,7 +130,8 @@ def main():
     run_hooks(hook, options, args)
 
     if options.script_filename:
-        log.debug('Saving sourcable %s hooks to %s', hook, options.script_filename)
+        log.debug('Saving sourcable %s hooks to %s',
+                  hook, options.script_filename)
         options.sourcing = True
         output = open(options.script_filename, "w")
         try:
@@ -147,7 +157,8 @@ def run_hooks(hook, options, args, output=None):
 
     if options.listing:
         def show(ext):
-            output.write('  %-10s -- %s\n' % (ext.name, inspect.getdoc(ext.plugin) or ''))
+            output.write('  %-10s -- %s\n' %
+                         (ext.name, inspect.getdoc(ext.plugin) or ''))
         hook_mgr.map(show)
 
     elif options.sourcing:
