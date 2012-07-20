@@ -721,8 +721,8 @@ function add2virtualenv {
 
     if [ ! -f "$path_file" ]
     then
-        echo "import sys; sys.__plen = len(sys.path)" >> "$path_file"
-        echo "import sys; new=sys.path[sys.__plen:]; del sys.path[sys.__plen:]; p=getattr(sys,'__egginsert',0); sys.path[p:p]=new; sys.__egginsert = p+len(new)" >> "$path_file"
+        echo "import sys; sys.__plen = len(sys.path)" > "$path_file" || return 1
+        echo "import sys; new=sys.path[sys.__plen:]; del sys.path[sys.__plen:]; p=getattr(sys,'__egginsert',0); sys.path[p:p]=new; sys.__egginsert = p+len(new)" >> "$path_file" || return 1
     fi
 
     for pydir in "$@"

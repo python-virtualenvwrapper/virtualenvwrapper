@@ -37,6 +37,44 @@ test_add2virtualenv () {
     cd - >/dev/null 2>&1
 }
 
+test_add2virtualenv_zsh_noclobber () {
+    # See issue #137
+    if [ ! -z $ZSH_VERSION ]
+    then
+        set -o noclobber
+    elif [[ "$SHELL" =~ "bash" ]]
+    then
+        shopt -o -s noclobber
+    else
+        return 0
+    fi
+    mkvirtualenv "pathtest_noclobber" >/dev/null 2>&1
+    full_path=$(pwd)
+    add2virtualenv "$full_path"
+    RC=$?
+    if [ ! -z $ZSH_VERSION ]
+    then
+        unsetopt noclobber
+    elif [[ "/$SHELL" =~ "/bash" ]]
+    then
+        shopt -o -u noclobber
+    fi
+    assertEquals "0" "$RC"
+    cdsitepackages
+    # Check contents of path file
+    path_file="./_virtualenv_path_extensions.pth"
+    assertTrue "No $full_path in $(cat $path_file)" "grep -q $full_path $path_file"
+    assertTrue "No path insert code in $(cat $path_file)" "grep -q sys.__egginsert $path_file"
+    # Check the path we inserted is actually at the top
+    expected="$full_path"
+    actual=$($WORKON_HOME/pathtest_noclobber/bin/python -c "import sys; sys.stdout.write(sys.path[1]+'\n')")
+    assertSame "$expected" "$actual"
+    # Make sure the temporary file created
+    # during the edit was removed
+    assertFalse "Temporary file ${path_file}.tmp still exists" "[ -f ${path_file}.tmp ]"
+    cd - >/dev/null 2>&1
+}
+
 test_add2virtualenv_relative () {
     mkvirtualenv "pathtest_relative" >/dev/null 2>&1
     parent_dir=$(dirname $(pwd))
