@@ -5,6 +5,8 @@ Release History
 dev
 
   - Switch to stevedore_ for plugin management
+  - mkvirtualenv_help should use ``$VIRTUALENVWRAPPER_PYTHON`` instead
+    of calling ``virtualenv`` directly (:bbissue:`148`).
 
 .. _stevedore: http://pypi.python.org/pypi/stevedore
 

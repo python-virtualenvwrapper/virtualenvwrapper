@@ -360,7 +360,7 @@ function mkvirtualenv_help {
     echo;
     echo 'virtualenv help:';
     echo;
-    virtualenv $@;
+    "$VIRTUALENVWRAPPER_VIRTUALENV" $@;
 }
 
 # Create a new environment, in the WORKON_HOME.
