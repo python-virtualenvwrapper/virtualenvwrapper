@@ -7,6 +7,7 @@ dev
   - Switch to stevedore_ for plugin management
   - mkvirtualenv_help should use ``$VIRTUALENVWRAPPER_PYTHON`` instead
     of calling ``virtualenv`` directly (:bbissue:`148`).
+  - Fix issue with lazy-loader code under zsh (:bbissue:`144`).
 
 .. _stevedore: http://pypi.python.org/pypi/stevedore
 

@@ -1,4 +1,3 @@
-#!/bin/sh
 
 test_dir=$(cd $(dirname $0) && pwd)
 source "$test_dir/setup.sh"
@@ -6,7 +5,9 @@ source "$test_dir/setup.sh"
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
+    [ ! -z "$ZSH_VERSION" ] && unsetopt shwordsplit
     source "$test_dir/../virtualenvwrapper_lazy.sh"
+    [ ! -z "$ZSH_VERSION" ] && setopt shwordsplit
 }
 
 oneTimeTearDown() {
@@ -22,6 +23,13 @@ function_defined_lazy() {
     name="$1"
     assertTrue "$name not defined" "type $name"
 	assertTrue "$name does not load virtualenvwrapper" "typeset -f $name | grep 'virtualenvwrapper_load'"
+    if [ "$name" = "mkvirtualenv" ]
+    then
+        lookfor="rmvirtualenv"
+    else
+        lookfor="mkvirtualenv"
+    fi
+	assertFalse "$name includes reference to $lookfor: $(typeset -f $name)" "typeset -f $name | grep $lookfor"
 }
 
 test_mkvirtualenv_defined_lazy() {

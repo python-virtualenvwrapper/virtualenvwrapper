@@ -20,12 +20,12 @@ function virtualenvwrapper_load {
 # Set up "alias" functions based on the API definition.
 function virtualenvwrapper_setup_lazy_loader {
     typeset venvw_name
-	for venvw_name in $_VIRTUALENVWRAPPER_API
+	for venvw_name in $(echo ${_VIRTUALENVWRAPPER_API})
 	do
 		eval "
 function $venvw_name {
 	virtualenvwrapper_load
-	$venvw_name \"\$@\"
+	${venvw_name} \"\$@\"
 }
 "
 	done
