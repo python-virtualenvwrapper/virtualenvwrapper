@@ -200,10 +200,10 @@ Rich Leland has created a short `screencast
 showing off the features of virtualenvwrapper.
 
 Manuel Kaufmann has `translated this documentation into Spanish
-<http://www.doughellmann.com/docs/virtualenvwrapper/es/>`__.
+<http://virtualenvwrapper-docs-es.readthedocs.org/en/latest/>`__.
 
 Tetsuya Morimoto has `translated this documentation into Japanese
-<http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__.
+<http://virtualenvwrapper-docs-ja.readthedocs.org/en/latest/>`__.
 
 =======
 Support
