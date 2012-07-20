@@ -8,7 +8,8 @@ dev
   - mkvirtualenv_help should use ``$VIRTUALENVWRAPPER_PYTHON`` instead
     of calling ``virtualenv`` directly (:bbissue:`148`).
   - Fix issue with lazy-loader code under zsh (:bbissue:`144`).
-  - Fix issue with ``noclobber`` option under zsh (:bbissue:`137`).
+  - Fix issue with ``noclobber`` option under zsh
+    (:bbissue:`137`). Fix based on patch from :bbuser:`rob_b`.
 
 .. _stevedore: http://pypi.python.org/pypi/stevedore
 
