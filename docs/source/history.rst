@@ -10,6 +10,9 @@ dev
   - Fix issue with lazy-loader code under zsh (:bbissue:`144`).
   - Fix issue with ``noclobber`` option under zsh
     (:bbissue:`137`). Fix based on patch from :bbuser:`rob_b`.
+  - Fix documentation for ``add2virtualenv`` to show the correct name
+    for the file containing the new path entry. (contributed by
+    :bbuser:`rvoicilas`)
 
 .. _stevedore: http://pypi.python.org/pypi/stevedore
 
