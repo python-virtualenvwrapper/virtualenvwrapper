@@ -408,7 +408,7 @@ in a ``.pth`` file inside ``site-packages`` using ``add2virtualenv``.
 4. A usage message and list of current "extra" paths is printed.
 
 The directory names are added to a path file named
-``virtualenv_path_extensions.pth`` inside the site-packages directory
+``_virtualenv_path_extensions.pth`` inside the site-packages directory
 for the environment.
 
 *Based on a contribution from James Bennett and Jannis Leidel.*
