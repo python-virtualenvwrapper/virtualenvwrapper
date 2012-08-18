@@ -13,6 +13,8 @@ dev
   - Fix documentation for ``add2virtualenv`` to show the correct name
     for the file containing the new path entry. (contributed by
     :bbuser:`rvoicilas`)
+  - Fix problem with ``virtualenvwrapper_show_workon_options`` under
+    zsh with ``chpwd`` functions that produce output. (:bbissue:`153`)
 
 .. _stevedore: http://pypi.python.org/pypi/stevedore
 

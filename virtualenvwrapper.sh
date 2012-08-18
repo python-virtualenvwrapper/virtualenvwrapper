@@ -502,10 +502,23 @@ function rmvirtualenv {
 # List the available environments.
 function virtualenvwrapper_show_workon_options {
     virtualenvwrapper_verify_workon_home || return 1
-    # NOTE: DO NOT use ls here because colorized versions spew control characters
-    #       into the output list.
+    # NOTE: DO NOT use ls or cd here because colorized versions spew control 
+    #       characters into the output list.
     # echo seems a little faster than find, even with -depth 3.
-    (virtualenvwrapper_cd "$WORKON_HOME"; for f in */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate; do echo $f; done) 2>/dev/null | command \sed 's|^\./||' | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||" | command \sort | (unset GREP_OPTIONS; command \egrep -v '^\*$')
+    #
+    # 1. Look for environments by finding the activate scripts.
+    #    Use a subshell so we can suppress the message printed
+    #    by zsh if the glob pattern fails to match any files.
+    # 2. Strip the WORKON_HOME prefix from each name.
+    # 3. Strip the bindir/activate script suffix.
+    # 4. Format the output to show one name on a line.
+    # 5. Eliminate any lines with * on them because that means there 
+    #    were no envs.
+    (echo $WORKON_HOME/*/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
+        | command \sed "s|$WORKON_HOME/||g" \
+        | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||g" \
+        | command \fmt -w 1 \
+        | (unset GREP_OPTIONS; command \egrep -v '^\*$') 2>/dev/null
 }
 
 function _lsvirtualenv_usage {
