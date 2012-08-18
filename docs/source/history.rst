@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+3.6
 
   - Switch to stevedore_ for plugin management
   - mkvirtualenv_help should use ``$VIRTUALENVWRAPPER_PYTHON`` instead

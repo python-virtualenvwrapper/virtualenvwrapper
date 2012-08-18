@@ -7,27 +7,28 @@
 What is virtualenvwrapper?
 ==========================
 
-virtualenvwrapper_ is a set of extensions to Ian Bicking's virtualenv_
-tool.  The extensions include wrappers for creating and deleting
-virtual environments and otherwise managing your development workflow,
-making it easier to work on more than one project at a time without
+virtualenvwrapper_ is a set of extensions to virtualenv_.  The
+extensions include wrappers for creating and deleting virtual
+environments and otherwise managing your development workflow, making
+it easier to work on more than one project at a time without
 introducing conflicts in their dependencies.
 
 What's New?
 ===========
 
-- Rewrite ``cpvirtualenv`` to use `virtualenv-clone`_
-  instead of making the new environment relocatable. Contributed by
-  Justin Barber (barberj). This also resolves a problem
-  with cpvirtualenv not honoring the ``--no-site-packages`` flag
-  (issue 102).
-- Update docs with link to `virtualenvwrapper-win`_ port by David
-  Marble.
-- Use ``command`` to avoid functions named the same as common
-  utilities. (issue 119)
+- Switch to stevedore_ for plugin management
+- mkvirtualenv_help should use ``$VIRTUALENVWRAPPER_PYTHON`` instead
+  of calling ``virtualenv`` directly (issue 148).
+- Fix issue with lazy-loader code under zsh (issue 144).
+- Fix issue with ``noclobber`` option under zsh
+  (issue 137`). Fix based on patch from rob_b.
+- Fix documentation for ``add2virtualenv`` to show the correct name
+  for the file containing the new path entry. (contributed by
+  rvoicilas)
+- Fix problem with ``virtualenvwrapper_show_workon_options`` under
+  zsh with ``chpwd`` functions that produce output. (issue 153)
 
-.. _virtualenv-clone: http://pypi.python.org/pypi/virtualenv-clone
-.. _virtualenvwrapper-win: http://pypi.python.org/pypi/virtualenvwrapper-win 
+.. _stevedore: http://pypi.python.org/pypi/stevedore
 
 Installing
 ==========
