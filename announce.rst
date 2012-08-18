@@ -1,5 +1,5 @@
 =======================
- virtualenvwrapper 3.5
+ virtualenvwrapper 3.6
 =======================
 
 .. tags:: virtualenvwrapper release python
