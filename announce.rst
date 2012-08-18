@@ -21,7 +21,7 @@ What's New?
   of calling ``virtualenv`` directly (issue 148).
 - Fix issue with lazy-loader code under zsh (issue 144).
 - Fix issue with ``noclobber`` option under zsh
-  (issue 137`). Fix based on patch from rob_b.
+  (issue 137). Fix based on patch from rob_b.
 - Fix documentation for ``add2virtualenv`` to show the correct name
   for the file containing the new path entry. (contributed by
   rvoicilas)
