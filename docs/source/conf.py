@@ -12,7 +12,6 @@
 # serve to show the default.
 
 import datetime
-import sys, os
 import subprocess
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -24,7 +23,7 @@ import subprocess
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = [ 'sphinxcontrib.bitbucket' ]
+extensions = ['sphinxcontrib.bitbucket']
 
 bitbucket_project_url = 'http://bitbucket.org/dhellmann/virtualenvwrapper/'
 
