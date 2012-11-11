@@ -402,6 +402,10 @@ function mkvirtualenv {
             -i)
                 i=$(( $i + 1 ));
                 packages="$packages ${in_args[$i]}";;
+            -p|--python)
+                i=$(( $i + 1 ));
+                interpreter="${in_args[$i]}";
+                interpreter=$(realpath "$interpreter");;
             -r)
                 i=$(( $i + 1 ));
                 requirements="${in_args[$i]}";
@@ -416,6 +420,11 @@ function mkvirtualenv {
         esac
         i=$(( $i + 1 ))
     done
+
+    if [ ! -z $interpreter ]
+    then
+        out_args=( "--python=$interpreter" ${out_args[@]} )
+    fi;
 
     set -- "${out_args[@]}"
 
