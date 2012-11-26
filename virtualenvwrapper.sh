@@ -110,6 +110,15 @@ function virtualenvwrapper_expandpath {
     fi
 }
 
+function virtualenvwrapper_absolutepath {
+    if [ "$1" = "" ]; then
+        return 1
+    else
+        "$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.abspath(\"$1\")+'\n')"
+        return 0
+    fi
+}
+
 function virtualenvwrapper_derive_workon_home {
     typeset workon_home_dir="$WORKON_HOME"
 
@@ -405,7 +414,7 @@ function mkvirtualenv {
             -p|--python)
                 i=$(( $i + 1 ));
                 interpreter="${in_args[$i]}";
-                interpreter=$(realpath "$interpreter");;
+                interpreter=$(virtualenvwrapper_absolutepath "$interpreter");;
             -r)
                 i=$(( $i + 1 ));
                 requirements="${in_args[$i]}";
@@ -749,7 +758,7 @@ function add2virtualenv {
 
     for pydir in "$@"
     do
-        absolute_path=$("$VIRTUALENVWRAPPER_PYTHON" -c "import os,sys; sys.stdout.write(os.path.abspath(\"$pydir\")+'\n')")
+        absolute_path=$(virtualenvwrapper_absolutepath "$pydir")
         if [ "$absolute_path" != "$pydir" ]
         then
             echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
