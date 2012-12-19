@@ -396,7 +396,7 @@ Syntax::
     add2virtualenv directory1 directory2 ...
 
 Sometimes it is desirable to share installed packages that are not in
-the system ``site-pacakges`` directory and which should not be
+the system ``site-packages`` directory and which should not be
 installed in each virtualenv.  One possible solution is to symlink the
 source into the environment ``site-packages`` directory, but it is
 also easy to add extra directories to the PYTHONPATH by including them
