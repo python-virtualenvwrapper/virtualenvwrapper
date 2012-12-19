@@ -488,6 +488,8 @@ create a virtual environment with the same name as the project.
   * :ref:`scripts-premkproject`
   * :ref:`scripts-postmkproject`
 
+.. _command-setvirtualenvproject:
+
 setvirtualenvproject
 --------------------
 
