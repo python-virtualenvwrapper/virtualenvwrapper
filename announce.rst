@@ -1,6 +1,6 @@
-=======================
- virtualenvwrapper 3.6
-=======================
+=========================
+ virtualenvwrapper 3.6.1
+=========================
 
 .. tags:: virtualenvwrapper release python
 
@@ -16,19 +16,10 @@ introducing conflicts in their dependencies.
 What's New?
 ===========
 
-- Switch to stevedore_ for plugin management
-- mkvirtualenv_help should use ``$VIRTUALENVWRAPPER_PYTHON`` instead
-  of calling ``virtualenv`` directly (issue 148).
-- Fix issue with lazy-loader code under zsh (issue 144).
-- Fix issue with ``noclobber`` option under zsh
-  (issue 137). Fix based on patch from rob_b.
-- Fix documentation for ``add2virtualenv`` to show the correct name
-  for the file containing the new path entry. (contributed by
-  rvoicilas)
-- Fix problem with ``virtualenvwrapper_show_workon_options`` under
-  zsh with ``chpwd`` functions that produce output. (issue 153)
-
-.. _stevedore: http://pypi.python.org/pypi/stevedore
+- Replace realpath with a more portable way of converting a relative
+  path to an absolute path, used with the ``--python`` option to
+  mkvirtualenv (contributed by Radu Voicilas).
+- Posted release to PyPI, resolving download redirect issue.
 
 Installing
 ==========

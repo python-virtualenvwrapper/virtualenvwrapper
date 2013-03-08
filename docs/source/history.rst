@@ -2,6 +2,14 @@
 Release History
 ===============
 
+3.6.1
+
+  - Replace realpath with a more portable way of converting a relative
+    path to an absolute path, used with the ``--python`` option to
+    mkvirtualenv (contributed by Radu Voicilas, :bbuser:`rvoicilas`).
+  - Posted release to PyPI, resolving download redirect
+    issue. (:bbissue:`171` and :bbissue:`172`)
+
 3.6
 
   - Switch to stevedore_ for plugin management
