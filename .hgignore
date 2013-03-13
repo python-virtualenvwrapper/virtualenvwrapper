@@ -9,6 +9,9 @@ distribute*.tar.gz
 docs/build
 docs/html
 docs/website
+docs/en
+docs/es
+docs/ja
 tests/catch_output
 tests/testpackage/build
 tests/testpackage/dist
