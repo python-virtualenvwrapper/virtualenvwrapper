@@ -972,9 +972,8 @@ function mkproject {
     while [ $i $tst $# ]
     do
         a="${in_args[$i]}"
-        # echo "arg $i : $a"
         case "$a" in
-            -h)
+            -h|--help)
                 mkproject_help;
                 return;;
             -t)
