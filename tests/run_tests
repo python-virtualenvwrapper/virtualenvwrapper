@@ -40,7 +40,7 @@ then
     exit 1
 fi
 
-# Force the tox virtualenv to be active.  
+# Force the tox virtualenv to be active.
 #
 # Since this script runs from within a separate shell created by tox,
 # the name of the virtualenv (in $VIRTUAL_ENV) is inherited, but the
@@ -87,6 +87,7 @@ do
         echo "    $($VIRTUALENVWRAPPER_PYTHON -V 2>&1)"
         echo "  PYTHONPATH=$PYTHONPATH"
         echo "  SHELL=$test_shell"
+        echo "  virtualenv=$(which virtualenv)"
         echo
         export SHUNIT_PARENT="$test_script"
         $test_shell $test_shell_opts $test_script || exit 1
