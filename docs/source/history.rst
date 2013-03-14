@@ -6,6 +6,8 @@ dev
 
   - Improve tab-completion support for users of the lazy-loading
     mode. (:bbuser:`upsuper`)
+  - Add ``--help`` option to ``mkproject``.
+  - Add ``--help`` option to ``workon``.
 
 3.6.1
 

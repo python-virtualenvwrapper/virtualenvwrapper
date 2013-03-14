@@ -619,11 +619,51 @@ function showvirtualenv {
     echo
 }
 
+# Show help for workon
+function workon_help {
+    echo "Usage: workon env_name"
+    echo ""
+    echo "           Deactivate any currently activated virtualenv"
+    echo "           and activate the named environment, triggering"
+    echo "           any hooks in the process."
+    echo ""
+    echo "       workon"
+    echo ""
+    echo "           Print a list of available environments."
+    echo "           (See also lsvirtualenv -b)"
+    echo ""
+    echo "       workon (-h|--help)"
+    echo ""
+    echo "           Show this help message."
+    echo ""
+}
+
 # List or change working virtual environments
 #
 # Usage: workon [environment_name]
 #
 function workon {
+    in_args=( "$@" )
+
+    if [ -n "$ZSH_VERSION" ]
+    then
+        i=1
+        tst="-le"
+    else
+        i=0
+        tst="-lt"
+    fi
+    while [ $i $tst $# ]
+    do
+        a="${in_args[$i]}"
+        case "$a" in
+            -h|--help)
+                workon_help;
+                return 0;;
+        esac
+        i=$(( $i + 1 ))
+    done
+
     typeset env_name="$1"
     if [ "$env_name" = "" ]
     then
