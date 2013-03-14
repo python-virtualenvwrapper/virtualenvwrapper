@@ -2,6 +2,11 @@
 Release History
 ===============
 
+dev
+
+  - Improve tab-completion support for users of the lazy-loading
+    mode. (:bbuser:`upsuper`)
+
 3.6.1
 
   - Replace realpath with a more portable way of converting a relative
