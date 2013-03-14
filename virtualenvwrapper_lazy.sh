@@ -34,9 +34,9 @@ function $venvw_name {
 # Set up completion functions to virtualenvwrapper_load
 function virtualenvwrapper_setup_lazy_completion {
     if [ -n "$BASH" ] ; then
-        complete -o nospace -F virtualenvwrapper_load cdvirtualenv cdsitepackages workon rmvirtualenv cpvirtualenv showvirtualenv
+        complete -o nospace -F virtualenvwrapper_load $(echo ${_VIRTUALENVWRAPPER_API})
     elif [ -n "$ZSH_VERSION" ] ; then
-        compctl -K virtualenvwrapper_load cdvirtualenv cdsitepackages workon rmvirtualenv cpvirtualenv showvirtualenv
+        compctl -K virtualenvwrapper_load $(echo ${_VIRTUALENVWRAPPER_API})
     fi
 }
 
