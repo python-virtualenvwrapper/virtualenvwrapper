@@ -15,6 +15,7 @@ dev
     caused by that rotating behavior, especially when the wrappers are
     being used by users with different permissions and
     umasks. (:bbissue:`152`)
+  - Use flake8 for style checking.
 
 3.6.1
 

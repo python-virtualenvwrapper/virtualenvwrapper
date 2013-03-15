@@ -15,7 +15,8 @@ log = logging.getLogger(__name__)
 GLOBAL_HOOKS = [
     # mkproject
     ("premkproject",
-     "This hook is run after a new project is created and before it is activated."),
+     "This hook is run after a new project is created "
+     "and before it is activated."),
     ("postmkproject",
      "This hook is run after a new project is activated."),
 
@@ -24,20 +25,20 @@ GLOBAL_HOOKS = [
      "This hook is run before a project is deleted."),
     ("postrmproject",
      "This hook is run after a project is deleted."),
-    ]
+]
 
 
 def initialize(args):
     """Set up user hooks
     """
     for filename, comment in GLOBAL_HOOKS:
-        make_hook(os.path.join('$VIRTUALENVWRAPPER_HOOK_DIR', filename), comment)
+        make_hook(os.path.join('$VIRTUALENVWRAPPER_HOOK_DIR', filename),
+                  comment)
     return
 
 
 def pre_mkproject(args):
     log.debug('pre_mkproject %s', str(args))
-    envname = args[0]
     run_global('premkproject', *args)
     return
 
@@ -56,5 +57,6 @@ def post_activate_source(args):
 #
 # Change to the project directory
 #
-[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ] && cd "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")"
+[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ] && \
+    cd "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")"
 """

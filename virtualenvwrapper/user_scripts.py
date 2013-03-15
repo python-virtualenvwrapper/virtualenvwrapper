@@ -16,11 +16,9 @@ import sys
 log = logging.getLogger(__name__)
 
 # Are we running under msys
-if (sys.platform == 'win32'
-    and
-    os.environ.get('OS') == 'Windows_NT'
-    and
-    os.environ.get('MSYSTEM') == 'MINGW32'):
+if sys.platform == 'win32' and \
+   os.environ.get('OS') == 'Windows_NT' and \
+   os.environ.get('MSYSTEM') == 'MINGW32':
     is_msys = True
     script_folder = 'Scripts'
 else:
@@ -59,11 +57,13 @@ PERMISSIONS = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
 GLOBAL_HOOKS = [
     # initialize
     ("initialize",
-     "This hook is run during the startup phase when loading virtualenvwrapper.sh."),
+     "This hook is run during the startup phase "
+     "when loading virtualenvwrapper.sh."),
 
     # mkvirtualenv
     ("premkvirtualenv",
-     "This hook is run after a new virtualenv is created and before it is activated."),
+     "This hook is run after a new virtualenv is created "
+     "and before it is activated."),
     ("postmkvirtualenv",
      "This hook is run after a new virtualenv is activated."),
 
@@ -89,7 +89,7 @@ GLOBAL_HOOKS = [
     ("get_env_details",
      "This hook is run when the list of virtualenvs is printed "
      "so each name can include details."),
-    ]
+]
 
 
 LOCAL_HOOKS = [
@@ -109,7 +109,7 @@ LOCAL_HOOKS = [
     ("get_env_details",
      "This hook is run when the list of virtualenvs is printed "
      "in 'long' mode so each name can include details."),
-    ]
+]
 
 
 def make_hook(filename, comment):
@@ -149,7 +149,8 @@ def initialize_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/initialize" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/initialize"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/initialize" ] && \
+    source "$VIRTUALENVWRAPPER_HOOK_DIR/initialize"
 """
 
 
@@ -157,7 +158,8 @@ def pre_mkvirtualenv(args):
     log.debug('pre_mkvirtualenv %s', str(args))
     envname = args[0]
     for filename, comment in LOCAL_HOOKS:
-        make_hook(get_path('$WORKON_HOME', envname, script_folder, filename), comment)
+        make_hook(get_path('$WORKON_HOME', envname, script_folder, filename),
+                  comment)
     run_global('premkvirtualenv', *args)
     return
 
@@ -167,7 +169,8 @@ def post_mkvirtualenv_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv" ] && \
+    source "$VIRTUALENVWRAPPER_HOOK_DIR/postmkvirtualenv"
 """
 
 
@@ -175,7 +178,8 @@ def pre_cpvirtualenv(args):
     log.debug('pre_cpvirtualenv %s', str(args))
     envname = args[0]
     for filename, comment in LOCAL_HOOKS:
-        make_hook(get_path('$WORKON_HOME', envname, script_folder, filename), comment)
+        make_hook(get_path('$WORKON_HOME', envname, script_folder, filename),
+                  comment)
     run_global('precpvirtualenv', *args)
     return
 
@@ -185,7 +189,8 @@ def post_cpvirtualenv_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv" ] && \
+    source "$VIRTUALENVWRAPPER_HOOK_DIR/postcpvirtualenv"
 """
 
 
@@ -204,7 +209,8 @@ def post_rmvirtualenv(args):
 def pre_activate(args):
     log.debug('pre_activate')
     run_global('preactivate', *args)
-    script_path = get_path('$WORKON_HOME', args[0], script_folder, 'preactivate')
+    script_path = get_path('$WORKON_HOME', args[0],
+                           script_folder, 'preactivate')
     run_script(script_path, *args)
     return
 
@@ -215,8 +221,10 @@ def post_activate_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate"
-[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postactivate" ] && source "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate" ] && \
+    source "$VIRTUALENVWRAPPER_HOOK_DIR/postactivate"
+[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postactivate" ] && \
+    source "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postactivate"
 """
 
 
@@ -226,8 +234,10 @@ def pre_deactivate_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/predeactivate" ] && source "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/predeactivate"
-[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate"
+[ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/predeactivate" ] && \
+    source "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/predeactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate" ] && \
+    source "$VIRTUALENVWRAPPER_HOOK_DIR/predeactivate"
 """
 
 
@@ -238,8 +248,10 @@ def post_deactivate_source(args):
 # Run user-provided scripts
 #
 VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV="$WORKON_HOME/%(env_name)s"
-[ -f "$WORKON_HOME/%(env_name)s/bin/postdeactivate" ] && source "$WORKON_HOME/%(env_name)s/bin/postdeactivate"
-[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postdeactivate" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postdeactivate"
+[ -f "$WORKON_HOME/%(env_name)s/bin/postdeactivate" ] && \
+    source "$WORKON_HOME/%(env_name)s/bin/postdeactivate"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postdeactivate" ] && \
+    source "$VIRTUALENVWRAPPER_HOOK_DIR/postdeactivate"
 unset VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV
 """ % {'env_name': args[0]}
 
@@ -247,7 +259,8 @@ unset VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV
 def get_env_details(args):
     log.debug('get_env_details')
     run_global('get_env_details', *args)
-    script_path = get_path('$WORKON_HOME', args[0], script_folder, 'get_env_details')
+    script_path = get_path('$WORKON_HOME', args[0],
+                           script_folder, 'get_env_details')
     run_script(script_path, *args)
     return
 
@@ -263,7 +276,8 @@ def get_path(*args):
     '''
     path = os.path.expanduser(os.path.expandvars(os.path.join(*args)))
     if is_msys:
-        # MSYS accept unix or Win32 and sometimes it drives to mixed style paths
+        # MSYS accept unix or Win32 and sometimes
+        # it drives to mixed style paths
         if re.match(r'^/[a-zA-Z](/|^)', path):
             # msys path could starts with '/c/'-form drive letter
             path = ''.join((path[1], ':', path[2:]))
