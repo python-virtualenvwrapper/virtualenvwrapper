@@ -8,6 +8,13 @@ dev
     mode. (:bbuser:`upsuper`)
   - Add ``--help`` option to ``mkproject``.
   - Add ``--help`` option to ``workon``.
+  - Turn off logging from the hook loader by default, and replace
+    ``VIRTUALENVWRAPPER_LOG_DIR`` environment variable with
+    ``VIRTUALENVWRAPPER_LOG_FILE``. The rotating log behavior remains
+    the same. The motivation for this change is the race condition
+    caused by that rotating behavior, especially when the wrappers are
+    being used by users with different permissions and
+    umasks. (:bbissue:`152`)
 
 3.6.1
 

@@ -202,12 +202,6 @@ function virtualenvwrapper_run_hook {
 
     hook_script="$(virtualenvwrapper_tempfile ${1}-hook)" || return 1
 
-    if [ -z "$VIRTUALENVWRAPPER_LOG_DIR" ]
-    then
-        echo "ERROR: VIRTUALENVWRAPPER_LOG_DIR is not set." 1>&2
-        command \rm -f "$hook_script"
-        return 1
-    fi
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
     result=$?
 
@@ -284,12 +278,6 @@ function virtualenvwrapper_initialize {
     if [ "$VIRTUALENVWRAPPER_HOOK_DIR" = "" ]
     then
         export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
-    fi
-
-    # Set the location of the hook script logs
-    if [ "$VIRTUALENVWRAPPER_LOG_DIR" = "" ]
-    then
-        export VIRTUALENVWRAPPER_LOG_DIR="$WORKON_HOME"
     fi
 
     virtualenvwrapper_run_hook "initialize"

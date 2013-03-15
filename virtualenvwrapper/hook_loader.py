@@ -85,16 +85,17 @@ def main():
     root_logger = logging.getLogger('')
 
     # Set up logging to a file
-    root_logger.setLevel(logging.DEBUG)
-    file_handler = GroupWriteRotatingFileHandler(
-        os.path.expandvars(os.path.join('$VIRTUALENVWRAPPER_LOG_DIR',
-                                        'hook.log')),
-        maxBytes=10240,
-        backupCount=1,
-        )
-    formatter = logging.Formatter(LOG_FORMAT)
-    file_handler.setFormatter(formatter)
-    root_logger.addHandler(file_handler)
+    logfile = os.environ.get('VIRTUALENVWRAPPER_LOG_FILE')
+    if logfile:
+        root_logger.setLevel(logging.DEBUG)
+        file_handler = GroupWriteRotatingFileHandler(
+            logfile,
+            maxBytes=10240,
+            backupCount=1,
+            )
+        formatter = logging.Formatter(LOG_FORMAT)
+        file_handler.setFormatter(formatter)
+        root_logger.addHandler(file_handler)
 
     # Send higher-level messages to the console, too
     console = logging.StreamHandler()

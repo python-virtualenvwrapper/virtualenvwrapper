@@ -220,14 +220,14 @@ default is ``$WORKON_HOME``.
 
    * :ref:`scripts`
 
-.. _variable-VIRTUALENVWRAPPER_LOG_DIR:
+.. _variable-VIRTUALENVWRAPPER_LOG_FILE:
 
 Location of Hook Logs
 ---------------------
 
-The variable ``VIRTUALENVWRAPPER_LOG_DIR`` tells virtualenvwrapper
+The variable ``VIRTUALENVWRAPPER_LOG_FILE`` tells virtualenvwrapper
 where the logs for the hook loader should be written. The default is
-``$WORKON_HOME``.
+to not log from the hooks.
 
 .. _variable-VIRTUALENVWRAPPER_VIRTUALENV:
 
