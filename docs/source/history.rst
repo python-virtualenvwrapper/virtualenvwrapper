@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+3.7
 
   - Improve tab-completion support for users of the lazy-loading
     mode. (:bbuser:`upsuper`)

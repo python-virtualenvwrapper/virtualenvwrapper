@@ -1,6 +1,6 @@
-=========================
- virtualenvwrapper 3.6.1
-=========================
+=======================
+ virtualenvwrapper 3.7
+=======================
 
 .. tags:: virtualenvwrapper release python
 
@@ -16,10 +16,20 @@ introducing conflicts in their dependencies.
 What's New?
 ===========
 
-- Replace realpath with a more portable way of converting a relative
-  path to an absolute path, used with the ``--python`` option to
-  mkvirtualenv (contributed by Radu Voicilas).
-- Posted release to PyPI, resolving download redirect issue.
+- Improve tab-completion support for users of the lazy-loading
+  mode.
+- Add ``--help`` option to ``mkproject``.
+- Add ``--help`` option to ``workon``.
+- Turn off logging from the hook loader by default, and replace
+  ``VIRTUALENVWRAPPER_LOG_DIR`` environment variable with
+  ``VIRTUALENVWRAPPER_LOG_FILE``. The rotating log behavior remains
+  the same. The motivation for this change is the race condition
+  caused by that rotating behavior, especially when the wrappers are
+  being used by users with different permissions and
+  umasks.
+- Use flake8_ for style checking.
+
+.. _flake8: https://pypi.python.org/pypi/flake8
 
 Installing
 ==========
