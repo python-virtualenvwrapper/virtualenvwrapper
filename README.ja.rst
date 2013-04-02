@@ -28,7 +28,7 @@ virtualenvwrapper は Ian Bicking の
 6. さらに共有可能な拡張機能を作成できるプラグインシステム(:ref:`plugins` を参照)
 
 Rich Leland は virtualenvwrapper の機能を誇示するために短い
-`スクリーンキャスト <http://mathematism.com/2009/jul/30/presentation-pip-and-virtualenv/>`__
+`スクリーンキャスト <http://mathematism.com/2009/07/30/presentation-pip-and-virtualenv/>`__
 を作成しました。
 
 ============
