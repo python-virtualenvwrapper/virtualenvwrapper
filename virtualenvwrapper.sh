@@ -608,7 +608,7 @@ function showvirtualenv {
 }
 
 # Show help for workon
-function workon_help {
+function _workon_help {
     echo "Usage: workon env_name"
     echo ""
     echo "           Deactivate any currently activated virtualenv"
@@ -646,7 +646,7 @@ function workon {
         a="${in_args[$i]}"
         case "$a" in
             -h|--help)
-                workon_help;
+                _workon_help;
                 return 0;;
         esac
         i=$(( $i + 1 ))
