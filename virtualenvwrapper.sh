@@ -337,7 +337,7 @@ function virtualenvwrapper_verify_active_environment {
 }
 
 # Help text for mkvirtualenv
-function mkvirtualenv_help {
+function virtualenvwrapper_mkvirtualenv_help {
     echo "Usage: mkvirtualenv [-a project_path] [-i package] [-r requirements_file] [virtualenv options] env_name"
     echo
     echo " -a project_path"
@@ -394,7 +394,7 @@ function mkvirtualenv {
                 i=$(( $i + 1 ));
                 project="${in_args[$i]}";;
             -h|--help)
-                mkvirtualenv_help $a;
+                virtualenvwrapper_mkvirtualenv_help $a;
                 return;;
             -i)
                 i=$(( $i + 1 ));
@@ -608,7 +608,7 @@ function showvirtualenv {
 }
 
 # Show help for workon
-function _workon_help {
+function virtualenvwrapper_workon_help {
     echo "Usage: workon env_name"
     echo ""
     echo "           Deactivate any currently activated virtualenv"
@@ -646,7 +646,7 @@ function workon {
         a="${in_args[$i]}"
         case "$a" in
             -h|--help)
-                _workon_help;
+                virtualenvwrapper_workon_help;
                 return 0;;
         esac
         i=$(( $i + 1 ))
@@ -962,7 +962,7 @@ function setvirtualenvproject {
 }
 
 # Show help for mkproject
-function mkproject_help {
+function virtualenvwrapper_mkproject_help {
     echo "Usage: mkproject [-t template] [virtualenv options] project_name"
     echo ""
     echo "Multiple templates may be selected.  They are applied in the order"
@@ -1002,7 +1002,7 @@ function mkproject {
         a="${in_args[$i]}"
         case "$a" in
             -h|--help)
-                mkproject_help;
+                virtualenvwrapper_mkproject_help;
                 return;;
             -t)
                 i=$(( $i + 1 ));
