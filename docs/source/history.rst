@@ -7,6 +7,8 @@ dev
   - Rename functions for generating help so they do not pollute the
     global namespace, and especially so they do not interfere with tab
     completion. Contributed by :bbuser:`davidszotten`.
+  - Fix an issue with listing project templates if none are
+    installed. (:bbissue:`179`)
 
 3.7
 

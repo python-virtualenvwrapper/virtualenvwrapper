@@ -160,7 +160,10 @@ def run_hooks(hook, options, args, output=None):
         def show(ext):
             output.write('  %-10s -- %s\n' %
                          (ext.name, inspect.getdoc(ext.plugin) or ''))
-        hook_mgr.map(show)
+        try:
+            hook_mgr.map(show)
+        except RuntimeError:  # no templates
+            output.write('  No templates installed.\n')
 
     elif options.sourcing:
         def get_source(ext, args):
