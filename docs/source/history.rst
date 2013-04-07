@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+3.7.1
 
   - Rename functions for generating help so they do not pollute the
     global namespace, and especially so they do not interfere with tab
