@@ -2,6 +2,12 @@
 Release History
 ===============
 
+dev
+
+  - Rename functions for generating help so they do not pollute the
+    global namespace, and especially so they do not interfere with tab
+    completion. Contributed by :bbuser:`davidszotten`.
+
 3.7
 
   - Improve tab-completion support for users of the lazy-loading
