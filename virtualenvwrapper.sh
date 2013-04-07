@@ -374,6 +374,7 @@ function mkvirtualenv {
     typeset envname
     typeset requirements
     typeset packages
+    typeset interpreter
 
     in_args=( "$@" )
 

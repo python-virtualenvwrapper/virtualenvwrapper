@@ -166,5 +166,13 @@ test_virtualenv_fails () {
     VIRTUALENVWRAPPER_VIRTUALENV=virtualenv
 }
 
+test_mkvirtualenv_python_not_sticky () {
+    typeset _save=$VIRTUALENVWRAPPER_VIRTUALENV
+    VIRTUALENVWRAPPER_VIRTUALENV=true
+    mkvirtualenv --python blah foo
+    assertSame "" "$interpreter"
+    VIRTUALENVWRAPPER_VIRTUALENV=$_save
+}
+
 
 . "$test_dir/shunit2"

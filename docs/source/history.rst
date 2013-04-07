@@ -9,6 +9,9 @@ dev
     completion. Contributed by :bbuser:`davidszotten`.
   - Fix an issue with listing project templates if none are
     installed. (:bbissue:`179`)
+  - Fix an issue with the ``--python`` option to ``mkvirtualenv``
+    becoming *sticky* for future calls that do not explicitly specify
+    the option. (:bbissue:`178`)
 
 3.7
 
