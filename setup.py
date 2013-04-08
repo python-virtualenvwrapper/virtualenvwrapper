@@ -19,7 +19,7 @@ try:
 except IOError:
     long_description = ''
 
-################################################################################
+#############################################################################
 # find_package_data is an Ian Bicking creation.
 
 # Provided as an attribute, so you can append to these instead
@@ -29,12 +29,13 @@ standard_exclude_directories = ('.*', 'CVS', '_darcs', './build',
                                 './dist', 'EGG-INFO', '*.egg-info')
 
 
-def find_package_data(
-    where='.', package='',
-    exclude=standard_exclude,
-    exclude_directories=standard_exclude_directories,
-    only_in_packages=True,
-    show_ignored=False):
+def find_package_data(where='.',
+                      package='',
+                      exclude=standard_exclude,
+                      exclude_directories=standard_exclude_directories,
+                      only_in_packages=True,
+                      show_ignored=False,
+                      ):
     """
     Return a dictionary suitable for use in ``package_data``
     in a distutils ``setup.py`` file.
@@ -74,7 +75,7 @@ def find_package_data(
                 bad_name = False
                 for pattern in exclude_directories:
                     if (fnmatchcase(name, pattern)
-                        or fn.lower() == pattern.lower()):
+                            or fn.lower() == pattern.lower()):
                         bad_name = True
                         if show_ignored:
                             print >> sys.stderr, (
@@ -90,13 +91,16 @@ def find_package_data(
                         new_package = package + '.' + name
                     stack.append((fn, '', new_package, False))
                 else:
-                    stack.append((fn, prefix + name + '/', package, only_in_packages))
+                    stack.append((fn,
+                                  prefix + name + '/',
+                                  package,
+                                  only_in_packages))
             elif package or not only_in_packages:
                 # is a file
                 bad_name = False
                 for pattern in exclude:
                     if (fnmatchcase(name, pattern)
-                        or fn.lower() == pattern.lower()):
+                            or fn.lower() == pattern.lower()):
                         bad_name = True
                         if show_ignored:
                             print >> sys.stderr, (
@@ -107,8 +111,66 @@ def find_package_data(
                     continue
                 out.setdefault(package, []).append(prefix + name)
     return out
-################################################################################
+############################################################################
 
+us_pkg = 'virtualenvwrapper.user_scripts'
+
+entry_points = {
+    'virtualenvwrapper.initialize': [
+        'user_scripts = %s:initialize' % us_pkg,
+        'project = virtualenvwrapper.project:initialize',
+    ],
+    'virtualenvwrapper.initialize_source': [
+        'user_scripts = %s:initialize_source' % us_pkg,
+    ],
+
+    'virtualenvwrapper.pre_mkvirtualenv': [
+        'user_scripts = %s:pre_mkvirtualenv' % us_pkg,
+    ],
+    'virtualenvwrapper.post_mkvirtualenv_source': [
+        'user_scripts = %s:post_mkvirtualenv_source' % us_pkg,
+    ],
+
+    'virtualenvwrapper.pre_cpvirtualenv': [
+        'user_scripts = %s:pre_cpvirtualenv' % us_pkg,
+    ],
+    'virtualenvwrapper.post_cpvirtualenv_source': [
+        'user_scripts = %s:post_cpvirtualenv_source' % us_pkg,
+    ],
+
+    'virtualenvwrapper.pre_rmvirtualenv': [
+        'user_scripts = %s:pre_rmvirtualenv' % us_pkg,
+    ],
+    'virtualenvwrapper.post_rmvirtualenv': [
+        'user_scripts = %s:post_rmvirtualenv' % us_pkg,
+    ],
+
+    'virtualenvwrapper.project.pre_mkproject': [
+        'project = virtualenvwrapper.project:pre_mkproject',
+    ],
+    'virtualenvwrapper.project.post_mkproject_source': [
+        'project = virtualenvwrapper.project:post_mkproject_source',
+    ],
+
+    'virtualenvwrapper.pre_activate': [
+        'user_scripts = %s:pre_activate' % us_pkg,
+    ],
+    'virtualenvwrapper.post_activate_source': [
+        'user_scripts = %s:post_activate_source' % us_pkg,
+        'project = virtualenvwrapper.project:post_activate_source',
+    ],
+
+    'virtualenvwrapper.pre_deactivate_source': [
+        'user_scripts = %s:pre_deactivate_source' % us_pkg,
+    ],
+    'virtualenvwrapper.post_deactivate_source': [
+        'user_scripts = %s:post_deactivate_source' % us_pkg,
+    ],
+
+    'virtualenvwrapper.get_env_details': [
+        'user_scripts = %s:get_env_details' % us_pkg,
+    ],
+}
 
 setup(
     name=PROJECT,
@@ -155,68 +217,12 @@ setup(
     # Scan the input for package information
     # to grab any data files (text, images, etc.)
     # associated with sub-packages.
-    package_data=find_package_data(PROJECT, 
+    package_data=find_package_data(PROJECT,
                                    package=PROJECT,
                                    only_in_packages=False,
                                    ),
 
-    entry_points={
-        #'console_scripts': [ 'venvw_hook = virtualenvwrapper.hook_loader:main' ],
-        'virtualenvwrapper.initialize': [
-            'user_scripts = virtualenvwrapper.user_scripts:initialize',
-            'project = virtualenvwrapper.project:initialize',
-            ],
-        'virtualenvwrapper.initialize_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:initialize_source',
-            ],
-
-        'virtualenvwrapper.pre_mkvirtualenv': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_mkvirtualenv',
-            ],
-        'virtualenvwrapper.post_mkvirtualenv_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_mkvirtualenv_source',
-            ],
-
-        'virtualenvwrapper.pre_cpvirtualenv': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_cpvirtualenv',
-            ],
-        'virtualenvwrapper.post_cpvirtualenv_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_cpvirtualenv_source',
-            ],
-
-        'virtualenvwrapper.pre_rmvirtualenv': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_rmvirtualenv',
-            ],
-        'virtualenvwrapper.post_rmvirtualenv': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_rmvirtualenv',
-            ],
-
-        'virtualenvwrapper.project.pre_mkproject': [
-            'project = virtualenvwrapper.project:pre_mkproject',
-            ],
-        'virtualenvwrapper.project.post_mkproject_source': [
-            'project = virtualenvwrapper.project:post_mkproject_source',
-            ],
-
-        'virtualenvwrapper.pre_activate': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_activate',
-            ],
-        'virtualenvwrapper.post_activate_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_activate_source',
-            'project = virtualenvwrapper.project:post_activate_source',
-            ],
-
-        'virtualenvwrapper.pre_deactivate_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:pre_deactivate_source',
-            ],
-        'virtualenvwrapper.post_deactivate_source': [
-            'user_scripts = virtualenvwrapper.user_scripts:post_deactivate_source',
-            ],
-
-        'virtualenvwrapper.get_env_details': [
-            'user_scripts = virtualenvwrapper.user_scripts:get_env_details',
-            ],
-        },
+    entry_points=entry_points,
 
     zip_safe=False,
-    )
+)
