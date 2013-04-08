@@ -1,4 +1,4 @@
-#!/bin/sh
+# -*- mode: shell-script -*-
 
 test_dir=$(dirname $0)
 source "$test_dir/setup.sh"

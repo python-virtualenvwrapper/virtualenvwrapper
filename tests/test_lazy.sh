@@ -1,3 +1,4 @@
+# -*- mode: shell-script -*-
 
 test_dir=$(cd $(dirname $0) && pwd)
 source "$test_dir/setup.sh"
