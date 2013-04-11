@@ -9,7 +9,7 @@ then
 fi
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then
-	echo "ERROR: virtualenvwrapper_quick.sh: Could not find virtualenvwrapper.sh" 1>&2
+	echo "ERROR: virtualenvwrapper_lazy.sh: Could not find virtualenvwrapper.sh" 1>&2
 fi
 
 # Load the real implementation of the API from virtualenvwrapper.sh
