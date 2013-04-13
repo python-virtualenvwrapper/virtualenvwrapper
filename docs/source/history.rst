@@ -2,6 +2,12 @@
 Release History
 ===============
 
+dev
+
+  - Fix the name of the script in an error message produced
+    by ``virtualenvwrapper_lazy.sh``. (Contributed by
+    :bbuser:`scottstvnsn`.)
+
 3.7.1
 
   - Rename functions for generating help so they do not pollute the
