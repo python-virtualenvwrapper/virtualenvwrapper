@@ -26,7 +26,7 @@ run in the same place as before.
 - All tests pass under Python 2.6, 2.7, 3.2 and 3.3.
 - Fix the name of the script in an error message produced
   by ``virtualenvwrapper_lazy.sh``. (Contributed by
-  :bbuser:`scottstvnsn`.)
+  scottstvnsn.)
 
 Installing
 ==========
