@@ -46,7 +46,7 @@ test_hooks () {
 
     output=$(cat "$WORKON_HOME/catch_output")
 
-    expected="GLOBAL premkproject $PROJECT_HOME myproject3
+    expected="GLOBAL premkproject $WORKON_HOME myproject3
 GLOBAL postmkproject $PROJECT_HOME/myproject3"
     assertSame "$expected" "$output"
 

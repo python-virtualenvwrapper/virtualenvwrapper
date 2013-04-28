@@ -11,13 +11,14 @@ import os
 
 log = logging.getLogger(__name__)
 
+
 def template(args):
     """Creates a test file containing the args passed to us
     """
-    log.info('Running test template with args %r', args)
-    project = args[0]
-    filename = 'TEST_FILE'
-    log.info('Writing to %s', filename)
+    print('Running test template with args %r' % args)
+    project, project_dir = args
+    filename = os.path.join(project_dir, 'TEST_FILE')
+    print('Writing to %s' % filename)
     output = open(filename, 'w')
     try:
         output.write('\n'.join(args))

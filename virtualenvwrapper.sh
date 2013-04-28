@@ -202,7 +202,15 @@ function virtualenvwrapper_run_hook {
 
     hook_script="$(virtualenvwrapper_tempfile ${1}-hook)" || return 1
 
-    "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' $HOOK_VERBOSE_OPTION --script "$hook_script" "$@"
+    # Use a subshell to run the python interpreter with hook_loader so
+    # we can change the working directory. This avoids having the
+    # Python 3 interpreter decide that its "prefix" is the virtualenv
+    # if we happen to be inside the virtualenv when we start.
+    ( \
+        cd "$WORKON_HOME" &&
+        "$VIRTUALENVWRAPPER_PYTHON" -m 'virtualenvwrapper.hook_loader' \
+            $HOOK_VERBOSE_OPTION --script "$hook_script" "$@" \
+    )
     result=$?
 
     if [ $result -eq 0 ]
@@ -691,6 +699,8 @@ function workon {
 
     # Replace the deactivate() function with a wrapper.
     eval 'deactivate () {
+        typeset env_postdeactivate_hook
+        typeset old_env
 
         # Call the local hook before the global so we can undo
         # any settings made by the local postactivate first.
@@ -1053,7 +1063,7 @@ function mkproject {
         # For some reason zsh insists on prefixing the template
         # names with a space, so strip them out before passing
         # the value to the hook loader.
-        virtualenvwrapper_run_hook --name $(echo $t | sed 's/^ //') "project.template" $envname
+        virtualenvwrapper_run_hook --name $(echo $t | sed 's/^ //') "project.template" "$envname" "$PROJECT_HOME/$envname"
     done
 
     virtualenvwrapper_run_hook "project.post_mkproject"
@@ -1085,7 +1095,7 @@ function cdproject {
 #
 # Originally part of virtualenvwrapper.tmpenv plugin
 #
-mktmpenv() {
+function mktmpenv {
     typeset tmpenvname
     typeset RC
 
