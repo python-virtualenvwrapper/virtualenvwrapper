@@ -157,6 +157,13 @@ Duplicate an existing virtualenv environment. The source can be an
 environment managed by virtualenvwrapper or an external environment
 created elsewhere.
 
+.. warning::
+
+   Copying virtual environments is not well supported. Each virtualenv
+   has path information hard-coded into it, and there may be cases
+   where the copy code does not know to update a particular
+   file. **Use with caution.**
+
 Syntax::
 
     cpvirtualenv ENVNAME [TARGETENVNAME]
