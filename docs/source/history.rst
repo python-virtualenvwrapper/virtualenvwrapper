@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+4.0
 ===
 
 **Warning:** This release includes some potentially incompatible
@@ -12,7 +12,7 @@ varied depending on the hook). The *shell* portion of any hook
 (anything sourced by the user's shell when the hook is run) is still
 run in the same place as before.
 
-- All tests pass under Python 3.2 and 3.3.
+- All tests pass under Python 2.6, 2.7, 3.2 and 3.3.
 - Fix the name of the script in an error message produced
   by ``virtualenvwrapper_lazy.sh``. (Contributed by
   :bbuser:`scottstvnsn`.)

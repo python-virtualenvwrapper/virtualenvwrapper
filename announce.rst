@@ -1,6 +1,6 @@
-=========================
- virtualenvwrapper 3.7.1
-=========================
+=======================
+ virtualenvwrapper 4.0
+=======================
 
 .. tags:: virtualenvwrapper release python
 
@@ -16,13 +16,17 @@ introducing conflicts in their dependencies.
 What's New?
 ===========
 
-- Rename functions for generating help so they do not pollute the
-  global namespace, and especially so they do not interfere with tab
-  completion. Contributed by ``davidszotten``.
-- Fix an issue with listing project templates if none are installed.
-- Fix an issue with the ``--python`` option to ``mkvirtualenv``
-  becoming *sticky* for future calls that do not explicitly specify
-  the option.
+**Warning:** This release includes some potentially incompatible
+changes for extensions. The python modules for extensions are now
+*always* run with ``PWD=$WORKON_HOME`` (previously the value of PWD
+varied depending on the hook). The *shell* portion of any hook
+(anything sourced by the user's shell when the hook is run) is still
+run in the same place as before.
+
+- All tests pass under Python 2.6, 2.7, 3.2 and 3.3.
+- Fix the name of the script in an error message produced
+  by ``virtualenvwrapper_lazy.sh``. (Contributed by
+  :bbuser:`scottstvnsn`.)
 
 Installing
 ==========

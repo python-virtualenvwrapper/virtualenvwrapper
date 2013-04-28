@@ -11,6 +11,13 @@ managing your development workflow, making it easier to work on more
 than one project at a time without introducing conflicts in their
 dependencies.
 
+**Warning:** The 4.x release includes some potentially incompatible
+changes for extensions from 3.x. The python modules for extensions are
+now *always* run with ``PWD=$WORKON_HOME`` (previously the value of
+PWD varied depending on the hook). The *shell* portion of any hook
+(anything sourced by the user's shell when the hook is run) is still
+run in the same place as before.
+
 ========
 Features
 ========

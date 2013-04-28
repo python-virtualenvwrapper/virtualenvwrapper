@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 PROJECT = 'virtualenvwrapper'
-VERSION = '3.7.1'
+VERSION = '4.0'
 
 from setuptools import setup, find_packages
 
