@@ -178,7 +178,7 @@ setup(
     author='Doug Hellmann',
     author_email='doug.hellmann@gmail.com',
 
-    url='http://www.doughellmann.com/projects/%s/' % PROJECT,
+    url='http://%s.readthedocs.org' % PROJECT,
 
     classifiers=['Development Status :: 5 - Production/Stable',
                  'License :: OSI Approved :: MIT License',
