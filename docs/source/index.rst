@@ -179,6 +179,7 @@ Details
    tips
    developers
    extensions
+   design
    history
 
 .. _references:
