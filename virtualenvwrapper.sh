@@ -146,7 +146,7 @@ function virtualenvwrapper_derive_workon_home {
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
         # - Expanding variables (e.g., $foo)
         # - Converting ~s to complete paths (e.g., ~/ to /home/brian/ and ~arthur to /home/arthur)
-        workon_home_dir=$(virtualenvwrapper_expandpath "$workon_home_dir")
+        workon_home_dir="$(virtualenvwrapper_expandpath "$workon_home_dir")"
     fi
 
     echo "$workon_home_dir"
@@ -297,7 +297,7 @@ function virtualenvwrapper_initialize {
 
 # Verify that the passed resource is in path and exists
 function virtualenvwrapper_verify_resource {
-    typeset exe_path=$(command \which "$1" | (unset GREP_OPTIONS; command \grep -v "not found"))
+    typeset exe_path="$(command \which "$1" | (unset GREP_OPTIONS; command \grep -v "not found"))"
     if [ "$exe_path" = "" ]
     then
         echo "ERROR: virtualenvwrapper could not find $1 in your path" >&2
@@ -411,11 +411,11 @@ function mkvirtualenv {
             -p|--python)
                 i=$(( $i + 1 ));
                 interpreter="${in_args[$i]}";
-                interpreter=$(virtualenvwrapper_absolutepath "$interpreter");;
+                interpreter="$(virtualenvwrapper_absolutepath "$interpreter")";;
             -r)
                 i=$(( $i + 1 ));
                 requirements="${in_args[$i]}";
-                requirements=$(virtualenvwrapper_expandpath "$requirements");;
+                requirements="$(virtualenvwrapper_expandpath "$requirements")";;
             *)
                 if [ ${#out_args} -gt 0 ]
                 then
@@ -608,7 +608,7 @@ function showvirtualenv {
             echo "showvirtualenv [env]"
             return 1
         fi
-        env_name=$(basename $VIRTUAL_ENV)
+        env_name=$(basename "$VIRTUAL_ENV")
     fi
 
     echo -n "$env_name"
@@ -797,7 +797,7 @@ function add2virtualenv {
 
     for pydir in "$@"
     do
-        absolute_path=$(virtualenvwrapper_absolutepath "$pydir")
+        absolute_path="$(virtualenvwrapper_absolutepath "$pydir")"
         if [ "$absolute_path" != "$pydir" ]
         then
             echo "Warning: Converting \"$pydir\" to \"$absolute_path\"" 1>&2
@@ -884,13 +884,13 @@ function cpvirtualenv {
             # so its a virtualenv we are importing
             # make sure we have a full path
             # and get the name
-            src=$(virtualenvwrapper_expandpath "$src_name")
+            src="$(virtualenvwrapper_expandpath "$src_name")"
             # final verification
             if [ ! -e "$src" ]; then
                 echo "Please provide a valid virtualenv to copy."
                 return 1
             fi
-            src_name=$(basename "$src")
+            src_name="$(basename "$src")"
         else
            src="$WORKON_HOME/$src_name"
         fi
@@ -904,7 +904,7 @@ function cpvirtualenv {
     else
         trg="$WORKON_HOME/$trg_name"
     fi
-    trg=$(virtualenvwrapper_expandpath "$trg")
+    trg="$(virtualenvwrapper_expandpath "$trg")"
 
     # validate trg does not already exist
     # catch copying virtualenv in workon home
@@ -1075,7 +1075,7 @@ function cdproject {
     virtualenvwrapper_verify_active_environment || return 1
     if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]
     then
-        typeset project_dir=$(cat "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME")
+        typeset project_dir="$(cat "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME")"
         if [ ! -z "$project_dir" ]
         then
             cd "$project_dir"

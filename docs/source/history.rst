@@ -2,6 +2,12 @@
 Release History
 ===============
 
+dev
+===
+
+- Ensure that all $() style commands that produce paths are
+  quoted. Addresses :bbissue:`164`.
+
 4.0
 ===
 
