@@ -1,5 +1,3 @@
-#!/bin/sh
-
 #set -x
 
 envdir="$1"
@@ -60,6 +58,7 @@ do
     echo "  ZSH_VERSION=$ZSH_VERSION"
     echo "  KSH_VERSION=$KSH_VERSION"
     echo "  virtualenv=$(which virtualenv)"
+    echo "  ZSH=$ZSH_NAME $ZSH_EVAL_CONTEXT"
     echo
     SHUNIT_PARENT="$test_script"
     export SHUNIT_PARENT
