@@ -40,15 +40,17 @@ test_without_project () {
 }
 
 test_space_in_path () {
-    old_project_home="$PROJECT_HOME"
+    (
+    set -x
+    set -e
     PROJECT_HOME="$PROJECT_HOME/with spaces"
     mkdir -p "$PROJECT_HOME"
     mkproject "myproject" >/dev/null 2>&1
-    cd $TMPDIR
+    cd "$WORKON_HOME"
     cdproject
-    assertSame "$PROJECT_HOME/myproject" "$(pwd)"
-    deactivate
-    PROJECT_HOME="$old_project_home"
+    [ "$PROJECT_HOME/myproject" == "$(pwd)" ]
+    )
+    assertTrue "Did not cd to project directory" $?
 }
 
 
