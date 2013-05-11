@@ -547,3 +547,18 @@ Syntax::
 
   cdproject
 
+===========================
+Managing Installed Packages
+===========================
+
+.. _command-wipeenv:
+
+wipeenv
+-------
+
+Remove all of the installed third-party packages in the current
+virtualenv.
+
+Syntax::
+
+  wipeenv

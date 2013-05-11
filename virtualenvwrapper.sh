@@ -1131,6 +1131,26 @@ fi
 EOF
 }
 
+#
+# Remove all installed packages from the env
+#
+function wipeenv {
+    virtualenvwrapper_verify_workon_home || return 1
+    virtualenvwrapper_verify_active_environment || return 1
+
+    typeset req_file="$(virtualenvwrapper_tempfile "requirements.txt")"
+    pip freeze | egrep -v '(distribute|wsgiref)' > "$req_file"
+    if [ -n "$(cat "$req_file")" ]
+    then
+        echo "Uninstalling packages:"
+        cat "$req_file"
+        echo
+        pip uninstall -y $(cat "$req_file" | sed 's/>/=/g' | cut -f1 -d=)
+    else
+        echo "Nothing to remove."
+    fi
+    rm -f "$req_file"
+}
 
 #
 # Invoke the initialization functions

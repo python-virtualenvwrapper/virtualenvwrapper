@@ -7,6 +7,8 @@ dev
 
 - Ensure that all $() style commands that produce paths are
   quoted. Addresses :bbissue:`164`.
+- Add :ref:`command-wipeenv` command for removing all packages
+  installed in the virtualenv.
 
 4.0
 ===
