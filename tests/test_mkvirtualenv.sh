@@ -51,7 +51,7 @@ GLOBAL postmkvirtualenv"
     rm -f "$WORKON_HOME/premkvirtualenv"
     rm -f "$WORKON_HOME/postmkvirtualenv"
     deactivate
-    rmvirtualenv "env3"
+    rmvirtualenv "env3" >/dev/null 2>&1
 }
 
 test_no_virtualenv () {
@@ -106,6 +106,28 @@ test_mkvirtualenv_sitepackages () {
     ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
     assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
     rmvirtualenv "env4"
+}
+
+test_mkvirtualenv_hooks_system_site_packages () {
+    # See issue #189
+
+    export pre_test_dir=$(cd "$test_dir"; pwd)
+
+    echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    chmod +x "$WORKON_HOME/premkvirtualenv"
+
+    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    mkvirtualenv --system-site-packages "env189" >/dev/null 2>&1
+    output=$(cat "$test_dir/catch_output")
+    workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
+    expected="GLOBAL premkvirtualenv $workon_home_as_pwd env189
+GLOBAL postmkvirtualenv"
+    assertSame "$expected" "$output"
+    rm -f "$WORKON_HOME/premkvirtualenv"
+    rm -f "$WORKON_HOME/postmkvirtualenv"
+    deactivate
+    rmvirtualenv "env189" >/dev/null 2>&1
 }
 
 test_mkvirtualenv_args () {
