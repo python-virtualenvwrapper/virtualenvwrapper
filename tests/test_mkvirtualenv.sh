@@ -105,7 +105,7 @@ test_mkvirtualenv_sitepackages () {
     mkvirtualenv --no-site-packages "without_sp" >/dev/null 2>&1
     ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
     assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
-    rmvirtualenv "env4"
+    rmvirtualenv "env4" >/dev/null 2>&1
 }
 
 test_mkvirtualenv_hooks_system_site_packages () {
@@ -137,7 +137,7 @@ test_mkvirtualenv_args () {
     mkvirtualenv "without_sp2" >/dev/null 2>&1
     ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
     assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
-    rmvirtualenv "env4"
+    rmvirtualenv "env4" >/dev/null 2>&1
     unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
 }
 
