@@ -1,7 +1,7 @@
 #!/bin/sh
 # Alternative startup script for faster login times.
 
-export _VIRTUALENVWRAPPER_API="mkvirtualenv rmvirtualenv lsvirtualenv showvirtualenv workon add2virtualenv cdsitepackages cdvirtualenv lssitepackages toggleglobalsitepackages cpvirtualenv setvirtualenvproject mkproject cdproject mktmpenv"
+export _VIRTUALENVWRAPPER_API="$_VIRTUALENVWRAPPER_API mkvirtualenv rmvirtualenv lsvirtualenv showvirtualenv workon add2virtualenv cdsitepackages cdvirtualenv lssitepackages toggleglobalsitepackages cpvirtualenv setvirtualenvproject mkproject cdproject mktmpenv"
 
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then

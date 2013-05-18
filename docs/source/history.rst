@@ -9,6 +9,10 @@ dev
   quoted. Addresses :bbissue:`164`.
 - Add :ref:`command-wipeenv` command for removing all packages
   installed in the virtualenv.
+- Allow users of ``virtualenvwrapper_lazy.sh`` to extend the list of
+  API commands that trigger the lazy-loader by extending
+  ``_VIRTUALENVWRAPPER_API``. Patch contributed by John Purnell, see
+  :bbissue:`188`.
 
 4.0
 ===
