@@ -24,6 +24,7 @@ virtualenvwrapper.egg-info
 virtualenvwrapper/docs
 .tox
 *.orig
+TAGS
 
 syntax: re
 .DS_Store
