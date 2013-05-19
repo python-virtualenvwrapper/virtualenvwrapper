@@ -15,6 +15,8 @@ dev
   :bbissue:`188`.
 - Fix detection of ``--python`` option to
   :ref:`command-mkvirtualenv`. Resolves :bbissue:`190`.
+- Add :ref:`command-allvirtualenv` command to run a command across all
+  virtualenvs. Suggested by Dave Coutts in :bbissue:`186`.
 
 4.0
 ===

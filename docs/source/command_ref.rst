@@ -204,6 +204,27 @@ Syntax::
    * :ref:`scripts-premkvirtualenv`
    * :ref:`scripts-postmkvirtualenv`
 
+.. _command-allvirtualenv:
+
+allvirtualenv
+-------------
+
+Run a command in all virtualenvs under WORKON_HOME.
+
+Syntax::
+
+    allenvs command with arguments
+
+Each virtualenv is activated, bypassing activation hooks, the current
+working directory is changed to the current virtualenv, and then the
+command is run. Commands cannot modify the current shell state, but
+can modify the virtualenv.
+
+::
+
+  $ allenvs pip install -U pip
+
+
 ==================================
 Controlling the Active Environment
 ==================================

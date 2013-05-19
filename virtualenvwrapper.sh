@@ -592,10 +592,11 @@ function lsvirtualenv {
 
     if $long_mode
     then
-        for env_name in $(virtualenvwrapper_show_workon_options)
-        do
-            showvirtualenv "$env_name"
-        done
+        allenvs showvirtualenv "$env_name"
+        # for env_name in $(virtualenvwrapper_show_workon_options)
+        # do
+            
+        # done
     else
         virtualenvwrapper_show_workon_options
     fi
@@ -616,7 +617,6 @@ function showvirtualenv {
         env_name=$(basename "$VIRTUAL_ENV")
     fi
 
-    echo -n "$env_name"
     virtualenvwrapper_run_hook "get_env_details" "$env_name"
     echo
 }
@@ -1155,6 +1155,27 @@ function wipeenv {
         echo "Nothing to remove."
     fi
     rm -f "$req_file"
+}
+
+#
+# Run a command in each virtualenv
+#
+function allvirtualenv {
+    virtualenvwrapper_verify_workon_home || return 1
+    typeset d
+
+    virtualenvwrapper_show_workon_options | while read d
+    do
+        [ ! -d "$WORKON_HOME/$d" ] && continue
+        echo "$d"
+        echo "$d" | sed 's/./=/g'
+        # Activate the environment, but not with workon
+        # because we don't want to trigger any hooks.
+        (source "$WORKON_HOME/$d/bin/activate";
+            cd "$VIRTUAL_ENV";
+            $@)
+        echo
+    done
 }
 
 #
