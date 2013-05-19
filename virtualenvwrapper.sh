@@ -592,11 +592,7 @@ function lsvirtualenv {
 
     if $long_mode
     then
-        allenvs showvirtualenv "$env_name"
-        # for env_name in $(virtualenvwrapper_show_workon_options)
-        # do
-            
-        # done
+        allvirtualenv showvirtualenv "$env_name"
     else
         virtualenvwrapper_show_workon_options
     fi
