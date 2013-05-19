@@ -13,6 +13,8 @@ dev
   API commands that trigger the lazy-loader by extending
   ``_VIRTUALENVWRAPPER_API``. Patch contributed by John Purnell, see
   :bbissue:`188`.
+- Fix detection of ``--python`` option to
+  :ref:`command-mkvirtualenv`. Resolves :bbissue:`190`.
 
 4.0
 ===

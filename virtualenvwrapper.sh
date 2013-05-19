@@ -408,9 +408,14 @@ function mkvirtualenv {
             -i)
                 i=$(( $i + 1 ));
                 packages="$packages ${in_args[$i]}";;
-            -p|--python)
-                i=$(( $i + 1 ));
-                interpreter="${in_args[$i]}";
+            -p|--python*)
+                if echo "$a" | grep -q "="
+                then
+                    interpreter="$(echo "$a" | cut -f2 -d=)"
+                else
+                    i=$(( $i + 1 ))
+                    interpreter="${in_args[$i]}"
+                fi;
                 interpreter="$(virtualenvwrapper_absolutepath "$interpreter")";;
             -r)
                 i=$(( $i + 1 ));
