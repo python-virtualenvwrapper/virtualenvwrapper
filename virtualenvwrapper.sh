@@ -534,8 +534,7 @@ function virtualenvwrapper_show_workon_options {
     # 4. Format the output to show one name on a line.
     # 5. Eliminate any lines with * on them because that means there 
     #    were no envs.
-    (echo $WORKON_HOME/*/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
-        | command \sed "s|$WORKON_HOME/||g" \
+    (cd "$WORKON_HOME" && echo */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
         | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||g" \
         | command \fmt -w 1 \
         | (unset GREP_OPTIONS; command \egrep -v '^\*$') 2>/dev/null

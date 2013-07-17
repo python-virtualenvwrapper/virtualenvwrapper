@@ -5,7 +5,7 @@ Release History
 dev
 ===
 
-- Ensure that all $() style commands that produce paths are
+- Ensure that all ``$()`` style commands that produce paths are
   quoted. Addresses :bbissue:`164`.
 - Add :ref:`command-wipeenv` command for removing all packages
   installed in the virtualenv.
@@ -17,6 +17,8 @@ dev
   :ref:`command-mkvirtualenv`. Resolves :bbissue:`190`.
 - Add :ref:`command-allvirtualenv` command to run a command across all
   virtualenvs. Suggested by Dave Coutts in :bbissue:`186`.
+- Fix :ref:`command-lsvirtualenv` when there are spaces in
+  ``WORKON_HOME``. Resolves :bbissue:`194`.
 
 4.0
 ===
