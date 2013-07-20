@@ -25,6 +25,8 @@ virtualenvwrapper/docs
 .tox
 *.orig
 TAGS
+ChangeLog
+AUTHORS
 
 syntax: re
 .DS_Store

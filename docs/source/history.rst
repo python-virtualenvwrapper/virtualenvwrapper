@@ -19,6 +19,9 @@ dev
   virtualenvs. Suggested by Dave Coutts in :bbissue:`186`.
 - Fix :ref:`command-lsvirtualenv` when there are spaces in
   ``WORKON_HOME``. Resolves :bbissue:`194`.
+- Switch to `pbr`_ for packaging.
+
+.. _pbr: https://github.com/openstack-dev/pbr
 
 4.0
 ===
