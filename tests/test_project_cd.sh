@@ -40,7 +40,6 @@ test_without_project () {
 
 test_space_in_path () {
     (
-    set -x
     set -e
     PROJECT_HOME="$PROJECT_HOME/with spaces"
     mkdir -p "$PROJECT_HOME"
