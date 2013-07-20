@@ -11,7 +11,7 @@ oneTimeSetUp() {
 
 oneTimeTearDown() {
     rm -rf "$WORKON_HOME"
-    rm -f "$test_dir/requirements.txt"
+    rm -f "$TMPDIR/requirements.txt"
 }
 
 setUp () {
@@ -19,8 +19,8 @@ setUp () {
 }
 
 test_requirements_file () {
-    echo "IPy" > "$test_dir/requirements.txt"
-    mkvirtualenv -r "$test_dir/requirements.txt" "env3" >/dev/null 2>&1
+    echo "IPy" > "$TMPDIR/requirements.txt"
+    mkvirtualenv -r "$TMPDIR/requirements.txt" "env3" >/dev/null 2>&1
     installed=$(pip freeze)
     assertTrue "IPy not found in $installed" "pip freeze | grep IPy"
 }
