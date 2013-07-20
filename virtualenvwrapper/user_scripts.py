@@ -123,12 +123,10 @@ def make_hook(filename, comment):
         log.info('creating %s', filename)
         f = open(filename, 'w')
         try:
-            f.write("""#!%(shell)s
-# %(comment)s
-
-""" % {'comment': comment,
-       'shell': os.environ.get('SHELL', '/bin/sh'),
-       })
+            f.write("#!%(shell)s\n# %(comment)s\n\n" % {
+                'comment': comment,
+                'shell': os.environ.get('SHELL', '/bin/sh'),
+            })
         finally:
             f.close()
         os.chmod(filename, PERMISSIONS)
