@@ -16,7 +16,6 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
 }
 
 function_defined_normal() {
@@ -98,10 +97,9 @@ test_mktmpenv_defined_normal() {
 #         assertTrue "Global $WORKON_HOME/$hook is not executable" "[ -x $WORKON_HOME/$hook ]"
 #     done
 #     assertTrue "Log file was not created" "[ -f $WORKON_HOME/hook.log ]"
-#     export pre_test_dir=$(cd "$test_dir"; pwd)
-#     echo "echo GLOBAL initialize >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/initialize"
+#     echo "echo GLOBAL initialize >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/initialize"
 #     virtualenvwrapper_initialize
-#     output=$(cat "$test_dir/catch_output")
+#     output=$(cat "$TMPDIR/catch_output")
 #     expected="GLOBAL initialize"
 #     assertSame "$expected" "$output"
 # }

@@ -15,7 +15,6 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
 }
 
 function_defined_lazy() {

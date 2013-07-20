@@ -16,7 +16,7 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
+    rm -f "$TMPDIR/catch_output"
 }
 
 test_deactivate () {
@@ -32,15 +32,15 @@ test_deactivate_hooks () {
 
     for t in pre post
     do
-        echo "echo GLOBAL ${t}deactivate \$VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV >> $test_dir/catch_output" > "$WORKON_HOME/${t}deactivate"
-        echo "echo ENV ${t}deactivate \$VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV >> $test_dir/catch_output" > "$WORKON_HOME/env1/bin/${t}deactivate"
+        echo "echo GLOBAL ${t}deactivate \$VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV >> $TMPDIR/catch_output" > "$WORKON_HOME/${t}deactivate"
+        echo "echo ENV ${t}deactivate \$VIRTUALENVWRAPPER_LAST_VIRTUAL_ENV >> $TMPDIR/catch_output" > "$WORKON_HOME/env1/bin/${t}deactivate"
     done
 
-    touch "$test_dir/catch_output"
+    touch "$TMPDIR/catch_output"
 
     deactivate
 
-    output=$(cat "$test_dir/catch_output")
+    output=$(cat "$TMPDIR/catch_output")
     expected="ENV predeactivate
 GLOBAL predeactivate
 ENV postdeactivate $WORKON_HOME/env1

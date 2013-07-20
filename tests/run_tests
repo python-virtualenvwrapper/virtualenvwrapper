@@ -1,3 +1,4 @@
+# -*- mode: shell-script -*-
 #set -x
 
 envdir="$1"
@@ -59,6 +60,7 @@ do
     echo "  KSH_VERSION=$KSH_VERSION"
     echo "  virtualenv=$(which virtualenv)"
     echo "  ZSH=$ZSH_NAME $ZSH_EVAL_CONTEXT"
+    echo "  TMPDIR=$TMPDIR"
     echo
     SHUNIT_PARENT="$test_script"
     export SHUNIT_PARENT

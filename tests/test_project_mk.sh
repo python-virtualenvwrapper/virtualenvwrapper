@@ -18,7 +18,7 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$WORKON_HOME/catch_output"
+    rm -f "$TMPDIR/catch_output"
 }
 
 tearDown () {
@@ -38,13 +38,13 @@ test_create_virtualenv () {
 }
 
 test_hooks () {
-    echo "echo GLOBAL premkproject \`pwd\` \"\$@\" >> \"$WORKON_HOME/catch_output\"" >> "$VIRTUALENVWRAPPER_HOOK_DIR/premkproject"
+    echo "echo GLOBAL premkproject \`pwd\` \"\$@\" >> \"$TMPDIR/catch_output\"" >> "$VIRTUALENVWRAPPER_HOOK_DIR/premkproject"
     chmod +x "$VIRTUALENVWRAPPER_HOOK_DIR/premkproject"
-    echo "echo GLOBAL postmkproject \`pwd\` >> $WORKON_HOME/catch_output" > "$VIRTUALENVWRAPPER_HOOK_DIR/postmkproject"
+    echo "echo GLOBAL postmkproject \`pwd\` >> $TMPDIR/catch_output" > "$VIRTUALENVWRAPPER_HOOK_DIR/postmkproject"
 
     mkproject myproject3 >/dev/null 2>&1
 
-    output=$(cat "$WORKON_HOME/catch_output")
+    output=$(cat "$TMPDIR/catch_output")
 
     expected="GLOBAL premkproject $WORKON_HOME myproject3
 GLOBAL postmkproject $PROJECT_HOME/myproject3"

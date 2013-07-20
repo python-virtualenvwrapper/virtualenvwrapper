@@ -18,7 +18,6 @@ oneTimeSetUp() {
 
 setUp () {
     echo
-    rm -f "$TMPDIR/catch_output"
 }
 
 test_activate () {

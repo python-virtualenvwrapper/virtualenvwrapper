@@ -18,7 +18,6 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$TMPDIR/catch_output"
 }
 
 test_with_project () {

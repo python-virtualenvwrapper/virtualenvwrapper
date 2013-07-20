@@ -15,7 +15,7 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
+    rm -f "$TMPDIR/catch_output"
 }
 
 test_create() {
@@ -35,15 +35,13 @@ test_activates () {
 }
 
 test_hooks () {
-    export pre_test_dir=$(cd "$test_dir"; pwd)
-
     echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
-    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
 
-    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    echo "echo GLOBAL postmkvirtualenv >> $TMPDIR/catch_output" > "$WORKON_HOME/postmkvirtualenv"
     mkvirtualenv "env3" >/dev/null 2>&1
-    output=$(cat "$test_dir/catch_output")
+    output=$(cat "$TMPDIR/catch_output")
     workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
     expected="GLOBAL premkvirtualenv $workon_home_as_pwd env3
 GLOBAL postmkvirtualenv"
@@ -111,15 +109,13 @@ test_mkvirtualenv_sitepackages () {
 test_mkvirtualenv_hooks_system_site_packages () {
     # See issue #189
 
-    export pre_test_dir=$(cd "$test_dir"; pwd)
-
     echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
-    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
 
-    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    echo "echo GLOBAL postmkvirtualenv >> $TMPDIR/catch_output" > "$WORKON_HOME/postmkvirtualenv"
     mkvirtualenv --system-site-packages "env189" >/dev/null 2>&1
-    output=$(cat "$test_dir/catch_output")
+    output=$(cat "$TMPDIR/catch_output")
     workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
     expected="GLOBAL premkvirtualenv $workon_home_as_pwd env189
 GLOBAL postmkvirtualenv"
@@ -145,12 +141,12 @@ test_no_such_virtualenv () {
     VIRTUALENVWRAPPER_VIRTUALENV=/path/to/missing/program
 
     echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
-    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
 
-    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    echo "echo GLOBAL postmkvirtualenv >> $TMPDIR/catch_output" > "$WORKON_HOME/postmkvirtualenv"
     mkvirtualenv "env3" >/dev/null 2>&1
-    output=$(cat "$test_dir/catch_output" 2>/dev/null)
+    output=$(cat "$TMPDIR/catch_output" 2>/dev/null)
     workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
     expected=""
     assertSame "$expected" "$output"
@@ -173,12 +169,12 @@ test_virtualenv_fails () {
     VIRTUALENVWRAPPER_VIRTUALENV=false
 
     echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
-    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
 
-    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    echo "echo GLOBAL postmkvirtualenv >> $TMPDIR/catch_output" > "$WORKON_HOME/postmkvirtualenv"
     mkvirtualenv "env3" >/dev/null 2>&1
-    output=$(cat "$test_dir/catch_output" 2>/dev/null)
+    output=$(cat "$TMPDIR/catch_output" 2>/dev/null)
     workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
     expected=""
     assertSame "$expected" "$output"

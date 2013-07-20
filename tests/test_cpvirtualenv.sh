@@ -7,7 +7,6 @@ setUp () {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     source "$test_dir/../virtualenvwrapper.sh"
-    rm -f "$test_dir/catch_output"
     echo
 }
 
@@ -202,7 +201,7 @@ test_clone_venv_using_vars () {
     assertTrue "Cloned virtualenv already exists" "[ ! -d $WORKON_HOME/cpvenv_test ]"
 
     $VIRTUALENVWRAPPER_VIRTUALENV "$TMPDIR/cpvenv_test" >/dev/null 2>&1
-    touch "$tmplocation/cpvenv_test/mytestpackage"
+    touch "$TMPDIR/cpvenv_test/mytestpackage"
 
     assertTrue "Virtualenv to clone didn't get created" "[ -d $TMPDIR/cpvenv_test ]"
     assertTrue "Cloned virtualenv already exists" "[ ! -d $WORKON_HOME/cpvenv_test ]"

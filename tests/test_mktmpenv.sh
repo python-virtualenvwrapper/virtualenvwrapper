@@ -16,7 +16,6 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
 }
 
 test_mktmpenv_no_name() {

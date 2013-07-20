@@ -15,8 +15,8 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
     unset VIRTUALENVWRAPPER_INITIALIZED
+    rm -f "$TMPDIR/catch_output"
 }
 
 test_virtualenvwrapper_initialize() {
@@ -26,10 +26,9 @@ test_virtualenvwrapper_initialize() {
         assertTrue "Global $WORKON_HOME/$hook was not created" "[ -f $WORKON_HOME/$hook ]"
         assertTrue "Global $WORKON_HOME/$hook is not executable" "[ -x $WORKON_HOME/$hook ]"
     done
-    export pre_test_dir=$(cd "$test_dir"; pwd)
-    echo "echo GLOBAL initialize >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/initialize"
+    echo "echo GLOBAL initialize >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/initialize"
     virtualenvwrapper_initialize
-    output=$(cat "$test_dir/catch_output")
+    output=$(cat "$TMPDIR/catch_output")
     expected="GLOBAL initialize"
     assertSame "$expected" "$output"
 }

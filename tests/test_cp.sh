@@ -7,7 +7,7 @@ setUp () {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     source "$test_dir/../virtualenvwrapper.sh"
-    rm -f "$test_dir/catch_output"
+    rm -f "$TMPDIR/catch_output"
     echo
 }
 
@@ -107,27 +107,25 @@ test_source_does_not_exist () {
 test_hooks () {
     mkvirtualenv "source" >/dev/null 2>&1 
 
-    export pre_test_dir=$(cd "$test_dir"; pwd)
-
     # Set the interpreter of the hook script to the simple shell
     echo "#!/bin/sh" > "$WORKON_HOME/premkvirtualenv"
-    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
+    echo "echo GLOBAL premkvirtualenv \`pwd\` \"\$@\" >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/premkvirtualenv"
     chmod +x "$WORKON_HOME/premkvirtualenv"
 
-    echo "echo GLOBAL postmkvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postmkvirtualenv"
+    echo "echo GLOBAL postmkvirtualenv >> $TMPDIR/catch_output" > "$WORKON_HOME/postmkvirtualenv"
 
     # Set the interpreter of the hook script to the simple shell
     echo "#!/bin/sh" > "$WORKON_HOME/precpvirtualenv"
-    echo "echo GLOBAL precpvirtualenv \`pwd\` \"\$@\" >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/precpvirtualenv"
+    echo "echo GLOBAL precpvirtualenv \`pwd\` \"\$@\" >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/precpvirtualenv"
     chmod +x "$WORKON_HOME/precpvirtualenv"
 
     # Set the interpreter of the hook script to the simple shell
     echo "#!/bin/sh" > "$WORKON_HOME/postcpvirtualenv"
-    echo "echo GLOBAL postcpvirtualenv >> $test_dir/catch_output" > "$WORKON_HOME/postcpvirtualenv"
+    echo "echo GLOBAL postcpvirtualenv >> $TMPDIR/catch_output" > "$WORKON_HOME/postcpvirtualenv"
 
     cpvirtualenv "source" "destination" >/dev/null 2>&1 
 
-    output=$(cat "$test_dir/catch_output")
+    output=$(cat "$TMPDIR/catch_output")
     workon_home_as_pwd=$(cd $WORKON_HOME; pwd)
 
     expected="GLOBAL precpvirtualenv $workon_home_as_pwd $workon_home_as_pwd/source destination

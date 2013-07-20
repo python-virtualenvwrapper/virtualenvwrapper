@@ -17,7 +17,6 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
     WORKON_HOME="$TMP_WORKON_HOME"
 }
 

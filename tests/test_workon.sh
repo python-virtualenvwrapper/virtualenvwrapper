@@ -18,7 +18,7 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
+    rm -f "$TMPDIR/catch_output"
 }
 
 tearDown () {
@@ -35,20 +35,20 @@ test_workon_activate_hooks () {
     for t in pre post
     do
         echo "#!/bin/sh" > "$WORKON_HOME/${t}activate"
-        echo "echo GLOBAL ${t}activate >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/${t}activate"
+        echo "echo GLOBAL ${t}activate >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/${t}activate"
         chmod +x "$WORKON_HOME/${t}activate"
 
         echo "#!/bin/sh" > "$WORKON_HOME/env2/bin/${t}activate"
-        echo "echo ENV ${t}activate >> \"$test_dir/catch_output\"" >> "$WORKON_HOME/env1/bin/${t}activate"
+        echo "echo ENV ${t}activate >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/env1/bin/${t}activate"
         chmod +x "$WORKON_HOME/env1/bin/${t}activate"
     done
 
-    rm -f "$test_dir/catch_output"
-    touch "$test_dir/catch_output"
+    rm -f "$TMPDIR/catch_output"
+    touch "$TMPDIR/catch_output"
 
     workon env1
     
-    output=$(cat "$test_dir/catch_output")
+    output=$(cat "$TMPDIR/catch_output")
     expected="GLOBAL preactivate
 ENV preactivate
 GLOBAL postactivate

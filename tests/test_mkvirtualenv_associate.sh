@@ -16,9 +16,9 @@ oneTimeTearDown() {
 
 setUp () {
     echo
-    rm -f "$test_dir/catch_output"
     echo "#!/bin/sh" > "$WORKON_HOME/preactivate"
     echo "#!/bin/sh" > "$WORKON_HOME/postactivate"
+    rm -f "$TMPDIR/catch_output"
 }
 
 test_associate() {
@@ -38,14 +38,14 @@ test_preactivate() {
 #!/bin/sh
 if [ -f "$ptrfile" ]
 then
-    echo exists >> "$test_dir/catch_output"
+    echo exists >> "$TMPDIR/catch_output"
 else
-    echo noexists >> "$test_dir/catch_output"
+    echo noexists >> "$TMPDIR/catch_output"
 fi
 EOF
     chmod +x "$WORKON_HOME/preactivate"
     mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
-	assertSame "preactivate did not find file" "exists" "$(cat $test_dir/catch_output)"
+	assertSame "preactivate did not find file" "exists" "$(cat $TMPDIR/catch_output)"
 }
 
 test_postactivate() {
@@ -56,14 +56,14 @@ cat - >"$WORKON_HOME/postactivate" <<EOF
 #!/bin/sh
 if [ -f "$ptrfile" ]
 then
-    echo exists >> "$test_dir/catch_output"
+    echo exists >> "$TMPDIR/catch_output"
 else
-    echo noexists >> "$test_dir/catch_output"
+    echo noexists >> "$TMPDIR/catch_output"
 fi
 EOF
     chmod +x "$WORKON_HOME/postactivate"
     mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
-	assertSame "postactivate did not find file" "exists" "$(cat $test_dir/catch_output)"
+	assertSame "postactivate did not find file" "exists" "$(cat $TMPDIR/catch_output)"
 }
 
 . "$test_dir/shunit2"
