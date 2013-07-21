@@ -2,6 +2,11 @@
 Release History
 ===============
 
+4.1.1
+=====
+
+- Fix packaging issue with 4.1.
+
 4.1
 ===
 
