@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+4.1
 ===
 
 - Ensure that all ``$()`` style commands that produce paths are

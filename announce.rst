@@ -1,5 +1,5 @@
 =======================
- virtualenvwrapper 4.0
+ virtualenvwrapper 4.1
 =======================
 
 .. tags:: virtualenvwrapper release python
@@ -16,17 +16,23 @@ introducing conflicts in their dependencies.
 What's New?
 ===========
 
-**Warning:** This release includes some potentially incompatible
-changes for extensions. The python modules for extensions are now
-*always* run with ``PWD=$WORKON_HOME`` (previously the value of PWD
-varied depending on the hook). The *shell* portion of any hook
-(anything sourced by the user's shell when the hook is run) is still
-run in the same place as before.
+- Ensure that all ``$()`` style commands that produce paths are
+  quoted; addresses issue 164.
+- Add ``wipeenv`` command for removing all packages installed in the
+  virtualenv.
+- Allow users of ``virtualenvwrapper_lazy.sh`` to extend the list of
+  API commands that trigger the lazy-loader by extending
+  ``_VIRTUALENVWRAPPER_API``. Patch contributed by John Purnell, see
+  issue 188.
+- Fix detection of ``--python`` option to ``mkvirtualenv``. Resolves
+  issue 190.
+- Add ``allvirtualenv`` command to run a command across all
+  virtualenvs. Suggested by Dave Coutts in issue 186.
+- Fix ``lsvirtualenv`` when there are spaces in
+  ``WORKON_HOME``. Resolves issue 194.
+- Switch to `pbr`_ for packaging.
 
-- All tests pass under Python 2.6, 2.7, 3.2 and 3.3.
-- Fix the name of the script in an error message produced
-  by ``virtualenvwrapper_lazy.sh``. (Contributed by
-  scottstvnsn.)
+.. _pbr: https://github.com/openstack-dev/pbr
 
 Installing
 ==========
