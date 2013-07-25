@@ -975,13 +975,13 @@ function setvirtualenvproject {
 # Show help for mkproject
 function virtualenvwrapper_mkproject_help {
     echo "Usage: mkproject [-t template] [virtualenv options] project_name"
-    echo ""
+    echo
     echo "Multiple templates may be selected.  They are applied in the order"
     echo "specified on the command line."
-    echo;
+    echo
     echo "mkvirtualenv help:"
     echo
-    mkvirtualenv -h;
+    mkvirtualenv -h
     echo
     echo "Available project templates:"
     echo
