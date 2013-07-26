@@ -30,4 +30,8 @@ test_allvirtualenv_all() {
     assertTrue "Did not find test2" "allvirtualenv pwd | grep -q 'test2$'"
 }
 
+test_allvirtualenv_spaces() {
+    assertTrue "Command did not output The Zen of Python" "allvirtualenv python -c 'import this' | grep -q 'The Zen of Python'"
+}
+
 . "$test_dir/shunit2"
