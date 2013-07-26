@@ -24,6 +24,7 @@ docs:
 
 - Sphinx
 - docutils
+- sphinxcontrib-bitbucket
 
 Once all of the tools are installed into a virtualenv using
 pip, run ``make html`` to generate the HTML version of the
