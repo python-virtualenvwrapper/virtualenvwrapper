@@ -1106,6 +1106,7 @@ function mktmpenv {
         # This python does not support uuid
         tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import random,sys; sys.stdout.write(hex(random.getrandbits(64))[2:-1]+"\n")' 2>/dev/null)
     fi
+    tmpenvname="tmp-$tmpenvname"
 
     # Create the environment
     mkvirtualenv "$@" "$tmpenvname"

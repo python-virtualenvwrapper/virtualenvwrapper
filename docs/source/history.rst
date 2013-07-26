@@ -2,6 +2,12 @@
 Release History
 ===============
 
+dev
+===
+
+- Add ``tmp-`` prefix to temporary environment names created by
+  :ref:`command-mktmpenv`.
+
 4.1.1
 =====
 
