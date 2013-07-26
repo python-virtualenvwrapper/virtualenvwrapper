@@ -489,7 +489,10 @@ PROJECT_HOME.
 
 Syntax::
 
-    mkproject [-t template] [virtualenv_options] ENVNAME
+    mkproject [-f|--force] [-t template] [virtualenv_options] ENVNAME
+
+-f, --force    Create the virtualenv even if the project directory
+               already exists
 
 The template option may be repeated to have several templates used to
 create a new project.  The templates are applied in the order named on

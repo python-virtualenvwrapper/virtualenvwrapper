@@ -976,7 +976,7 @@ function setvirtualenvproject {
 function virtualenvwrapper_mkproject_help {
     echo "Usage: mkproject [-f|--force] [-t template] [virtualenv options] project_name"
     echo
-    echo "-f, --force    Create the project even if the project directory"
+    echo "-f, --force    Create the virtualenv even if the project directory"
     echo "               already exists"
     echo
     echo "Multiple templates may be selected.  They are applied in the order"
