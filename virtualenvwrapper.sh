@@ -1169,7 +1169,7 @@ function allvirtualenv {
         # because we don't want to trigger any hooks.
         (source "$WORKON_HOME/$d/bin/activate";
             cd "$VIRTUAL_ENV";
-            $@)
+            "$@")
         echo
     done
 }
