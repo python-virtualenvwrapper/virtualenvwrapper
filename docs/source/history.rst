@@ -7,6 +7,8 @@ dev
 
 - Add ``tmp-`` prefix to temporary environment names created by
   :ref:`command-mktmpenv`.
+- Fix some uses of ``cd`` that did not account for possible
+  aliasing. Contributed by Ismail Badawi (:bbuser:`ibadawi`).
 
 4.1.1
 =====
