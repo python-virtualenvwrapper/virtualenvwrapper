@@ -9,6 +9,8 @@ dev
   :ref:`command-mktmpenv`.
 - Fix some uses of ``cd`` that did not account for possible
   aliasing. Contributed by Ismail Badawi (:bbuser:`ibadawi`).
+- Fix documentation for :ref:`command-allvirtualenv`, contributed by
+  Andy Dirnberger (:bbuser:`dirn`).
 
 4.1.1
 =====
