@@ -28,9 +28,7 @@ test_get_site_packages_dir () {
 test_lssitepackages () {
     mkvirtualenv "lssitepackagestest" >/dev/null 2>&1
     contents="$(lssitepackages)"    
-    actual=$(echo $contents | grep easy-install.pth)
-    expected=$(echo $contents)
-    assertSame "$expected" "$actual"
+    assertTrue "did not find easy_install in site-packages" "echo $contents | grep -q easy_install"
     deactivate
 }
 
