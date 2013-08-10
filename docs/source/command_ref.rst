@@ -213,7 +213,7 @@ Run a command in all virtualenvs under WORKON_HOME.
 
 Syntax::
 
-    allenvs command with arguments
+    allvirtualenv command with arguments
 
 Each virtualenv is activated, bypassing activation hooks, the current
 working directory is changed to the current virtualenv, and then the
@@ -222,7 +222,7 @@ can modify the virtualenv.
 
 ::
 
-  $ allenvs pip install -U pip
+  $ allvirtualenv pip install -U pip
 
 
 ==================================
