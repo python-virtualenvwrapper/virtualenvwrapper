@@ -11,6 +11,8 @@ dev
   aliasing. Contributed by Ismail Badawi (:bbuser:`ibadawi`).
 - Fix documentation for :ref:`command-allvirtualenv`, contributed by
   Andy Dirnberger (:bbuser:`dirn`).
+- Add ``--force`` option to :ref:`command-mkproject`, contributed by
+  Clay McClure (:bbuser:`claymcclure`).
 
 4.1.1
 =====
