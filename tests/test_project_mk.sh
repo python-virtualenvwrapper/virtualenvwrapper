@@ -66,6 +66,8 @@ test_project_exists () {
     mkproject myproject4 >/dev/null 2>&1
     output=`mkproject myproject4 2>&1`
     assertTrue "Did not see expected message 'already exists' in: $output" "echo $output | grep 'already exists'"
+    output=`mkproject -f myproject4 2>&1`
+    assertFalse "Saw unexpected message 'already exists' in: $output" "echo $output | grep 'already exists'"
 }
 
 test_same_workon_and_project_home () {

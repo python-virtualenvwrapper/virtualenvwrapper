@@ -974,14 +974,17 @@ function setvirtualenvproject {
 
 # Show help for mkproject
 function virtualenvwrapper_mkproject_help {
-    echo "Usage: mkproject [-t template] [virtualenv options] project_name"
-    echo ""
+    echo "Usage: mkproject [-f|--force] [-t template] [virtualenv options] project_name"
+    echo
+    echo "-f, --force    Create the virtualenv even if the project directory"
+    echo "               already exists"
+    echo
     echo "Multiple templates may be selected.  They are applied in the order"
     echo "specified on the command line."
-    echo;
+    echo
     echo "mkvirtualenv help:"
     echo
-    mkvirtualenv -h;
+    mkvirtualenv -h
     echo
     echo "Available project templates:"
     echo
@@ -996,9 +999,11 @@ function mkproject {
     typeset tst
     typeset a
     typeset t
+    typeset force
     typeset templates
 
     in_args=( "$@" )
+    force=0
 
     if [ -n "$ZSH_VERSION" ]
     then
@@ -1015,6 +1020,8 @@ function mkproject {
             -h|--help)
                 virtualenvwrapper_mkproject_help;
                 return;;
+            -f|--force)
+                force=1;;
             -t)
                 i=$(( $i + 1 ));
                 templates="$templates ${in_args[$i]}";;
@@ -1038,7 +1045,7 @@ function mkproject {
     eval "typeset envname=\$$#"
     virtualenvwrapper_verify_project_home || return 1
 
-    if [ -d "$PROJECT_HOME/$envname" ]
+    if [ -d "$PROJECT_HOME/$envname" -a $force -eq 0 ]
     then
         echo "Project $envname already exists." >&2
         return 1
