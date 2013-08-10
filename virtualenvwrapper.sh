@@ -207,7 +207,7 @@ function virtualenvwrapper_run_hook {
     # Python 3 interpreter decide that its "prefix" is the virtualenv
     # if we happen to be inside the virtualenv when we start.
     ( \
-        cd "$WORKON_HOME" &&
+        virtualenvwrapper_cd "$WORKON_HOME" &&
         "$VIRTUALENVWRAPPER_PYTHON" -m 'virtualenvwrapper.hook_loader' \
             $HOOK_VERBOSE_OPTION --script "$hook_script" "$@" \
     )
@@ -534,7 +534,7 @@ function virtualenvwrapper_show_workon_options {
     # 4. Format the output to show one name on a line.
     # 5. Eliminate any lines with * on them because that means there 
     #    were no envs.
-    (cd "$WORKON_HOME" && echo */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
+    (virtualenvwrapper_cd "$WORKON_HOME" && echo */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
         | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||g" \
         | command \fmt -w 1 \
         | (unset GREP_OPTIONS; command \egrep -v '^\*$') 2>/dev/null
@@ -1046,7 +1046,7 @@ function mkproject {
 
     mkvirtualenv "$@" || return 1
 
-    cd "$PROJECT_HOME"
+    virtualenvwrapper_cd "$PROJECT_HOME"
 
     virtualenvwrapper_run_hook "project.pre_mkproject" $envname
 
@@ -1054,7 +1054,7 @@ function mkproject {
     mkdir -p "$PROJECT_HOME/$envname"
     setvirtualenvproject "$VIRTUAL_ENV" "$PROJECT_HOME/$envname"
 
-    cd "$PROJECT_HOME/$envname"
+    virtualenvwrapper_cd "$PROJECT_HOME/$envname"
 
     for t in $templates
     do
@@ -1078,7 +1078,7 @@ function cdproject {
         typeset project_dir="$(cat "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME")"
         if [ ! -z "$project_dir" ]
         then
-            cd "$project_dir"
+            virtualenvwrapper_cd "$project_dir"
         else
             echo "Project directory $project_dir does not exist" 1>&2
             return 1
@@ -1168,7 +1168,7 @@ function allvirtualenv {
         # Activate the environment, but not with workon
         # because we don't want to trigger any hooks.
         (source "$WORKON_HOME/$d/bin/activate";
-            cd "$VIRTUAL_ENV";
+            virtualenvwrapper_cd "$VIRTUAL_ENV";
             "$@")
         echo
     done
