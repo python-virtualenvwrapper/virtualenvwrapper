@@ -5,7 +5,7 @@ export _VIRTUALENVWRAPPER_API="$_VIRTUALENVWRAPPER_API mkvirtualenv rmvirtualenv
 
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then
-	export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
+	export VIRTUALENVWRAPPER_SCRIPT="$(command \which virtualenvwrapper.sh)"
 fi
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then
