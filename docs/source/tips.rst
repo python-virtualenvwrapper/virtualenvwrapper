@@ -67,7 +67,7 @@ In the ``postmkvirtualenv`` script I have the following to create a
 directory based on the project name, add that directory to the python
 path and then cd into it::
 
-    proj_name=$(echo $VIRTUAL_ENV|awk -F'/' '{print $NF}')
+    proj_name=$(basename $VIRTUAL_ENV)
     mkdir $HOME/projects/$proj_name
     add2virtualenv $HOME/projects/$proj_name
     cd $HOME/projects/$proj_name
@@ -76,7 +76,7 @@ path and then cd into it::
 In the ``postactivate`` script I have it set to automatically change
 to the project directory when I use the workon command::
 
-    proj_name=$(echo $VIRTUAL_ENV|awk -F'/' '{print $NF}')
+    proj_name=$(basename $VIRTUAL_ENV)
     cd ~/projects/$proj_name
 
 Automatically Run workon When Entering a Directory
