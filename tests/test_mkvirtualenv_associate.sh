@@ -19,20 +19,57 @@ setUp () {
     echo "#!/bin/sh" > "$WORKON_HOME/preactivate"
     echo "#!/bin/sh" > "$WORKON_HOME/postactivate"
     rm -f "$TMPDIR/catch_output"
+    cd "$WORKON_HOME"
 }
 
 test_associate() {
-    project="/dev/null"
-    env="env1"
+    n=1
+    project="$WORKON_HOME/project$n"
+    mkdir "$project"
+    env="env$n"
     ptrfile="$WORKON_HOME/$env/.project"
     mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
     assertTrue ".project not found" "[ -f $ptrfile ]"
     assertEquals "$ptrfile contains wrong content" "$project" "$(cat $ptrfile)"
 }
 
+test_associate_relative_path() {
+    n=2
+    project="project$n"
+    mkdir "$project"
+    env="env$n"
+    ptrfile="$WORKON_HOME/$env/.project"
+    mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
+    assertTrue ".project not found" "[ -f $ptrfile ]"
+    assertEquals "$ptrfile contains wrong content" "$WORKON_HOME/$project" "$(cat $ptrfile)"
+}
+
+test_associate_not_a_directory() {
+    n=3
+    project="project$n"
+    touch "$project"
+    env="env$n"
+    ptrfile="$WORKON_HOME/$env/.project"
+    mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
+    RC=$?
+    assertTrue "mkvirtualenv should have failed" "[ $RC -ne 0 ]"
+}
+
+test_associate_does_not_exist() {
+    n=4
+    project="project$n"
+    env="env$n"
+    ptrfile="$WORKON_HOME/$env/.project"
+    mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
+    RC=$?
+    assertTrue "mkvirtualenv should have failed" "[ $RC -ne 0 ]"
+}
+
 test_preactivate() {
-    project="/dev/null"
-    env="env2"
+    n=5
+    project="project$n"
+    mkdir "$project"
+    env="env$n"
     ptrfile="$WORKON_HOME/$env/.project"
 	cat - >"$WORKON_HOME/preactivate" <<EOF
 #!/bin/sh
@@ -49,8 +86,10 @@ EOF
 }
 
 test_postactivate() {
-    project="/dev/null"
-    env="env3"
+    n=6
+    project="project$n"
+    mkdir "$project"
+    env="env$n"
     ptrfile="$WORKON_HOME/$env/.project"
 cat - >"$WORKON_HOME/postactivate" <<EOF
 #!/bin/sh
@@ -64,6 +103,22 @@ EOF
     chmod +x "$WORKON_HOME/postactivate"
     mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
 	assertSame "postactivate did not find file" "exists" "$(cat $TMPDIR/catch_output)"
+}
+
+test_associate_relative_with_dots() {
+    cd "$WORKON_HOME"
+    n=7
+    project="project$n"
+    mkdir $project
+    mkdir $project.sibling
+    cd $project.sibling
+    # Change the reference to a sibling directory
+    project="../$project"
+    env="env$n"
+    ptrfile="$WORKON_HOME/$env/.project"
+    mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
+    assertTrue ".project not found" "[ -f $ptrfile ]"
+    assertEquals "$ptrfile contains wrong content" "$WORKON_HOME/project$n" "$(cat $ptrfile)"
 }
 
 . "$test_dir/shunit2"

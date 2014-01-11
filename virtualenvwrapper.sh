@@ -383,6 +383,7 @@ function mkvirtualenv {
     typeset requirements
     typeset packages
     typeset interpreter
+    typeset project
 
     in_args=( "$@" )
 
@@ -402,6 +403,12 @@ function mkvirtualenv {
             -a)
                 i=$(( $i + 1 ));
                 project="${in_args[$i]}";;
+                if [ ! -d "$project" ]
+                then
+                    echo "$project is not a directory" 1>&2
+                    return 1
+                fi
+                project="$(virtualenvwrapper_absolutepath ${project})";;
             -h|--help)
                 virtualenvwrapper_mkvirtualenv_help $a;
                 return;;

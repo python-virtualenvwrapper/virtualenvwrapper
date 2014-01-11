@@ -13,6 +13,8 @@ dev
   Andy Dirnberger (:bbuser:`dirn`).
 - Add ``--force`` option to :ref:`command-mkproject`, contributed by
   Clay McClure (:bbuser:`claymcclure`).
+- Fix handling for project directory argument ``-a`` to
+  :ref:`command-mkvirtualenv`, based on work by Xupeng Yun.
 
 4.1.1
 =====
