@@ -401,8 +401,8 @@ function mkvirtualenv {
         # echo "arg $i : $a"
         case "$a" in
             -a)
-                i=$(( $i + 1 ));
-                project="${in_args[$i]}";;
+                i=$(( $i + 1 ))
+                project="${in_args[$i]}"
                 if [ ! -d "$project" ]
                 then
                     echo "$project is not a directory" 1>&2
