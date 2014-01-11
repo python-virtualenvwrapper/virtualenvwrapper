@@ -15,6 +15,7 @@ dev
   Clay McClure (:bbuser:`claymcclure`).
 - Fix handling for project directory argument ``-a`` to
   :ref:`command-mkvirtualenv`, based on work by Xupeng Yun.
+- Dropped python 3.2 testing.
 
 4.1.1
 =====
