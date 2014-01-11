@@ -16,6 +16,7 @@ dev
 - Fix handling for project directory argument ``-a`` to
   :ref:`command-mkvirtualenv`, based on work by Xupeng Yun.
 - Dropped python 3.2 testing.
+- Updated test configuration so they work properly under Linux.
 
 4.1.1
 =====
