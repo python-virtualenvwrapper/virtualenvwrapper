@@ -288,6 +288,8 @@ function virtualenvwrapper_initialize {
         export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
     fi
 
+    mkdir -p "$VIRTUALENVWRAPPER_HOOK_DIR"
+
     virtualenvwrapper_run_hook "initialize"
 
     virtualenvwrapper_setup_tab_completion
