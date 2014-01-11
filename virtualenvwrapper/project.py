@@ -19,12 +19,6 @@ GLOBAL_HOOKS = [
      "and before it is activated."),
     ("postmkproject",
      "This hook is run after a new project is activated."),
-
-    # rmproject
-    ("prermproject",
-     "This hook is run before a project is deleted."),
-    ("postrmproject",
-     "This hook is run after a project is deleted."),
 ]
 
 

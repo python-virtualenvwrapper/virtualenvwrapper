@@ -22,7 +22,7 @@ setUp () {
 
 test_initialize() {
     source "$test_dir/../virtualenvwrapper.sh"
-    for hook in  premkproject postmkproject prermproject postrmproject
+    for hook in  premkproject postmkproject
     do
         assertTrue "Global $hook was not created" "[ -f $WORKON_HOME/$hook ]"
         assertTrue "Global $hook is not executable" "[ -x $WORKON_HOME/$hook ]"
@@ -33,7 +33,7 @@ test_initialize_hook_dir() {
     export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME/hooks"
     mkdir -p "$VIRTUALENVWRAPPER_HOOK_DIR"
     source "$test_dir/../virtualenvwrapper.sh"
-    for hook in  premkproject postmkproject prermproject postrmproject
+    for hook in  premkproject postmkproject
     do
         assertTrue "Global $hook was not created" "[ -f $VIRTUALENVWRAPPER_HOOK_DIR/$hook ]"
         assertTrue "Global $hook is not executable" "[ -x $VIRTUALENVWRAPPER_HOOK_DIR/$hook ]"
