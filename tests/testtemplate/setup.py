@@ -3,10 +3,6 @@
 PROJECT = 'testtemplate'
 VERSION = '1.0'
 
-# Bootstrap installation of Distribute
-import distribute_setup
-distribute_setup.use_setuptools()
-
 from setuptools import setup, find_packages
 
 from distutils.util import convert_path
@@ -15,7 +11,7 @@ from fnmatch import fnmatchcase
 import os
 import sys
 
-################################################################################
+##############################################################################
 # find_package_data is an Ian Bicking creation.
 
 # Provided as an attribute, so you can append to these instead
@@ -24,12 +20,13 @@ standard_exclude = ('*.py', '*.pyc', '*~', '.*', '*.bak', '*.swp*')
 standard_exclude_directories = ('.*', 'CVS', '_darcs', './build',
                                 './dist', 'EGG-INFO', '*.egg-info')
 
+
 def find_package_data(
-    where='.', package='',
-    exclude=standard_exclude,
-    exclude_directories=standard_exclude_directories,
-    only_in_packages=True,
-    show_ignored=False):
+        where='.', package='',
+        exclude=standard_exclude,
+        exclude_directories=standard_exclude_directories,
+        only_in_packages=True,
+        show_ignored=False):
     """
     Return a dictionary suitable for use in ``package_data``
     in a distutils ``setup.py`` file.
@@ -55,7 +52,7 @@ def find_package_data(
 
     Note patterns use wildcards, or can be exact paths (including
     leading ``./``), and all searching is case-insensitive.
-    
+
     This function is by Ian Bicking.
     """
 
@@ -102,27 +99,28 @@ def find_package_data(
                     continue
                 out.setdefault(package, []).append(prefix+name)
     return out
-################################################################################
+##############################################################################
 
 setup(
-    name = PROJECT,
-    version = VERSION,
-    
-    description = 'template for testing mkproject',
-    
-    author = 'Doug Hellmann',
-    author_email = 'doug.hellmann@gmail.com',
+    name=PROJECT,
+    version=VERSION,
 
-    url = 'http://www.doughellmann.com/projects/virtualenvwrapper/',
+    description='template for testing mkproject',
 
-    classifiers = [ 'Development Status :: 5 - Production/Stable',
-                    'License :: OSI Approved :: BSD License',
-                    'Programming Language :: Python',
-                    'Intended Audience :: Developers',
-                    'Environment :: Console',
-                    ],
+    author='Doug Hellmann',
+    author_email='doug.hellmann@gmail.com',
 
-    platforms = ['Any'],
+    url='http://www.doughellmann.com/projects/virtualenvwrapper/',
+
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'License :: OSI Approved :: BSD License',
+        'Programming Language :: Python',
+        'Intended Audience :: Developers',
+        'Environment :: Console',
+    ],
+
+    platforms=['Any'],
 
     provides=['testtemplate',
               ],
@@ -130,21 +128,21 @@ setup(
               'virtualenvwrapper (>=2.9)',
               ],
 
-    packages = find_packages(),
-    include_package_data = True,
+    packages=find_packages(),
+    include_package_data=True,
     # Scan the input for package information
-    # to grab any data files (text, images, etc.) 
+    # to grab any data files (text, images, etc.)
     # associated with sub-packages.
-    package_data = find_package_data('mytemplates', 
-                                     package='mytemplates',
-                                     only_in_packages=False,
-                                     ),
+    package_data=find_package_data('mytemplates',
+                                   package='mytemplates',
+                                   only_in_packages=False,
+                               ),
 
-    entry_points = {
+    entry_points={
         'virtualenvwrapper.project.template': [
             'test = mytemplates.main:template',
-            ],
-        },
+        ],
+    },
 
     zip_safe=False,
-    )
+)
