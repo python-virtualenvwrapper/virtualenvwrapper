@@ -407,7 +407,7 @@ function mkvirtualenv {
                 project="${in_args[$i]}"
                 if [ ! -d "$project" ]
                 then
-                    echo "$project is not a directory" 1>&2
+                    echo "Cannot associate project with $project, it is not a directory" 1>&2
                     return 1
                 fi
                 project="$(virtualenvwrapper_absolutepath ${project})";;
@@ -471,6 +471,8 @@ function mkvirtualenv {
     if [ ! -z "$project" ]
     then
         setvirtualenvproject "$WORKON_HOME/$envname" "$project"
+        RC=$?
+        [ $RC -ne 0 ] && return $RC
     fi
 
     # Now activate the new environment
@@ -976,7 +978,29 @@ function setvirtualenvproject {
     if [ -z "$prj" ]
     then
         prj="$(pwd)"
+    else
+        prj=$(virtualenvwrapper_absolutepath "${prj}")
     fi
+
+    # If what we were given isn't a directory, see if it is under
+    # $WORKON_HOME.
+    if [ ! -d "$venv" ]
+    then
+        venv="$WORKON_HOME/$venv"
+    fi
+    if [ ! -d "$venv" ]
+    then
+        echo "No virtualenv $(basename $venv)" 1>&2
+        return 1
+    fi
+
+    # Make sure we have a valid project setting
+    if [ ! -d "$prj" ]
+    then
+        echo "Cannot associate virtualenv with \"$prj\", it is not a directory" 1>&2
+        return 1
+    fi
+
     echo "Setting project for $(basename $venv) to $prj"
     echo "$prj" > "$venv/$VIRTUALENVWRAPPER_PROJECT_FILENAME"
 }

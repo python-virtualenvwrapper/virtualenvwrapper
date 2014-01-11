@@ -17,6 +17,8 @@ dev
   :ref:`command-mkvirtualenv`, based on work by Xupeng Yun.
 - Dropped python 3.2 testing.
 - Updated test configuration so they work properly under Linux.
+- Resolve relative paths before storing the project directory
+  reference in :ref:`command-setvirtualenvproject`. (:bbissue:`207`)
 
 4.1.1
 =====
