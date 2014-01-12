@@ -5,7 +5,7 @@ export _VIRTUALENVWRAPPER_API="$_VIRTUALENVWRAPPER_API mkvirtualenv rmvirtualenv
 
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then
-    export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
+    export VIRTUALENVWRAPPER_SCRIPT="$(command \which virtualenvwrapper.sh)"
 fi
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then
@@ -14,7 +14,17 @@ fi
 
 # Load the real implementation of the API from virtualenvwrapper.sh
 function virtualenvwrapper_load {
-    source "$VIRTUALENVWRAPPER_SCRIPT"
+    # Only source the script once.
+    # We might get called multiple times, because not all of _VIRTUALENVWRAPPER_API gets
+    # a real completion.
+    if [ -z $VIRTUALENVWRAPPER_LAZY_LOADED ]
+    then
+        # NOTE: For Zsh, I have tried to unset any auto-load completion.
+        #       (via `compctl + $(echo ${_VIRTUALENVWRAPPER_API})`.
+        #       But this does not appear to work / triggers a crash.
+        source "$VIRTUALENVWRAPPER_SCRIPT"
+        VIRTUALENVWRAPPER_LAZY_LOADED=1
+    fi
 }
 
 # Set up "alias" functions based on the API definition.
@@ -41,4 +51,6 @@ function virtualenvwrapper_setup_lazy_completion {
 }
 
 virtualenvwrapper_setup_lazy_loader
+# Does not really work. Cannot be reset in zsh to fallback to files (e.g. mkvirtualenv).
+# It also needs a second invocation, because the first one only sets up the real completion.
 virtualenvwrapper_setup_lazy_completion

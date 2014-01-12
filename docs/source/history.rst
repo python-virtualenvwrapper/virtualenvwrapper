@@ -23,6 +23,10 @@ Release History
   command. (:bbissue:`203`)
 - Update the tests to use a valid template for creating temporary
   directories under Linux.
+- Fix the use of ``which`` in ``virtualenvwrapper_lazy.sh`` in case it
+  is aliased.
+- Fix an issue with recursion in completion expansion crashing zsh,
+  contributed by :bbuser:`blueyed`.
 
 4.1.1
 =====
