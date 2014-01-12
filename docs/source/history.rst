@@ -2,7 +2,7 @@
 Release History
 ===============
 
-dev
+4.2
 ===
 
 - Add ``tmp-`` prefix to temporary environment names created by

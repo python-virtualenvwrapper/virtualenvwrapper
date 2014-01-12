@@ -1,5 +1,5 @@
 =======================
- virtualenvwrapper 4.1
+ virtualenvwrapper 4.2
 =======================
 
 .. tags:: virtualenvwrapper release python
@@ -16,23 +16,24 @@ introducing conflicts in their dependencies.
 What's New?
 ===========
 
-- Ensure that all ``$()`` style commands that produce paths are
-  quoted; addresses issue 164.
-- Add ``wipeenv`` command for removing all packages installed in the
-  virtualenv.
-- Allow users of ``virtualenvwrapper_lazy.sh`` to extend the list of
-  API commands that trigger the lazy-loader by extending
-  ``_VIRTUALENVWRAPPER_API``. Patch contributed by John Purnell, see
-  issue 188.
-- Fix detection of ``--python`` option to ``mkvirtualenv``. Resolves
-  issue 190.
-- Add ``allvirtualenv`` command to run a command across all
-  virtualenvs. Suggested by Dave Coutts in issue 186.
-- Fix ``lsvirtualenv`` when there are spaces in
-  ``WORKON_HOME``. Resolves issue 194.
-- Switch to `pbr`_ for packaging.
-
-.. _pbr: https://github.com/openstack-dev/pbr
+- Add ``tmp-`` prefix to temporary environment names created by
+  ``mktmpenv``.
+- Fix some uses of ``cd`` that did not account for possible
+  aliasing. Contributed by Ismail Badawi.
+- Fix documentation for ``allvirtualenv``, contributed by
+  Andy Dirnberger.
+- Add ``--force`` option to ``mkproject``, contributed by
+  Clay McClure.
+- Fix handling for project directory argument ``-a`` to
+  ``mkvirtualenv``, based on work by Xupeng Yun.
+- Dropped python 3.2 testing.
+- Updated test configuration so they work properly under Linux.
+- Resolve relative paths before storing the project directory
+  reference in ``setvirtualenvproject``. (issue 207)
+- Do not create hooks for rmproject, since there is no such
+  command. (issue 203)
+- Update the tests to use a valid template for creating temporary
+  directories under Linux.
 
 Installing
 ==========
