@@ -229,7 +229,7 @@ function virtualenvwrapper_run_hook {
 virtualenvwrapper.sh: There was a problem running the initialization hooks. 
 
 If Python could not import the module virtualenvwrapper.hook_loader,
-check that virtualenv has been installed for
+check that virtualenvwrapper has been installed for
 VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is
 set properly.
 EOF
