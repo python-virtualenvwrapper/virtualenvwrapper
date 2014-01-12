@@ -19,7 +19,10 @@ dev
 - Updated test configuration so they work properly under Linux.
 - Resolve relative paths before storing the project directory
   reference in :ref:`command-setvirtualenvproject`. (:bbissue:`207`)
-- Do not create hooks for commands that don't exist. (:bbissue:`203`)
+- Do not create hooks for rmproject, since there is no such
+  command. (:bbissue:`203`)
+- Update the tests to use a valid template for creating temporary
+  directories under Linux.
 
 4.1.1
 =====
