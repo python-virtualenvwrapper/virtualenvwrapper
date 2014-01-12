@@ -17,11 +17,13 @@ function virtualenvwrapper_load {
     # Only source the script once.
     # We might get called multiple times, because not all of _VIRTUALENVWRAPPER_API gets
     # a real completion.
-    if [ -z $VIRTUALENVWRAPPER_LAZY_LOADED ]; then
-        if [ -n "$ZSH_VERSION" ] ; then
-            # Tried to unset any auto-load completion, does not appear to work/triggers a crash
-            # compctl + $(echo ${_VIRTUALENVWRAPPER_API})
-        fi
+    if [ -z $VIRTUALENVWRAPPER_LAZY_LOADED ]
+    then
+        # if [ -n "$ZSH_VERSION" ]
+        # then
+        #     # Tried to unset any auto-load completion, does not appear to work/triggers a crash
+        #     # compctl + $(echo ${_VIRTUALENVWRAPPER_API})
+        # fi
         source "$VIRTUALENVWRAPPER_SCRIPT"
         VIRTUALENVWRAPPER_LAZY_LOADED=1
     fi
