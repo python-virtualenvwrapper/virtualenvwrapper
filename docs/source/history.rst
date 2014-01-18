@@ -2,6 +2,12 @@
 Release History
 ===============
 
+dev
+===
+
+- Add :ref:`command-virtualenvwrapper` to print basic help and a list
+  of commands.
+
 4.2
 ===
 

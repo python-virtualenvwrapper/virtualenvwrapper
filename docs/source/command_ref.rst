@@ -586,3 +586,19 @@ virtualenv.
 Syntax::
 
   wipeenv
+
+
+==============
+Other Commands
+==============
+
+.. _command-virtualenvwrapper:
+
+virtualenvwrapper
+-----------------
+
+Print a list of commands and their descriptions as basic help output.
+
+Syntax::
+
+  virtualenvwrapper

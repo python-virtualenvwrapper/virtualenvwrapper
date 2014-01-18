@@ -1214,6 +1214,60 @@ function allvirtualenv {
     done
 }
 
+function virtualenvwrapper {
+	cat <<EOF
+
+virtualenvwrapper is a set of extensions to Ian Bicking's virtualenv
+tool.  The extensions include wrappers for creating and deleting
+virtual environments and otherwise managing your development workflow,
+making it easier to work on more than one project at a time without
+introducing conflicts in their dependencies.
+
+For more information please refer to the documentation:
+
+    http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html
+
+Commands available:
+
+  add2virtualenv:            Adds the specified directories to the Python
+                                path for the currently-active virtualenv.
+  allvirtualenv:             Run a command in all virtualenvs under
+                                \$WORKON_HOME
+  cdproject:                 Change the current working directory to the
+                               one specified as the project directory for
+                               the active virtualenv.
+  cdsitepackages:            Change the current working directory to the
+                               site-packages for \$VIRTUAL_ENV.
+  cdvirtualenv:              Change the current working directory to
+                               \$VIRTUAL_ENV
+  cpvirtualenv:              Duplicate an existing virtualenv environment.
+  deactivate:                Switch from a virtual environment to the
+                               system-installed version of Python
+  lssitepackages:            Shows the content of the site-packages directory
+                               of the currently-active virtualenv
+  lsvirtualenv:              List all virtual environments, use -h for more
+                               info
+  mkproject:                 Create a new virtualenv in the \$WORKON_HOME and
+                               project directory in \$PROJECT_HOME
+  mktmpenv:                  Create a new temporary virtualenv in the
+                               \$WORKON_HOME directory with a generated name
+  mkvirtualenv:              Create a new environment, in the \$WORKON_HOME,
+                               use -h for more info.
+  rmvirtualenv:              Remove an environment
+  setvirtualenvproject:      Bind an existing virtualenv to an existing
+                               project.
+  showvirtualenv:            Show the details for a single virtualenv
+  toggleglobalsitepackages:  Controls whether the active virtualenv will
+                               access the packages in the global
+                               Python site-packages directory.
+  virtualenvwrapper:         Prints this help message
+  wipeenv:                   Remove all of the installed third-party
+                               packages in the current virtualenv.
+  workon:                    List or change working virtual environments
+
+EOF
+}
+
 #
 # Invoke the initialization functions
 #
