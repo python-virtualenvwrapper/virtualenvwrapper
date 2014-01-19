@@ -78,6 +78,12 @@ then
     export VIRTUALENVWRAPPER_PROJECT_FILENAME=".project"
 fi
 
+# Remember where we are running from.
+if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
+then
+    export VIRTUALENVWRAPPER_SCRIPT="$0"
+fi
+
 # Portable shell scripting is hard, let's go shopping.
 #
 # People insist on aliasing commands like 'cd', either with a real
@@ -375,6 +381,7 @@ function virtualenvwrapper_mkvirtualenv_help {
 # Usage: mkvirtualenv [options] ENVNAME
 # (where the options are passed directly to virtualenv)
 #
+#:help:mkvirtualenv: Create a new virtualenv in $WORKON_HOME
 function mkvirtualenv {
     typeset -a in_args
     typeset -a out_args
@@ -491,7 +498,7 @@ function mkvirtualenv {
     virtualenvwrapper_run_hook "post_mkvirtualenv"
 }
 
-# Remove an environment, in the WORKON_HOME.
+#:help:rmvirtualenv: Remove a virtualenv
 function rmvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     if [ ${#@} = 0 ]
@@ -558,9 +565,7 @@ function _lsvirtualenv_usage {
     echo "  -h -- this help message"
 }
 
-# List virtual environments
-#
-# Usage: lsvirtualenv [-l]
+#:help:lsvirtualenv: list virtualenvs
 function lsvirtualenv {
 
     typeset long_mode=true
@@ -608,9 +613,7 @@ function lsvirtualenv {
     fi
 }
 
-# Show details of a virtualenv
-#
-# Usage: showvirtualenv [env]
+#:help:showvirtualenv: show details of a single virtualenv
 function showvirtualenv {
     typeset env_name="$1"
     if [ -z "$env_name" ]
@@ -646,10 +649,7 @@ function virtualenvwrapper_workon_help {
     echo ""
 }
 
-# List or change working virtual environments
-#
-# Usage: workon [environment_name]
-#
+#:help:workon: list or change working virtualenvs
 function workon {
     in_args=( "$@" )
 
@@ -765,6 +765,8 @@ function virtualenvwrapper_get_site_packages_dir {
 # "virtualenv_path_extensions.pth" inside the virtualenv's
 # site-packages directory; if this file does not exist, it will be
 # created first.
+#
+#:help:add2virtualenv: add directory to the import path
 function add2virtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
@@ -829,6 +831,7 @@ function add2virtualenv {
 
 # Does a ``cd`` to the site-packages directory of the currently-active
 # virtualenv.
+#:help:cdsitepackages: change to the site-packages directory
 function cdsitepackages {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
@@ -837,6 +840,7 @@ function cdsitepackages {
 }
 
 # Does a ``cd`` to the root of the currently-active virtualenv.
+#:help:cdvirtualenv: change to the $VIRTUAL_ENV directory
 function cdvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
@@ -845,6 +849,7 @@ function cdvirtualenv {
 
 # Shows the content of the site-packages directory of the currently-active
 # virtualenv
+#:help:lssitepackages: list contents of the site-packages directory
 function lssitepackages {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
@@ -862,6 +867,7 @@ function lssitepackages {
 
 # Toggles the currently-active virtualenv between having and not having
 # access to the global site-packages.
+#:help:toggleglobalsitepackages: turn access to global site-packages on/off
 function toggleglobalsitepackages {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
@@ -875,7 +881,7 @@ function toggleglobalsitepackages {
     fi
 }
 
-# Duplicate the named virtualenv to make a new one.
+#:help:cpvirtualenv: duplicate the named virtualenv to make a new one
 function cpvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_virtualenv_clone || return 1
@@ -968,6 +974,7 @@ function virtualenvwrapper_verify_project_home {
 # Given a virtualenv directory and a project directory,
 # set the virtualenv up to be associated with the
 # project
+#:help:setvirtualenvproject: associate a project directory with a virtualenv
 function setvirtualenvproject {
     typeset venv="$1"
     typeset prj="$2"
@@ -1024,7 +1031,7 @@ function virtualenvwrapper_mkproject_help {
     "$VIRTUALENVWRAPPER_PYTHON" -c 'from virtualenvwrapper.hook_loader import main; main()' -l project.template
 }
 
-# Create a new project directory and its associated virtualenv.
+#:help:mkproject: create a new project directory and its associated virtualenv
 function mkproject {
     typeset -a in_args
     typeset -a out_args
@@ -1109,7 +1116,7 @@ function mkproject {
     virtualenvwrapper_run_hook "project.post_mkproject"
 }
 
-# Change directory to the active project
+#:help:cdproject: change directory to the active project
 function cdproject {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
@@ -1135,6 +1142,7 @@ function cdproject {
 #
 # Originally part of virtualenvwrapper.tmpenv plugin
 #
+#:help:mktmpenv: create a temporary virtualenv
 function mktmpenv {
     typeset tmpenvname
     typeset RC
@@ -1175,6 +1183,7 @@ EOF
 #
 # Remove all installed packages from the env
 #
+#:help:wipeenv: remove all packages installed in the current virtualenv
 function wipeenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
@@ -1196,6 +1205,7 @@ function wipeenv {
 #
 # Run a command in each virtualenv
 #
+#:help:allvirtualenv: run a command in all virtualenvs
 function allvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     typeset d
@@ -1214,6 +1224,7 @@ function allvirtualenv {
     done
 }
 
+#:help:virtualenvwrapper: show this help message
 function virtualenvwrapper {
 	cat <<EOF
 
@@ -1229,43 +1240,14 @@ For more information please refer to the documentation:
 
 Commands available:
 
-  add2virtualenv:            Adds the specified directories to the Python
-                                path for the currently-active virtualenv.
-  allvirtualenv:             Run a command in all virtualenvs under
-                                \$WORKON_HOME
-  cdproject:                 Change the current working directory to the
-                               one specified as the project directory for
-                               the active virtualenv.
-  cdsitepackages:            Change the current working directory to the
-                               site-packages for \$VIRTUAL_ENV.
-  cdvirtualenv:              Change the current working directory to
-                               \$VIRTUAL_ENV
-  cpvirtualenv:              Duplicate an existing virtualenv environment.
-  deactivate:                Switch from a virtual environment to the
-                               system-installed version of Python
-  lssitepackages:            Shows the content of the site-packages directory
-                               of the currently-active virtualenv
-  lsvirtualenv:              List all virtual environments, use -h for more
-                               info
-  mkproject:                 Create a new virtualenv in the \$WORKON_HOME and
-                               project directory in \$PROJECT_HOME
-  mktmpenv:                  Create a new temporary virtualenv in the
-                               \$WORKON_HOME directory with a generated name
-  mkvirtualenv:              Create a new environment, in the \$WORKON_HOME,
-                               use -h for more info.
-  rmvirtualenv:              Remove an environment
-  setvirtualenvproject:      Bind an existing virtualenv to an existing
-                               project.
-  showvirtualenv:            Show the details for a single virtualenv
-  toggleglobalsitepackages:  Controls whether the active virtualenv will
-                               access the packages in the global
-                               Python site-packages directory.
-  virtualenvwrapper:         Prints this help message
-  wipeenv:                   Remove all of the installed third-party
-                               packages in the current virtualenv.
-  workon:                    List or change working virtual environments
-
 EOF
+
+    typeset helpmarker="#:help:"
+    cat  "$VIRTUALENVWRAPPER_SCRIPT" \
+        | grep "^$helpmarker" \
+        | sed -e "s/^$helpmarker/  /g" \
+        | sort \
+        | sed -e 's/$/\'$'\n/g'
 }
 
 #
