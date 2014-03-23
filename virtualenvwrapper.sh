@@ -746,7 +746,7 @@ function virtualenvwrapper_get_python_version {
     # VIRTUALENVWRAPPER_PYTHON because we're trying to determine the
     # version installed there so we can build up the path to the
     # site-packages directory.
-    "$VIRTUAL_ENV/bin/python" -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.
+    "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/python" -V 2>&1 | cut -f2 -d' ' | cut -f-2 -d.
 }
 
 # Prints the path to the site-packages directory for the current environment.
@@ -1171,7 +1171,7 @@ function mktmpenv {
     echo "This is a temporary environment. It will be deleted when you run 'deactivate'." | tee "$VIRTUAL_ENV/README.tmpenv"
 
     # Update the postdeactivate script
-    cat - >> "$VIRTUAL_ENV/bin/postdeactivate" <<EOF
+    cat - >> "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_ENV_BIN_DIR/postdeactivate" <<EOF
 if [ -f "$VIRTUAL_ENV/README.tmpenv" ]
 then
     echo "Removing temporary environment:" $(basename "$VIRTUAL_ENV")
@@ -1217,7 +1217,7 @@ function allvirtualenv {
         echo "$d" | sed 's/./=/g'
         # Activate the environment, but not with workon
         # because we don't want to trigger any hooks.
-        (source "$WORKON_HOME/$d/bin/activate";
+        (source "$WORKON_HOME/$d/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate";
             virtualenvwrapper_cd "$VIRTUAL_ENV";
             "$@")
         echo
