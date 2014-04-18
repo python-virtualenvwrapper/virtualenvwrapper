@@ -66,59 +66,82 @@ PERMISSIONS_SOURCED = (
 GLOBAL_HOOKS = [
     # initialize
     ("initialize",
-     "This hook is run during the startup phase "
+     "This hook is sourced during the startup phase "
      "when loading virtualenvwrapper.sh."),
 
     # mkvirtualenv
     ("premkvirtualenv",
      "This hook is run after a new virtualenv is created "
      "and before it is activated."),
+     # argument: name of new environment
     ("postmkvirtualenv",
-     "This hook is run after a new virtualenv is activated."),
+     "This hook is sourced after a new virtualenv is activated."),
+
+    # cpvirtualenv:
+    # precpvirtualenv <old> <new> (run),
+    # postcpvirtualenv (sourced) 
 
     # rmvirtualenv
     ("prermvirtualenv",
      "This hook is run before a virtualenv is deleted."),
+     # argument: full path to environment directory
     ("postrmvirtualenv",
      "This hook is run after a virtualenv is deleted."),
+     # argument: full path to environment directory
 
     # deactivate
     ("predeactivate",
-     "This hook is run before every virtualenv is deactivated."),
+     "This hook is sourced before every virtualenv is deactivated."),
     ("postdeactivate",
-     "This hook is run after every virtualenv is deactivated."),
+     "This hook is sourced after every virtualenv is deactivated."),
 
     # activate
     ("preactivate",
      "This hook is run before every virtualenv is activated."),
+     # argument: environment name
     ("postactivate",
-     "This hook is run after every virtualenv is activated."),
+     "This hook is sourced after every virtualenv is activated."),
+
+    # mkproject:
+    # premkproject <new project name> (run),
+    # postmkproject (sourced) 
 
     # get_env_details
     ("get_env_details",
      "This hook is run when the list of virtualenvs is printed "
      "so each name can include details."),
+     # argument: environment name
 ]
 
 
 LOCAL_HOOKS = [
     # deactivate
     ("predeactivate",
-     "This hook is run before this virtualenv is deactivated."),
+     "This hook is sourced before this virtualenv is deactivated."),
     ("postdeactivate",
-     "This hook is run after this virtualenv is deactivated."),
+     "This hook is sourced after this virtualenv is deactivated."),
 
     # activate
     ("preactivate",
      "This hook is run before this virtualenv is activated."),
     ("postactivate",
-     "This hook is run after this virtualenv is activated."),
+     "This hook is sourced after this virtualenv is activated."),
 
     # get_env_details
     ("get_env_details",
      "This hook is run when the list of virtualenvs is printed "
      "in 'long' mode so each name can include details."),
+     # argument: environment name
 ]
+
+
+SOURCED = ('initialize',
+	   'postactivate',
+	   'predeactivate',
+	   'postdeactivate',
+	   'postmkproject',
+	   'postmkvirtualenv',
+	   )
 
 
 def make_hook(filename, comment):
@@ -132,13 +155,18 @@ def make_hook(filename, comment):
         log.info('creating %s', filename)
         f = open(filename, 'w')
         try:
+	    # for sourced scripts, the shebang line won't be used;
+	    # it is useful for editors to recognize the file type, though 
             f.write("#!%(shell)s\n# %(comment)s\n\n" % {
                 'comment': comment,
                 'shell': os.environ.get('SHELL', '/bin/sh'),
             })
         finally:
             f.close()
-        os.chmod(filename, PERMISSIONS)
+        os.chmod(filename,
+		 os.path.basename(filename) in SOURCED
+		 and PERMISSIONS_SOURCED
+		 or  PERMISSIONS)
     return
 
 
