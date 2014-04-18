@@ -56,10 +56,10 @@ PERMISSIONS = (stat.S_IRWXU  # read/write/execute, user
              | stat.S_IROTH  # read, others
              | stat.S_IXOTH) # execute, others
 PERMISSIONS_SOURCED = PERMISSIONS \
-                      & ~ ( # remove executable bits for
-                              stat.S_IXUSR      # ... user
-                            | stat.S_IXGRP      # ...
-                            | stat.S_IXOTH)
+                      & ~ (# remove executable bits for
+                             stat.S_IXUSR   # ... user
+                           | stat.S_IXGRP   # ... group
+                           | stat.S_IXOTH)  # ... others
 
 
 GLOBAL_HOOKS = [
