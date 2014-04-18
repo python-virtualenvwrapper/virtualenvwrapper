@@ -51,7 +51,16 @@ def run_global(script_name, *args):
     return
 
 
-PERMISSIONS = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
+PERMISSIONS = (stat.S_IRWXU  # read/write/execute, user
+             | stat.S_IRWXG  # read/write/execute, group
+             | stat.S_IROTH  # read, others
+             | stat.S_IXOTH) # execute, others
+PERMISSIONS_SOURCED = (
+               stat.S_IRUSR  # read, user
+             | stat.S_IWUSR  # write, user
+             | stat.S_IRGRP  # read, group
+             | stat.S_IWGRP  # write, group
+             | stat.S_IROTH) # read, others
 
 
 GLOBAL_HOOKS = [
