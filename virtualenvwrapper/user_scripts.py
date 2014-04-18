@@ -55,12 +55,11 @@ PERMISSIONS = (stat.S_IRWXU  # read/write/execute, user
              | stat.S_IRWXG  # read/write/execute, group
              | stat.S_IROTH  # read, others
              | stat.S_IXOTH) # execute, others
-PERMISSIONS_SOURCED = (
-               stat.S_IRUSR  # read, user
-             | stat.S_IWUSR  # write, user
-             | stat.S_IRGRP  # read, group
-             | stat.S_IWGRP  # write, group
-             | stat.S_IROTH) # read, others
+PERMISSIONS_SOURCED = PERMISSIONS \
+                      & ~ ( # remove executable bits for
+                              stat.S_IXUSR      # ... user
+                            | stat.S_IXGRP      # ... 
+                            | stat.S_IXOTH)
 
 
 GLOBAL_HOOKS = [
@@ -136,12 +135,12 @@ LOCAL_HOOKS = [
 
 
 SOURCED = ('initialize',
-	   'postactivate',
-	   'predeactivate',
-	   'postdeactivate',
-	   'postmkproject',
-	   'postmkvirtualenv',
-	   )
+           'postactivate',
+           'predeactivate',
+           'postdeactivate',
+           'postmkproject',
+           'postmkvirtualenv',
+           )
 
 
 def make_hook(filename, comment):
@@ -155,8 +154,8 @@ def make_hook(filename, comment):
         log.info('creating %s', filename)
         f = open(filename, 'w')
         try:
-	    # for sourced scripts, the shebang line won't be used;
-	    # it is useful for editors to recognize the file type, though 
+            # for sourced scripts, the shebang line won't be used;
+            # it is useful for editors to recognize the file type, though 
             f.write("#!%(shell)s\n# %(comment)s\n\n" % {
                 'comment': comment,
                 'shell': os.environ.get('SHELL', '/bin/sh'),
@@ -164,9 +163,9 @@ def make_hook(filename, comment):
         finally:
             f.close()
         os.chmod(filename,
-		 os.path.basename(filename) in SOURCED
-		 and PERMISSIONS_SOURCED
-		 or  PERMISSIONS)
+                 os.path.basename(filename) in SOURCED
+                 and PERMISSIONS_SOURCED
+                 or  PERMISSIONS)
     return
 
 
