@@ -58,7 +58,7 @@ PERMISSIONS = (stat.S_IRWXU  # read/write/execute, user
 PERMISSIONS_SOURCED = PERMISSIONS \
                       & ~ ( # remove executable bits for
                               stat.S_IXUSR      # ... user
-                            | stat.S_IXGRP      # ... 
+                            | stat.S_IXGRP      # ...
                             | stat.S_IXOTH)
 
 
@@ -78,7 +78,7 @@ GLOBAL_HOOKS = [
 
     # cpvirtualenv:
     # precpvirtualenv <old> <new> (run),
-    # postcpvirtualenv (sourced) 
+    # postcpvirtualenv (sourced)
 
     # rmvirtualenv
     ("prermvirtualenv",
@@ -103,7 +103,7 @@ GLOBAL_HOOKS = [
 
     # mkproject:
     # premkproject <new project name> (run),
-    # postmkproject (sourced) 
+    # postmkproject (sourced)
 
     # get_env_details
     ("get_env_details",
@@ -155,7 +155,7 @@ def make_hook(filename, comment):
         f = open(filename, 'w')
         try:
             # for sourced scripts, the shebang line won't be used;
-            # it is useful for editors to recognize the file type, though 
+            # it is useful for editors to recognize the file type, though
             f.write("#!%(shell)s\n# %(comment)s\n\n" % {
                 'comment': comment,
                 'shell': os.environ.get('SHELL', '/bin/sh'),
