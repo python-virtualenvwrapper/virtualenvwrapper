@@ -27,6 +27,9 @@ virtualenvwrapper/docs
 TAGS
 ChangeLog
 AUTHORS
+bin
+include
+lib
 
 syntax: re
 .DS_Store
