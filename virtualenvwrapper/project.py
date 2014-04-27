@@ -8,7 +8,7 @@
 import logging
 import os
 
-from virtualenvwrapper.user_scripts import make_hook, run_global
+from virtualenvwrapper.user_scripts import make_hook, run_global, PERMISSIONS
 
 log = logging.getLogger(__name__)
 
@@ -16,18 +16,20 @@ GLOBAL_HOOKS = [
     # mkproject
     ("premkproject",
      "This hook is run after a new project is created "
-     "and before it is activated."),
+     "and before it is activated.",
+     PERMISSIONS),
     ("postmkproject",
-     "This hook is run after a new project is activated."),
+     "This hook is run after a new project is activated.",
+     PERMISSIONS),
 ]
 
 
 def initialize(args):
     """Set up user hooks
     """
-    for filename, comment in GLOBAL_HOOKS:
+    for filename, comment, permissions in GLOBAL_HOOKS:
         make_hook(os.path.join('$VIRTUALENVWRAPPER_HOOK_DIR', filename),
-                  comment)
+                  comment, permissions)
     return
 
 

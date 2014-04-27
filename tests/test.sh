@@ -19,12 +19,20 @@ setUp () {
     rm -f "$TMPDIR/catch_output"
 }
 
+SOURCE_SCRIPTS="initialize postmkvirtualenv predeactivate postdeactivate postactivate "
+RUN_SCRIPTS="premkvirtualenv prermvirtualenv postrmvirtualenv preactivate get_env_details"
+
 test_virtualenvwrapper_initialize() {
     assertTrue "Initialized" virtualenvwrapper_initialize
-    for hook in premkvirtualenv postmkvirtualenv prermvirtualenv postrmvirtualenv preactivate postactivate predeactivate postdeactivate
+    for hook in $SOURCE_SCRIPTS
     do
         assertTrue "Global $WORKON_HOME/$hook was not created" "[ -f $WORKON_HOME/$hook ]"
-        assertTrue "Global $WORKON_HOME/$hook is not executable" "[ -x $WORKON_HOME/$hook ]"
+        assertFalse "Global $WORKON_HOME/$hook is executable" "[ -x $WORKON_HOME/$hook ]"
+    done
+    for hook in $RUN_SCRIPTS
+    do
+        assertTrue "Global $WORKON_HOME/$hook was not created" "[ -f $WORKON_HOME/$hook ]"
+        assertTrue "Global $WORKON_HOME/$hook is executable" "[ -x $WORKON_HOME/$hook ]"
     done
     echo "echo GLOBAL initialize >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/initialize"
     virtualenvwrapper_initialize

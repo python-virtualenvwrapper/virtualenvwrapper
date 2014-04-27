@@ -51,30 +51,37 @@ def run_global(script_name, *args):
     return
 
 
-PERMISSIONS = (stat.S_IRWXU  # read/write/execute, user
-             | stat.S_IRWXG  # read/write/execute, group
-             | stat.S_IROTH  # read, others
-             | stat.S_IXOTH) # execute, others
-PERMISSIONS_SOURCED = PERMISSIONS \
-                      & ~ (# remove executable bits for
-                             stat.S_IXUSR   # ... user
-                           | stat.S_IXGRP   # ... group
-                           | stat.S_IXOTH)  # ... others
+PERMISSIONS = (
+    stat.S_IRWXU    # read/write/execute, user
+    | stat.S_IRGRP  # read, group
+    | stat.S_IXGRP  # execute, group
+    | stat.S_IROTH  # read, others
+    | stat.S_IXOTH  # execute, others
+)
+PERMISSIONS_SOURCED = PERMISSIONS & ~(
+    # remove executable bits for
+    stat.S_IXUSR     # ... user
+    | stat.S_IXGRP   # ... group
+    | stat.S_IXOTH   # ... others
+)
 
 
 GLOBAL_HOOKS = [
     # initialize
     ("initialize",
      "This hook is sourced during the startup phase "
-     "when loading virtualenvwrapper.sh."),
+     "when loading virtualenvwrapper.sh.",
+     PERMISSIONS_SOURCED),
 
     # mkvirtualenv
     ("premkvirtualenv",
      "This hook is run after a new virtualenv is created "
-     "and before it is activated."),
-     # argument: name of new environment
+     "and before it is activated.\n"
+     "# argument: name of new environment",
+     PERMISSIONS),
     ("postmkvirtualenv",
-     "This hook is sourced after a new virtualenv is activated."),
+     "This hook is sourced after a new virtualenv is activated.",
+     PERMISSIONS_SOURCED),
 
     # cpvirtualenv:
     # precpvirtualenv <old> <new> (run),
@@ -82,24 +89,30 @@ GLOBAL_HOOKS = [
 
     # rmvirtualenv
     ("prermvirtualenv",
-     "This hook is run before a virtualenv is deleted."),
-     # argument: full path to environment directory
+     "This hook is run before a virtualenv is deleted.\n"
+     "# argument: full path to environment directory",
+     PERMISSIONS),
     ("postrmvirtualenv",
-     "This hook is run after a virtualenv is deleted."),
-     # argument: full path to environment directory
+     "This hook is run after a virtualenv is deleted.\n"
+     "# argument: full path to environment directory",
+     PERMISSIONS),
 
     # deactivate
     ("predeactivate",
-     "This hook is sourced before every virtualenv is deactivated."),
+     "This hook is sourced before every virtualenv is deactivated.",
+     PERMISSIONS_SOURCED),
     ("postdeactivate",
-     "This hook is sourced after every virtualenv is deactivated."),
+     "This hook is sourced after every virtualenv is deactivated.",
+     PERMISSIONS_SOURCED),
 
     # activate
     ("preactivate",
-     "This hook is run before every virtualenv is activated."),
-     # argument: environment name
+     "This hook is run before every virtualenv is activated.\n"
+     "# argument: environment name",
+     PERMISSIONS),
     ("postactivate",
-     "This hook is sourced after every virtualenv is activated."),
+     "This hook is sourced after every virtualenv is activated.",
+     PERMISSIONS_SOURCED),
 
     # mkproject:
     # premkproject <new project name> (run),
@@ -108,42 +121,39 @@ GLOBAL_HOOKS = [
     # get_env_details
     ("get_env_details",
      "This hook is run when the list of virtualenvs is printed "
-     "so each name can include details."),
-     # argument: environment name
+     "so each name can include details.\n"
+     "# argument: environment name",
+     PERMISSIONS),
 ]
 
 
 LOCAL_HOOKS = [
     # deactivate
     ("predeactivate",
-     "This hook is sourced before this virtualenv is deactivated."),
+     "This hook is sourced before this virtualenv is deactivated.",
+     PERMISSIONS_SOURCED),
     ("postdeactivate",
-     "This hook is sourced after this virtualenv is deactivated."),
+     "This hook is sourced after this virtualenv is deactivated.",
+     PERMISSIONS_SOURCED),
 
     # activate
     ("preactivate",
-     "This hook is run before this virtualenv is activated."),
+     "This hook is run before this virtualenv is activated.",
+     PERMISSIONS),
     ("postactivate",
-     "This hook is sourced after this virtualenv is activated."),
+     "This hook is sourced after this virtualenv is activated.",
+     PERMISSIONS_SOURCED),
 
     # get_env_details
     ("get_env_details",
      "This hook is run when the list of virtualenvs is printed "
-     "in 'long' mode so each name can include details."),
-     # argument: environment name
+     "in 'long' mode so each name can include details.\n"
+     "# argument: environment name",
+     PERMISSIONS),
 ]
 
 
-SOURCED = ('initialize',
-           'postactivate',
-           'predeactivate',
-           'postdeactivate',
-           'postmkproject',
-           'postmkvirtualenv',
-           )
-
-
-def make_hook(filename, comment):
+def make_hook(filename, comment, permissions):
     """Create a hook script.
 
     :param filename: The name of the file to write.
@@ -162,10 +172,7 @@ def make_hook(filename, comment):
             })
         finally:
             f.close()
-        os.chmod(filename,
-                 os.path.basename(filename) in SOURCED
-                 and PERMISSIONS_SOURCED
-                 or  PERMISSIONS)
+        os.chmod(filename, permissions)
     return
 
 
@@ -173,8 +180,9 @@ def make_hook(filename, comment):
 
 
 def initialize(args):
-    for filename, comment in GLOBAL_HOOKS:
-        make_hook(get_path('$VIRTUALENVWRAPPER_HOOK_DIR', filename), comment)
+    for filename, comment, permissions in GLOBAL_HOOKS:
+        make_hook(get_path('$VIRTUALENVWRAPPER_HOOK_DIR', filename),
+                  comment, permissions)
     return
 
 
@@ -191,9 +199,9 @@ def initialize_source(args):
 def pre_mkvirtualenv(args):
     log.debug('pre_mkvirtualenv %s', str(args))
     envname = args[0]
-    for filename, comment in LOCAL_HOOKS:
+    for filename, comment, permissions in LOCAL_HOOKS:
         make_hook(get_path('$WORKON_HOME', envname, script_folder, filename),
-                  comment)
+                  comment, permissions)
     run_global('premkvirtualenv', *args)
     return
 
@@ -211,9 +219,9 @@ def post_mkvirtualenv_source(args):
 def pre_cpvirtualenv(args):
     log.debug('pre_cpvirtualenv %s', str(args))
     envname = args[0]
-    for filename, comment in LOCAL_HOOKS:
+    for filename, comment, permissions in LOCAL_HOOKS:
         make_hook(get_path('$WORKON_HOME', envname, script_folder, filename),
-                  comment)
+                  comment, permissions)
     run_global('precpvirtualenv', *args)
     return
 

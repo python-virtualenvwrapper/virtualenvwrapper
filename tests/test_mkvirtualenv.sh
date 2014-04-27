@@ -24,7 +24,7 @@ test_create() {
     for hook in postactivate predeactivate postdeactivate
     do
         assertTrue "env1 $hook was not created" "[ -f $WORKON_HOME/env1/bin/$hook ]"
-        assertTrue "env1 $hook is not executable" "[ -x $WORKON_HOME/env1/bin/$hook ]"
+        assertFalse "env1 $hook is executable" "[ -x $WORKON_HOME/env1/bin/$hook ]"
     done
 }
 
