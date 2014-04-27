@@ -108,7 +108,7 @@ def main():
     console.setFormatter(formatter)
     root_logger.addHandler(console)
 
-    #logging.getLogger(__name__).debug('cli args %s', args)
+    # logging.getLogger(__name__).debug('cli args %s', args)
 
     # Determine which hook we're running
     if not args:
