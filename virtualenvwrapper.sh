@@ -513,6 +513,9 @@ function rmvirtualenv {
     do
         echo "Removing $env_name..."
         typeset env_dir="$WORKON_HOME/$env_name"
+        if [ ! -d "$env_dir" ]; then
+            echo "Cannot remove '$env_name'. No such environment." >&2
+        fi
         if [ "$VIRTUAL_ENV" = "$env_dir" ]
         then
             echo "ERROR: You cannot remove the active environment ('$env_name')." >&2
