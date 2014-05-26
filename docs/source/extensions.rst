@@ -64,6 +64,15 @@ The django_ extension automatically creates a new Django project.
 
 .. _django: http://www.doughellmann.com/projects/virtualenvwrapper.django/
 
+SublimeText
+-----------
+
+Song Jin has created a template plugin for automatically generating
+the project files used by SublimeText.  See the
+sublime_projectfile_maker_ page for details.
+
+.. _sublime_projectfile_maker: https://github.com/SongGithub/sublime_projectfile_maker
+
 .. seealso::
 
    * :ref:`developer-templates`
