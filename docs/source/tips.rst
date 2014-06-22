@@ -39,25 +39,6 @@ I also added the command 'rehash' to ``$WORKON_HOME/postactivate`` and
 ``$WORKON_HOME/postdeactivate`` as I was having some problems with zsh
 not picking up the new paths immediately.
 
-Tying to pip's virtualenv support
-=================================
-
-Via http://becomingguru.com/:
-
-Add this to your shell login script to make pip use the same directory
-for virtualenvs as virtualenvwrapper::
-
-    export PIP_VIRTUALENV_BASE=$WORKON_HOME
-
-and Via Nat:
-
-in addition to what becomingguru said, this line is key::
-
-   export PIP_RESPECT_VIRTUALENV=true
-
-That makes pip detect an active virtualenv and install to it, without
-having to pass it the -E parameter.
-
 Creating Project Work Directories
 =================================
 
