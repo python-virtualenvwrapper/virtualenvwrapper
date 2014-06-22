@@ -18,7 +18,7 @@ sdist: html
 # Documentation
 .PHONY: html
 html:
-	(cd docs && $(MAKE) html)
+	tox -e docs
 
 .PHONY: docclean
 docclean:

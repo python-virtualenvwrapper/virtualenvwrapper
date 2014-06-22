@@ -327,8 +327,7 @@ run in the same place as before.
   - Implement suggestion by Van Lindberg to have
     :ref:`VIRTUALENVWRAPPER_HOOK_DIR
     <variable-VIRTUALENVWRAPPER_HOOK_DIR>` and
-    :ref:`VIRTUALENVWRAPPER_LOG_DIR
-    <variable-VIRTUALENVWRAPPER_LOG_DIR>` variables to control the
+    ``VIRTUALENVWRAPPER_LOG_DIR`` variables to control the
     locations of hooks and logs.
   - Enabled tab completion for :ref:`command-showvirtualenv`
     (:bbissue:`78`).

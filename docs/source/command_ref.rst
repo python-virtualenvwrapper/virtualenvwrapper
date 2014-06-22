@@ -413,6 +413,8 @@ Syntax::
 Path Management
 ===============
 
+.. _command-add2virtualenv:
+
 add2virtualenv
 --------------
 

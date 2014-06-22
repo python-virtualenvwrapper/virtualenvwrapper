@@ -181,6 +181,7 @@ Details
    extensions
    design
    history
+   glossary
 
 .. _references:
 
