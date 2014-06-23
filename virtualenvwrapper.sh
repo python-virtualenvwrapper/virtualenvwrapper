@@ -521,7 +521,7 @@ function rmvirtualenv {
         fi
 
         if [ ! -d "$env_dir" ]; then
-            echo "Cannot remove '$env_name'. No such environment." >&2
+            echo "Did not find environment $env_dir to remove." >&2
         fi
 
         # Move out of the current directory to one known to be
