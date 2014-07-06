@@ -81,7 +81,15 @@ fi
 # Remember where we are running from.
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then
-    export VIRTUALENVWRAPPER_SCRIPT="$0"
+    if [ -n "$BASH" ]
+    then
+        export VIRTUALENVWRAPPER_SCRIPT="$BASH_SOURCE"
+    elif [ -n "$ZSH_VERSION" ]
+    then
+        export VIRTUALENVWRAPPER_SCRIPT="$0"
+    else
+        export VIRTUALENVWRAPPER_SCRIPT="${.sh.file}"
+    fi
 fi
 
 # Portable shell scripting is hard, let's go shopping.
