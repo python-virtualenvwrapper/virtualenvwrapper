@@ -520,6 +520,10 @@ function rmvirtualenv {
             return 1
         fi
 
+        if [ ! -d "$env_dir" ]; then
+            echo "Did not find environment $env_dir to remove." >&2
+        fi
+
         # Move out of the current directory to one known to be
         # safe, in case we are inside the environment somewhere.
         typeset prior_dir="$(pwd)"
