@@ -44,7 +44,8 @@ def post_mkproject_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postmkproject" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postmkproject"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postmkproject" ] && \
+    source "$VIRTUALENVWRAPPER_HOOK_DIR/postmkproject"
 """
 
 

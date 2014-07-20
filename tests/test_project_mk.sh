@@ -8,6 +8,7 @@ oneTimeSetUp() {
     mkdir -p "$WORKON_HOME"
     rm -rf "$PROJECT_HOME"
     mkdir -p "$PROJECT_HOME"
+    export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME/hooks"
     source "$test_dir/../virtualenvwrapper.sh"
 }
 
