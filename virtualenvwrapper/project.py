@@ -44,7 +44,7 @@ def post_mkproject_source(args):
 #
 # Run user-provided scripts
 #
-[ -f "$WORKON_HOME/postmkproject" ] && source "$WORKON_HOME/postmkproject"
+[ -f "$VIRTUALENVWRAPPER_HOOK_DIR/postmkproject" ] && source "$VIRTUALENVWRAPPER_HOOK_DIR/postmkproject"
 """
 
 
