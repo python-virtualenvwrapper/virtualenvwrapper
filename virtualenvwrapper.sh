@@ -109,7 +109,7 @@ function virtualenvwrapper_cd {
         builtin \cd "$@"
     elif [ -n "$ZSH_VERSION" ]
     then
-        builtin \cd "$@"
+        builtin \cd -q "$@"
     else
         command \cd "$@"
     fi
