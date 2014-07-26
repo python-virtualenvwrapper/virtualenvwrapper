@@ -46,7 +46,7 @@ test_space_in_path () {
     mkproject "myproject" >/dev/null 2>&1
     cd "$WORKON_HOME"
     cdproject
-    [ "$PROJECT_HOME/myproject" == "$(pwd)" ]
+    test "$PROJECT_HOME/myproject" = "$PWD"
     )
     assertTrue "Did not cd to project directory" $?
 }
