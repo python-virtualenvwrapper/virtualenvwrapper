@@ -49,7 +49,7 @@ do
 
     echo
     echo '********************************************************************************'
-    echo "Running $test_script"
+    echo "Running $SHELL $test_shell_opts $test_script"
     echo "  VIRTUAL_ENV=$VIRTUAL_ENV"
     echo "  VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON"
     echo "    $($VIRTUALENVWRAPPER_PYTHON -V 2>&1)"
@@ -59,12 +59,14 @@ do
     echo "  ZSH_VERSION=$ZSH_VERSION"
     echo "  KSH_VERSION=$KSH_VERSION"
     echo "  virtualenv=$(which virtualenv)"
+    echo "  test_shell_opts=$test_shell_opts"
     echo "  ZSH=$ZSH_NAME $ZSH_EVAL_CONTEXT"
     echo "  TMPDIR=$TMPDIR"
+
     echo
     SHUNIT_PARENT="$test_script"
     export SHUNIT_PARENT
-    $test_shell_opts $test_script || exit 1
+    $SHELL $test_shell_opts $test_script || exit 1
     echo
 
 done
