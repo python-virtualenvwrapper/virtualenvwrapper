@@ -10,8 +10,28 @@ the appropriate trigger time.
 
 The global scripts applied to all environments should be placed in the
 directory named by :ref:`VIRTUALENVWRAPPER_HOOK_DIR
-<variable-VIRTUALENVWRAPPER_HOOK_DIR>`. The local scripts should be
+<variable-VIRTUALENVWRAPPER_HOOK_DIR>`, which by default will be equal
+to :ref:`WORKON_HOME <variable-WORKON_HOME>`. The local scripts should be
 placed in the ``bin`` directory of the virtualenv.
+
+Example Usage
+===============
+
+As a Django developer, you likely want DJANGO_SETTINGS_MODULE to be set, and
+if you work on multiple projects, you want it to be specific to the project
+you are currently working on. Wouldn't it be nice if it was set based on the
+active virtualenv? You can achieve this with :ref:`scripts` as follows.
+
+If your :ref:`WORKON_HOME <variable-WORKON_HOME>` is set to ~/.virtualenvs:
+
+    vim ~/.virtualenvs/premkvirtualenv
+
+Edit the file so it contains the following (for a default Django setup):
+
+    # Automatically set django settings for the virtualenv
+    echo "export DJANGO_SETTINGS_MODULE=$1.settings" >> "$1/bin/activate"
+
+Create a new virtualenv, and you should see DJANGO_SETTINGS_MODULE in your env!
 
 .. _scripts-get_env_details:
 

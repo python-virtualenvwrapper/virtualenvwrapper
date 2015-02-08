@@ -12,6 +12,13 @@ virtualenvwrapper continues the tradition of encouraging a craftsman
 to modify their tools to work the way they want, rather than the other
 way around.
 
+There are two ways to attach your code so that virtualenvwrapper will
+run it: End-users can use shell scripts or other programs for personal
+customization, e.g. automatically performing an action on every new
+virtualenv (see :ref:`scripts`).  Extensions can also be
+implemented in Python by using Distribute_ *entry points*, making it
+possible to share common behaviors between systems and developers.
+
 Use the hooks provided to eliminate repetitive manual operations and
 streamline your development workflow.  For example, set up the
 :ref:`plugins-pre_activate` and :ref:`plugins-post_activate` hooks to
@@ -24,12 +31,6 @@ to virtualenvwrapper.  And the :ref:`plugins-pre_mkvirtualenv` and
 install basic requirements into each new development environment,
 initialize a source code control repository, or otherwise set up a new
 project.
-
-There are two ways to attach your code so that virtualenvwrapper will
-run it: End-users can use shell scripts or other programs for personal
-customization (see :ref:`scripts`).  Extensions can also be
-implemented in Python by using Distribute_ *entry points*, making it
-possible to share common behaviors between systems and developers.
 
 Defining an Extension
 =====================
