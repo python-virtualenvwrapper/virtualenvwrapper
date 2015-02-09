@@ -16,7 +16,7 @@ There are two ways to attach your code so that virtualenvwrapper will
 run it: End-users can use shell scripts or other programs for personal
 customization, e.g. automatically performing an action on every new
 virtualenv (see :ref:`scripts`).  Extensions can also be
-implemented in Python by using Distribute_ *entry points*, making it
+implemented in Python by using `Setuptools entry points`_, making it
 possible to share common behaviors between systems and developers.
 
 Use the hooks provided to eliminate repetitive manual operations and
@@ -162,48 +162,22 @@ Registering Entry Points
 
 The functions defined in the plugin need to be registered as *entry
 points* in order for virtualenvwrapper's hook loader to find them.
-Distribute_ entry points are configured in the ``setup.py`` for your
-package by mapping the entry point name to the function in the package
-that implements it.
+Entry points are configured in the ``setup.py`` (or ``setup.cfg`` when
+using pbr) for your package by mapping the entry point name to the
+function in the package that implements it.
 
-This partial copy of virtualenvwrapper's ``setup.py`` illustrates how
+This partial copy of virtualenvwrapper's ``setup.cfg`` illustrates how
 the ``initialize()`` and ``initialize_source()`` entry points are
 configured.
 
-::
-    
-    # Bootstrap installation of Distribute
-    import distribute_setup
-    distribute_setup.use_setuptools()
-    
-    from setuptools import setup
-    
-    setup(
-        name = 'virtualenvwrapper',
-        version = '2.0',
-        
-        description = 'Enhancements to virtualenv',
-    
-        # ... details omitted ...
+.. include:: ../../setup.cfg
+   :literal:
+   :start-after: [entry_points]
 
-        namespace_packages = [ 'virtualenvwrapper' ],
-    
-        entry_points = {
-            'virtualenvwrapper.initialize': [
-                'user_scripts = virtualenvwrapper.user_scripts:initialize',
-                ],
-            'virtualenvwrapper.initialize_source': [
-                'user_scripts = virtualenvwrapper.user_scripts:initialize_source',
-                ],
-    
-            # ... details omitted ...
-            },
-        )
-
-The ``entry_points`` argument to ``setup()`` is a dictionary mapping
-the entry point *group names* to lists of entry point specifiers.  A
-different group name is defined by virtualenvwrapper for each
-extension point (see :ref:`plugins-extension-points`).
+The ``entry_points`` section maps the *group names* to lists of entry
+point specifiers.  A different group name is defined by
+virtualenvwrapper for each extension point (see
+:ref:`plugins-extension-points`).
 
 The entry point specifiers are strings with the syntax ``name =
 package.module:function``.  By convention, the *name* of each entry
@@ -212,8 +186,8 @@ used).
 
 .. seealso::
 
-  * `namespace packages <http://packages.python.org/distribute/setuptools.html#namespace-packages>`__
-  * `Extensible Applications and Frameworks <http://packages.python.org/distribute/setuptools.html#extensible-applications-and-frameworks>`__
+  * `namespace packages <http://pythonhosted.org//setuptools/setuptools.html#namespace-packages>`__
+  * `Extensible Applications and Frameworks <http://pythonhosted.org/setuptools/setuptools.html#extensible-applications-and-frameworks>`__
 
 The Hook Loader
 ---------------
@@ -420,6 +394,6 @@ and::
 
 respectively.
 
-.. _Distribute: http://packages.python.org/distribute/
+.. _Setuptools entry points: http://pythonhosted.org//setuptools/pkg_resources.html#entry-points
 
 .. _project: http://www.doughellmann.com/projects/virtualenvwrapper.project/
