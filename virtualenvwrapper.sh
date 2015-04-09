@@ -1207,7 +1207,7 @@ function wipeenv {
         echo "Uninstalling packages:"
         cat "$req_file"
         echo
-        pip uninstall -y $(cat "$req_file" | sed 's/>/=/g' | cut -f1 -d=)
+        pip uninstall -y $(cat "$req_file" | grep -v '^-f' | sed 's/>/=/g' | cut -f1 -d=)
     else
         echo "Nothing to remove."
     fi
