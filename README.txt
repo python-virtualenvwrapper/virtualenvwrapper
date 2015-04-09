@@ -73,8 +73,8 @@ Join the `virtualenvwrapper Google Group
 <http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
 issues and features.  
 
-Report bugs via the `bug tracker on BitBucket
-<http://bitbucket.org/dhellmann/virtualenvwrapper/>`__.
+Report bugs via the `bug tracker on Bitbucket
+<https://bitbucket.org/dhellmann/virtualenvwrapper/issues>`__.
 
 Shell Aliases
 =============
