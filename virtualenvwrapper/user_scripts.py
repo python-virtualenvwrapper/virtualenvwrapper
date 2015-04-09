@@ -26,13 +26,23 @@ else:
     script_folder = 'bin'
 
 
+def _get_msys_shell():
+    if 'MSYS_HOME' in os.environ:
+        return [get_path(os.environ['MSYS_HOME'], 'bin', 'sh.exe')]
+    else:
+        for path in os.environ['PATH'].split(';'):
+            if os.path.exists(os.path.join(path, 'sh.exe')):
+                return [get_path(path, 'sh.exe')]
+    raise Exception('Could not find sh.exe')
+
+
 def run_script(script_path, *args):
     """Execute a script in a subshell.
     """
     if os.path.exists(script_path):
         cmd = [script_path] + list(args)
         if is_msys:
-            cmd = [get_path(os.environ['MSYS_HOME'], 'bin', 'sh.exe')] + cmd
+            cmd = _get_msys_shell() + cmd
         log.debug('running %s', str(cmd))
         try:
             subprocess.call(cmd)
