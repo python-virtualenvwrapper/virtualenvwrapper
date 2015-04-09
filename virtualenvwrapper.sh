@@ -439,8 +439,7 @@ function mkvirtualenv {
                 else
                     i=$(( $i + 1 ))
                     interpreter="${in_args[$i]}"
-                fi;
-                interpreter="$(virtualenvwrapper_absolutepath "$interpreter")";;
+                fi;;
             -r)
                 i=$(( $i + 1 ));
                 requirements="${in_args[$i]}";

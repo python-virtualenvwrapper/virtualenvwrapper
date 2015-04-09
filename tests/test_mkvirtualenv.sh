@@ -196,7 +196,7 @@ test_mkvirtualenv_python_short_option () {
     typeset _save=$VIRTUALENVWRAPPER_VIRTUALENV
     VIRTUALENVWRAPPER_VIRTUALENV=echo
     output="$(mkvirtualenv -p python foo)"
-    assertSame "--python=$(pwd)/python foo" "$output"
+    assertSame "--python=python foo" "$output"
     VIRTUALENVWRAPPER_VIRTUALENV=$_save
 }
 
@@ -204,7 +204,7 @@ test_mkvirtualenv_python_long_option () {
     typeset _save=$VIRTUALENVWRAPPER_VIRTUALENV
     VIRTUALENVWRAPPER_VIRTUALENV=echo
     output="$(mkvirtualenv --python python foo)"
-    assertSame "--python=$(pwd)/python foo" "$output"
+    assertSame "--python=python foo" "$output"
     VIRTUALENVWRAPPER_VIRTUALENV=$_save
 }
 
@@ -212,7 +212,7 @@ test_mkvirtualenv_python_long_option_equal () {
     typeset _save=$VIRTUALENVWRAPPER_VIRTUALENV
     VIRTUALENVWRAPPER_VIRTUALENV=echo
     output="$(mkvirtualenv --python=python foo)"
-    assertSame "--python=$(pwd)/python foo" "$output"
+    assertSame "--python=python foo" "$output"
     VIRTUALENVWRAPPER_VIRTUALENV=$_save
 }
 
