@@ -78,6 +78,13 @@ then
     export VIRTUALENVWRAPPER_PROJECT_FILENAME=".project"
 fi
 
+# Let the user tell us they never want to cd to projects
+# automatically.
+if [ "$VIRTUALENVWRAPPER_WORKON_CD" = "" ]
+then
+    export VIRTUALENVWRAPPER_WORKON_CD=1
+fi
+
 # Remember where we are running from.
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then
@@ -658,10 +665,23 @@ function virtualenvwrapper_workon_help {
     echo ""
     echo "           Show this help message."
     echo ""
+    echo "       workon (-c|--cd) envname"
+    echo ""
+    echo "           After activating the environment, cd to the associated"
+    echo "           project directory if it is set."
+    echo ""
+    echo "       workon (-n|--no-cd) envname"
+    echo ""
+    echo "           After activating the environment, do not cd to the"
+    echo "           associated project directory."
+    echo ""
 }
 
 #:help:workon: list or change working virtualenvs
 function workon {
+    typeset -a in_args
+    typeset -a out_args
+
     in_args=( "$@" )
 
     if [ -n "$ZSH_VERSION" ]
@@ -672,6 +692,7 @@ function workon {
         i=0
         tst="-lt"
     fi
+    typeset cd_after_activate=$VIRTUALENVWRAPPER_WORKON_CD
     while [ $i $tst $# ]
     do
         a="${in_args[$i]}"
@@ -679,9 +700,22 @@ function workon {
             -h|--help)
                 virtualenvwrapper_workon_help;
                 return 0;;
+            -n|--no-cd)
+                cd_after_activate=0;;
+            -c|--cd)
+                cd_after_activate=1;;
+            *)
+                if [ ${#out_args} -gt 0 ]
+                then
+                    out_args=( "${out_args[@]-}" "$a" )
+                else
+                    out_args=( "$a" )
+                fi;;
         esac
         i=$(( $i + 1 ))
     done
+
+    set -- "${out_args[@]}"
 
     typeset env_name="$1"
     if [ "$env_name" = "" ]
@@ -745,7 +779,7 @@ function workon {
 
     }'
 
-    virtualenvwrapper_run_hook "post_activate"
+    VIRTUALENVWRAPPER_PROJECT_CD=$cd_after_activate virtualenvwrapper_run_hook "post_activate"
 
     return 0
 }

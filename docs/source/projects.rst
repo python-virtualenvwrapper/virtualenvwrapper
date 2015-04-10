@@ -36,3 +36,4 @@ site, combine the :ref:`templates-bitbucket` and
    * :ref:`extensions-templates`
    * :ref:`variable-PROJECT_HOME`
    * :ref:`variable-VIRTUALENVWRAPPER_PROJECT_FILENAME`
+   * :ref:`variable-VIRTUALENVWRAPPER_WORKON_CD`

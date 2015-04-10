@@ -238,10 +238,18 @@ List or change working virtual environments
 
 Syntax::
 
-    workon [environment_name]
+    workon [(-c|--cd)|(-n|--no-cd)] [environment_name]
 
 If no ``environment_name`` is given the list of available environments
 is printed to stdout.
+
+If ``-c`` or ``--cd`` is specified the working directory is changed to
+the project directory during the post-activate phase, regardless of
+the value of ``VIRTUALENVWRAPPER_WORKON_CD``.
+
+If ``-n`` or ``--no-cd`` is specified the working directory is **not**
+changed to the project directory during the post-activate phase,
+regardless of the value of ``VIRTUALENVWRAPPER_WORKON_CD``.
 
 ::
 
@@ -276,6 +284,7 @@ is printed to stdout.
    * :ref:`scripts-postdeactivate`
    * :ref:`scripts-preactivate`
    * :ref:`scripts-postactivate`
+   * :ref:`variable-VIRTUALENVWRAPPER_WORKON_CD`
 
 .. _command-deactivate:
 

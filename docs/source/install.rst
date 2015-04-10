@@ -207,6 +207,20 @@ project working directory. The default is ``.project``.
 
    * :ref:`project-management`
 
+.. _variable-VIRTUALENVWRAPPER_WORKON_CD:
+
+Enable Project Directory Switching
+----------------------------------
+
+The variable ``VIRTUALENVWRAPPER_WORKON_CD`` controls whether the
+working directory is changed during the post activate phase. The
+default is ``1``, to enable changing directories. Set the value to
+``0`` to disable this behavior for all invocations of ``workon``.
+
+.. seealso::
+
+  * :ref:`command-workon`
+
 .. _variable-VIRTUALENVWRAPPER_HOOK_DIR:
 
 Location of Hook Scripts
