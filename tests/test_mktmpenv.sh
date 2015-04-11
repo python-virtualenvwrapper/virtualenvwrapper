@@ -23,6 +23,7 @@ test_mktmpenv_no_name() {
     mktmpenv >/dev/null 2>&1
     after=$(lsvirtualenv -b)
     assertFalse "Environment was not created" "[ \"$before\" = \"$after\" ]"
+    assertSame "$VIRTUAL_ENV" "$(pwd)"
 }
 
 test_mktmpenv_name() {
