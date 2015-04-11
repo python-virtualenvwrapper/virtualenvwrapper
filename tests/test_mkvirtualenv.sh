@@ -28,6 +28,16 @@ test_create() {
     done
 }
 
+test_create_space_in_name() {
+    mkvirtualenv "env with space" >/dev/null 2>&1
+    assertTrue "Environment directory was not created" "[ -d \"$WORKON_HOME/env with space\" ]"
+    for hook in postactivate predeactivate postdeactivate
+    do
+        assertTrue "$hook was not created" "[ -f \"$WORKON_HOME/env with space/bin/$hook\" ]"
+        assertFalse "$hook is executable" "[ -x \"$WORKON_HOME/env with space/bin/$hook\" ]"
+    done
+}
+
 test_activates () {
     mkvirtualenv "env2" >/dev/null 2>&1
     assertTrue virtualenvwrapper_verify_active_environment
