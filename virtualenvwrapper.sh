@@ -722,6 +722,9 @@ function workon {
     then
         lsvirtualenv -b
         return 1
+    elif [ "$env_name" = "." ]
+    then
+        env_name=$(basename $(pwd))
     fi
 
     virtualenvwrapper_verify_workon_home || return 1

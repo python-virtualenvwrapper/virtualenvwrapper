@@ -116,4 +116,11 @@ test_no_workon_home () {
     WORKON_HOME="$old_home"
 }
 
+test_workon_dot () {
+    cd $WORKON_HOME/env1
+    workon .
+    assertTrue virtualenvwrapper_verify_active_environment
+    assertSame "env1" $(basename "$VIRTUAL_ENV")
+}
+
 . "$test_dir/shunit2"
