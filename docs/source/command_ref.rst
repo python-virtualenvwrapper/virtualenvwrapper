@@ -238,7 +238,7 @@ List or change working virtual environments
 
 Syntax::
 
-    workon [(-c|--cd)|(-n|--no-cd)] [environment_name]
+    workon [(-c|--cd)|(-n|--no-cd)] [environment_name|"."]
 
 If no ``environment_name`` is given the list of available environments
 is printed to stdout.
@@ -250,6 +250,10 @@ the value of ``VIRTUALENVWRAPPER_WORKON_CD``.
 If ``-n`` or ``--no-cd`` is specified the working directory is **not**
 changed to the project directory during the post-activate phase,
 regardless of the value of ``VIRTUALENVWRAPPER_WORKON_CD``.
+
+If ``"."`` is passed as the environment name, the name is derived from
+the base name of the current working directory (contributed by Matias
+Saguir).
 
 ::
 
