@@ -68,9 +68,17 @@ Create a new virtualenv in the ``WORKON_HOME`` directory.
 
 Syntax::
 
-    mktmpenv [VIRTUALENV_OPTIONS]
+    mktmpenv [(-c|--cd)|(-n|--no-cd)] [VIRTUALENV_OPTIONS]
 
 A unique virtualenv name is generated.
+
+If ``-c`` or ``--cd`` is specified the working directory is changed to
+the virtualenv directory during the post-activate phase, regardless of
+the value of ``VIRTUALENVWRAPPER_WORKON_CD``.
+
+If ``-n`` or ``--no-cd`` is specified the working directory is **not**
+changed to the virtualenv directory during the post-activate phase,
+regardless of the value of ``VIRTUALENVWRAPPER_WORKON_CD``.
 
 ::
 

@@ -1195,6 +1195,40 @@ function cdproject {
 function mktmpenv {
     typeset tmpenvname
     typeset RC
+    typeset -a in_args
+    typeset -a out_args
+
+    in_args=( "$@" )
+
+    if [ -n "$ZSH_VERSION" ]
+    then
+        i=1
+        tst="-le"
+    else
+        i=0
+        tst="-lt"
+    fi
+    typeset cd_after_activate=$VIRTUALENVWRAPPER_WORKON_CD
+    while [ $i $tst $# ]
+    do
+        a="${in_args[$i]}"
+        case "$a" in
+            -n|--no-cd)
+                cd_after_activate=0;;
+            -c|--cd)
+                cd_after_activate=1;;
+            *)
+                if [ ${#out_args} -gt 0 ]
+                then
+                    out_args=( "${out_args[@]-}" "$a" )
+                else
+                    out_args=( "$a" )
+                fi;;
+        esac
+        i=$(( $i + 1 ))
+    done
+
+    set -- "${out_args[@]}"
 
     # Generate a unique temporary name
     tmpenvname=$("$VIRTUALENVWRAPPER_PYTHON" -c 'import uuid,sys; sys.stdout.write(uuid.uuid4()+"\n")' 2>/dev/null)
@@ -1214,7 +1248,7 @@ function mktmpenv {
     fi
 
     # Change working directory
-    cdvirtualenv
+    [ "$cd_after_activate" = "1" ] && cdvirtualenv
 
     # Create the tmpenv marker file
     echo "This is a temporary environment. It will be deleted when you run 'deactivate'." | tee "$VIRTUAL_ENV/README.tmpenv"

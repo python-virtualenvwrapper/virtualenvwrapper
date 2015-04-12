@@ -32,6 +32,16 @@ test_mktmpenv_name() {
     assertTrue "Error was not detected" "[ $RC -ne 0 ]"
 }
 
+test_mktmpenv_n() {
+    mktmpenv -n >/dev/null 2>&1
+    assertNotSame "$VIRTUAL_ENV" "$(pwd)"
+}
+
+test_mktmpenv_no_cd() {
+    mktmpenv --no-cd >/dev/null 2>&1
+    assertNotSame "$VIRTUAL_ENV" "$(pwd)"
+}
+
 test_mktmpenv_virtualenv_args() {
     mktmpenv --no-site-packages >/dev/null 2>&1
     ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
