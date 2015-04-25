@@ -892,7 +892,7 @@ function cdsitepackages {
 function cdvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    virtualenvwrapper_cd $VIRTUAL_ENV/$1
+    virtualenvwrapper_cd "$VIRTUAL_ENV"/$1
 }
 
 # Shows the content of the site-packages directory of the currently-active
