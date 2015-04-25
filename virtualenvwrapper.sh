@@ -80,10 +80,7 @@ fi
 
 # Let the user tell us they never want to cd to projects
 # automatically.
-if [ "$VIRTUALENVWRAPPER_WORKON_CD" = "" ]
-then
-    export VIRTUALENVWRAPPER_WORKON_CD=1
-fi
+export VIRTUALENVWRAPPER_WORKON_CD=${VIRTUALENVWRAPPER_WORKON_CD:-1}
 
 # Remember where we are running from.
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
