@@ -10,6 +10,7 @@ oneTimeSetUp() {
     source "$test_dir/../virtualenvwrapper.sh"
     mkvirtualenv test1 >/dev/null 2>&1
     mkvirtualenv test2 >/dev/null 2>&1
+    mkvirtualenv " env with space " >/dev/null 2>&1
     deactivate
 }
 
@@ -28,6 +29,8 @@ tearDown () {
 test_allvirtualenv_all() {
     assertTrue "Did not find test1" "allvirtualenv pwd | grep -q 'test1$'"
     assertTrue "Did not find test2" "allvirtualenv pwd | grep -q 'test2$'"
+    allvirtualenv pwd
+    assertTrue "Did not find ' env with space '" "allvirtualenv pwd | grep -q ' env with space '"
 }
 
 test_allvirtualenv_spaces() {

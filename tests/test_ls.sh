@@ -75,5 +75,11 @@ test_lsvirtualenv_space_in_workon_home () {
     WORKON_HOME="$old_home"
 }
 
+test_lsvirtualenv_space_in_env_name () {
+    mkvirtualenv " env with space "
+    lsvirtualenv -b >"$WORKON_HOME/output" 2>&1
+    assertTrue "Did not see expected message in \"$output\"" "cat \"$WORKON_HOME/output\" | grep -q ' env with space '"
+}
+
 
 . "$test_dir/shunit2"

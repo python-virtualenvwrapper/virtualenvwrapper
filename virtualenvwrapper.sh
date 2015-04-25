@@ -569,8 +569,9 @@ function virtualenvwrapper_show_workon_options {
     # 5. Eliminate any lines with * on them because that means there 
     #    were no envs.
     (virtualenvwrapper_cd "$WORKON_HOME" && echo */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
-        | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate||g" \
-        | command \fmt -w 1 \
+        | command \tr "\n" " " \
+        | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate |/|g" \
+        | command \tr "/" "\n" \
         | (unset GREP_OPTIONS; command \egrep -v '^\*$') 2>/dev/null
 }
 
@@ -1292,6 +1293,7 @@ function allvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     typeset d
 
+    IFS=''
     virtualenvwrapper_show_workon_options | while read d
     do
         [ ! -d "$WORKON_HOME/$d" ] && continue
@@ -1304,6 +1306,7 @@ function allvirtualenv {
             "$@")
         echo
     done
+    unset IFS
 }
 
 #:help:virtualenvwrapper: show this help message
