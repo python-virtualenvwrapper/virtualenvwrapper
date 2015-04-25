@@ -29,16 +29,18 @@ test_create() {
 }
 
 test_create_space_in_name() {
-    mkvirtualenv "env with space" >/dev/null 2>&1
-    assertTrue "Environment directory was not created" "[ -d \"$WORKON_HOME/env with space\" ]"
+    # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
+    # and work with virtualenv on OSX, but error out on Linux.
+    mkvirtualenv " env with space" >/dev/null 2>&1
+    assertTrue "Environment directory was not created" "[ -d \"$WORKON_HOME/ env with space\" ]"
     for hook in postactivate predeactivate postdeactivate
     do
-        assertTrue "$hook was not created" "[ -f \"$WORKON_HOME/env with space/bin/$hook\" ]"
-        assertFalse "$hook is executable" "[ -x \"$WORKON_HOME/env with space/bin/$hook\" ]"
+        assertTrue "$hook was not created" "[ -f \"$WORKON_HOME/ env with space/bin/$hook\" ]"
+        assertFalse "$hook is executable" "[ -x \"$WORKON_HOME/ env with space/bin/$hook\" ]"
     done
     assertTrue virtualenvwrapper_verify_active_environment
     env_name=$(basename "$VIRTUAL_ENV")
-    assertSame "env with space" "$env_name"
+    assertSame " env with space" "$env_name"
 }
 
 test_activates () {

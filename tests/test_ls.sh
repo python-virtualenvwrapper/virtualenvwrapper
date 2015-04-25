@@ -76,9 +76,11 @@ test_lsvirtualenv_space_in_workon_home () {
 }
 
 test_lsvirtualenv_space_in_env_name () {
-    mkvirtualenv " env with space "
+    # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
+    # and work with virtualenv on OSX, but error out on Linux.
+    mkvirtualenv " env with space"
     lsvirtualenv -b >"$WORKON_HOME/output" 2>&1
-    assertTrue "Did not see expected message in \"$output\"" "cat \"$WORKON_HOME/output\" | grep -q ' env with space '"
+    assertTrue "Did not see expected message in \"$output\"" "cat \"$WORKON_HOME/output\" | grep -q ' env with space'"
 }
 
 
