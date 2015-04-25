@@ -9,6 +9,7 @@ oneTimeSetUp() {
     source "$test_dir/../virtualenvwrapper.sh"
     mkvirtualenv "env1" >/dev/null 2>&1
     mkvirtualenv "env2" >/dev/null 2>&1
+    mkvirtualenv "env with space" >/dev/null 2>&1
     deactivate >/dev/null 2>&1 
 }
 
@@ -67,7 +68,7 @@ test_virtualenvwrapper_show_workon_options () {
     mkdir "$WORKON_HOME/not_env"
     (cd "$WORKON_HOME"; ln -s env1 link_env)
     envs=$(virtualenvwrapper_show_workon_options | tr '\n' ' ')
-    assertSame "env1 env2 link_env " "$envs"
+    assertSame "env1 env2 link_env env with space " "$envs"
     rmdir "$WORKON_HOME/not_env"
     rm -f "$WORKON_HOME/link_env"
 }
@@ -78,7 +79,7 @@ test_virtualenvwrapper_show_workon_options_grep_options () {
     export GREP_OPTIONS="--count"
     envs=$(virtualenvwrapper_show_workon_options | tr '\n' ' ')
     unset GREP_OPTIONS
-    assertSame "env1 env2 link_env " "$envs"
+    assertSame "env1 env2 link_env env with space " "$envs"
     rmdir "$WORKON_HOME/not_env"
     rm -f "$WORKON_HOME/link_env"
 }
@@ -94,7 +95,7 @@ test_virtualenvwrapper_show_workon_options_chpwd () {
     }
     mkdir "$WORKON_HOME/not_env"
     envs=$(virtualenvwrapper_show_workon_options | tr '\n' ' ')
-    assertSame "env1 env2 " "$envs"
+    assertSame "env1 env2 env with space " "$envs"
     rmdir "$WORKON_HOME/not_env"
     rm -f "$WORKON_HOME/link_env"
 }
@@ -121,6 +122,21 @@ test_workon_dot () {
     workon .
     assertTrue virtualenvwrapper_verify_active_environment
     assertSame "env1" $(basename "$VIRTUAL_ENV")
+}
+
+test_workon_dot_with_space () {
+    cd $WORKON_HOME/"env with space"
+    workon .
+    assertTrue virtualenvwrapper_verify_active_environment
+    env_name=$(basename "$VIRTUAL_ENV")
+    assertSame "env with space" "$env_name"
+}
+
+test_workon_with_space () {
+    workon "env with space"
+    assertTrue virtualenvwrapper_verify_active_environment
+    env_name=$(basename "$VIRTUAL_ENV")
+    assertSame "env with space" "$env_name"
 }
 
 . "$test_dir/shunit2"

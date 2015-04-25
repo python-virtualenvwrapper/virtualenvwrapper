@@ -722,11 +722,13 @@ function workon {
         return 1
     elif [ "$env_name" = "." ]
     then
-        env_name=$(basename $(pwd))
+        IFS='%'
+        env_name="$(basename $(pwd))"
+        unset IFS
     fi
 
     virtualenvwrapper_verify_workon_home || return 1
-    virtualenvwrapper_verify_workon_environment $env_name || return 1
+    virtualenvwrapper_verify_workon_environment "$env_name" || return 1
 
     activate="$WORKON_HOME/$env_name/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate"
     if [ ! -f "$activate" ]

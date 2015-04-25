@@ -36,6 +36,9 @@ test_create_space_in_name() {
         assertTrue "$hook was not created" "[ -f \"$WORKON_HOME/env with space/bin/$hook\" ]"
         assertFalse "$hook is executable" "[ -x \"$WORKON_HOME/env with space/bin/$hook\" ]"
     done
+    assertTrue virtualenvwrapper_verify_active_environment
+    env_name=$(basename "$VIRTUAL_ENV")
+    assertSame "env with space" "$env_name"
 }
 
 test_activates () {
