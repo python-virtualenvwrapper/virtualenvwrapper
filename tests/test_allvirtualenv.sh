@@ -8,6 +8,8 @@ oneTimeSetUp() {
     mkdir -p "$WORKON_HOME"
     unset VIRTUAL_ENV
     source "$test_dir/../virtualenvwrapper.sh"
+    # These three env names must sort the same whether the OS considers leading whitespace or not.
+    # "test" is after " env" and after "env", so the asserts work on OSX and Linux.
     mkvirtualenv test1 >/dev/null 2>&1
     mkvirtualenv test2 >/dev/null 2>&1
     # Only test with leading and internal spaces. Directory names with trailing spaces are legal,

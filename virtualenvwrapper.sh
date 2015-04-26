@@ -521,6 +521,7 @@ function rmvirtualenv {
 
     # support to remove several environments
     typeset env_name
+    # Must quote the parameters, as environments could have spaces in their names
     for env_name in "$@"
     do
         echo "Removing $env_name..."
@@ -559,13 +560,18 @@ function virtualenvwrapper_show_workon_options {
     # NOTE: DO NOT use ls or cd here because colorized versions spew control 
     #       characters into the output list.
     # echo seems a little faster than find, even with -depth 3.
+    # Note that this is a little tricky, as there may be spaces in the path.
     #
     # 1. Look for environments by finding the activate scripts.
     #    Use a subshell so we can suppress the message printed
     #    by zsh if the glob pattern fails to match any files.
-    # 2. Strip the WORKON_HOME prefix from each name.
-    # 3. Strip the bindir/activate script suffix.
-    # 4. Format the output to show one name on a line.
+    #    This yields a single, space-separated line containing all matches.
+    # 2. Replace the trailing newline with a space, so every
+    #    possible env has a space following it.
+    # 3. Strip the bindir/activate script suffix, replacing it with
+    #    a slash, as that is an illegal character in a directory name.
+    #    This yields a slash-separated list of possible env names.
+    # 4. Replace each slash with a newline to show the output one name per line.
     # 5. Eliminate any lines with * on them because that means there 
     #    were no envs.
     (virtualenvwrapper_cd "$WORKON_HOME" && echo */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
@@ -723,6 +729,8 @@ function workon {
         return 1
     elif [ "$env_name" = "." ]
     then
+        # The IFS default of breaking on whitespace causes issues if there
+        # are spaces in the env_name, so change it.
         IFS='%'
         env_name="$(basename $(pwd))"
         unset IFS
@@ -885,7 +893,7 @@ function cdsitepackages {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
     typeset site_packages="`virtualenvwrapper_get_site_packages_dir`"
-    virtualenvwrapper_cd "$site_packages"/$1
+    virtualenvwrapper_cd "$site_packages/$1"
 }
 
 # Does a ``cd`` to the root of the currently-active virtualenv.
@@ -893,7 +901,7 @@ function cdsitepackages {
 function cdvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     virtualenvwrapper_verify_active_environment || return 1
-    virtualenvwrapper_cd "$VIRTUAL_ENV"/$1
+    virtualenvwrapper_cd "$VIRTUAL_ENV/$1"
 }
 
 # Shows the content of the site-packages directory of the currently-active
@@ -1293,7 +1301,9 @@ function allvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     typeset d
 
-    IFS=''
+    # The IFS default of breaking on whitespace causes issues if there
+    # are spaces in the env_name, so change it.
+    IFS='%'
     virtualenvwrapper_show_workon_options | while read d
     do
         [ ! -d "$WORKON_HOME/$d" ] && continue

@@ -25,7 +25,16 @@ test_get_site_packages_dir () {
     deactivate
 }
 
+test_lssitepackages () {
+    mkvirtualenv "lssitepackagestest" >/dev/null 2>&1
+    contents="$(lssitepackages)"    
+    assertTrue "did not find easy_install in site-packages" "echo $contents | grep -q easy_install"
+    deactivate
+}
+
 test_lssitepackages_space_in_name () {
+    # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
+    # and work with virtualenv on OSX, but error out on Linux.
     mkvirtualenv " space lssitepackagestest" >/dev/null 2>&1
     contents="$(lssitepackages)"    
     assertTrue "did not find easy_install in site-packages" "echo $contents | grep -q easy_install"

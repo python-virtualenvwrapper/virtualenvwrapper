@@ -33,7 +33,16 @@ test_new_env_activated () {
     assertTrue virtualenvwrapper_verify_active_environment
 }
 
+test_virtual_env_variable () {
+    mkvirtualenv "source" >/dev/null 2>&1
+    cpvirtualenv "source" "destination" >/dev/null 2>&1
+    assertSame "Wrong virtualenv name" "destination" $(basename "$VIRTUAL_ENV")
+    assertTrue "$WORKON_HOME not in $VIRTUAL_ENV" "echo $VIRTUAL_ENV | grep -q $WORKON_HOME"
+}
+
 test_virtual_env_variable_space_in_name () {
+    # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
+    # and work with virtualenv on OSX, but error out on Linux.
     mkvirtualenv " space source" >/dev/null 2>&1
     cpvirtualenv " space source" " space destination" >/dev/null 2>&1
     assertSame "Wrong virtualenv name" " space destination" "$(basename "$VIRTUAL_ENV")"

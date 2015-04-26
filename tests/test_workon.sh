@@ -108,8 +108,8 @@ test_virtualenvwrapper_show_workon_options_chpwd () {
 test_virtualenvwrapper_show_workon_options_no_envs () {
     old_home="$WORKON_HOME"
     export WORKON_HOME=${TMPDIR:-/tmp}/$$
-    envs=$(virtualenvwrapper_show_workon_options 2>/dev/null\
-        | tr '\n' '' 2>/dev/null | tr ' ' '' 2>/dev/null)
+    # On OSX there is a space and on Linux there is not, so strip all spaces
+    envs=$(virtualenvwrapper_show_workon_options 2>/dev/null | sed 's/\n //g')
     assertSame "" "$envs"
     export WORKON_HOME="$old_home"
 }

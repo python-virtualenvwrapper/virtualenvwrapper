@@ -9,9 +9,6 @@ oneTimeSetUp() {
     unset VIRTUAL_ENV
     source "$test_dir/../virtualenvwrapper.sh"
     mkvirtualenv cd-test >/dev/null 2>&1
-    # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
-    # and work with virtualenv on OSX, but error out on Linux.
-    mkvirtualenv " env with space" >/dev/null 2>&1
     deactivate
 }
 
@@ -41,27 +38,7 @@ test_cdvirtual() {
     virtualenvwrapper_cd "$start_dir"
 }
 
-test_cdvirtual_space_in_name() {
-    workon " env with space"
-    start_dir="$(pwd)"
-    cdvirtualenv
-    assertSame "$VIRTUAL_ENV" "$(pwd)"
-    cdvirtualenv bin
-    assertSame "$VIRTUAL_ENV/bin" "$(pwd)"
-    virtualenvwrapper_cd "$start_dir"
-}
-
 test_cdsitepackages () {
-    start_dir="$(pwd)"
-    cdsitepackages
-    pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
-    sitepackages="$VIRTUAL_ENV/lib/python${pyvers}/site-packages"
-    assertSame "$sitepackages" "$(pwd)"
-    virtualenvwrapper_cd "$start_dir"
-}
-
-test_cdsitepackages_space_in_name () {
-    workon " env with space"
     start_dir="$(pwd)"
     cdsitepackages
     pyvers=$(python -V 2>&1 | cut -f2 -d' ' | cut -f1-2 -d.)
