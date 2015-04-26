@@ -521,7 +521,7 @@ function rmvirtualenv {
 
     # support to remove several environments
     typeset env_name
-    for env_name in $@
+    for env_name in "$@"
     do
         echo "Removing $env_name..."
         typeset env_dir="$WORKON_HOME/$env_name"

@@ -14,51 +14,53 @@ oneTimeTearDown() {
 }
 
 setUp () {
-    echo
+    mkvirtualenv "deleteme" >/dev/null 2>&1
+    # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
+    # and work with virtualenv on OSX, but error out on Linux.
+    mkvirtualenv " env with space" >/dev/null 2>&1
+    deactivate >/dev/null 2>&1
 }
 
 test_remove () {
-    mkvirtualenv "deleteme" >/dev/null 2>&1
     assertTrue "[ -d $WORKON_HOME/deleteme ]"
-    deactivate
     rmvirtualenv "deleteme"
     assertFalse "[ -d $WORKON_HOME/deleteme ]"
+}
+
+test_remove_space_in_name () {
+    assertTrue "[ -d $WORKON_HOME/\" env with space\" ]"
+    rmvirtualenv " env with space"
+    assertFalse "[ -d $WORKON_HOME/\" env with space\" ]"
 }
 
 test_remove_several_envs () {
-    mkvirtualenv "deleteme" >/dev/null 2>&1
     assertTrue "[ -d $WORKON_HOME/deleteme ]"
-    deactivate
-    mkvirtualenv "deleteme2" >/dev/null 2>&1
-    assertTrue "[ -d $WORKON_HOME/deleteme2 ]"
-    deactivate
-    rmvirtualenv "deleteme deleteme2"
+    assertTrue "[ -d $WORKON_HOME/\" env with space\" ]"
+    rmvirtualenv deleteme " env with space"
     assertFalse "[ -d $WORKON_HOME/deleteme ]"
-    assertFalse "[ -d $WORKON_HOME/deleteme2 ]"
+    assertFalse "[ -d $WORKON_HOME/\" env with space\" ]"
 }
 
 test_within_virtualenv () {
-    mkvirtualenv "deleteme" >/dev/null 2>&1
-    assertTrue "[ -d $WORKON_HOME/deleteme ]"
+    mkvirtualenv "deleteme2" >/dev/null 2>&1
+    assertTrue "[ -d $WORKON_HOME/deleteme2 ]"
     cdvirtualenv
     assertSame "$VIRTUAL_ENV" "$(pwd)"
     deactivate
-    rmvirtualenv "deleteme"
+    rmvirtualenv "deleteme2"
     assertSame "$WORKON_HOME" "$(pwd)"
-    assertFalse "[ -d $WORKON_HOME/deleteme ]"
+    assertFalse "[ -d $WORKON_HOME/deleteme2 ]"
 }
 
 test_rm_aliased () {
-    mkvirtualenv "deleteme" >/dev/null 2>&1
-    deactivate
     alias rm='rm -i'
     rmvirtualenv "deleteme"
     unalias rm
 }
 
 test_no_such_env () {
-    assertFalse "[ -d $WORKON_HOME/deleteme ]"
-    assertTrue "rmvirtualenv deleteme"
+    assertFalse "[ -d $WORKON_HOME/deleteme2 ]"
+    assertTrue "rmvirtualenv deleteme2"
 }
 
 test_no_workon_home () {
