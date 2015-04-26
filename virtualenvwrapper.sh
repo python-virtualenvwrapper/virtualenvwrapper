@@ -945,9 +945,9 @@ function cpvirtualenv {
         echo "Please provide a valid virtualenv to copy."
         return 1
     else
-        # see if its already in workon
+        # see if it's already in workon
         if [ ! -e "$WORKON_HOME/$src_name" ]; then
-            # so its a virtualenv we are importing
+            # so it's a virtualenv we are importing
             # make sure we have a full path
             # and get the name
             src="$(virtualenvwrapper_expandpath "$src_name")"

@@ -25,8 +25,8 @@ test_get_site_packages_dir () {
     deactivate
 }
 
-test_lssitepackages () {
-    mkvirtualenv "lssitepackagestest" >/dev/null 2>&1
+test_lssitepackages_space_in_name () {
+    mkvirtualenv " space lssitepackagestest" >/dev/null 2>&1
     contents="$(lssitepackages)"    
     assertTrue "did not find easy_install in site-packages" "echo $contents | grep -q easy_install"
     deactivate
