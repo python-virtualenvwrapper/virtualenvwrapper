@@ -32,6 +32,15 @@ test_lssitepackages () {
     deactivate
 }
 
+test_lssitepackages_space_in_name () {
+    # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
+    # and work with virtualenv on OSX, but error out on Linux.
+    mkvirtualenv " space lssitepackagestest" >/dev/null 2>&1
+    contents="$(lssitepackages)"    
+    assertTrue "did not find easy_install in site-packages" "echo $contents | grep -q easy_install"
+    deactivate
+}
+
 test_lssitepackages_add2virtualenv () {
     mkvirtualenv "lssitepackagestest" >/dev/null 2>&1
     parent_dir=$(dirname $(pwd))
@@ -73,6 +82,14 @@ test_lsvirtualenv_space_in_workon_home () {
     output=$(cat "$old_home/output")
     assertTrue "Did not see expected message in \"$output\"" "echo $output | grep -q 'testenv'"
     WORKON_HOME="$old_home"
+}
+
+test_lsvirtualenv_space_in_env_name () {
+    # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
+    # and work with virtualenv on OSX, but error out on Linux.
+    mkvirtualenv " env with space"
+    lsvirtualenv -b >"$WORKON_HOME/output" 2>&1
+    assertTrue "Did not see expected message in \"$output\"" "cat \"$WORKON_HOME/output\" | grep -q ' env with space'"
 }
 
 
