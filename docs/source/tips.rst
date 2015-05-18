@@ -63,8 +63,8 @@ to the project directory when I use the workon command::
 Automatically Run workon When Entering a Directory
 ==================================================
 
-`Justin Lily posted
-<http://justinlilly.com/python/virtualenv_wrapper_helper.html>`__
+`Justin Abrahms posted
+<https://justin.abrah.ms/python/virtualenv_wrapper_helper.html>`__
 about some code he added to his shell environment to look at the
 directory each time he runs ``cd``.  If it finds a ``.venv`` file, it
 activates the environment named within.  On leaving that directory,
