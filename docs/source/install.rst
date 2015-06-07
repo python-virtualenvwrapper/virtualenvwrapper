@@ -76,7 +76,7 @@ can download virtualenvwrapper-powershell_ from PyPI.
 Python Versions
 ===============
 
-virtualenvwrapper is tested under Python 2.6-3.3.
+virtualenvwrapper is tested under Python 2.6-3.4.
 
 .. _install-basic:
 
