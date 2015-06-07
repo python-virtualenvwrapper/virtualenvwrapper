@@ -92,5 +92,11 @@ test_lsvirtualenv_space_in_env_name () {
     assertTrue "Did not see expected message in \"$output\"" "cat \"$WORKON_HOME/output\" | grep -q ' env with space'"
 }
 
+test_lsvirtualenv_blank_lines () {
+    # There should be no blank lines in the list of virtualenvs
+    mkvirtualenv "at-least-one-env" >/dev/null 2>&1
+    assertFalse "Found blank line in virtualenvwrapper_show_workon_options output" "virtualenvwrapper_show_workon_options | grep -q '^$'"
+}
+
 
 . "$test_dir/shunit2"
