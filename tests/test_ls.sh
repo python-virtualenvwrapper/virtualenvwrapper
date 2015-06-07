@@ -77,7 +77,7 @@ test_lsvirtualenv_space_in_workon_home () {
     old_home="$WORKON_HOME"
     export WORKON_HOME="$WORKON_HOME/with space"
     mkdir "$WORKON_HOME"
-    (cd "$WORKON_HOME"; virtualenv testenv) 2>&1
+    (cd "$WORKON_HOME"; virtualenv testenv) >/dev/null 2>&1
     lsvirtualenv -b >"$old_home/output"
     output=$(cat "$old_home/output")
     assertTrue "Did not see expected message in \"$output\"" "echo $output | grep -q 'testenv'"
@@ -87,7 +87,7 @@ test_lsvirtualenv_space_in_workon_home () {
 test_lsvirtualenv_space_in_env_name () {
     # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
     # and work with virtualenv on OSX, but error out on Linux.
-    mkvirtualenv " env with space"
+    mkvirtualenv " env with space" >/dev/null 2>&1
     lsvirtualenv -b >"$WORKON_HOME/output" 2>&1
     assertTrue "Did not see expected message in \"$output\"" "cat \"$WORKON_HOME/output\" | grep -q ' env with space'"
 }
