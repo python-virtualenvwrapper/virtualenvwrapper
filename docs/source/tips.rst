@@ -117,7 +117,7 @@ Via `mae <http://www.blogger.com/profile/10879711379090472478>`__:
 This is supposed to be executed after workon, that is as a
 ``postactivate`` hook. It basically overrides ``cd`` to know about the
 VENV so instead of doing ``cd`` to go to ``~`` you will go to the venv
-root, IMO very handy and I can't live without it anymore. if you pass
+root, IMO very handy and I can't live without it anymore. If you pass
 it a proper path then it will do the right thing.
 
 ::
@@ -132,3 +132,12 @@ it a proper path then it will do the right thing.
     }
 
     cd
+
+And to finally restore the default behaviour of ``cd`` once you
+bailout of a VENV via a ``deactivate`` command, you need to add this
+as a ``postdeactivate`` hook (`source 
+<http://github.com/kdeldycke/dotfiles/commit/80470b>`_)::
+
+    cd () {
+        builtin cd "$@"
+    }
