@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 # Are we running under msys
 if sys.platform == 'win32' and \
    os.environ.get('OS') == 'Windows_NT' and \
-   os.environ.get('MSYSTEM') == 'MINGW32':
+   os.environ.get('MSYSTEM') in ('MINGW32', 'MINGW64'):
     is_msys = True
     script_folder = 'Scripts'
 else:
