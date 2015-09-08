@@ -104,12 +104,12 @@ or::
 
 An alternative to installing it into the global site-packages is to
 add it to `your user local directory
-<http://docs.python.org/install/index.html#alternate-installation-the-home-scheme>`__
+<http://docs.python.org/install/index.html#alternate-installation-the-user-scheme>`__
 (usually `~/.local`).
 
 ::
 
-  $ pip install --install-option="--user" virtualenvwrapper
+  $ pip install --user virtualenvwrapper
 
 .. _install-shell-config:
 
