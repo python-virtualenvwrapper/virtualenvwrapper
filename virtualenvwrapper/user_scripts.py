@@ -217,6 +217,7 @@ def pre_mkvirtualenv(args):
 
 
 def post_mkvirtualenv_source(args):
+    log.debug('post_mkvirtualenv_source %s', str(args))
     return """
 #
 # Run user-provided scripts
@@ -237,6 +238,7 @@ def pre_cpvirtualenv(args):
 
 
 def post_cpvirtualenv_source(args):
+    log.debug('post_cpvirtualenv_source %s', str(args))
     return """
 #
 # Run user-provided scripts
@@ -268,7 +270,7 @@ def pre_activate(args):
 
 
 def post_activate_source(args):
-    log.debug('post_activate')
+    log.debug('post_activate_source')
     return """
 #
 # Run user-provided scripts
@@ -281,7 +283,7 @@ def post_activate_source(args):
 
 
 def pre_deactivate_source(args):
-    log.debug('pre_deactivate')
+    log.debug('pre_deactivate_source')
     return """
 #
 # Run user-provided scripts
@@ -294,7 +296,7 @@ def pre_deactivate_source(args):
 
 
 def post_deactivate_source(args):
-    log.debug('post_deactivate')
+    log.debug('post_deactivate_source')
     return """
 #
 # Run user-provided scripts

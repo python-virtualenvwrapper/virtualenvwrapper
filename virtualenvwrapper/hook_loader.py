@@ -82,7 +82,7 @@ def main():
     parser.disable_interspersed_args()  # stop when on option without an '-'
     options, args = parser.parse_args()
 
-    root_logger = logging.getLogger('')
+    root_logger = logging.getLogger('virtualenvwrapper')
 
     # Set up logging to a file
     logfile = os.environ.get('VIRTUALENVWRAPPER_LOG_FILE')
@@ -98,7 +98,7 @@ def main():
         root_logger.addHandler(file_handler)
 
     # Send higher-level messages to the console, too
-    console = logging.StreamHandler()
+    console = logging.StreamHandler(stream=sys.stderr)
     console_level = [logging.WARNING,
                      logging.INFO,
                      logging.DEBUG,
@@ -107,6 +107,7 @@ def main():
     formatter = logging.Formatter('%(name)s %(message)s')
     console.setFormatter(formatter)
     root_logger.addHandler(console)
+    root_logger.setLevel(console_level)
 
     # logging.getLogger(__name__).debug('cli args %s', args)
 
@@ -125,7 +126,7 @@ def main():
     if options.sourcing:
         hook += '_source'
 
-    log = logging.getLogger(__name__)
+    log = logging.getLogger('virtualenvwrapper.hook_loader')
 
     log.debug('Running %s hooks', hook)
     run_hooks(hook, options, args)
@@ -147,13 +148,16 @@ def main():
 
 
 def run_hooks(hook, options, args, output=None):
+    log = logging.getLogger('virtualenvwrapper.hook_loader')
     if output is None:
         output = sys.stdout
 
     namespace = 'virtualenvwrapper.%s' % hook
     if options.names:
+        log.debug('looking for %s hooks %s' % (namespace, options.names))
         hook_mgr = NamedExtensionManager(namespace, options.names)
     else:
+        log.debug('looking for %s hooks' % namespace)
         hook_mgr = ExtensionManager(namespace)
 
     if options.listing:
@@ -169,6 +173,7 @@ def run_hooks(hook, options, args, output=None):
         def get_source(ext, args):
             # Show the shell commands so they can
             # be run in the calling shell.
+            log.debug('getting source instructions for %s' % ext.name)
             contents = (ext.plugin(args) or '').strip()
             if contents:
                 output.write('# %s\n' % ext.name)
@@ -182,6 +187,7 @@ def run_hooks(hook, options, args, output=None):
     else:
         # Just run the plugin ourselves
         def invoke(ext, args):
+            log.debug('running %s' % ext.name)
             ext.plugin(args)
         try:
             hook_mgr.map(invoke, args[1:])
