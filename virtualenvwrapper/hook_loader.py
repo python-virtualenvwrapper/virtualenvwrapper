@@ -98,7 +98,7 @@ def main():
         root_logger.addHandler(file_handler)
 
     # Send higher-level messages to the console, too
-    console = logging.StreamHandler(stream=sys.stderr)
+    console = logging.StreamHandler(sys.stderr)
     console_level = [logging.WARNING,
                      logging.INFO,
                      logging.DEBUG,
