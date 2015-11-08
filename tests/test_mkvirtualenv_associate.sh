@@ -41,7 +41,10 @@ test_associate_relative_path() {
     ptrfile="$WORKON_HOME/$env/.project"
     mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
     assertTrue ".project not found" "[ -f $ptrfile ]"
-    assertEquals "$ptrfile contains wrong content" "$WORKON_HOME/$project" "$(cat $ptrfile)"
+    assertEquals \
+        "$ptrfile contains wrong content" \
+        "$WORKON_HOME/$project" \
+        "$(cat $ptrfile | sed 's|^/private||')"
 }
 
 test_associate_not_a_directory() {
@@ -118,7 +121,13 @@ test_associate_relative_with_dots() {
     ptrfile="$WORKON_HOME/$env/.project"
     mkvirtualenv -a "$project" "$env" >/dev/null 2>&1
     assertTrue ".project not found" "[ -f $ptrfile ]"
-    assertEquals "$ptrfile contains wrong content" "$WORKON_HOME/project$n" "$(cat $ptrfile)"
+    # Sometimes OS X prepends /private on the front of the temporary
+    # directory, but the directory is the same as without it, so strip
+    # it if we see the value in the project file.
+    assertEquals \
+        "$ptrfile contains wrong content" \
+        "$WORKON_HOME/project$n" \
+        "$(cat $ptrfile | sed 's|^/private||')"
 }
 
 . "$test_dir/shunit2"
