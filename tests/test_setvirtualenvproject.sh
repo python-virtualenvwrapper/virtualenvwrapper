@@ -42,7 +42,10 @@ test_setvirtualenvproject_relative_path() {
     mkvirtualenv "$env" >/dev/null 2>&1
     setvirtualenvproject "$env" "$project" >/dev/null 2>&1
     assertTrue ".project not found" "[ -f $ptrfile ]"
-    assertEquals "$ptrfile contains wrong content" "$WORKON_HOME/$project" "$(cat $ptrfile)"
+    assertEquals \
+        "$ptrfile contains wrong content" \
+        "$WORKON_HOME/$project" \
+        "$(cat $ptrfile | sed 's|^/private||')"
 }
 
 test_setvirtualenvproject_not_a_directory() {
@@ -83,7 +86,10 @@ test_setvirtualenvproject_relative_with_dots() {
     mkvirtualenv "$env" >/dev/null 2>&1
     setvirtualenvproject "$env" "$project" >/dev/null 2>&1
     assertTrue ".project not found" "[ -f $ptrfile ]"
-    assertEquals "$ptrfile contains wrong content" "$WORKON_HOME/project$n" "$(cat $ptrfile)"
+    assertEquals \
+        "$ptrfile contains wrong content" \
+        "$WORKON_HOME/project$n" \
+        "$(cat $ptrfile | sed 's|^/private||')"
 }
 
 . "$test_dir/shunit2"
