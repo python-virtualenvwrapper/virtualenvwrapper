@@ -74,7 +74,7 @@ Join the `virtualenvwrapper Google Group
 issues and features.  
 
 Report bugs via the `bug tracker on Bitbucket
-<https://bitbucket.org/dhellmann/virtualenvwrapper/issues>`__.
+<https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/issues>`__.
 
 Shell Aliases
 =============
