@@ -141,3 +141,17 @@ as a ``postdeactivate`` hook (`source
     cd () {
         builtin cd "$@"
     }
+
+Clean up environments on exit
+=======================================
+
+Via `Michael <https://github.com/kojiromike>`__:
+
+When you use a temporary virtualenv via ``mktmpenv`` or if you have
+a `deactivate <http://virtualenvwrapper.readthedocs.org/en/latest/plugins.html?highlight=hooks#post-deactivate>`_ hook, you have to actually run
+``deactivate`` to clean up the temporary environment or run the hook,
+respectively. It's easy to forget and just exit the shell. Put the
+following in ``~/.bash_logout`` (or your shell's equivalent file) to
+always deactivate environments before exiting the shell::
+
+    [ "$VIRTUAL_ENV" ] && deactivate
