@@ -457,6 +457,7 @@ in a ``.pth`` file inside ``site-packages`` using ``add2virtualenv``.
 2. Run: ``add2virtualenv path_to_source``.
 3. Run: ``add2virtualenv``.
 4. A usage message and list of current "extra" paths is printed.
+5. Use option ``-d`` to remove the added path.
 
 The directory names are added to a path file named
 ``_virtualenv_path_extensions.pth`` inside the site-packages directory
