@@ -44,13 +44,16 @@ function $venvw_name {
 # Set up completion functions to virtualenvwrapper_load
 function virtualenvwrapper_setup_lazy_completion {
     if [ -n "$BASH" ] ; then
-        complete -o nospace -F virtualenvwrapper_load $(echo ${_VIRTUALENVWRAPPER_API})
+        function virtualenvwrapper_lazy_load {
+            virtualenvwrapper_load
+            return 124
+        }
+        complete -o nospace -F virtualenvwrapper_lazy_load $(echo ${_VIRTUALENVWRAPPER_API})
     elif [ -n "$ZSH_VERSION" ] ; then
         compctl -K virtualenvwrapper_load $(echo ${_VIRTUALENVWRAPPER_API})
     fi
 }
 
 virtualenvwrapper_setup_lazy_loader
-# Does not really work. Cannot be reset in zsh to fallback to files (e.g. mkvirtualenv).
-# It also needs a second invocation, because the first one only sets up the real completion.
+# Cannot be reset in zsh to fallback to files (e.g. mkvirtualenv).
 virtualenvwrapper_setup_lazy_completion
