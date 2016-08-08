@@ -57,3 +57,6 @@ function virtualenvwrapper_setup_lazy_completion {
 virtualenvwrapper_setup_lazy_loader
 # Cannot be reset in zsh to fallback to files (e.g. mkvirtualenv).
 virtualenvwrapper_setup_lazy_completion
+
+unset virtualenvwrapper_setup_lazy_loader
+unset virtualenvwrapper_setup_lazy_completion
