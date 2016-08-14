@@ -1,6 +1,6 @@
 syntax: glob
 *~
-*.pyc
+*.py[co]
 README.html
 build
 dist
