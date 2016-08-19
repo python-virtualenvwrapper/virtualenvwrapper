@@ -103,7 +103,7 @@ Switch between environments with ``workon``::
   (env2)$ workon env1
   (env1)$ echo $VIRTUAL_ENV
   /Users/dhellmann/Envs/env1
-  (env1)$ 
+  (env1)$
 
 The ``workon`` command also includes tab completion for the
 environment names, and invokes customization scripts as an environment
@@ -155,7 +155,7 @@ created, letting you automatically install commonly-used tools.
       Installing sphinx-build script to /Users/dhellmann/Envs/env3/bin
       Installing sphinx-quickstart script to /Users/dhellmann/Envs/env3/bin
       Installing sphinx-autogen script to /Users/dhellmann/Envs/env3/bin
-  Successfully installed docutils Jinja2 Pygments sphinx  (env3)$ 
+  Successfully installed docutils Jinja2 Pygments sphinx  (env3)$
   (venv3)$ which sphinx-build
   /Users/dhellmann/Envs/env3/bin/sphinx-build
 
@@ -213,10 +213,10 @@ Support
 
 Join the `virtualenvwrapper Google Group
 <http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
-issues and features.  
+issues and features.
 
 Report bugs via the `bug tracker on BitBucket
-<http://bitbucket.org/dhellmann/virtualenvwrapper/>`__.
+<http://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`__.
 
 Shell Aliases
 =============
