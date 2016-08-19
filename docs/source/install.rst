@@ -22,7 +22,7 @@ request through the `bitbucket project page`_.  If you write a clone to
 work with an incompatible shell, let me know and I will link to it
 from this page.
 
-.. _bitbucket project page: https://bitbucket.org/dhellmann/virtualenvwrapper/
+.. _bitbucket project page: https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/
 
 Windows Command Prompt
 ----------------------
@@ -32,7 +32,7 @@ which can be run under Microsoft Windows Command Prompt. This is also
 a separately distributed re-implementation. You can download
 `virtualenvwrapper-win`_ from PyPI.
 
-.. _virtualenvwrapper-win: http://pypi.python.org/pypi/virtualenvwrapper-win 
+.. _virtualenvwrapper-win: http://pypi.python.org/pypi/virtualenvwrapper-win
 
 MSYS
 ----

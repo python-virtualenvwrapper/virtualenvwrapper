@@ -7,7 +7,7 @@
 This is a list of user-contributed tips for making virtualenv and
 virtualenvwrapper even more useful.  If you have tip to share, drop me
 an email or post a comment on `this blog post
-<http://blog.doughellmann.com/2010/01/virtualenvwrapper-tips-and-tricks.html>`__
+<https://doughellmann.com/blog/2010/01/12/virtualenvwrapper-tips-and-tricks/>`__
 and I'll add it here.
 
 zsh Prompt
