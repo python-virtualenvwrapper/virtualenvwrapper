@@ -212,11 +212,11 @@ Support
 =======
 
 Join the `virtualenvwrapper Google Group
-<http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
+<https://groups.google.com/group/virtualenvwrapper/>`__ to discuss
 issues and features.
 
 Report bugs via the `bug tracker on BitBucket
-<http://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`__.
+<https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`__.
 
 Shell Aliases
 =============
