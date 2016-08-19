@@ -27,7 +27,7 @@ import subprocess
 # ones.
 extensions = ['sphinxcontrib.bitbucket']
 
-bitbucket_project_url = 'http://bitbucket.org/virtualenvwrapper/virtualenvwrapper/'
+bitbucket_project_url = 'https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/'
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['pkg/templates']

@@ -5,7 +5,7 @@ For Developers
 If you would like to contribute to virtualenvwrapper directly, these
 instructions should help you get started.  Patches, bug reports, and
 feature requests are all welcome through the `BitBucket site
-<http://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`_.  Contributions
+<https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`_.  Contributions
 in the form of patches or pull requests are easier to integrate and
 will receive priority attention.
 
@@ -91,7 +91,7 @@ the ``tests`` directory.
 
 .. _shunit2: http://shunit2.googlecode.com/
 
-.. _tox: http://codespeak.net/tox
+.. _tox: https://tox.testrun.org/
 
 .. _developer-templates:
 

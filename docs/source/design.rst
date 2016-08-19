@@ -147,7 +147,7 @@ far I have dealt with the ports by encouraging other developers to
 handle them, and then trying to link to and otherwise promote the
 results.
 
-.. _fish: http://ridiculousfish.com/shell/
+.. _fish: https://fishshell.com/
 
 Not As Bad As It Seems
 ======================
@@ -169,10 +169,10 @@ what virtualenvwrapper is doing, it's a natural fit.
   * `Environment variable`_ on Wikipedia
   * `Linux implementation of fork()`_
 
-.. _Advanced Programming in the UNIX Environment: http://www.amazon.com/gp/product/0321637739/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0321637739&linkCode=as2&tag=hellflynet-20
+.. _Advanced Programming in the UNIX Environment: https://www.amazon.com/gp/product/0321637739/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0321637739&linkCode=as2&tag=hellflynet-20
 
-.. _Fork (operating system): http://en.wikipedia.org/wiki/Fork_(operating_system)
+.. _Fork (operating system): https://en.wikipedia.org/wiki/Fork_(operating_system)
 
-.. _Environment variable: http://en.wikipedia.org/wiki/Environment_variable
+.. _Environment variable: https://en.wikipedia.org/wiki/Environment_variable
 
 .. _Linux implementation of fork(): https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/kernel/fork.c?id=refs/tags/v3.9-rc8#n1558
