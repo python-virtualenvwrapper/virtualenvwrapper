@@ -8,7 +8,7 @@ virtualenvwrapper |release|
 ###########################
 
 virtualenvwrapper is a set of extensions to Ian Bicking's `virtualenv
-<http://pypi.python.org/pypi/virtualenv>`_ tool.  The extensions
+<https://pypi.python.org/pypi/virtualenv>`_ tool.  The extensions
 include wrappers for creating and deleting virtual environments and
 otherwise managing your development workflow, making it easier to work
 on more than one project at a time without introducing conflicts in
@@ -189,23 +189,23 @@ Details
 References
 ==========
 
-`virtualenv <http://pypi.python.org/pypi/virtualenv>`_, from Ian
+`virtualenv <https://pypi.python.org/pypi/virtualenv>`_, from Ian
 Bicking, is a pre-requisite to using these extensions.
 
 For more details, refer to the column I wrote for the May 2008 issue
 of Python Magazine: `virtualenvwrapper | And Now For Something
 Completely Different
-<http://www.doughellmann.com/articles/CompletelyDifferent-2008-05-virtualenvwrapper/index.html>`_.
+<https://doughellmann.com/blog/2008/05/01/virtualenvwrapper/>`_.
 
 Rich Leland has created a short `screencast
-<http://mathematism.com/2009/jul/30/presentation-pip-and-virtualenv/>`__
+<http://mathematism.com/2009/07/30/presentation-pip-and-virtualenv/>`__
 showing off the features of virtualenvwrapper.
 
 Manuel Kaufmann has `translated this documentation into Spanish
-<http://virtualenvwrapper-docs-es.readthedocs.org/en/latest/>`__.
+<https://virtualenvwrapper-docs-es.readthedocs.org/es/latest/>`__.
 
 Tetsuya Morimoto has `translated this documentation into Japanese
-<http://virtualenvwrapper-docs-ja.readthedocs.org/en/latest/>`__.
+<https://virtualenvwrapper-docs-ja.readthedocs.org/en/latest/>`__.
 
 =======
 Support
