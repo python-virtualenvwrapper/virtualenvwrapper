@@ -5,7 +5,7 @@ For Developers
 If you would like to contribute to virtualenvwrapper directly, these
 instructions should help you get started.  Patches, bug reports, and
 feature requests are all welcome through the `BitBucket site
-<http://bitbucket.org/dhellmann/virtualenvwrapper/>`_.  Contributions
+<http://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`_.  Contributions
 in the form of patches or pull requests are easier to integrate and
 will receive priority attention.
 
@@ -40,7 +40,7 @@ documentation::
     updating environment: 0 added, 2 changed, 0 removed
     reading sources... [ 50%] command_ref
     reading sources... [100%] developers
-    
+
     looking for now-outdated files... none found
     pickling environment... done
     checking consistency... done
@@ -48,17 +48,17 @@ documentation::
     writing output... [ 33%] command_ref
     writing output... [ 66%] developers
     writing output... [100%] index
-    
+
     writing additional files... search
     copying static files... WARNING: static directory '/Users/dhellmann/Devel/virtualenvwrapper/plugins/docs/sphinx/pkg/static' does not exist
     done
     dumping search index... done
     dumping object inventory... done
     build succeeded, 1 warning.
-    
+
     Build finished. The HTML pages are in build/html.
     cp -r docs/build/html virtualenvwrapper/docs
-    
+
 The output version of the documentation ends up in
 ``./virtualenvwrapper/docs`` inside your sandbox.
 
