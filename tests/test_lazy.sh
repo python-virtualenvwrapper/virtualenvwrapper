@@ -96,4 +96,12 @@ test_mktmpenv_defined_lazy() {
     function_defined_lazy mktmpenv
 }
 
+test_mktmpenv_defined_lazy() {
+    function_defined_lazy wipeenv
+}
+
+test_mktmpenv_defined_lazy() {
+    function_defined_lazy allvirtualenv
+}
+
 . "$test_dir/shunit2"

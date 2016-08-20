@@ -13,7 +13,7 @@ and I'll add it here.
 zsh Prompt
 ==========
 
-From `Nat <http://www.blogger.com/profile/16779944428406910187>`_:
+From Nat (was blogger.com/profile/16779944428406910187):
 
 Using zsh, I added some bits to ``$WORKON_HOME/post(de)activate`` to show
 the active virtualenv on the right side of my screen instead.
@@ -33,7 +33,7 @@ Adjust colors according to your own personal tastes or environment.
 Updating cached ``$PATH`` entries
 =================================
 
-From `Nat <http://www.blogger.com/profile/16779944428406910187>`_:
+From Nat (was blogger.com/profile/16779944428406910187):
 
 I also added the command 'rehash' to ``$WORKON_HOME/postactivate`` and
 ``$WORKON_HOME/postdeactivate`` as I was having some problems with zsh
@@ -42,7 +42,7 @@ not picking up the new paths immediately.
 Creating Project Work Directories
 =================================
 
-Via `James <http://www.blogger.com/profile/02618224969192901883>`_:
+Via `James <https://www.blogger.com/profile/02618224969192901883>`_:
 
 In the ``postmkvirtualenv`` script I have the following to create a
 directory based on the project name, add that directory to the python
@@ -70,14 +70,14 @@ directory each time he runs ``cd``.  If it finds a ``.venv`` file, it
 activates the environment named within.  On leaving that directory,
 the current virtualenv is automatically deactivated.
 
-`Harry Marr <http://www.blogger.com/profile/17141199633387157732>`__
+`Harry Marr <http://hmarr.com/about/>`__
 wrote a similar function that works with `git repositories
 <http://hmarr.com/2010/jan/19/making-virtualenv-play-nice-with-git/>`__.
 
 Installing Common Tools Automatically in New Environments
 =========================================================
 
-Via `rizumu <http://rizumu.myopenid.com/>`__:
+Via rizumu (was rizumu.myopenid.com):
 
 I have this ``postmkvirtualenv`` to install the get a basic setup.
 
@@ -112,7 +112,7 @@ PIL, psycopg2, django-apps, numpy, etc.
 Changing the Default Behavior of ``cd``
 =======================================
 
-Via `mae <http://www.blogger.com/profile/10879711379090472478>`__:
+Via `mae <https://www.blogger.com/profile/10879711379090472478>`__:
 
 This is supposed to be executed after workon, that is as a
 ``postactivate`` hook. It basically overrides ``cd`` to know about the
@@ -136,7 +136,7 @@ it a proper path then it will do the right thing.
 And to finally restore the default behaviour of ``cd`` once you
 bailout of a VENV via a ``deactivate`` command, you need to add this
 as a ``postdeactivate`` hook (`source
-<http://github.com/kdeldycke/dotfiles/commit/80470b>`_)::
+<https://github.com/kdeldycke/dotfiles/commit/80470b>`_)::
 
     cd () {
         builtin cd "$@"

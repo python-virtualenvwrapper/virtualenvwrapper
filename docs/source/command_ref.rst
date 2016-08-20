@@ -57,7 +57,7 @@ installed.
    * :ref:`scripts-postmkvirtualenv`
    * `requirements file format`_
 
-.. _requirements file format: http://www.pip-installer.org/en/latest/requirements.html
+.. _requirements file format: https://pip.pypa.io/en/latest/reference/pip_install/#requirements-file-format
 
 .. _command-mktmpenv:
 
