@@ -96,11 +96,11 @@ test_mktmpenv_defined_lazy() {
     function_defined_lazy mktmpenv
 }
 
-test_mktmpenv_defined_lazy() {
+test_wipeenv_defined_lazy() {
     function_defined_lazy wipeenv
 }
 
-test_mktmpenv_defined_lazy() {
+test_allvirtualenv_defined_lazy() {
     function_defined_lazy allvirtualenv
 }
 

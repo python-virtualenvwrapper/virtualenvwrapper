@@ -34,3 +34,5 @@ lib
 syntax: re
 .DS_Store
 ^web/
+.python-version
+.eggs
