@@ -6,7 +6,7 @@ help:
 	@echo "upload         - upload a new release to PyPI"
 	@echo "develop        - install development version"
 	@echo "test           - run the test suite"
-	@echo "test-quick     - run the test suite for bash and one version of Python ($(PYTHON26))"
+	@echo "test-quick     - run the test suite for bash and one version of Python ($(PYTHON27))"
 
 .PHONY: sdist
 sdist: html
