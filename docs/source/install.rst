@@ -32,7 +32,7 @@ which can be run under Microsoft Windows Command Prompt. This is also
 a separately distributed re-implementation. You can download
 `virtualenvwrapper-win`_ from PyPI.
 
-.. _virtualenvwrapper-win: http://pypi.python.org/pypi/virtualenvwrapper-win
+.. _virtualenvwrapper-win: https://pypi.python.org/pypi/virtualenvwrapper-win
 
 MSYS
 ----
@@ -58,7 +58,7 @@ or::
 Depending on your MSYS setup, you may need to install the `MSYS mktemp
 binary`_ in the ``MSYS_HOME/bin`` folder.
 
-.. _MSYS mktemp binary: http://sourceforge.net/projects/mingw/files/MSYS/mktemp/
+.. _MSYS mktemp binary: https://sourceforge.net/projects/mingw/files/MSYS/
 
 PowerShell
 ----------
@@ -69,7 +69,7 @@ with the rest of the extensions, and is largely a re-implementation
 (rather than an adaptation), it should be distributed separately. You
 can download virtualenvwrapper-powershell_ from PyPI.
 
-.. _virtualenvwrapper-powershell: http://pypi.python.org/pypi/virtualenvwrapper-powershell/2.7.1
+.. _virtualenvwrapper-powershell: https://pypi.python.org/pypi/virtualenvwrapper-powershell
 
 .. _supported-versions:
 
@@ -104,7 +104,7 @@ or::
 
 An alternative to installing it into the global site-packages is to
 add it to `your user local directory
-<http://docs.python.org/install/index.html#alternate-installation-the-user-scheme>`__
+<https://docs.python.org/install/index.html#alternate-installation-the-user-scheme>`__
 (usually `~/.local`).
 
 ::
@@ -331,4 +331,4 @@ supported.  In your startup file, change ``source
 /usr/local/bin/virtualenvwrapper_bashrc`` to ``source
 /usr/local/bin/virtualenvwrapper.sh``.
 
-.. _pip: http://pypi.python.org/pypi/pip
+.. _pip: https://pypi.python.org/pypi/pip

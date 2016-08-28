@@ -88,6 +88,14 @@ test_mktmpenv_defined_normal() {
     function_defined_normal mktmpenv
 }
 
+test_wipeenv_defined_normal() {
+    function_defined_normal wipeenv
+}
+
+test_allvirtualenv_defined_normal() {
+    function_defined_normal allvirtualenv
+}
+
 
 # test_virtualenvwrapper_initialize() {
 #     assertTrue "Initialized" virtualenvwrapper_initialize

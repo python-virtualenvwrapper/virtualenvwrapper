@@ -1,7 +1,7 @@
 #!/bin/sh
 # Alternative startup script for faster login times.
 
-export _VIRTUALENVWRAPPER_API="$_VIRTUALENVWRAPPER_API mkvirtualenv rmvirtualenv lsvirtualenv showvirtualenv workon add2virtualenv cdsitepackages cdvirtualenv lssitepackages toggleglobalsitepackages cpvirtualenv setvirtualenvproject mkproject cdproject mktmpenv"
+export _VIRTUALENVWRAPPER_API="$_VIRTUALENVWRAPPER_API mkvirtualenv rmvirtualenv lsvirtualenv showvirtualenv workon add2virtualenv cdsitepackages cdvirtualenv lssitepackages toggleglobalsitepackages cpvirtualenv setvirtualenvproject mkproject cdproject mktmpenv wipeenv allvirtualenv"
 
 if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
 then
@@ -44,13 +44,19 @@ function $venvw_name {
 # Set up completion functions to virtualenvwrapper_load
 function virtualenvwrapper_setup_lazy_completion {
     if [ -n "$BASH" ] ; then
-        complete -o nospace -F virtualenvwrapper_load $(echo ${_VIRTUALENVWRAPPER_API})
+        function virtualenvwrapper_lazy_load {
+            virtualenvwrapper_load
+            return 124
+        }
+        complete -o nospace -F virtualenvwrapper_lazy_load $(echo ${_VIRTUALENVWRAPPER_API})
     elif [ -n "$ZSH_VERSION" ] ; then
         compctl -K virtualenvwrapper_load $(echo ${_VIRTUALENVWRAPPER_API})
     fi
 }
 
 virtualenvwrapper_setup_lazy_loader
-# Does not really work. Cannot be reset in zsh to fallback to files (e.g. mkvirtualenv).
-# It also needs a second invocation, because the first one only sets up the real completion.
+# Cannot be reset in zsh to fallback to files (e.g. mkvirtualenv).
 virtualenvwrapper_setup_lazy_completion
+
+unset virtualenvwrapper_setup_lazy_loader
+unset virtualenvwrapper_setup_lazy_completion

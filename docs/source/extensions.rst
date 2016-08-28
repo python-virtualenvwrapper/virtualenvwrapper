@@ -14,9 +14,9 @@ used as a project file similar to other IDEs.  The emacs-desktop_
 plugin adds a trigger to save the current desktop file and load a new
 one when activating a new virtualenv using ``workon``.
 
-.. _desktop-mode: http://www.emacswiki.org/emacs/DeskTop
+.. _desktop-mode: https://www.emacswiki.org/emacs/DeskTop
 
-.. _emacs-desktop: http://www.doughellmann.com/projects/virtualenvwrapper-emacs-desktop/
+.. _emacs-desktop: https://pypi.python.org/pypi/virtualenvwrapper-emacs-desktop
 
 .. _extensions-user_scripts:
 
@@ -53,7 +53,7 @@ bitbucket
 The bitbucket_ extension automatically clones a mercurial repository
 from the specified bitbucket project.
 
-.. _bitbucket: http://www.doughellmann.com/projects/virtualenvwrapper.bitbucket/
+.. _bitbucket: https://pypi.python.org/pypi/virtualenvwrapper.bitbucket
 
 .. _templates-django:
 
@@ -62,7 +62,7 @@ django
 
 The django_ extension automatically creates a new Django project.
 
-.. _django: http://www.doughellmann.com/projects/virtualenvwrapper.django/
+.. _django: https://pypi.python.org/pypi/virtualenvwrapper.django
 
 SublimeText
 -----------

@@ -89,7 +89,7 @@ Python::
 Add new tests by modifying an existing file or creating new script in
 the ``tests`` directory.
 
-.. _shunit2: http://shunit2.googlecode.com/
+.. _shunit2: https://github.com/kward/shunit2
 
 .. _tox: https://tox.testrun.org/
 
@@ -100,7 +100,7 @@ Creating a New Template
 
 virtualenvwrapper.project templates work like `virtualenvwrapper
 plugins
-<http://www.doughellmann.com/docs/virtualenvwrapper/plugins.html>`__.
+<https://virtualenvwrapper.readthedocs.io/en/latest/plugins.html>`__.
 The *entry point* group name is
 ``virtualenvwrapper.project.template``.  Configure your entry point to
 refer to a function that will **run** (source hooks are not supported

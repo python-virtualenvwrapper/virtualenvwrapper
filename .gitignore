@@ -1,6 +1,6 @@
 syntax: glob
 *~
-*.pyc
+*.py[co]
 README.html
 build
 dist
@@ -34,3 +34,5 @@ lib
 syntax: re
 .DS_Store
 ^web/
+.python-version
+.eggs

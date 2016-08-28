@@ -186,8 +186,8 @@ used).
 
 .. seealso::
 
-  * `namespace packages <http://pythonhosted.org//setuptools/setuptools.html#namespace-packages>`__
-  * `Extensible Applications and Frameworks <http://pythonhosted.org/setuptools/setuptools.html#extensible-applications-and-frameworks>`__
+  * `namespace packages <https://setuptools.readthedocs.io/en/latest/setuptools.html#namespace-packages>`__
+  * `Extensible Applications and Frameworks <https://setuptools.readthedocs.io/en/latest/setuptools.html#extensible-applications-and-frameworks>`__
 
 The Hook Loader
 ---------------
@@ -256,8 +256,8 @@ messages.
 
 .. seealso::
 
-   * `Standard library documentation for logging <http://docs.python.org/library/logging.html>`__
-   * `PyMOTW for logging <http://www.doughellmann.com/PyMOTW/logging/>`__
+   * `Standard library documentation for logging <https://docs.python.org/library/logging.html>`__
+   * `PyMOTW for logging <https://www.doughellmann.com/PyMOTW/logging/>`__
 
 .. _plugins-extension-points:
 
@@ -394,6 +394,6 @@ and::
 
 respectively.
 
-.. _Setuptools entry points: http://pythonhosted.org//setuptools/pkg_resources.html#entry-points
+.. _Setuptools entry points: https://setuptools.readthedocs.io/en/latest/pkg_resources.html#entry-points
 
-.. _project: http://www.doughellmann.com/projects/virtualenvwrapper.project/
+.. _project: https://bitbucket.org/virtualenvwrapper/virtualenvwrapper
