@@ -135,12 +135,9 @@ it a proper path then it will do the right thing.
 
 And to finally restore the default behaviour of ``cd`` once you
 bailout of a VENV via a ``deactivate`` command, you need to add this
-as a ``postdeactivate`` hook (`source
-<https://github.com/kdeldycke/dotfiles/commit/80470b>`_)::
+as a ``postdeactivate`` hook::
 
-    cd () {
-        builtin cd "$@"
-    }
+    unset -f cd
 
 Clean up environments on exit
 =======================================
