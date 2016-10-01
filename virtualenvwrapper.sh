@@ -515,7 +515,7 @@ function rmvirtualenv {
     virtualenvwrapper_verify_workon_home || return 1
     if [ ${#@} = 0 ]
     then
-        echo "Please specify an enviroment." >&2
+        echo "Please specify an environment." >&2
         return 1
     fi
 
