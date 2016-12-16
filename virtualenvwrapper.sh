@@ -749,8 +749,9 @@ function workon {
 
     # Deactivate any current environment "destructively"
     # before switching so we use our override function,
-    # if it exists.
-    type deactivate >/dev/null 2>&1
+    # if it exists, but make sure it's the deactivate function
+    # we set up
+    type deactivate | grep 'typeset env_postdeactivate_hook' >/dev/null 2>&1
     if [ $? -eq 0 ]
     then
         deactivate
