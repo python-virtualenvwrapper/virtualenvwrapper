@@ -169,7 +169,7 @@ created elsewhere.
 
    Copying virtual environments is not well supported. Each virtualenv
    has path information hard-coded into it, and there may be cases
-   where the copy code does not know how to update a particular
+   where the copy code does not know it needs to update a particular
    file. **Use with caution.**
 
 Syntax::
