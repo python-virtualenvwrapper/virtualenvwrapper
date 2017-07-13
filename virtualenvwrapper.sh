@@ -749,12 +749,17 @@ function workon {
 
     # Deactivate any current environment "destructively"
     # before switching so we use our override function,
-    # if it exists.
+    # if it exists, but make sure it's the deactivate function
+    # we set up
     type deactivate >/dev/null 2>&1
     if [ $? -eq 0 ]
     then
-        deactivate
-        unset -f deactivate >/dev/null 2>&1
+        type deactivate | grep 'typeset env_postdeactivate_hook' >/dev/null 2>&1
+        if [ $? -eq 0 ]
+        then
+            deactivate
+            unset -f deactivate >/dev/null 2>&1
+        fi
     fi
 
     virtualenvwrapper_run_hook "pre_activate" "$env_name"
