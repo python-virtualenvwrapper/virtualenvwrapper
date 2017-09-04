@@ -45,26 +45,26 @@
 #
 
 # Locate the global Python where virtualenvwrapper is installed.
-if [ "$VIRTUALENVWRAPPER_PYTHON" = "" ]
+if [ "${VIRTUALENVWRAPPER_PYTHON:-}" = "" ]
 then
     VIRTUALENVWRAPPER_PYTHON="$(command \which python)"
 fi
 
 # Set the name of the virtualenv app to use.
-if [ "$VIRTUALENVWRAPPER_VIRTUALENV" = "" ]
+if [ "${VIRTUALENVWRAPPER_VIRTUALENV:-}" = "" ]
 then
     VIRTUALENVWRAPPER_VIRTUALENV="virtualenv"
 fi
 
 # Set the name of the virtualenv-clone app to use.
-if [ "$VIRTUALENVWRAPPER_VIRTUALENV_CLONE" = "" ]
+if [ "${VIRTUALENVWRAPPER_VIRTUALENV_CLONE:-}" = "" ]
 then
     VIRTUALENVWRAPPER_VIRTUALENV_CLONE="virtualenv-clone"
 fi
 
 # Define script folder depending on the platorm (Win32/Unix)
 VIRTUALENVWRAPPER_ENV_BIN_DIR="bin"
-if [ "$OS" = "Windows_NT" ] && ([ "$MSYSTEM" = "MINGW32" ] || [ "$MSYSTEM" = "MINGW64" ])
+if [ "${OS:-}" = "Windows_NT" ] && ([ "${MSYSTEM:-}" = "MINGW32" ] || [ "${MSYSTEM:-}" = "MINGW64" ])
 then
     # Only assign this for msys, cygwin use standard Unix paths
     # and its own python installation
@@ -73,7 +73,7 @@ fi
 
 # Let the user override the name of the file that holds the project
 # directory name.
-if [ "$VIRTUALENVWRAPPER_PROJECT_FILENAME" = "" ]
+if [ "${VIRTUALENVWRAPPER_PROJECT_FILENAME:-}" = "" ]
 then
     export VIRTUALENVWRAPPER_PROJECT_FILENAME=".project"
 fi
@@ -83,7 +83,7 @@ fi
 export VIRTUALENVWRAPPER_WORKON_CD=${VIRTUALENVWRAPPER_WORKON_CD:-1}
 
 # Remember where we are running from.
-if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]
+if [ -z "${VIRTUALENVWRAPPER_SCRIPT:-}" ]
 then
     if [ -n "$BASH" ]
     then
@@ -108,10 +108,10 @@ fi
 # we are trying to change the state of the current shell, so we use
 # "builtin" for bash and zsh but "command" under ksh.
 function virtualenvwrapper_cd {
-    if [ -n "$BASH" ]
+    if [ -n "${BASH:-}" ]
     then
         builtin \cd "$@"
-    elif [ -n "$ZSH_VERSION" ]
+    elif [ -n "${ZSH_VERSION:-}" ]
     then
         builtin \cd -q "$@"
     else
