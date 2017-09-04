@@ -197,10 +197,6 @@ of Python Magazine: `virtualenvwrapper | And Now For Something
 Completely Different
 <https://doughellmann.com/blog/2008/05/01/virtualenvwrapper/>`_.
 
-Rich Leland has created a short `screencast
-<http://mathematism.com/2009/07/30/presentation-pip-and-virtualenv/>`__
-showing off the features of virtualenvwrapper.
-
 Manuel Kaufmann has `translated this documentation into Spanish
 <https://virtualenvwrapper-docs-es.readthedocs.org/es/latest/>`__.
 
