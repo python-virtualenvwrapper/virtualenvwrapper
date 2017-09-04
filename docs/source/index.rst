@@ -39,7 +39,7 @@ First, some initialization steps.  Most of this only needs to be done
 one time.  You will want to add the command to ``source
 /usr/local/bin/virtualenvwrapper.sh`` to your shell startup file,
 changing the path to virtualenvwrapper.sh depending on where it was
-installed by pip.
+installed by pip or your package manager.
 
 ::
 
