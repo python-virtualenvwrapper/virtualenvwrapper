@@ -304,8 +304,9 @@ function virtualenvwrapper_initialize {
     # Set the location of the hook scripts
     if [ "$VIRTUALENVWRAPPER_HOOK_DIR" = "" ]
     then
-        export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
+        VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME"
     fi
+    export VIRTUALENVWRAPPER_HOOK_DIR
 
     mkdir -p "$VIRTUALENVWRAPPER_HOOK_DIR"
 
