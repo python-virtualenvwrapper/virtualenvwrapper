@@ -228,7 +228,7 @@ function virtualenvwrapper_run_hook {
     ( \
         virtualenvwrapper_cd "$WORKON_HOME" &&
         "$VIRTUALENVWRAPPER_PYTHON" -m 'virtualenvwrapper.hook_loader' \
-            $HOOK_VERBOSE_OPTION --script "$hook_script" "$@" \
+            ${HOOK_VERBOSE_OPTION:-} --script "$hook_script" "$@" \
     )
     result=$?
 
@@ -260,7 +260,7 @@ EOF
 # Set up tab completion.  (Adapted from Arthur Koziel's version at
 # http://arthurkoziel.com/2008/10/11/virtualenvwrapper-bash-completion/)
 function virtualenvwrapper_setup_tab_completion {
-    if [ -n "$BASH" ] ; then
+    if [ -n "${BASH:-}" ] ; then
         _virtualenvs () {
             local cur="${COMP_WORDS[COMP_CWORD]}"
             COMPREPLY=( $(compgen -W "`virtualenvwrapper_show_workon_options`" -- ${cur}) )
