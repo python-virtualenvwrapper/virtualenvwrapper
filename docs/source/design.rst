@@ -58,7 +58,7 @@ How the Shell Runs a Program
 
 When a shell receives a command to be executed, either interactively
 or by parsing a script file, and determines that the command is
-implemented in a separate program file, is uses ``fork()`` to create a
+implemented in a separate program file, it uses ``fork()`` to create a
 new process and then inside that process it uses one of the ``exec``
 functions to start the specified program. The language that program is
 written in doesn't make any difference in the decision about whether
