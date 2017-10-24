@@ -22,14 +22,13 @@ if you work on multiple projects, you want it to be specific to the project
 you are currently working on. Wouldn't it be nice if it was set based on the
 active virtualenv? You can achieve this with :ref:`scripts` as follows.
 
-If your :ref:`WORKON_HOME <variable-WORKON_HOME>` is set to ~/.virtualenvs:
+If your :ref:`WORKON_HOME <variable-WORKON_HOME>` is set to ~/.virtualenvs::
 
     vim ~/.virtualenvs/premkvirtualenv
 
-Edit the file so it contains the following (for a default Django setup):
+Edit the file so it contains the following (for a default Django setup)::
 
     # Automatically set django settings for the virtualenv
-    
     echo "export DJANGO_SETTINGS_MODULE=$1.settings" >> "$1/bin/activate"
 
 Create a new virtualenv, and you should see DJANGO_SETTINGS_MODULE in your env!
