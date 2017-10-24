@@ -29,6 +29,7 @@ If your :ref:`WORKON_HOME <variable-WORKON_HOME>` is set to ~/.virtualenvs:
 Edit the file so it contains the following (for a default Django setup):
 
     # Automatically set django settings for the virtualenv
+    
     echo "export DJANGO_SETTINGS_MODULE=$1.settings" >> "$1/bin/activate"
 
 Create a new virtualenv, and you should see DJANGO_SETTINGS_MODULE in your env!
