@@ -25,7 +25,7 @@ setUp () {
 }
 
 tearDown () {
-    deactivate >/dev/null 2>&1 
+    deactivate >/dev/null 2>&1
 }
 
 test_workon () {
@@ -50,7 +50,7 @@ test_workon_activate_hooks () {
     touch "$TMPDIR/catch_output"
 
     workon test1
-    
+
     output=$(cat "$TMPDIR/catch_output")
     expected="GLOBAL preactivate
 ENV preactivate
@@ -58,11 +58,44 @@ GLOBAL postactivate
 ENV postactivate"
 
     assertSame "$expected"  "$output"
-    
+
     for t in pre post
     do
         rm -f "$WORKON_HOME/test1/bin/${t}activate"
         rm -f "$WORKON_HOME/${t}activate"
+    done
+}
+
+test_workon_deactivate_hooks () {
+    for t in pre post
+    do
+        echo "#!/bin/sh" > "$WORKON_HOME/${t}deactivate"
+        echo "echo GLOBAL ${t}deactivate >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/${t}deactivate"
+        chmod +x "$WORKON_HOME/${t}deactivate"
+
+        echo "#!/bin/sh" > "$WORKON_HOME/test2/bin/${t}deactivate"
+        echo "echo ENV ${t}deactivate >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/test1/bin/${t}deactivate"
+        chmod +x "$WORKON_HOME/test1/bin/${t}deactivate"
+    done
+
+    rm -f "$TMPDIR/catch_output"
+    touch "$TMPDIR/catch_output"
+
+    workon test1
+    workon test2
+
+    output=$(cat "$TMPDIR/catch_output")
+    expected="ENV predeactivate
+GLOBAL predeactivate
+ENV postdeactivate
+GLOBAL postdeactivate"
+
+    assertSame "$expected"  "$output"
+
+    for t in pre post
+    do
+        rm -f "$WORKON_HOME/test1/bin/${t}deactivate"
+        rm -f "$WORKON_HOME/${t}deactivate"
     done
 }
 

@@ -755,7 +755,7 @@ function workon {
     type deactivate >/dev/null 2>&1
     if [ $? -eq 0 ]
     then
-        type deactivate | grep 'typeset env_postdeactivate_hook' >/dev/null 2>&1
+        typeset -f deactivate | grep 'typeset env_postdeactivate_hook' >/dev/null 2>&1
         if [ $? -eq 0 ]
         then
             deactivate
