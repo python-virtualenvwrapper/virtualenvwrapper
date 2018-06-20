@@ -54,7 +54,7 @@ copyright = u'2009-%s, Doug Hellmann' % datetime.datetime.today().year
 version = subprocess.check_output([
     'sh', '-c',
     'cd ../..; python setup.py --version',
-])
+]).decode('utf-8')
 version = version.strip()
 # The full version, including alpha/beta/rc tags.
 release = version
