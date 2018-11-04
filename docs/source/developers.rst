@@ -69,7 +69,7 @@ The test suite for virtualenvwrapper uses shunit2_ and tox_.  The
 shunit2 source is included in the ``tests`` directory, but tox must be
 installed separately (``pip install tox``).
 
-To run the tests under bash, zsh, and ksh for Python 2.4 through 2.7,
+To run the tests under bash, zsh, and ksh for Python 2.7 through 3.6,
 run ``tox`` from the top level directory of the hg repository.
 
 To run individual test scripts, use a command like::
