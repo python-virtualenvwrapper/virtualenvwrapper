@@ -45,7 +45,7 @@ Installation
 ============
 
 See the `project documentation
-<http://www.doughellmann.com/docs/virtualenvwrapper/>`__ for
+<https://virtualenvwrapper.readthedocs.io/en/latest/>`__ for
 installation and setup instructions.
 
 Supported Shells
@@ -71,7 +71,7 @@ Support
 
 Join the `virtualenvwrapper Google Group
 <http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
-issues and features.  
+issues and features.
 
 Report bugs via the `bug tracker on Bitbucket
 <https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/issues>`__.
@@ -92,7 +92,7 @@ Change Log
 
 The `release history`_ is part of the project documentation.
 
-.. _release history: http://www.doughellmann.com/docs/virtualenvwrapper/history.html
+.. _release history: https://virtualenvwrapper.readthedocs.io/en/latest/history.html
 
 =======
 License
