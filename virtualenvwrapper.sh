@@ -45,9 +45,21 @@
 #
 
 # Locate the global Python where virtualenvwrapper is installed.
+# Use the highest Python version
 if [ "${VIRTUALENVWRAPPER_PYTHON:-}" = "" ]
 then
-    VIRTUALENVWRAPPER_PYTHON="$(command \which python)"
+    for NAME in python3 python2 python
+    do
+        PYTHON="$(command \which $NAME 2>&1)"
+        if ! [ -z $PYTHON ]
+        then
+            if $PYTHON -m 'virtualenvwrapper.hook_loader' --help >/dev/null 2>&1
+            then
+                VIRTUALENVWRAPPER_PYTHON=$PYTHON
+                break
+            fi
+        fi
+    done
 fi
 
 # Set the name of the virtualenv app to use.
