@@ -50,16 +50,23 @@ if [ "${VIRTUALENVWRAPPER_PYTHON:-}" = "" ]
 then
     for NAME in python3 python2 python
     do
-        PYTHON="$(command \which $NAME 2>&1)"
-        if ! [ -z $PYTHON ]
+        python_executable="$(which $NAME 2>/dev/null)"
+        if ! [ -z "$python_executable" ]
         then
-            if $PYTHON -m 'virtualenvwrapper.hook_loader' --help >/dev/null 2>&1
+            if $python_executable -m 'virtualenvwrapper.hook_loader' --help >/dev/null 2>&1
             then
-                VIRTUALENVWRAPPER_PYTHON=$PYTHON
+                VIRTUALENVWRAPPER_PYTHON=$python_executable
                 break
             fi
         fi
     done
+    if [ "${VIRTUALENVWRAPPER_PYTHON:-}" = "" ]
+    then
+        echo -e "ERROR: Python with virtualenvwrapper module not found!
+Either, install virtualenvwrapper module for standard python2
+or python3 or set VIRTUALENVWRAPPER_PYTHON variable manually." 1>&2
+        return 1
+    fi
 fi
 
 # Set the name of the virtualenv app to use.
