@@ -45,9 +45,28 @@
 #
 
 # Locate the global Python where virtualenvwrapper is installed.
+# Use the highest Python version
 if [ "${VIRTUALENVWRAPPER_PYTHON:-}" = "" ]
 then
-    VIRTUALENVWRAPPER_PYTHON="$(command \which python)"
+    for NAME in python3 python2 python
+    do
+        python_executable="$(which $NAME 2>/dev/null)"
+        if ! [ -z "$python_executable" ]
+        then
+            if $python_executable -m 'virtualenvwrapper.hook_loader' --help >/dev/null 2>&1
+            then
+                VIRTUALENVWRAPPER_PYTHON=$python_executable
+                break
+            fi
+        fi
+    done
+    if [ "${VIRTUALENVWRAPPER_PYTHON:-}" = "" ]
+    then
+        echo -e "ERROR: Python with virtualenvwrapper module not found!
+Either, install virtualenvwrapper module for standard python2
+or python3 or set VIRTUALENVWRAPPER_PYTHON variable manually." 1>&2
+        return 1
+    fi
 fi
 
 # Set the name of the virtualenv app to use.
