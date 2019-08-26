@@ -25,7 +25,7 @@ Features
 4. Tab completion for commands that take a virtual environment as
    argument.
 5. User-configurable hooks for all operations (see :ref:`scripts`).
-6. Plugin system for more creating sharable extensions (see
+6. Plugin system for creating more sharable extensions (see
    :ref:`plugins`).
 
 ============
