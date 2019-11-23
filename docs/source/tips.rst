@@ -10,25 +10,71 @@ an email or post a comment on `this blog post
 <https://doughellmann.com/blog/2010/01/12/virtualenvwrapper-tips-and-tricks/>`__
 and I'll add it here.
 
-zsh Prompt
-==========
+Enhanced bash/zsh Prompt
+========================
 
-From Nat (was blogger.com/profile/16779944428406910187):
+Via `Stephan Sokolow <https://github.com/ssokolow/>`_
 
-Using zsh, I added some bits to ``$WORKON_HOME/post(de)activate`` to show
-the active virtualenv on the right side of my screen instead.
+While the virtualenv ``activate`` script does attempt to provide
+an indicator in the prompt, it has various shortcomings, and
+cannot be customized.
 
-in ``postactivate``::
+However, it does also set a shell variable named 
+``VIRTUAL_ENV`` which can be used as the basis for disabling the
+built-in prompt indicator and substituting an improved one,
+as a customization to ``.bashrc`` or ``.zshrc``::
 
-    PS1="$_OLD_VIRTUAL_PS1"
-    _OLD_RPROMPT="$RPROMPT"
-    RPROMPT="%{${fg_bold[white]}%}(env: %{${fg[green]}%}`basename \"$VIRTUAL_ENV\"`%{${fg_bold[white]}%})%{${reset_color}%} $RPROMPT"
+    virtualenv_prompt() {
+        # If not in a virtualenv, print nothing
+        [[ "$VIRTUAL_ENV" == "" ]] && return
+    
+        # Distinguish between the shell where the virtualenv was activated
+        # and its children
+        local venv_name="${VIRTUAL_ENV##*/}"
+        if typeset -f deactivate >/dev/null; then
+            echo "[${venv_name}] "
+        else
+            echo "<${venv_name}> "
+        fi
+    }
+    
+    # Display a "we are in a virtualenv" indicator that works in child shells too
+    VIRTUAL_ENV_DISABLE_PROMPT=1
+    PS1='$(virtualenv_prompt)'"$PS1"
 
-and in ``postdeactivate``::
+This basic example works in both bash and zsh and has the following
+advantages:
 
-    RPROMPT="$_OLD_RPROMPT"
+1. It will also display in sub-shells, because it works by having the
+   shell detect an active virtualenv, rather than by having the ``activate``
+   script modify the prompt for just the current shell instance.
+2. It will clearly indicate if you're in a subshell, where the
+   virtualenv will still apply, but the ``deactivate`` command will be
+   missing.
 
-Adjust colors according to your own personal tastes or environment.
+However, if you are using zsh, a better example of what the design
+is capable of can be constructed by taking advantage of zsh's built-in
+support for easily adding color and right-aligned segments to prompts::
+
+    zsh_virtualenv_prompt() {
+        # If not in a virtualenv, print nothing
+        [[ "$VIRTUAL_ENV" == "" ]] && return
+
+        # Distinguish between the shell where the virtualenv was activated
+        # and its children
+        local venv_name="${VIRTUAL_ENV##*/}"
+        if typeset -f deactivate >/dev/null; then
+            echo "[%F{green}${venv_name}%f] "
+        else
+            echo "<%F{green}${venv_name}%f> "
+        fi
+    }
+
+    setopt PROMPT_SUBST PROMPT_PERCENT
+
+    # Display a "we are in a virtualenv" indicator that works in child shells too
+    VIRTUAL_ENV_DISABLE_PROMPT=1
+    RPS1='$(zsh_virtualenv_prompt)'
 
 Updating cached ``$PATH`` entries
 =================================
