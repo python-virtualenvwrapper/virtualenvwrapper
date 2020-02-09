@@ -37,8 +37,8 @@ Features
 6. Plugin system for more creating sharable extensions.
 
 Rich Leland has created a short `screencast
-<http://mathematism.com/2009/07/30/presentation-pip-and-virtualenv/>`__
-showing off the features of virtualenvwrapper.
+<https://vimeo.com/5894881>`__ showing off the features of
+virtualenvwrapper.
 
 ============
 Installation
