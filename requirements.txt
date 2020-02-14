@@ -1,3 +1,3 @@
-virtualenv
+virtualenv>=20.0.4
 virtualenv-clone
 stevedore

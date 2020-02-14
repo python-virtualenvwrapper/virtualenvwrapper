@@ -82,7 +82,7 @@ then
 fi
 
 # Define script folder depending on the platorm (Win32/Unix)
-VIRTUALENVWRAPPER_ENV_BIN_DIR="bin"
+VIRTUALENVWRAPPER_ENV_BIN_DIR="usr/local/bin"
 if [ "${OS:-}" = "Windows_NT" ] && ([ "${MSYSTEM:-}" = "MINGW32" ] || [ "${MSYSTEM:-}" = "MINGW64" ])
 then
     # Only assign this for msys, cygwin use standard Unix paths
