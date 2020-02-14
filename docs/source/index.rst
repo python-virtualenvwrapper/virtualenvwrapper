@@ -54,10 +54,10 @@ installed by pip or your package manager.
   ....................................................
   ....................................................
   ...............................done.
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env1/bin/predeactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env1/bin/postdeactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env1/bin/preactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env1/bin/postactivate  New python executable in env1/bin/python
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env1/bin/predeactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env1/bin/postdeactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env1/bin/preactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env1/bin/postactivate  New python executable in env1/bin/python
   (env1)$ ls $WORKON_HOME
   env1 hook.log
 
@@ -72,7 +72,7 @@ Now we can install some software into the environment.
   Installing collected packages: django
     Running setup.py install for django
       changing mode of build/scripts-2.6/django-admin.py from 644 to 755
-      changing mode of /Users/dhellmann/Envs/env1/bin/django-admin.py to 755
+      changing mode of /Users/username/Envs/env1/bin/django-admin.py to 755
   Successfully installed django
 
 We can see the new package with ``lssitepackages``::
@@ -91,10 +91,10 @@ Of course we are not limited to a single virtualenv::
   ....................................................
   ....................................................
   ........... ...............................done.
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env2/bin/predeactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env2/bin/postdeactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env2/bin/preactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env2/bin/postactivate  New python executable in env2/bin/python
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env2/bin/predeactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env2/bin/postdeactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env2/bin/preactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env2/bin/postactivate  New python executable in env2/bin/python
   (env2)$ ls $WORKON_HOME
   env1            env2            hook.log
 
@@ -102,7 +102,7 @@ Switch between environments with ``workon``::
 
   (env2)$ workon env1
   (env1)$ echo $VIRTUAL_ENV
-  /Users/dhellmann/Envs/env1
+  /Users/username/Envs/env1
   (env1)$
 
 The ``workon`` command also includes tab completion for the
@@ -114,7 +114,7 @@ is activated or deactivated (see :ref:`scripts`).
   (env1)$ echo 'cd $VIRTUAL_ENV' >> $WORKON_HOME/postactivate
   (env1)$ workon env2
   (env2)$ pwd
-  /Users/dhellmann/Envs/env2
+  /Users/username/Envs/env2
 
 :ref:`scripts-postmkvirtualenv` is run when a new environment is
 created, letting you automatically install commonly-used tools.
@@ -128,10 +128,10 @@ created, letting you automatically install commonly-used tools.
   ....................................................
   ....................................................
   ........... ...............................done.
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env3/bin/predeactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env3/bin/postdeactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env3/bin/preactivate
-  virtualenvwrapper.user_scripts Creating /Users/dhellmann/Envs/env3/bin/postactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env3/bin/predeactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env3/bin/postdeactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env3/bin/preactivate
+  virtualenvwrapper.user_scripts Creating /Users/username/Envs/env3/bin/postactivate
   Downloading/unpacking sphinx
     Downloading Sphinx-0.6.5.tar.gz (972Kb): 972Kb downloaded
     Running setup.py egg_info for package sphinx
@@ -152,12 +152,12 @@ created, letting you automatically install commonly-used tools.
     Running setup.py install for Pygments
     Running setup.py install for sphinx
       no previously-included directories found matching 'doc/_build'
-      Installing sphinx-build script to /Users/dhellmann/Envs/env3/bin
-      Installing sphinx-quickstart script to /Users/dhellmann/Envs/env3/bin
-      Installing sphinx-autogen script to /Users/dhellmann/Envs/env3/bin
+      Installing sphinx-build script to /Users/username/Envs/env3/bin
+      Installing sphinx-quickstart script to /Users/username/Envs/env3/bin
+      Installing sphinx-autogen script to /Users/username/Envs/env3/bin
   Successfully installed docutils Jinja2 Pygments sphinx  (env3)$
   (venv3)$ which sphinx-build
-  /Users/dhellmann/Envs/env3/bin/sphinx-build
+  /Users/username/Envs/env3/bin/sphinx-build
 
 Through a combination of the existing functions defined by the core
 package (see :ref:`command`), third-party plugins (see

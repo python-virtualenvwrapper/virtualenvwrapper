@@ -23,7 +23,7 @@ if sys.platform == 'win32' and \
     script_folder = 'Scripts'
 else:
     is_msys = False
-    script_folder = 'bin'
+    script_folder = 'usr/local/bin'
 
 
 def _get_msys_shell():
