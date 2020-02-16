@@ -50,7 +50,7 @@ documentation::
     writing output... [100%] index
 
     writing additional files... search
-    copying static files... WARNING: static directory '/Users/username/Devel/virtualenvwrapper/plugins/docs/sphinx/pkg/static' does not exist
+    copying static files... WARNING: static directory '/Users/dhellmann/Devel/virtualenvwrapper/plugins/docs/sphinx/pkg/static' does not exist
     done
     dumping search index... done
     dumping object inventory... done

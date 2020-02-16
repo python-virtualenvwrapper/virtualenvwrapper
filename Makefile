@@ -40,7 +40,7 @@ test:
 	tox
 
 test-quick:
-	tox -e py37
+	tox -e py27
 
 develop:
 	python setup.py develop
