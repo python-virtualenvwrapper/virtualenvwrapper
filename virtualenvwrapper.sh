@@ -177,7 +177,7 @@ function virtualenvwrapper_derive_workon_home {
     # path might contain stuff to expand.
     # (it might be possible to do this in shell, but I don't know a
     # cross-shell-safe way of doing it -wolever)
-    if echo "$workon_home_dir" | (unset GREP_OPTIONS; command \egrep '([\$~]|//)' >/dev/null)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; command \grep -E '([\$~]|//)' >/dev/null)
     then
         # This will normalize the path by:
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
@@ -599,7 +599,7 @@ function virtualenvwrapper_show_workon_options {
         | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate |/|g" \
         | command \tr "/" "\n" \
         | command \sed "/^\s*$/d" \
-        | (unset GREP_OPTIONS; command \egrep -v '^\*$') 2>/dev/null
+        | (unset GREP_OPTIONS; command \grep -E -v '^\*$') 2>/dev/null
 }
 
 function _lsvirtualenv_usage {
@@ -1306,7 +1306,7 @@ function wipeenv {
     virtualenvwrapper_verify_active_environment || return 1
 
     typeset req_file="$(virtualenvwrapper_tempfile "requirements.txt")"
-    pip freeze | egrep -v '(distribute|wsgiref|appdirs|packaging|pyparsing|six)' > "$req_file"
+    pip freeze | grep -E -v '(distribute|wsgiref|appdirs|packaging|pyparsing|six)' > "$req_file"
     if [ -n "$(cat "$req_file")" ]
     then
         echo "Uninstalling packages:"
