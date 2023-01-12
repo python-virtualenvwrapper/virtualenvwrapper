@@ -44,6 +44,7 @@ unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
 
 # Run the test scripts with a little formatting around them to make it
 # easier to find where each script output starts.
+RC=0
 for test_script in $scripts
 do
 
@@ -66,9 +67,11 @@ do
     echo
     SHUNIT_PARENT="$test_script"
     export SHUNIT_PARENT
-    $SHELL $test_shell_opts $test_script || exit 1
+    if ! $SHELL $test_shell_opts $test_script; then
+        RC=1
+    fi
     echo
 
 done
 
-exit 0
+exit $RC
