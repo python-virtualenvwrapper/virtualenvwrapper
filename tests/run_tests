@@ -36,7 +36,7 @@ export HOOK_VERBOSE_OPTION
 
 # Force virtualenvwrapper to use the python interpreter in the
 # tox-created virtualenv.
-VIRTUALENVWRAPPER_PYTHON="$envdir/bin/python"
+VIRTUALENVWRAPPER_PYTHON="$envdir/bin/python3"
 export VIRTUALENVWRAPPER_PYTHON
 
 # Clear any user settings for the hook directory or log directory
