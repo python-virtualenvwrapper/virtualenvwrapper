@@ -1,7 +1,7 @@
 # -*- mode: shell-script -*-
 #set -x
 
-envdir="$1"
+envdir="$(cd $1 && pwd)"
 shift
 scripts="$*"
 if [ -z "$scripts" ]
