@@ -53,6 +53,8 @@ jobs:
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
 
       - name: Install dependencies
         run: python -m pip install tox
@@ -98,10 +100,10 @@ jobs:
 
     strategy:
       fail-fast: false
-      tox-environment:
+      matrix:
+        tox-environment:
           - docs
           - style
-          - pkglint
 
     steps:
       - uses: actions/checkout@v3
@@ -110,6 +112,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
 
       - name: Install dependencies
         run: python -m pip install tox
