@@ -23,8 +23,8 @@ A new project directory can be created empty, or populated using one
 or more :term:`template` plugins. Templates should be specified as
 arguments to :ref:`command-mkproject`. Multiple values can be provided
 to apply more than one template. For example, to check out a Mercurial
-repository from a project on GitHub and create a new Django
-site, combine the :ref:`templates-github` and
+repository from a project on BitBucket and create a new Django
+site, combine the :ref:`templates-bitbucket` and
 :ref:`templates-django` templates.
 
 ::

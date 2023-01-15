@@ -45,7 +45,7 @@ Templates
 Below is a list of some of the templates available for use with
 :ref:`command-mkproject`.
 
-.. _templates-github:
+.. _templates-bitbucket:
 
 bitbucket
 ---------
