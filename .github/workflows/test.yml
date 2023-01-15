@@ -104,6 +104,7 @@ jobs:
         tox-environment:
           - docs
           - style
+          - pkglint
 
     steps:
       - uses: actions/checkout@v3
