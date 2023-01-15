@@ -86,6 +86,11 @@ Python::
 
   $ tox -e py27 tests/test_cd.sh
 
+To stop the test suite as soon as any test fails, use the `fast` tox
+target::
+
+  $ tox -e fast
+
 Add new tests by modifying an existing file or creating new script in
 the ``tests`` directory.
 

@@ -14,6 +14,9 @@ then
     fi
 fi
 
+# Override FAIL_FAST to true to exit as soon as any test fails
+FAIL_FAST=${FAIL_FAST:-false}
+
 # Force the tox virtualenv to be active.
 #
 # Since this script runs from within a separate shell created by tox,
@@ -69,6 +72,9 @@ do
     export SHUNIT_PARENT
     if ! $SHELL $test_shell_opts $test_script; then
         RC=1
+        if $FAIL_FAST; then
+            exit $RC
+        fi
     fi
     echo
 
