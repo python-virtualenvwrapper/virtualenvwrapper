@@ -445,7 +445,7 @@ function mkvirtualenv {
             -a)
                 i=$(( $i + 1 ))
                 project="${in_args[$i]}"
-                if [ ! -d "$project" ]
+                if [ ! -d "${project}" ]
                 then
                     echo "Cannot associate project with $project, it is not a directory" 1>&2
                     return 1
