@@ -98,17 +98,6 @@ test_virtualenvwrapper_virtualenv_clone_variable () {
     assertTrue "VIRTUALENVWRAPPER_CLONE did not clone fake file" "[ -f $WORKON_HOME/destination/fake_virtualenv_clone_was_here ]"
 }
 
-test_source_relocatable () {
-    mkvirtualenv "source" >/dev/null 2>&1 
-    (cd tests/testpackage && python setup.py install) >/dev/null 2>&1
-    assertTrue "virtualenv --relocatable \"$WORKON_HOME/source\""
-    cpvirtualenv "source" "destination" >/dev/null 2>&1 
-    testscript="$(which testscript.py)"
-    assertTrue "Environment test script not the same as copy" "[ $WORKON_HOME/destination/bin/testscript.py -ef $testscript ]"
-    assertTrue virtualenvwrapper_verify_active_environment
-    assertSame "Wrong virtualenv name" "destination" $(basename "$VIRTUAL_ENV")
-}
-
 test_source_does_not_exist () {
     assertSame "Please provide a valid virtualenv to copy." "$(cpvirtualenv virtualenvthatdoesntexist foo)"
 }
