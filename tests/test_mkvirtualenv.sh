@@ -104,23 +104,6 @@ test_no_workon_home () {
     WORKON_HOME="$old_home"
 }
 
-test_mkvirtualenv_sitepackages () {
-    # This part of the test is not reliable because
-    # creating a new virtualenv from inside the
-    # tox virtualenv inherits the setting from there.
-#     # Without the option, verify that site-packages are copied.
-# 	mkvirtualenv "with_sp" >/dev/null 2>&1
-#     ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
-#     assertFalse "$ngsp_file exists" "[ -f \"$ngsp_file\" ]"
-#     rmvirtualenv "env3"
-    
-    # With the argument, verify that they are not copied.
-    mkvirtualenv --no-site-packages "without_sp" >/dev/null 2>&1
-    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
-    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
-    rmvirtualenv "env4" >/dev/null 2>&1
-}
-
 test_mkvirtualenv_hooks_system_site_packages () {
     # See issue #189
 
@@ -143,12 +126,14 @@ GLOBAL postmkvirtualenv"
 
 test_mkvirtualenv_args () {
     # See issue #102
-    VIRTUALENVWRAPPER_VIRTUALENV_ARGS="--no-site-packages"
+    VIRTUALENVWRAPPER_VIRTUALENV_ARGS="--without-pip"
     # With the argument, verify that they are not copied.
-    mkvirtualenv "without_sp2" >/dev/null 2>&1
-    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
-    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
-    rmvirtualenv "env4" >/dev/null 2>&1
+    mkvirtualenv "without_pip" >/dev/null 2>&1
+    local RC=$?
+    assertTrue "mkvirtualenv failed" "[ $RC -eq 0 ]"
+    contents="$(lssitepackages)"
+    assertFalse "found pip in site-packages: ${contents}" "echo $contents | grep -q pip"
+    rmvirtualenv "without_pip" >/dev/null 2>&1
     unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
 }
 

@@ -27,8 +27,8 @@ test_get_site_packages_dir () {
 
 test_lssitepackages () {
     mkvirtualenv "lssitepackagestest" >/dev/null 2>&1
-    contents="$(lssitepackages)"    
-    assertTrue "did not find easy_install in site-packages" "echo $contents | grep -q easy_install"
+    contents="$(lssitepackages)"
+    assertTrue "did not find pip in site-packages: ${contents}" "echo $contents | grep -q pip"
     deactivate
 }
 
@@ -36,8 +36,8 @@ test_lssitepackages_space_in_name () {
     # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
     # and work with virtualenv on OSX, but error out on Linux.
     mkvirtualenv " space lssitepackagestest" >/dev/null 2>&1
-    contents="$(lssitepackages)"    
-    assertTrue "did not find easy_install in site-packages" "echo $contents | grep -q easy_install"
+    contents="$(lssitepackages)"
+    assertTrue "did not find pip in site-packages: ${contents}" "echo $contents | grep -q pip"
     deactivate
 }
 
@@ -46,7 +46,7 @@ test_lssitepackages_add2virtualenv () {
     parent_dir=$(dirname $(pwd))
     base_dir=$(basename $(pwd))
     add2virtualenv "../$base_dir"
-    contents="$(lssitepackages)"    
+    contents="$(lssitepackages)"
     actual=$(echo $contents | grep $base_dir)
     expected=$(echo $contents)
     assertSame "$expected" "$actual"

@@ -21,6 +21,11 @@ setUp () {
 }
 
 test_tempfile () {
+    if [ "$(uname)" = "Darwin" ]; then
+        # macOS doesn't seem to allow controlling where mktemp creates
+        # the output files
+        return 0
+    fi
     filename=$(virtualenvwrapper_tempfile hook)
     assertTrue "Filename is empty" "[ ! -z \"$filename\" ]"
     assertTrue "File doesn't exist" "[ -f \"$filename\" ]"
@@ -52,6 +57,11 @@ test_bad_mktemp() {
 }
 
 test_no_such_tmpdir () {
+    if [ "$(uname)" = "Darwin" ]; then
+        # macOS doesn't seem to allow controlling where mktemp creates
+        # the output files
+        return 0
+    fi
     old_tmpdir="$TMPDIR"
     export TMPDIR="$TMPDIR/does-not-exist"
     virtualenvwrapper_run_hook "initialize" >/dev/null 2>&1
@@ -61,6 +71,11 @@ test_no_such_tmpdir () {
 }
 
 test_tmpdir_not_writable () {
+    if [ "$(uname)" = "Darwin" ]; then
+        # macOS doesn't seem to allow controlling where mktemp creates
+        # the output files
+        return 0
+    fi
     old_tmpdir="$TMPDIR"
     export TMPDIR="$TMPDIR/cannot-write"
     mkdir "$TMPDIR"

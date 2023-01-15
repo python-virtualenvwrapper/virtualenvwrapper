@@ -465,36 +465,6 @@ for the environment.
 
 *Based on a contribution from James Bennett and Jannis Leidel.*
 
-.. _command-toggleglobalsitepackages:
-
-toggleglobalsitepackages
-------------------------
-
-Controls whether the active virtualenv will access the packages in the
-global Python ``site-packages`` directory.
-
-Syntax::
-
-    toggleglobalsitepackages [-q]
-
-Outputs the new state of the virtualenv. Use the ``-q`` switch to turn off all
-output.
-
-::
-
-    $ mkvirtualenv env1
-    New python executable in env1/bin/python
-    Installing setuptools.............................................
-    ..................................................................
-    ..................................................................
-    done.
-    (env1)$ toggleglobalsitepackages
-    Disabled global site-packages
-    (env1)$ toggleglobalsitepackages
-    Enabled global site-packages
-    (env1)$ toggleglobalsitepackages -q
-    (env1)$
-
 ============================
 Project Directory Management
 ============================

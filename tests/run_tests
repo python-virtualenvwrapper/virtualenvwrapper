@@ -1,7 +1,7 @@
 # -*- mode: shell-script -*-
 #set -x
 
-envdir="$1"
+envdir="$(cd $1 && pwd)"
 shift
 scripts="$*"
 if [ -z "$scripts" ]
@@ -13,6 +13,9 @@ then
         exit 1
     fi
 fi
+
+# Override FAIL_FAST to true to exit as soon as any test fails
+FAIL_FAST=${FAIL_FAST:-false}
 
 # Force the tox virtualenv to be active.
 #
@@ -33,7 +36,7 @@ export HOOK_VERBOSE_OPTION
 
 # Force virtualenvwrapper to use the python interpreter in the
 # tox-created virtualenv.
-VIRTUALENVWRAPPER_PYTHON="$envdir/bin/python"
+VIRTUALENVWRAPPER_PYTHON="$envdir/bin/python3"
 export VIRTUALENVWRAPPER_PYTHON
 
 # Clear any user settings for the hook directory or log directory
@@ -44,6 +47,7 @@ unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
 
 # Run the test scripts with a little formatting around them to make it
 # easier to find where each script output starts.
+RC=0
 for test_script in $scripts
 do
 
@@ -66,9 +70,14 @@ do
     echo
     SHUNIT_PARENT="$test_script"
     export SHUNIT_PARENT
-    $SHELL $test_shell_opts $test_script || exit 1
+    if ! $SHELL $test_shell_opts $test_script; then
+        RC=1
+        if $FAIL_FAST; then
+            exit $RC
+        fi
+    fi
     echo
 
 done
 
-exit 0
+exit $RC

@@ -57,7 +57,7 @@ test_virtualenvwrapper_run_hook_permissions() {
     echo "echo run $@ >> \"$TMPDIR/catch_output\"" >> "$WORKON_HOME/prermvirtualenv"
     chmod 0444 "$WORKON_HOME/prermvirtualenv"
     touch "$TMPDIR/catch_output"
-    error=$(virtualenvwrapper_run_hook "pre_rmvirtualenv" "foo" 2>&1 | grep "could not run" | cut -f2- -d'[')
+    error=$(virtualenvwrapper_run_hook "pre_rmvirtualenv" "foo" 2>&1 | grep "could not run" | cut -f2- -d'[' | cut -f1 -d:)
     output=$(cat "$TMPDIR/catch_output")
     expected=""
     assertSame "$expected" "$output"
