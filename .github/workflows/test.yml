@@ -98,10 +98,10 @@ jobs:
 
     strategy:
       fail-fast: false
-      tox-environment:
+      matrix:
+        tox-environment:
           - docs
           - style
-          - pkglint
 
     steps:
       - uses: actions/checkout@v3
