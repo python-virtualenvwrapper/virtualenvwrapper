@@ -396,4 +396,4 @@ respectively.
 
 .. _Setuptools entry points: https://setuptools.readthedocs.io/en/latest/pkg_resources.html#entry-points
 
-.. _project: https://bitbucket.org/virtualenvwrapper/virtualenvwrapper
+.. _project: https://github.com/python-virtualenvwrapper/virtualenvwrapper

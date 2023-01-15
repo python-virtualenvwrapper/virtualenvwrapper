@@ -50,11 +50,11 @@ virtualenvwrapper is a set of shell *functions* defined in Bourne
 shell compatible syntax.  It is tested under ``bash``, ``ksh``, and
 ``zsh``.  It may work with other shells, so if you find that it does
 work with a shell not listed here please let us know by opening a
-`ticket on bitbucket
-<https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/issues>`_.
+`ticket on GitHub
+<https://github.com/python-virtualenvwrapper/virtualenvwrapper/issues>`_.
 If you can modify it to work with another shell, without completely
-rewriting it, send a pull request through the `bitbucket project page
-<https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`_.  If
+rewriting it, send a pull request through the `GitHub project page
+<https://github.com/python-virtualenvwrapper/virtualenvwrapper/>`_.  If
 you write a clone to work with an incompatible shell, let us know and
 we will link to it from this page.
 
@@ -71,8 +71,8 @@ Join the `virtualenvwrapper Google Group
 <http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
 issues and features.
 
-Report bugs via the `bug tracker on Bitbucket
-<https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/issues>`__.
+Report bugs via the `bug tracker on GitHub
+<https://github.com/python-virtualenvwrapper/virtualenvwrapper/issues>`__.
 
 Shell Aliases
 =============

@@ -48,7 +48,7 @@ virtualenvwrapper は Bourne シェル互換の構文で定義された
 ここに記載されていないシェルで動作することを発見したら私に
 教えてください。もしあなたがその他のシェルで動作させるために
 virtualenvwrapper を完全に書き直すことなく修正できるなら、
-bitbucket のプロジェクトページを通じて pull リクエストを
+GitHub のプロジェクトページを通じて pull リクエストを
 送ってください。あなたが非互換なシェル上で動作させるクローンを
 作成するなら、このページでリンクを張るので私に連絡してください。
 
@@ -84,7 +84,7 @@ virtualenvwrapper のコアへ新しい機能を追加する前に、
 `virtualenvwrapper Google Group <http://groups.google.com/group/virtualenvwrapper/>`__
 に参加してください。
 
-`BitBucket のバグトラッカー <http://bitbucket.org/dhellmann/virtualenvwrapper/>`__
+`github のバグトラッカー <https://github.com/python-virtualenvwrapper/virtualenvwrapper/>`__
 でバグを報告してください。
 
 シェルエイリアス
