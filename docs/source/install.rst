@@ -22,7 +22,7 @@ request through the `GitHub project page`_.  If you write a clone to
 work with an incompatible shell, let me know and I will link to it
 from this page.
 
-.. _github project page: https://GitHub.com/python-virtualenvwrapper/virtualenvwrapper/
+.. _GitHub project page: https://GitHub.com/python-virtualenvwrapper/virtualenvwrapper/
 
 Windows Command Prompt
 ----------------------

@@ -84,7 +84,7 @@ virtualenvwrapper のコアへ新しい機能を追加する前に、
 `virtualenvwrapper Google Group <http://groups.google.com/group/virtualenvwrapper/>`__
 に参加してください。
 
-`github のバグトラッカー <https://github.com/python-virtualenvwrapper/virtualenvwrapper/>`__
+`GitHub のバグトラッカー <https://github.com/python-virtualenvwrapper/virtualenvwrapper/>`__
 でバグを報告してください。
 
 シェルエイリアス
