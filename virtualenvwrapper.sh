@@ -480,7 +480,7 @@ function mkvirtualenv {
         i=$(( $i + 1 ))
     done
 
-    if [ ! -z $interpreter ]
+    if [ ! -z "$interpreter" ]
     then
         out_args=( "--python=$interpreter" ${out_args[@]} )
     fi;
