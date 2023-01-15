@@ -4,8 +4,8 @@ For Developers
 
 If you would like to contribute to virtualenvwrapper directly, these
 instructions should help you get started.  Patches, bug reports, and
-feature requests are all welcome through the `BitBucket site
-<https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`_.  Contributions
+feature requests are all welcome through the `GitHub site
+<https://github.com/python-virtualenvwrapper/virtualenvwrapper/>`_.  Contributions
 in the form of patches or pull requests are easier to integrate and
 will receive priority attention.
 

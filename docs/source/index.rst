@@ -211,8 +211,8 @@ Join the `virtualenvwrapper Google Group
 <https://groups.google.com/group/virtualenvwrapper/>`__ to discuss
 issues and features.
 
-Report bugs via the `bug tracker on BitBucket
-<https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/>`__.
+Report bugs via the `bug tracker on GitHub
+<https://github.com/python-virtualenvwrapper/virtualenvwrapper/>`__.
 
 Shell Aliases
 =============
