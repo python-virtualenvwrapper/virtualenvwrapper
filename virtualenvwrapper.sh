@@ -1294,9 +1294,28 @@ function wipeenv {
     if [ -n "$(cat "$req_file")" ]
     then
         echo "Uninstalling packages:"
-        cat "$req_file"
         echo
-        pip uninstall -y $(cat "$req_file" | grep -v '^-f' | sed 's/>/=/g' | cut -f1 -d=)
+        while read line; do
+            typeset pkg=""
+            if [[ "$line" =~ ^-f ]]; then
+                # ignore lines starting -f which pip sometimes
+                # includes and that do not point to specific
+                # dependencies
+                continue
+            fi
+            if [[ "$line" =~ ^-e ]]; then
+                # fix lines pointing to editable packages, which look like:
+                # -e git+ssh://git@github.com/python-virtualenvwrapper/virtualenvwrapper.git@1dc9e5f52102f0133b804c0c8a6b76c55db908bf#egg=testpackage&subdirectory=tests/testpackage
+                # and parse out the egg name to pass to pip
+                pkg=$(echo "$line" | cut -f2 -d' ' | sed -e 's|&subdirectory.*||g' -e 's|.*egg=||g')
+            else
+                # Strip version specifiers off of the end of the line
+                # to keep only the package name.
+                pkg=$(echo "$line" | sed -e 's/[<>!=].*//g')
+            fi
+            echo $pkg
+            pip uninstall -y "$pkg"
+        done < "$req_file"
     else
         echo "Nothing to remove."
     fi

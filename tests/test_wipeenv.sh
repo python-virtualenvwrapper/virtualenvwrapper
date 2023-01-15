@@ -32,10 +32,10 @@ test_wipeenv_pip_e () {
     mkvirtualenv "wipetest" >/dev/null 2>&1
     (cd tests/testpackage && pip install -e .) >/dev/null 2>&1
     before="$(pip freeze)"
-    assertTrue "testpackage not installed" "pip freeze | grep testpackage"
+    assertTrue "testpackage not installed: $before" "pip freeze | grep testpackage"
     wipeenv >/dev/null 2>&1
     after="$(pip freeze)"
-    assertFalse "testpackage still installed" "pip freeze | grep testpackage"
+    assertFalse "testpackage still installed: $after" "pip freeze | grep testpackage"
 }
 
 # test_wipeenv_pip_e_url () {
