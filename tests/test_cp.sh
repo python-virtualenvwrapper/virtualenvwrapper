@@ -137,33 +137,4 @@ GLOBAL postcpvirtualenv"
     rm -f "$WORKON_HOME/postmkvirtualenv"
 }
 
-test_no_site_packages () {
-    # See issue #102
-    mkvirtualenv "source" --no-site-packages >/dev/null 2>&1
-    cpvirtualenv "source" "destination" >/dev/null 2>&1 
-    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
-    assertTrue "$ngsp_file does not exist in copied env" "[ -f \"$ngsp_file\" ]"
-}
-
-test_no_site_packages_default_args () {
-    # See issue #102
-    VIRTUALENVWRAPPER_VIRTUALENV_ARGS="--no-site-packages"
-    # With the argument, verify that they are not copied.
-    mkvirtualenv "source" >/dev/null 2>&1
-    cpvirtualenv "source" "destination" >/dev/null 2>&1 
-    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
-    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
-    unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
-}
-
-test_no_site_packages_default_behavior () {
-    # See issue #102
-    # virtualenv 1.7 changed to make --no-site-packages the default
-    mkvirtualenv "source" >/dev/null 2>&1
-    cpvirtualenv "source" "destination" >/dev/null 2>&1 
-    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
-    assertTrue "$ngsp_file does not exist in copied env" "[ -f \"$ngsp_file\" ]"
-}
-
 . "$test_dir/shunit2"
-

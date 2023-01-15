@@ -43,9 +43,9 @@ test_mktmpenv_no_cd() {
 }
 
 test_mktmpenv_virtualenv_args() {
-    mktmpenv --no-site-packages >/dev/null 2>&1
-    ngsp_file="`virtualenvwrapper_get_site_packages_dir`/../no-global-site-packages.txt"
-    assertTrue "$ngsp_file does not exist" "[ -f \"$ngsp_file\" ]"
+    mktmpenv --without-pip >/dev/null 2>&1
+    contents="$(lssitepackages)"
+    assertFalse "found pip in site-packages: ${contents}" "echo $contents | grep -q pip"
 }
 
 test_deactivate() {
