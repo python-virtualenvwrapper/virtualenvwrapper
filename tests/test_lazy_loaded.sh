@@ -64,10 +64,6 @@ test_lssitepackages_defined_normal() {
     function_defined_normal lssitepackages
 }
 
-test_toggleglobalsitepackages_defined_normal() {
-    function_defined_normal toggleglobalsitepackages
-}
-
 test_cpvirtualenv_defined_normal() {
     function_defined_normal cpvirtualenv
 }
