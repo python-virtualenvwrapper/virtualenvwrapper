@@ -29,7 +29,7 @@ site, combine the :ref:`templates-bitbucket` and
 
 ::
 
-    $ mkproject -t github -t django my_site
+    $ mkproject -t bitbucket -t django my_site
 
 .. seealso::
 
