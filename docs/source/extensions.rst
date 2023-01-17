@@ -51,7 +51,7 @@ bitbucket
 ---------
 
 The bitbucket_ extension automatically clones a mercurial repository
-from the specified bitbucket project.
+from the specified Bitbucket project.
 
 .. _bitbucket: https://pypi.python.org/pypi/virtualenvwrapper.bitbucket
 
