@@ -16,10 +16,10 @@ shells on OS X and Linux:
 * ``zsh``
 
 It may work with other shells, so if you find that it does work with a
-shell not listed here please let me know.  If you can modify it to
+shell not listed here please let us know.  If you can modify it to
 work with another shell without completely rewriting it, then send a pull
 request through the `GitHub project page`_.  If you write a clone to
-work with an incompatible shell, let me know and I will link to it
+work with an incompatible shell, let us know and we will link to it
 from this page.
 
 .. _GitHub project page: https://GitHub.com/python-virtualenvwrapper/virtualenvwrapper/
