@@ -150,7 +150,7 @@ shell process.
 .. warning::
 
     virtualenvwrapper works under several shells with slightly
-    different syntax (bash, sh, zsh, ksh).  Take this portability into
+    different syntax (bash, sh, zsh).  Take this portability into
     account when defining source hooks.  Sticking to the simplest
     possible syntax usually avoids problems, but there may be cases
     where examining the ``SHELL`` environment variable to generate

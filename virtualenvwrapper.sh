@@ -121,11 +121,9 @@ fi
 # alias or even a shell function. Under bash and zsh, "builtin" forces
 # the use of a command that is part of the shell itself instead of an
 # alias, function, or external command, while "command" does something
-# similar but allows external commands. Under ksh "builtin" registers
-# a new command from a shared library, but "command" will pick up
-# existing builtin commands. We need to use a builtin for cd because
-# we are trying to change the state of the current shell, so we use
-# "builtin" for bash and zsh but "command" under ksh.
+# similar but allows external commands. We need to use a builtin for
+# cd because we are trying to change the state of the current shell,
+# so we use "builtin".
 function virtualenvwrapper_cd {
     if [ -n "${BASH:-}" ]
     then
@@ -133,8 +131,6 @@ function virtualenvwrapper_cd {
     elif [ -n "${ZSH_VERSION:-}" ]
     then
         builtin \cd -q "$@"
-    else
-        command \cd "$@"
     fi
 }
 

@@ -29,7 +29,6 @@ tearDown() {
 }
 
 test_ticket_101 () {
-    [ ! -z "$KSH_VERSION" ] && echo "Skipping test under ksh"  && return 0
     mkvirtualenv some_env
     deactivate
     cd "$WORKON_HOME/start_here"

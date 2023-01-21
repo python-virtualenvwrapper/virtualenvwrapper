@@ -12,7 +12,6 @@ shell compatible syntax.  Its automated tests run under these
 shells on OS X and Linux:
 
 * ``bash``
-* ``ksh``
 * ``zsh``
 
 It may work with other shells, so if you find that it does work with a

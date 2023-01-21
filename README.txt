@@ -47,7 +47,7 @@ Supported Shells
 ================
 
 virtualenvwrapper is a set of shell *functions* defined in Bourne
-shell compatible syntax.  It is tested under ``bash``, ``ksh``, and
+shell compatible syntax.  It is tested under ``bash`` and
 ``zsh``.  It may work with other shells, so if you find that it does
 work with a shell not listed here please let us know by opening a
 `ticket on GitHub
