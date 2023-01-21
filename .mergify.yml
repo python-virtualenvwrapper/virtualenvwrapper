@@ -33,6 +33,24 @@ pull_request_rules:
         add:
           - documentation
 
+  - name: Add breaking-change label
+    # https://docs.openstack.org/pbr/latest/user/features.html
+    conditions:
+      - "body~=Sem-Ver: api-break"
+    actions:
+      label:
+        add:
+          - "breaking change"
+
+  - name: Add feature label
+    # https://docs.openstack.org/pbr/latest/user/features.html
+    conditions:
+      - "body~=Sem-Ver: feature"
+    actions:
+      label:
+        add:
+          - feature
+
   - name: Automatic merge on approval
     conditions:
       - and:
