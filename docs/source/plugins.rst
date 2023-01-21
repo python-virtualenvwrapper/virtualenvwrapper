@@ -80,7 +80,7 @@ techniques.
 
 The API is the same for every extension point.  Each uses a Python
 function that takes a single argument, a list of strings passed to the
-hook loader on the command line.  
+hook loader on the command line.
 
 ::
 
@@ -106,7 +106,7 @@ user scripts when ``virtualenvwrapper.sh`` is loaded.
     def initialize(args):
         for filename, comment in GLOBAL_HOOKS:
             make_hook(os.path.join('$WORKON_HOME', filename), comment)
-        return 
+        return
 
 .. _plugins-user-env:
 
@@ -150,13 +150,13 @@ shell process.
 .. warning::
 
     virtualenvwrapper works under several shells with slightly
-    different syntax (bash, sh, zsh, ksh).  Take this portability into
+    different syntax (bash, sh, zsh).  Take this portability into
     account when defining source hooks.  Sticking to the simplest
     possible syntax usually avoids problems, but there may be cases
     where examining the ``SHELL`` environment variable to generate
     different syntax for each case is the only way to achieve the
     desired result.
-    
+
 Registering Entry Points
 ------------------------
 
@@ -200,9 +200,9 @@ application, use the ``-m`` option to the interpreter::
 
   $ python -m virtualenvwrapper.hook_loader -h
   Usage: virtualenvwrapper.hook_loader [options] <hook> [<arguments>]
-  
+
   Manage hooks for virtualenvwrapper
-  
+
   Options:
     -h, --help            show this help message and exit
     -s, --source          Print the shell commands to be run in the current
@@ -213,7 +213,7 @@ application, use the ``-m`` option to the interpreter::
     -q, --quiet           Show less information on the console
     -n NAMES, --name=NAMES
                           Only run the hook from the named plugin
-  
+
 To run the extensions for the initialize hook::
 
   $ python -m virtualenvwrapper.hook_loader -v initialize
@@ -375,7 +375,7 @@ Plugins that define new operations can also define new extension
 points.  No setup needs to be done to allow the hook loader to find
 the extensions; documenting the names and adding calls to
 ``virtualenvwrapper_run_hook`` is sufficient to cause them to be
-invoked.  
+invoked.
 
 The hook loader assumes all extension point names start with
 ``virtualenvwrapper.`` and new plugins will want to use their own

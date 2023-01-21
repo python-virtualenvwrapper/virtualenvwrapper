@@ -61,7 +61,6 @@ do
     echo "  SHELL=$SHELL"
     echo "  BASH_VERSION=$BASH_VERSION"
     echo "  ZSH_VERSION=$ZSH_VERSION"
-    echo "  KSH_VERSION=$KSH_VERSION"
     echo "  virtualenv=$(which virtualenv)"
     echo "  test_shell_opts=$test_shell_opts"
     echo "  ZSH=$ZSH_NAME $ZSH_EVAL_CONTEXT"
