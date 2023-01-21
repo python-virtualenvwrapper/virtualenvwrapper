@@ -186,8 +186,7 @@ used).
 
 .. seealso::
 
-  * `namespace packages <https://setuptools.readthedocs.io/en/latest/setuptools.html#namespace-packages>`__
-  * `Extensible Applications and Frameworks <https://setuptools.readthedocs.io/en/latest/setuptools.html#extensible-applications-and-frameworks>`__
+  * `namespace packages <https://packaging.python.org/en/latest/guides/packaging-namespace-packages/>`__
 
 The Hook Loader
 ---------------
@@ -257,7 +256,7 @@ messages.
 .. seealso::
 
    * `Standard library documentation for logging <https://docs.python.org/library/logging.html>`__
-   * `PyMOTW for logging <https://www.doughellmann.com/PyMOTW/logging/>`__
+   * `PyMOTW for logging <http://pymotw.com/3/logging/>`__
 
 .. _plugins-extension-points:
 

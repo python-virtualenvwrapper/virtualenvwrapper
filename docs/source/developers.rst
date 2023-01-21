@@ -98,7 +98,7 @@ the ``tests`` directory.
 
 .. _shunit2: https://github.com/kward/shunit2
 
-.. _tox: https://tox.testrun.org/
+.. _tox: https://tox.wiki/
 
 .. _developer-templates:
 

@@ -19,7 +19,7 @@ While the virtualenv ``activate`` script does attempt to provide
 an indicator in the prompt, it has various shortcomings, and
 cannot be customized.
 
-However, it does also set a shell variable named 
+However, it does also set a shell variable named
 ``VIRTUAL_ENV`` which can be used as the basis for disabling the
 built-in prompt indicator and substituting an improved one,
 as a customization to ``.bashrc`` or ``.zshrc``::
@@ -27,7 +27,7 @@ as a customization to ``.bashrc`` or ``.zshrc``::
     virtualenv_prompt() {
         # If not in a virtualenv, print nothing
         [[ "$VIRTUAL_ENV" == "" ]] && return
-    
+
         # Distinguish between the shell where the virtualenv was activated
         # and its children
         local venv_name="${VIRTUAL_ENV##*/}"
@@ -37,7 +37,7 @@ as a customization to ``.bashrc`` or ``.zshrc``::
             echo "<${venv_name}> "
         fi
     }
-    
+
     # Display a "we are in a virtualenv" indicator that works in child shells too
     VIRTUAL_ENV_DISABLE_PROMPT=1
     PS1='$(virtualenv_prompt)'"$PS1"
@@ -115,10 +115,6 @@ about some code he added to his shell environment to look at the
 directory each time he runs ``cd``.  If it finds a ``.venv`` file, it
 activates the environment named within.  On leaving that directory,
 the current virtualenv is automatically deactivated.
-
-`Harry Marr <http://hmarr.com/about/>`__
-wrote a similar function that works with `git repositories
-<http://hmarr.com/2010/jan/19/making-virtualenv-play-nice-with-git/>`__.
 
 Installing Common Tools Automatically in New Environments
 =========================================================
