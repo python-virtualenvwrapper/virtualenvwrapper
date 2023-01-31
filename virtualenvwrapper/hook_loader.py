@@ -79,8 +79,19 @@ def main():
         dest='names',
         default=[],
     )
+    parser.add_option(
+        '--version',
+        help='Show the version of virtualenvwrapper',
+        action='store_true',
+        default=False,
+    )
     parser.disable_interspersed_args()  # stop when on option without an '-'
     options, args = parser.parse_args()
+
+    if options.version:
+        import importlib.metadata
+        print(importlib.metadata.version('virtualenvwrapper'))
+        return 0
 
     root_logger = logging.getLogger('virtualenvwrapper')
 
