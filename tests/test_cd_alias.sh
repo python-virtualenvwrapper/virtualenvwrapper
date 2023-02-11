@@ -6,8 +6,8 @@ source "$test_dir/setup.sh"
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
+    load_wrappers
     unset VIRTUAL_ENV
-    source "$test_dir/../virtualenvwrapper.sh"
     mkvirtualenv cd-test >/dev/null 2>&1
     deactivate
 }

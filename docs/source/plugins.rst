@@ -162,25 +162,30 @@ Registering Entry Points
 
 The functions defined in the plugin need to be registered as *entry
 points* in order for virtualenvwrapper's hook loader to find them.
-Entry points are configured in the ``setup.py`` (or ``setup.cfg`` when
-using pbr) for your package by mapping the entry point name to the
-function in the package that implements it.
+Entry points are configured in the packaging instructions for your
+package by mapping the entry point name to the function in the package
+that implements it.
 
-This partial copy of virtualenvwrapper's ``setup.cfg`` illustrates how
+This partial copy of virtualenvwrapper's ``pyproject.toml`` illustrates how
 the ``initialize()`` and ``initialize_source()`` entry points are
 configured.
 
-.. include:: ../../setup.cfg
-   :literal:
-   :start-after: [entry_points]
+::
 
-The ``entry_points`` section maps the *group names* to lists of entry
+    [project.entry-points."virtualenvwrapper.initialize"]
+    user_scripts = "virtualenvwrapper.user_scripts:initialize"
+    project = "virtualenvwrapper.project:initialize"
+
+    [project.entry-points."virtualenvwrapper.initialize_source"]
+    user_scripts = "virtualenvwrapper.user_scripts:initialize_source"
+
+Each entry points section maps the *group names* to lists of entry
 point specifiers.  A different group name is defined by
 virtualenvwrapper for each extension point (see
 :ref:`plugins-extension-points`).
 
 The entry point specifiers are strings with the syntax ``name =
-package.module:function``.  By convention, the *name* of each entry
+"package.module:function"``.  By convention, the *name* of each entry
 point is the plugin name, but that is not required (the names are not
 used).
 

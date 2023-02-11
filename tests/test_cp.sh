@@ -6,14 +6,14 @@ source "$test_dir/setup.sh"
 setUp () {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     rm -f "$TMPDIR/catch_output"
     echo
 }
 
 tearDown() {
     if type deactivate >/dev/null 2>&1
-    then 
+    then
         deactivate
     fi
     rm -rf "$WORKON_HOME"

@@ -6,8 +6,8 @@ source "$test_dir/setup.sh"
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
+    load_wrappers
     unset VIRTUAL_ENV
-    source "$test_dir/../virtualenvwrapper.sh"
     # These three env names must sort the same whether the OS considers leading whitespace or not.
     # "test" is after " env" and after "env", so the asserts work on OSX and Linux.
     mkvirtualenv test1 >/dev/null 2>&1

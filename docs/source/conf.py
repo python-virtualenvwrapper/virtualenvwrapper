@@ -13,7 +13,7 @@
 # serve to show the default.
 
 import datetime
-import subprocess
+import importlib.metadata
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -51,11 +51,7 @@ copyright = u'2009-%s, Doug Hellmann' % datetime.datetime.today().year
 # built documents.
 #
 # The short X.Y version.
-version = subprocess.check_output([
-    'sh', '-c',
-    'cd ../..; python setup.py --version',
-]).decode('utf-8')
-version = version.strip()
+version = importlib.metadata.version('virtualenvwrapper')
 # The full version, including alpha/beta/rc tags.
 release = version
 

@@ -14,7 +14,7 @@ oneTimeTearDown() {
 setUp () {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     mkdir "$WORKON_HOME/start_here"
     mkdir "$WORKON_HOME/on_the_stack"
     echo

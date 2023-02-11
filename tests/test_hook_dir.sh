@@ -23,7 +23,7 @@ RUN_SCRIPTS="premkvirtualenv prermvirtualenv postrmvirtualenv preactivate get_en
 
 test_virtualenvwrapper_initialize() {
     export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME/hooks"
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     for hook in $SOURCE_SCRIPTS
     do
         assertTrue "Global $WORKON_HOME/$hook was not created" "[ -f $WORKON_HOME/hooks/$hook ]"
