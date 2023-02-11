@@ -13,8 +13,9 @@ import optparse
 import os
 import sys
 
-from stevedore import ExtensionManager
-from stevedore import NamedExtensionManager
+from stevedore import ExtensionManager, NamedExtensionManager
+
+import virtualenvwrapper.version
 
 LOG_FORMAT = '%(asctime)s %(levelname)s %(name)s %(message)s'
 
@@ -89,8 +90,7 @@ def main():
     options, args = parser.parse_args()
 
     if options.version:
-        import importlib.metadata
-        print(importlib.metadata.version('virtualenvwrapper'))
+        print(virtualenvwrapper.version.version)
         return 0
 
     root_logger = logging.getLogger('virtualenvwrapper')

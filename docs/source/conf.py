@@ -13,7 +13,8 @@
 # serve to show the default.
 
 import datetime
-import importlib.metadata
+
+import virtualenvwrapper.version
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -51,7 +52,7 @@ copyright = u'2009-%s, Doug Hellmann' % datetime.datetime.today().year
 # built documents.
 #
 # The short X.Y version.
-version = importlib.metadata.version('virtualenvwrapper')
+version = virtualenvwrapper.version.version
 # The full version, including alpha/beta/rc tags.
 release = version
 
