@@ -3,6 +3,10 @@
 from setuptools import setup
 
 setup(
-    setup_requires=['pbr'],
-    pbr=True,
+    # Listing the scripts in pyproject.toml requires them to be python
+    # entry points for console scripts, but they are shell scripts.
+    scripts=[
+        "virtualenvwrapper.sh",
+        "virtualenvwrapper_lazy.sh",
+    ],
 )

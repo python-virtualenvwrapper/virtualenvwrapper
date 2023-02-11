@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+authors = [
+  {name = "Doug Hellmann", email = "doug@doughellmann.com"},
+  {name = "Jason Myers", email = "jason@mailthemyers.com"},
+]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Intended Audience :: Developers",
+    "Environment :: Console",
+]
+
+name = "virtualenvwrapper"
+description = ""
+dynamic = ["version"]
+keywords = ["virtualenv"]
+license = {text = "MIT"}
+readme = "README.txt"
+requires-python = ">=3.8"
+
+dependencies = [
+    "virtualenv",
+    "virtualenv-clone",
+    "stevedore",
+]
+
+# https://github.com/pypa/setuptools_scm/
+[tool.setuptools_scm]
+
+[project.urls]
+homepage = "https://virtualenvwrapper.readthedocs.io/"
+repository = "https://github.com/python-virtualenvwrapper/virtualenvwrapper"
+
+[project.entry-points."virtualenvwrapper.initialize"]
+user_scripts = "virtualenvwrapper.user_scripts:initialize"
+project = "virtualenvwrapper.project:initialize"
+
+[project.entry-points."virtualenvwrapper.initialize_source"]
+user_scripts = "virtualenvwrapper.user_scripts:initialize_source"
+
+[project.entry-points."virtualenvwrapper.pre_mkvirtualenv"]
+user_scripts = "virtualenvwrapper.user_scripts:pre_mkvirtualenv"
+
+[project.entry-points."virtualenvwrapper.post_mkvirtualenv_source"]
+user_scripts = "virtualenvwrapper.user_scripts:post_mkvirtualenv_source"
+
+[project.entry-points."virtualenvwrapper.pre_cpvirtualenv"]
+user_scripts = "virtualenvwrapper.user_scripts:pre_cpvirtualenv"
+
+[project.entry-points."virtualenvwrapper.post_cpvirtualenv_source"]
+user_scripts = "virtualenvwrapper.user_scripts:post_cpvirtualenv_source"
+
+[project.entry-points."virtualenvwrapper.pre_rmvirtualenv"]
+user_scripts = "virtualenvwrapper.user_scripts:pre_rmvirtualenv"
+
+[project.entry-points."virtualenvwrapper.post_rmvirtualenv"]
+user_scripts = "virtualenvwrapper.user_scripts:post_rmvirtualenv"
+
+[project.entry-points."virtualenvwrapper.project.pre_mkproject"]
+project = "virtualenvwrapper.project:pre_mkproject"
+
+[project.entry-points."virtualenvwrapper.project.post_mkproject_source"]
+project = "virtualenvwrapper.project:post_mkproject_source"
+
+[project.entry-points."virtualenvwrapper.pre_activate"]
+user_scripts = "virtualenvwrapper.user_scripts:pre_activate"
+
+[project.entry-points."virtualenvwrapper.post_activate_source"]
+project = "virtualenvwrapper.project:post_activate_source"
+user_scripts = "virtualenvwrapper.user_scripts:post_activate_source"
+
+[project.entry-points."virtualenvwrapper.pre_deactivate_source"]
+user_scripts = "virtualenvwrapper.user_scripts:pre_deactivate_source"
+
+[project.entry-points."virtualenvwrapper.post_deactivate_source"]
+user_scripts = "virtualenvwrapper.user_scripts:post_deactivate_source"
+
+[project.entry-points."virtualenvwrapper.get_env_details"]
+user_scripts = "virtualenvwrapper.user_scripts:get_env_details"
