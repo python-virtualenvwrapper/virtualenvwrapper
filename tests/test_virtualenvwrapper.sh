@@ -27,13 +27,13 @@ test_virtualenvwrapper_script_set() {
 }
 
 test_virtualenvwrapper_version() {
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     typeset ver=$(_virtualenvwrapper_version)
     assertTrue "version is empty" "[ -n $ver ]"
 }
 
 test_virtualenvwrapper_help_shows_version() {
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     typeset pattern="Version: $(_virtualenvwrapper_version)"
     assertTrue "version not in command output" "virtualenvwrapper | grep \"$pattern\""
 }

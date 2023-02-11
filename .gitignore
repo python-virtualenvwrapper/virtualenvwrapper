@@ -36,3 +36,4 @@ syntax: re
 ^web/
 .python-version
 .eggs
+/virtualenvwrapper/version.py

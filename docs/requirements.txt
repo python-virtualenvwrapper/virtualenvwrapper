@@ -1,5 +1,3 @@
 # sphinxcontrib-bitbucket
 # sphinx>=1.1.2,!=1.2.0,!=1.3b1,<1.3
 sphinx
-# We need importlib.metadata, which was added in 3.10.
-importlib_metadata;python_version<'3.10'
