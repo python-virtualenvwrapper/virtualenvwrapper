@@ -141,7 +141,7 @@ jobs:
           # Pin this low because RTD doesn't seem to adopt new
           # versions quickly and this ensures we don't have a
           # dependency problem with importlib.metadata.
-          python-version: "3.9"
+          python-version: "3.7"
 
       - name: Install dependencies
         run: python -m pip install tox
