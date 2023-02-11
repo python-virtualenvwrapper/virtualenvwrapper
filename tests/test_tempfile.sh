@@ -8,7 +8,7 @@ source "$test_dir/setup.sh"
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     echo $PYTHONPATH
 }
 

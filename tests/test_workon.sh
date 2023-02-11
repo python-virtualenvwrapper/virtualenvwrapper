@@ -6,7 +6,7 @@ source "$test_dir/setup.sh"
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     mkvirtualenv "test1" >/dev/null 2>&1
     mkvirtualenv "test2" >/dev/null 2>&1
     # Only test with leading and internal spaces. Directory names with trailing spaces are legal,

@@ -6,7 +6,7 @@ source "$test_dir/setup.sh"
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
-    source "$test_dir/../virtualenvwrapper.sh" >/dev/null 2>&1
+    load_wrappers >/dev/null 2>&1
 }
 
 oneTimeTearDown() {

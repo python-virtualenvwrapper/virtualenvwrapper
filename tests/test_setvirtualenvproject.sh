@@ -8,7 +8,7 @@ oneTimeSetUp() {
     mkdir -p "$WORKON_HOME"
     rm -rf "$PROJECT_HOME"
     mkdir -p "$PROJECT_HOME"
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
 }
 
 oneTimeTearDown() {

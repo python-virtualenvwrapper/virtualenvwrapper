@@ -7,7 +7,7 @@ TMP_WORKON_HOME="$WORKON_HOME"
 oneTimeSetUp() {
     rm -rf "$TMP_WORKON_HOME"
     mkdir -p "$TMP_WORKON_HOME"
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     echo $PYTHONPATH
 }
 

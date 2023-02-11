@@ -5,7 +5,7 @@ source "$test_dir/setup.sh"
 TMP_WORKON_HOME="$WORKON_HOME"
 
 oneTimeSetUp() {
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     echo $PYTHONPATH
 }
 

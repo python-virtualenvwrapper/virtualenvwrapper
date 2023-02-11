@@ -21,7 +21,7 @@ setUp () {
 }
 
 test_virtualenvwrapper_script_set() {
-    source "$test_dir/../virtualenvwrapper.sh"
+    load_wrappers
     assertTrue "VIRTUALENVWRAPPER_SCRIPT is not right: $VIRTUALENVWRAPPER_SCRIPT" \
         "echo $VIRTUALENVWRAPPER_SCRIPT | grep -q /virtualenvwrapper.sh"
 }

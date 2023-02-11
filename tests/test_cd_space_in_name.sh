@@ -7,8 +7,8 @@ oneTimeSetUp() {
     export WORKON_HOME="$WORKON_HOME/ this has spaces"
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
+    load_wrappers
     unset VIRTUAL_ENV
-    source "$test_dir/../virtualenvwrapper.sh"
     # Only test with leading and internal spaces. Directory names with trailing spaces are legal,
     # and work with virtualenv on OSX, but error out on Linux.
     mkvirtualenv " env with space" >/dev/null 2>&1
