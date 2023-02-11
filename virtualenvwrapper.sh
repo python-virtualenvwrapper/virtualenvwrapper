@@ -1336,8 +1336,13 @@ function allvirtualenv {
     unset IFS
 }
 
+function _virtualenvwrapper_version {
+    "$VIRTUALENVWRAPPER_PYTHON" -m 'virtualenvwrapper.hook_loader' --version
+}
+
 #:help:virtualenvwrapper: show this help message
 function virtualenvwrapper {
+    typeset version=$(_virtualenvwrapper_version)
 	cat <<EOF
 
 virtualenvwrapper is a set of extensions to Ian Bicking's virtualenv
@@ -1349,6 +1354,12 @@ introducing conflicts in their dependencies.
 For more information please refer to the documentation:
 
     http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html
+
+Version: $version
+Script: $VIRTUALENVWRAPPER_SCRIPT
+Python: $VIRTUALENVWRAPPER_PYTHON
+WORKON_HOME: $WORKON_HOME
+PROJECT_HOME: $PROJECT_HOME
 
 Commands available:
 

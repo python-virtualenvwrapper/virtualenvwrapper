@@ -591,7 +591,9 @@ Other Commands
 virtualenvwrapper
 -----------------
 
-Print a list of commands and their descriptions as basic help output.
+Print a list of commands, their descriptions, and some details about
+the version and locations used by virtualenvwrapper as basic help
+output.
 
 Syntax::
 
