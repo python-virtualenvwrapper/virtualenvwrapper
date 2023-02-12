@@ -14,15 +14,7 @@
 
 import datetime
 
-# Try to import the version from our package, but if that fails
-# because of the way the RTD build works fall back to at least using
-# the git tag information.
-try:
-    from virtualenvwrapper.version import version
-except ImportError:
-    import subprocess
-    p = subprocess.run(['git', 'describe'], stdout=subprocess.PIPE)
-    version = p.stdout.decode('utf-8').strip()
+import virtualenvwrapper.version
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -60,7 +52,7 @@ copyright = u'2009-%s, Doug Hellmann' % datetime.datetime.today().year
 # built documents.
 #
 # The short X.Y version.
-# version = "SEE IMPORTS ABOVE"
+version = virtualenvwrapper.version.version
 # The full version, including alpha/beta/rc tags.
 release = version
 
