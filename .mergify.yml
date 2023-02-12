@@ -28,6 +28,7 @@ pull_request_rules:
           - "title~=^docs:"
           - "files~=docs"
           - "files~=.rst$"
+          - "files~=.readthedocs.yaml$"
     actions:
       label:
         add:
