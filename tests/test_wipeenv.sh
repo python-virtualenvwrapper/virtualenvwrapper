@@ -20,7 +20,7 @@ tearDown() {
 
 test_wipeenv () {
     mkvirtualenv "wipetest" >/dev/null 2>&1
-    (cd tests/testpackage && python setup.py install) >/dev/null 2>&1
+    (cd tests/testpackage && pip install .) >/dev/null 2>&1
     before="$(pip freeze)"
     assertTrue "testpackage not installed" "pip freeze | grep testpackage"
     wipeenv >/dev/null 2>&1
@@ -52,7 +52,7 @@ test_wipeenv_pip_e () {
 
 test_wipeenv_develop () {
     mkvirtualenv "wipetest" >/dev/null 2>&1
-    (cd tests/testpackage && python setup.py develop) >/dev/null 2>&1
+    (cd tests/testpackage && pip install -e . --config-settings editable_mode=compat) >/dev/null 2>&1
     before="$(pip freeze)"
     assertTrue "testpackage not installed" "pip freeze | grep testpackage"
     wipeenv >/dev/null 2>&1

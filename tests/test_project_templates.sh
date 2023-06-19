@@ -4,7 +4,7 @@ test_dir=$(dirname $0)
 source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
-    (cd "$test_dir/testtemplate" && rm -rf build && "$VIRTUAL_ENV/bin/python" setup.py install)
+    (cd "$test_dir/testtemplate" && rm -rf build && "$VIRTUAL_ENV/bin/python" -m pip install .)
     rm -rf "$WORKON_HOME"
     mkdir -p "$WORKON_HOME"
     rm -rf "$PROJECT_HOME"
