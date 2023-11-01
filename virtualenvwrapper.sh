@@ -586,7 +586,7 @@ function virtualenvwrapper_show_workon_options {
         | command \tr "\n" " " \
         | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate |/|g" \
         | command \tr "/" "\n" \
-        | command \sed "/^\s*$/d" \
+        | command \sed "/^[[:space:]]*$/d" \
         | (unset GREP_OPTIONS; command \grep -E -v '^\*$') 2>/dev/null
 }
 
