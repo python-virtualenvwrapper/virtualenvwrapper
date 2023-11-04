@@ -146,14 +146,15 @@ def main():
         log.debug('Saving sourcable %s hooks to %s',
                   hook, options.script_filename)
         options.sourcing = True
-        output = open(options.script_filename, "w")
         try:
-            output.write('# %s\n' % hook)
-            # output.write('echo %s\n' % hook)
-            # output.write('set -x\n')
-            run_hooks(hook + '_source', options, args, output)
-        finally:
-            output.close()
+            with open(options.script_filename, "w") as output:
+                output.write('# %s\n' % hook)
+                # output.write('echo %s\n' % hook)
+                # output.write('set -x\n')
+                run_hooks(hook + '_source', options, args, output)
+        except (IOError, OSError) as e:
+            log.error('Error while writing to %s: \n %s', options.script_filename, e)
+            sys.exit(1)
 
     return 0
 
