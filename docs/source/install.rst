@@ -103,7 +103,7 @@ or::
 
 An alternative to installing it into the global site-packages is to
 add it to `your user local directory
-<https://docs.python.org/install/index.html#alternate-installation-the-user-scheme>`__
+<https://docs.python.org/3.11/install/index.html#alternate-installation-the-user-scheme>`__
 (usually `~/.local`).
 
 ::
