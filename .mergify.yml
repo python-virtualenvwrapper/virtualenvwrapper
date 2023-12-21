@@ -34,6 +34,14 @@ pull_request_rules:
         add:
           - documentation
 
+  - name: automatic approval for Dependabot pull requests
+    conditions:
+      - author=dependabot[bot]
+    actions:
+      review:
+        type: APPROVE
+        message: Automatically approving dependabot
+
   - name: Add breaking-change label
     # https://docs.openstack.org/pbr/latest/user/features.html
     conditions:
@@ -52,6 +60,17 @@ pull_request_rules:
         add:
           - feature
 
+  - name: Add automatic-merge label
+    conditions:
+      - or:
+        - "author=dhellmann"
+        - "author=jasonamyers"
+      - "label!=mergify"
+    actions:
+      label:
+        add:
+          - automatic-merge
+
   - name: Automatic merge on approval
     conditions:
       - and:
@@ -69,7 +88,10 @@ pull_request_rules:
         - "check-success=Test Ubuntu (3.12)"
         - "check-success=Test Zsh"
         - "-draft"
-        - "#approved-reviews-by>=1"
+        - or:
+          - "#approved-reviews-by>=1"
+          - "author=dhellmann"
+          - "author=jasonamyers"
     actions:
       merge:
         method: merge
