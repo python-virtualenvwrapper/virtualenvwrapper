@@ -153,7 +153,8 @@ def main():
                 # output.write('set -x\n')
                 run_hooks(hook + '_source', options, args, output)
         except (IOError, OSError) as e:
-            log.error('Error while writing to %s: \n %s', options.script_filename, e)
+            log.error('Error while writing to %s: \n %s',
+                      options.script_filename, e)
             sys.exit(1)
 
     return 0
