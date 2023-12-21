@@ -81,6 +81,7 @@ pull_request_rules:
         - "check-success=Test macOS (3.9)"
         - "check-success=Test macOS (3.10)"
         - "check-success=Test macOS (3.11)"
+        - "check-success=Test macOS (3.12)"
         - "check-success=Test Ubuntu (3.8)"
         - "check-success=Test Ubuntu (3.9)"
         - "check-success=Test Ubuntu (3.10)"
