@@ -36,6 +36,10 @@ dependencies = [
     "stevedore",
 ]
 
+[project.optional-dependencies]
+linter = [
+    "flake8",
+]
 # https://github.com/pypa/setuptools_scm/
 [tool.setuptools_scm]
 write_to = "virtualenvwrapper/version.py"
