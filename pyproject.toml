@@ -40,6 +40,12 @@ dependencies = [
 linter = [
     "flake8",
 ]
+build = [
+    "build",
+    "twine",
+    "check-python-versions",
+]
+
 # https://github.com/pypa/setuptools_scm/
 [tool.setuptools_scm]
 write_to = "virtualenvwrapper/version.py"
