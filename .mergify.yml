@@ -60,6 +60,17 @@ pull_request_rules:
         add:
           - feature
 
+  - name: Add automatic-merge label
+    conditions:
+      - or:
+        - "author=dhellmann"
+        - "author=jasonamyers"
+      - "label!=mergify"
+    actions:
+      label:
+        add:
+          - automatic-merge
+
   - name: Automatic merge on approval
     conditions:
       - and:
