@@ -1,11 +1,18 @@
 CHANGES
 =======
 
-Unreleased
-----------
+6.0.0.0a5
+---------
 
 * add a --version option to the hook loader
 * modernize packaging
+* docs: update requirements for build on rtd
+* docs: add read the docs configuration file
+* Changed workon's env switching to use OR not $? by @Nealium (pull request #59)
+* Fix issues for python 3.12 by @parona-source (pull request #68)
+* Fix shell completion on FreeBSD by @bendikro (pull request #86)
+* add python 3.12 to test matrix
+* Improve error message for IOErrors by @kerel-fs (pull request #81)
 
 6.0.0.0a1
 ---------
