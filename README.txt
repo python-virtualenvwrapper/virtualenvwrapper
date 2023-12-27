@@ -61,7 +61,7 @@ we will link to it from this page.
 Python Versions
 ===============
 
-virtualenvwrapper is tested under Python 3.8 - 3.11.
+virtualenvwrapper is tested under Python 3.8 - 3.12 on macOS and Linux.
 
 =======
 Support
