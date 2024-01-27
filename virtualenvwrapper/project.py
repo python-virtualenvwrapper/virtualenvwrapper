@@ -58,4 +58,9 @@ def post_activate_source(args):
   -a "$VIRTUALENVWRAPPER_PROJECT_CD" = 1 ] && \
     virtualenvwrapper_cd \
         "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")"
+if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]; then
+    if [ -f "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")/.virtualenvwrapper/postactivate" ]; then
+        source "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")/.virtualenvwrapper/postactivate"
+    fi
+fi
 """
