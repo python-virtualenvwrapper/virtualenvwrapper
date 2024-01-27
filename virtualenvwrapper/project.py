@@ -8,7 +8,7 @@
 import logging
 import os
 
-from virtualenvwrapper.user_scripts import make_hook, run_global, PERMISSIONS
+from virtualenvwrapper.user_scripts import PERMISSIONS, make_hook, run_global
 
 log = logging.getLogger(__name__)
 
@@ -61,6 +61,16 @@ def post_activate_source(args):
 if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]; then
     if [ -f "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")/.virtualenvwrapper/postactivate" ]; then
         source "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")/.virtualenvwrapper/postactivate"
+    fi
+fi
+"""
+
+
+def pre_deactivate_source(args):
+    return """
+if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]; then
+    if [ -f "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")/.virtualenvwrapper/predeactivate" ]; then
+        source "$(cat \"$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME\")/.virtualenvwrapper/predeactivate"
     fi
 fi
 """

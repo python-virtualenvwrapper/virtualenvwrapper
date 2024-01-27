@@ -93,6 +93,7 @@ project = "virtualenvwrapper.project:post_activate_source"
 user_scripts = "virtualenvwrapper.user_scripts:post_activate_source"
 
 [project.entry-points."virtualenvwrapper.pre_deactivate_source"]
+project = "virtualenvwrapper.project:pre_deactivate_source"
 user_scripts = "virtualenvwrapper.user_scripts:pre_deactivate_source"
 
 [project.entry-points."virtualenvwrapper.post_deactivate_source"]
