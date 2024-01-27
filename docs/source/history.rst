@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+Next
+----
+
+* Look for `./.virtualenvwrapper/postactivate` and
+  `./.virtualenvwrapper/predeactivate` hook scripts.
+
 6.0.0.0a5
 ---------
 
