@@ -52,4 +52,24 @@ test_virtualenvwrapper_verify_project_home_missing_dir() {
     PROJECT_HOME="$old_home"
 }
 
+test_virtualenvwrapper_postactivate_hook() {
+    load_wrappers
+    mkproject "test_project_hook"
+    mkdir .virtualenvwrapper
+    echo "export TEST_PROJECT_HOOK_VAR=true" > .virtualenvwrapper/postactivate
+    echo "unset TEST_PROJECT_HOOK_VAR" > .virtualenvwrapper/predeactivate
+    deactivate
+
+    # Variable should not be set to start
+    assertSame "${TEST_PROJECT_HOOK_VAR}" ""
+
+    # Activating the env should set it
+    workon "test_project_hook"
+    assertSame "true" "${TEST_PROJECT_HOOK_VAR}"
+
+    # Deactivating should unset it
+    deactivate
+    assertSame "" "${TEST_PROJECT_HOOK_VAR}"
+}
+
 . "$test_dir/shunit2"
