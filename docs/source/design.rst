@@ -163,13 +163,11 @@ what virtualenvwrapper is doing, it's a natural fit.
 
 .. seealso::
 
-  * `Advanced Programming in the UNIX Environment`_ by W. Richard
+  * *Advanced Programming in the UNIX Environment* by W. Richard
     Stevens & Stephen A. Rago
   * `Fork (operating system)`_ on Wikipedia
   * `Environment variable`_ on Wikipedia
   * `Linux implementation of fork()`_
-
-.. _Advanced Programming in the UNIX Environment: https://www.amazon.com/gp/product/0321637739/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0321637739&linkCode=as2&tag=hellflynet-20
 
 .. _Fork (operating system): https://en.wikipedia.org/wiki/Fork_(operating_system)
 
