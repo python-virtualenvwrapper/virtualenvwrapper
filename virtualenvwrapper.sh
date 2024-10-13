@@ -117,12 +117,11 @@ fi
 # cd because we are trying to change the state of the current shell,
 # so we use "builtin".
 function virtualenvwrapper_cd {
-    if [ -n "${BASH:-}" ]
-    then
-        builtin \cd "$@"
-    elif [ -n "${ZSH_VERSION:-}" ]
+    if [ -n "${ZSH_VERSION:-}" ]
     then
         builtin \cd -q "$@"
+    else
+        builtin \cd "$@"
     fi
 }
 
