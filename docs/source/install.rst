@@ -57,7 +57,7 @@ or::
 Depending on your MSYS setup, you may need to install the `MSYS mktemp
 binary`_ in the ``MSYS_HOME/bin`` folder.
 
-.. _MSYS mktemp binary: https://sourceforge.net/projects/mingw/files/MSYS/
+.. _MSYS mktemp binary: https://sourceforge.net/projects/mingw/files/MSYS/Extension/mktemp/
 
 PowerShell
 ----------
