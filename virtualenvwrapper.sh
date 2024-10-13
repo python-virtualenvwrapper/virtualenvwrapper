@@ -391,6 +391,12 @@ function virtualenvwrapper_mkvirtualenv_help {
     echo
     echo "    Provide a pip requirements file to install a base set of packages"
     echo "    into the new environment."
+    echo
+    echo " -p python_interpreter, --python=python_interpreter"
+    echo
+    echo "    The Python interpreter to use for the new environment."
+    echo "    This can be specified as -p python3.8 or --python=/path/to/python"
+    echo
     echo;
     echo 'virtualenv help:';
     echo;
