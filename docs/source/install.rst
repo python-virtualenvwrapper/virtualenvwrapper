@@ -54,9 +54,10 @@ or::
     export MSYS_HOME=C:\msys\1.0
     source /usr/local/bin/virtualenvwrapper.sh
 
-Depending on your MSYS setup, you may need to install the MSYS mktemp binary
-(``https://sourceforge.net/projects/mingw/files/MSYS/``) in the
-``MSYS_HOME/bin`` folder.
+Depending on your MSYS setup, you may need to install the `MSYS mktemp
+binary`_ in the ``MSYS_HOME/bin`` folder.
+
+.. _MSYS mktemp binary: https://sourceforge.net/projects/mingw/files/MSYS/
 
 PowerShell
 ----------
