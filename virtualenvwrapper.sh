@@ -375,7 +375,7 @@ function virtualenvwrapper_verify_active_environment {
 
 # Help text for mkvirtualenv
 function virtualenvwrapper_mkvirtualenv_help {
-    echo "Usage: mkvirtualenv [-a project_path] [-i package] [-r requirements_file] [virtualenv options] env_name"
+    echo "Usage: mkvirtualenv [-a project_path] [-i package] [-r requirements_file] [-p python_interpreter] [virtualenv options] env_name"
     echo
     echo " -a project_path"
     echo
