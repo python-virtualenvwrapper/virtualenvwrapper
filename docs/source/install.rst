@@ -122,7 +122,7 @@ of the script installed with this package::
 
     export WORKON_HOME=$HOME/.virtualenvs
     export PROJECT_HOME=$HOME/Devel
-    source /usr/local/bin/virtualenvwrapper.sh
+    source ~/.local/bin/virtualenvwrapper.sh
 
 After editing it, reload the startup file (e.g., run ``source
 ~/.bashrc``).
