@@ -96,14 +96,11 @@ export VIRTUALENVWRAPPER_WORKON_CD=${VIRTUALENVWRAPPER_WORKON_CD:-1}
 # Remember where we are running from.
 if [ -z "${VIRTUALENVWRAPPER_SCRIPT:-}" ]
 then
-    if [ -n "$BASH" ]
+    if [ -n "${BASH_SOURCE:-}" ]
     then
         export VIRTUALENVWRAPPER_SCRIPT="$BASH_SOURCE"
-    elif [ -n "$ZSH_VERSION" ]
-    then
-        export VIRTUALENVWRAPPER_SCRIPT="$0"
     else
-        export VIRTUALENVWRAPPER_SCRIPT="${.sh.file}"
+        export VIRTUALENVWRAPPER_SCRIPT="$0"
     fi
 fi
 
@@ -430,7 +427,7 @@ function mkvirtualenv {
         i=0
         tst="-lt"
     fi
-    while [ $i $tst $# ]
+    while test $i $tst $# 
     do
         a="${in_args[$i]}"
         # echo "arg $i : $a"
@@ -712,7 +709,7 @@ function workon {
         tst="-lt"
     fi
     typeset cd_after_activate=$VIRTUALENVWRAPPER_WORKON_CD
-    while [ $i $tst $# ]
+    while test $i $tst $# 
     do
         a="${in_args[$i]}"
         case "$a" in
@@ -1111,7 +1108,7 @@ function mkproject {
         i=0
         tst="-lt"
     fi
-    while [ $i $tst $# ]
+    while test $i $tst $#
     do
         a="${in_args[$i]}"
         case "$a" in
@@ -1218,7 +1215,7 @@ function mktmpenv {
         tst="-lt"
     fi
     typeset cd_after_activate=$VIRTUALENVWRAPPER_WORKON_CD
-    while [ $i $tst $# ]
+    while test $i $tst $#
     do
         a="${in_args[$i]}"
         case "$a" in
