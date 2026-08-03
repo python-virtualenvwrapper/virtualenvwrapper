@@ -116,9 +116,9 @@ fi
 function virtualenvwrapper_cd {
     if [ -n "${ZSH_VERSION:-}" ]
     then
-        builtin \cd -q "$@"
+        builtin cd -q "$@"
     else
-        builtin \cd "$@"
+        builtin cd "$@"
     fi
 }
 
@@ -152,7 +152,7 @@ function virtualenvwrapper_derive_workon_home {
 
     # If the path is relative, prefix it with $HOME
     # (note: for compatibility)
-    if echo "$workon_home_dir" | (unset GREP_OPTIONS; command \grep '^[^/~]' > /dev/null)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; command grep '^[^/~]' > /dev/null)
     then
         workon_home_dir="$HOME/$WORKON_HOME"
     fi
@@ -161,7 +161,7 @@ function virtualenvwrapper_derive_workon_home {
     # path might contain stuff to expand.
     # (it might be possible to do this in shell, but I don't know a
     # cross-shell-safe way of doing it -wolever)
-    if echo "$workon_home_dir" | (unset GREP_OPTIONS; command \grep -E '([\$~]|//)' >/dev/null)
+    if echo "$workon_home_dir" | (unset GREP_OPTIONS; command grep -E '([\$~]|//)' >/dev/null)
     then
         # This will normalize the path by:
         # - Removing extra slashes (e.g., when TMPDIR ends in a slash)
@@ -197,7 +197,7 @@ function virtualenvwrapper_verify_workon_home {
 # Function to wrap mktemp so tests can replace it for error condition
 # testing.
 function virtualenvwrapper_mktemp {
-    command \mktemp "$@"
+    command mktemp "$@"
 }
 
 # Expects 1 argument, the suffix for the new file.
@@ -240,7 +240,7 @@ function virtualenvwrapper_run_hook {
         if [ ! -f "$hook_script" ]
         then
             echo "ERROR: virtualenvwrapper_run_hook could not find temporary file $hook_script" 1>&2
-            command \rm -f "$hook_script"
+            command rm -f "$hook_script"
             return 2
         fi
         # cat "$hook_script"
@@ -256,7 +256,7 @@ VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON and that PATH is
 set properly.
 EOF
     fi
-    command \rm -f "$hook_script"
+    command rm -f "$hook_script"
     return $result
 }
 
@@ -322,7 +322,7 @@ function virtualenvwrapper_initialize {
 
 # Verify that the passed resource is in path and exists
 function virtualenvwrapper_verify_resource {
-    typeset exe_path="$(command \which "$1" | (unset GREP_OPTIONS; command \grep -v "not found"))"
+    typeset exe_path="$(command which "$1" | (unset GREP_OPTIONS; command grep -v "not found"))"
     if [ "$exe_path" = "" ]
     then
         echo "ERROR: virtualenvwrapper could not find $1 in your path" >&2
@@ -553,7 +553,7 @@ function rmvirtualenv {
         virtualenvwrapper_cd "$WORKON_HOME"
 
         virtualenvwrapper_run_hook "pre_rmvirtualenv" "$env_name"
-        command \rm -rf "$env_dir"
+        command rm -rf "$env_dir"
         virtualenvwrapper_run_hook "post_rmvirtualenv" "$env_name"
 
         # If the directory we used to be in still exists, move back to it.
@@ -585,11 +585,11 @@ function virtualenvwrapper_show_workon_options {
     # 5. Eliminate any lines with * on them because that means there
     #    were no envs.
     (virtualenvwrapper_cd "$WORKON_HOME" && echo */$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
-        | command \tr "\n" " " \
-        | command \sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate |/|g" \
-        | command \tr "/" "\n" \
-        | command \sed "/^[[:space:]]*$/d" \
-        | (unset GREP_OPTIONS; command \grep -E -v '^\*$') 2>/dev/null
+        | command tr "\n" " " \
+        | command sed "s|/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate |/|g" \
+        | command tr "/" "\n" \
+        | command sed "/^[[:space:]]*$/d" \
+        | (unset GREP_OPTIONS; command grep -E -v '^\*$') 2>/dev/null
 }
 
 function _lsvirtualenv_usage {
